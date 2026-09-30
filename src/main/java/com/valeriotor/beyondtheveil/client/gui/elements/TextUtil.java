@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.client.gui.elements.property.LinkProperty;
 import com.valeriotor.beyondtheveil.client.gui.elements.property.Property;
 import net.minecraft.client.gui.Font;
 import net.minecraft.locale.Language;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
@@ -126,8 +127,8 @@ public class TextUtil {
                                             }
                                             propertyText.append(w.toFormattedString(true, nextWord));
                                         }
-                                        int propertyStart = f.width(FormattedCharSequence.forward(precedingText.toString(), style));
-                                        int propertyWidth = f.width(FormattedCharSequence.forward(propertyText.toString(), style));
+                                        int propertyStart = f.width(Component.literal(precedingText.toString()).withStyle(style));
+                                        int propertyWidth = f.width(Component.literal(propertyText.toString()).withStyle(style));
                                         properties.add(makeProperty(currentProperty, propertyStart, propertyStart + propertyWidth));
                                     }
                                     if (done || j == 0) {
