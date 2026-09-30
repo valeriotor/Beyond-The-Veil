@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,level=0": {
-      "model": "beyondtheveil:block/flebo",
+      "model": "beyondtheveil:block/flebo_lower_solid",
       "y": 90
     },
     "facing=east,level=1": {
-      "model": "beyondtheveil:block/flask_shelf_empty",
+      "model": "beyondtheveil:block/flebo_upper",
       "y": 90
     },
     "facing=north,level=0": {
-      "model": "beyondtheveil:block/flebo"
+      "model": "beyondtheveil:block/flebo_lower_solid"
     },
     "facing=north,level=1": {
-      "model": "beyondtheveil:block/flask_shelf_empty"
+      "model": "beyondtheveil:block/flebo_upper"
     },
     "facing=south,level=0": {
-      "model": "beyondtheveil:block/flebo",
+      "model": "beyondtheveil:block/flebo_lower_solid",
       "y": 180
     },
     "facing=south,level=1": {
-      "model": "beyondtheveil:block/flask_shelf_empty",
+      "model": "beyondtheveil:block/flebo_upper",
       "y": 180
     },
     "facing=west,level=0": {
-      "model": "beyondtheveil:block/flebo",
+      "model": "beyondtheveil:block/flebo_lower_solid",
       "y": 270
     },
     "facing=west,level=1": {
-      "model": "beyondtheveil:block/flask_shelf_empty",
+      "model": "beyondtheveil:block/flebo_upper",
       "y": 270
     }
   }

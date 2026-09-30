@@ -1,4 +1,4 @@
-// 1.20.1	2026-08-06T01:54:04.9990663	Block States: beyondtheveil
+// 1.20.1	2026-10-01T01:26:03.9627318	Block States: beyondtheveil
 a7b07515384d6495a401aeb9bb0ea24bb97f33d4 assets/beyondtheveil/blockstates/alembics.json
 e7ea9ccdb7e2573dcbc4046f269a918f4022acf7 assets/beyondtheveil/blockstates/algae_block.json
 8873909c619253397c1a10876038ee70191bb230 assets/beyondtheveil/blockstates/arboreal_generator.json
@@ -46,7 +46,7 @@ ea67bb617a055fe084aacc03e5bc6baff8db2541 assets/beyondtheveil/blockstates/flask_
 2ec2fcb262e9cefddb35c172f3a3245cd170a373 assets/beyondtheveil/blockstates/flask_medium.json
 726782345ec513c124bd3bd8ba730ccf03641654 assets/beyondtheveil/blockstates/flask_shelf.json
 dd122c3438862dbc3c3178b6dee5ce134f268ac9 assets/beyondtheveil/blockstates/flask_small.json
-c1d3328da7d12f2f24b20f656b964695ef01990b assets/beyondtheveil/blockstates/flebo.json
+b9bc4edb2a203db975aaadbae7238ba968dd5a29 assets/beyondtheveil/blockstates/flebo.json
 9e18b2fa0aa838b2d917315e35e6f428f75565e7 assets/beyondtheveil/blockstates/fume_spreader.json
 83172ccced02b6d3e0ce389c45bf659943996250 assets/beyondtheveil/blockstates/gear_bench.json
 88a310fedcef6ed98b119d1498ca221db5240ae8 assets/beyondtheveil/blockstates/ghost_grass.json
@@ -124,7 +124,7 @@ ad0508a1afef9cb2894f2243afafa8ffdab6ab88 assets/beyondtheveil/models/block/elder
 2cb7623e9bc628c309e26a659e6b112f8d67e2ae assets/beyondtheveil/models/block/elder_stone_brick_stairs_inner.json
 29b467def274e3ba2ced074397c7a05d15fd6d50 assets/beyondtheveil/models/block/elder_stone_brick_stairs_outer.json
 c37acf7e91fdcc00300e050d1337b0ab8ee1e50f assets/beyondtheveil/models/block/flask_shelf_complete.json
-3540f017aff869551c2ce83edf8abf507a841e6b assets/beyondtheveil/models/block/flebo.json
+f054608e0551b5bef9403471e5be02fcd277dc5b assets/beyondtheveil/models/block/flebo_upper.json
 e94910257ecc88274ae4221c6b63d7294a204120 assets/beyondtheveil/models/block/fume_spreader_empty.json
 ad27b82899763f842e1ce39706eda1f747a6f350 assets/beyondtheveil/models/block/fume_spreader_full.json
 6b660ee6327919cee8960026ab199ce7a9695168 assets/beyondtheveil/models/block/ghost_weed_stage0.json

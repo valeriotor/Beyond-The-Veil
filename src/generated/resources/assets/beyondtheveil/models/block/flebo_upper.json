@@ -1,8 +1,8 @@
 {
-  "parent": "minecraft:block/cube",
+  "parent": "beyondtheveil:block/large_cube",
   "children": {
     "block/flebo_solid1": {
-      "parent": "beyondtheveil:block/flebo_solid",
+      "parent": "beyondtheveil:block/flebo_upper_solid",
       "render_type": "minecraft:solid"
     },
     "block/flebo_translucent1": {
@@ -17,12 +17,5 @@
   "loader": "forge:composite",
   "textures": {
     "particle": "beyondtheveil:block/flebo"
-  },
-  "display": {
-    "gui": {
-      "rotation": [ 30, 135, 0 ],
-      "translation": [ 0, -2.5, 0],
-      "scale":[ 0.54125, 0.54125, 0.54125 ]
-    }
   }
 }

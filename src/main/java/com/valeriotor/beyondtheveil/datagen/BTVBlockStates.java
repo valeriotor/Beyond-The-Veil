@@ -6,7 +6,6 @@ import com.valeriotor.beyondtheveil.block.multiblock.FullMultiBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
 import com.valeriotor.beyondtheveil.lib.References;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -99,7 +98,8 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFumeSpreader();
         registerSleepChamber();
         registerWateryCradle();
-        registerPatientPod();
+        register2by1WithTranslucentTop(PATIENT_POD.get(), "patient_pod");
+        register2by1WithTranslucentTop(FLEBO.get(), "flebo");
         registerLetterBox();
         registerSolidAndTranslucentBlock("memory_sieve", mcLoc("block/stone"), MEMORY_SIEVE.get());
         registerSolidAndTranslucentBlock("dream_focus", mcLoc("block/quartz_block_side"), DREAM_FOCUS.get());
@@ -110,7 +110,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFullMultiBlock("sacrifice_altar", "flask_shelf_empty", SACRIFICE_ALTAR.get()); // TODO change empty thing to match texture
         registerAlembics("alembics", "flask_shelf_empty", ALEMBICS.get());
         registerBlackTallSeagrass();
-        registerSolidAndTranslucentMultiBlock("flebo", "flask_shelf_empty", modLoc("block/flebo"), FLEBO.get(), 1);
+        //registerSolidAndTranslucentMultiBlock("flebo", "flask_shelf_empty", modLoc("block/flebo"), FLEBO.get(), 1);
         registerThin1By2("arboreal_generator", ARBOREAL_GENERATOR.get());
 
         registerWeed("grass_weed", Registration.GRASS_WEED.get());
@@ -270,29 +270,29 @@ public class BTVBlockStates extends BlockStateProvider {
                         .build());
     }
 
-    private void registerPatientPod() {
-        ExistingModelFile patientPodSolidLower = new ExistingModelFile(modLoc("block/patient_pod_lower_solid"), models().existingFileHelper);
-        ExistingModelFile patientPodSolidUpper = new ExistingModelFile(modLoc("block/patient_pod_upper_solid"), models().existingFileHelper);
-        ExistingModelFile patientPodTranslucent = new ExistingModelFile(modLoc("block/patient_pod_translucent"), models().existingFileHelper);
+    private void register2by1WithTranslucentTop(ThinMultiBlock1by2 block, String name) {
+        ExistingModelFile patientPodSolidLower = new ExistingModelFile(modLoc("block/" + name + "_lower_solid"), models().existingFileHelper);
+        ExistingModelFile patientPodSolidUpper = new ExistingModelFile(modLoc("block/" + name + "_upper_solid"), models().existingFileHelper);
+        ExistingModelFile patientPodTranslucent = new ExistingModelFile(modLoc("block/" + name + "_translucent"), models().existingFileHelper);
 
-        BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/patient_pod_upper_solid1"), models().existingFileHelper);
+        BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/" + name + "_upper_solid1"), models().existingFileHelper);
         parent.parent(patientPodSolidUpper);
         parent.renderType("solid");
-        BlockModelBuilder translucent_parent = new BlockModelBuilder(modLoc("block/patient_pod_translucent1"), models().existingFileHelper);
+        BlockModelBuilder translucent_parent = new BlockModelBuilder(modLoc("block/" + name + "_translucent1"), models().existingFileHelper);
         translucent_parent.parent(patientPodTranslucent);
         translucent_parent.renderType("translucent");
 
-        BlockModelBuilder patientPodUpper = models().getBuilder("beyondtheveil:block/patient_pod_upper")
+        BlockModelBuilder patientPodUpper = models().getBuilder("beyondtheveil:block/" + name + "_upper")
                 .parent(models().getExistingFile(modLoc("large_cube")))
-                .texture("particle", modLoc("block/patient_pod"))
+                .texture("particle", modLoc("block/" + name + ""))
                 .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
-                        .child("block/patient_pod_solid1", parent))
-                .child("block/patient_pod_translucent1", translucent_parent)
+                        .child("block/" + name + "_solid1", parent))
+                .child("block/" + name + "_translucent1", translucent_parent)
                 .end();
 
-        getVariantBuilder(PATIENT_POD.get())
+        getVariantBuilder(block)
                 .forAllStates(state -> ConfiguredModel.builder()
-                        .modelFile(state.getValue(PATIENT_POD.get().getLevelProperty()) == 0 ? patientPodSolidLower : patientPodUpper)
+                        .modelFile(state.getValue(block.getLevelProperty()) == 0 ? patientPodSolidLower : patientPodUpper)
                         .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
                         .build());
     }
