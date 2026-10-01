@@ -1,0 +1,21 @@
+{
+  "parent": "beyondtheveil:block/large_cube",
+  "children": {
+    "block/megydrea_solid1": {
+      "parent": "beyondtheveil:block/megydrea_lower_solid",
+      "render_type": "minecraft:solid"
+    },
+    "block/megydrea_translucent1": {
+      "parent": "beyondtheveil:block/megydrea_lower_translucent",
+      "render_type": "minecraft:translucent"
+    }
+  },
+  "item_render_order": [
+    "block/megydrea_solid1",
+    "block/megydrea_translucent1"
+  ],
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "beyondtheveil:block/megydrea"
+  }
+}

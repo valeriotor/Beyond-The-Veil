@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-01T01:26:03.9627318	Block States: beyondtheveil
+// 1.20.1	2026-10-01T02:06:06.5381965	Block States: beyondtheveil
 a7b07515384d6495a401aeb9bb0ea24bb97f33d4 assets/beyondtheveil/blockstates/alembics.json
 e7ea9ccdb7e2573dcbc4046f269a918f4022acf7 assets/beyondtheveil/blockstates/algae_block.json
 8873909c619253397c1a10876038ee70191bb230 assets/beyondtheveil/blockstates/arboreal_generator.json
@@ -60,6 +60,7 @@ d054df755bb9eae001f7bc544840b9a1328682be assets/beyondtheveil/blockstates/jar_me
 e3c785406c8156e70ecaac6d82b409ea0d5a886e assets/beyondtheveil/blockstates/lacrymatory.json
 56e0d4fe8c85b85ff87151e0d3a2ccb1d96c4384 assets/beyondtheveil/blockstates/lamp.json
 dc51e198f1dd6cb9586babbae8eda45c34890e12 assets/beyondtheveil/blockstates/letter_box.json
+e61c924d5dab434d0fced3dd14dfa785b1529ea5 assets/beyondtheveil/blockstates/megydrea.json
 575aecbf7a96123b2eeba0bfd98ad3dbd4e87e14 assets/beyondtheveil/blockstates/memory_sieve.json
 cdf0645ae4f66a90a0c7c3517da11e99c6e077c4 assets/beyondtheveil/blockstates/offer_pillar.json
 fd65b65b23b95545e5498d689099388359576053 assets/beyondtheveil/blockstates/patient_pod.json
@@ -144,6 +145,8 @@ b77aecbaf708f2ff9408b8ed4ce03d2b826dcc4c assets/beyondtheveil/models/block/grass
 d36a71846c82a607be0baef7f827e165bdfcaa93 assets/beyondtheveil/models/block/grass_weed_stage6.json
 e12ac35381c1860fe6b7763726e676e95db31539 assets/beyondtheveil/models/block/grass_weed_stage7.json
 c1e99108338ad9a19e63a7a4dd8ca14303311887 assets/beyondtheveil/models/block/item_flask_complete.json
+4fa0055f42fdfe67e11898171da4b56ded01da4a assets/beyondtheveil/models/block/megydrea_lower.json
+4ea96c5471ff50229a6975277d53618ae63267f1 assets/beyondtheveil/models/block/megydrea_upper.json
 2d3fd84a7c2c7faf528189babb6824bc98d0ba98 assets/beyondtheveil/models/block/memory_sieve.json
 171111ceef94b3c0e500c4504a1322e1cac47c39 assets/beyondtheveil/models/block/patient_pod_upper.json
 9ab386caf0ed93cc977e9047a6b4d219ff88e9f8 assets/beyondtheveil/models/block/redstone_weed_stage0.json

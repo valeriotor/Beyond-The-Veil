@@ -110,7 +110,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerFullMultiBlock("sacrifice_altar", "flask_shelf_empty", SACRIFICE_ALTAR.get()); // TODO change empty thing to match texture
         registerAlembics("alembics", "flask_shelf_empty", ALEMBICS.get());
         registerBlackTallSeagrass();
-        //registerSolidAndTranslucentMultiBlock("flebo", "flask_shelf_empty", modLoc("block/flebo"), FLEBO.get(), 1);
+        registerSolidAndTranslucentThin2By1("megydrea", "flask_shelf_empty", modLoc("block/megydrea"), MEGYDREA.get());
         registerThin1By2("arboreal_generator", ARBOREAL_GENERATOR.get());
 
         registerWeed("grass_weed", Registration.GRASS_WEED.get());
@@ -446,35 +446,47 @@ public class BTVBlockStates extends BlockStateProvider {
                 });
     }
 
-    private void registerSolidAndTranslucentMultiBlock(String modelName, String emptyModelName, ResourceLocation particleTexture, FullMultiBlock block, int rotationOffset) {
-        ExistingModelFile empty = new ExistingModelFile(modLoc("block/" + emptyModelName), models().existingFileHelper);
+    private void registerSolidAndTranslucentThin2By1(String name, String emptyModelName, ResourceLocation particleTexture, ThinMultiBlock1by2 block) {
+        ExistingModelFile solidLower = new ExistingModelFile(modLoc("block/" + name + "_lower_solid"), models().existingFileHelper);
+        ExistingModelFile solidUpper = new ExistingModelFile(modLoc("block/" + name + "_upper_solid"), models().existingFileHelper);
+        ExistingModelFile translucentLower = new ExistingModelFile(modLoc("block/" + name + "_lower_translucent"), models().existingFileHelper);
+        ExistingModelFile translucentUpper = new ExistingModelFile(modLoc("block/" + name + "_upper_translucent"), models().existingFileHelper);
 
-        ExistingModelFile solid = new ExistingModelFile(modLoc("block/" + modelName + "_solid"), models().existingFileHelper);
-        ExistingModelFile translucent = new ExistingModelFile(modLoc("block/" + modelName + "_translucent"), models().existingFileHelper);
+        BlockModelBuilder upperSolidChild = new BlockModelBuilder(modLoc("block/" + name + "_upper_solid1"), models().existingFileHelper);
+        upperSolidChild.parent(solidUpper);
+        upperSolidChild.renderType("solid");
+        BlockModelBuilder upperTranslucentChild = new BlockModelBuilder(modLoc("block/" + name + "_upper_translucent1"), models().existingFileHelper);
+        upperTranslucentChild.parent(translucentUpper);
+        upperTranslucentChild.renderType("translucent");
 
-        BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/" + modelName + "_solid1"), models().existingFileHelper);
-        parent.parent(solid);
-        parent.renderType("solid");
-        BlockModelBuilder translucent_parent = new BlockModelBuilder(modLoc("block/" + modelName + "_translucent1"), models().existingFileHelper);
-        translucent_parent.parent(translucent);
-        translucent_parent.renderType("translucent");
+        BlockModelBuilder lowerSolidChild = new BlockModelBuilder(modLoc("block/" + name + "_lower_solid1"), models().existingFileHelper);
+        lowerSolidChild.parent(solidLower);
+        lowerSolidChild.renderType("solid");
+        BlockModelBuilder lowerTranslucentChild = new BlockModelBuilder(modLoc("block/" + name + "_lower_translucent1"), models().existingFileHelper);
+        lowerTranslucentChild.parent(translucentLower);
+        lowerTranslucentChild.renderType("translucent");
 
-        BlockModelBuilder builder = models().getBuilder("beyondtheveil:block/" + modelName)
-                .parent(models().getExistingFile(mcLoc("cube")))
-                .texture("particle", particleTexture)
+        BlockModelBuilder upper = models().getBuilder("beyondtheveil:block/" + name + "_upper")
+                .parent(models().getExistingFile(modLoc("large_cube")))
+                .texture("particle", modLoc("block/" + name))
                 .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
-                        .child("block/" + modelName + "_solid1", parent))
-                .child("block/" + modelName + "_translucent1", translucent_parent)
+                        .child("block/" + name + "_solid1", upperSolidChild))
+                .child("block/" + name + "_translucent1", upperTranslucentChild)
+                .end();
+
+        BlockModelBuilder lower = models().getBuilder("beyondtheveil:block/" + name + "_lower")
+                .parent(models().getExistingFile(modLoc("large_cube")))
+                .texture("particle", modLoc("block/" + name))
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("block/" + name + "_solid1", lowerSolidChild))
+                .child("block/" + name + "_translucent1", lowerTranslucentChild)
                 .end();
 
         getVariantBuilder(block)
-                .forAllStatesExcept(state -> {
-                    ModelFile file = block.isCenter(state) ? builder : empty;
-                    return ConfiguredModel.builder()
-                            .modelFile(file)
-                            .rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90 + 90 * rotationOffset) % 360))
-                            .build();
-                });
+                .forAllStates(state -> ConfiguredModel.builder()
+                        .modelFile(state.getValue(block.getLevelProperty()) == 0 ? lower : upper)
+                        //.rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)) // Rotates 'modelFile' on the Y axis depending on the property
+                        .build());
     }
 
     private void registerThin1By2(String modelName, ThinMultiBlock1by2 block) {

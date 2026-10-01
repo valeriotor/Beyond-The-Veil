@@ -1,4 +1,4 @@
-// 1.20.1	2026-08-06T01:40:48.3776864	Loot Tables
+// 1.20.1	2026-10-01T01:49:40.7473412	Loot Tables
 9f8dedba9451f0cb00310723519321c25690cacf data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 1507d9fa4732435ba035899271dcaa6627c50d86 data/beyondtheveil/loot_tables/blocks/arboreal_generator.json
@@ -59,6 +59,7 @@ b400ee15aca5836bf4776f630eaf5d9f7eb3a595 data/beyondtheveil/loot_tables/blocks/i
 b278089cdc6954c6df765158dddf5ab24ca8d340 data/beyondtheveil/loot_tables/blocks/lacrymatory.json
 2c54c3c75db6c1480c2dc6fc3787d547fcb1b17d data/beyondtheveil/loot_tables/blocks/lamp.json
 b65bd581bf8f0e50a899f93121df7d61a2012b3f data/beyondtheveil/loot_tables/blocks/letter_box.json
+1e7ff07d79f346c0fac9556fca60bbcf04d741b7 data/beyondtheveil/loot_tables/blocks/megydrea.json
 7291bf55b5646990818d32d7e3807a4517a4b410 data/beyondtheveil/loot_tables/blocks/memory_sieve.json
 670e780d90dc28ab2b208a678c9735693c1a52bb data/beyondtheveil/loot_tables/blocks/offer_pillar.json
 ff17b12edddc174ced130de2d50678d9ed95eca8 data/beyondtheveil/loot_tables/blocks/patient_pod.json

@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-01T01:26:03.9594512	Item Models: beyondtheveil
+// 1.20.1	2026-10-01T02:06:06.534405	Item Models: beyondtheveil
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/adeline.json
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
@@ -127,6 +127,7 @@ f42d8e9e779c6c6fe6e138f49e581558b7bde8bc assets/beyondtheveil/models/item/jar_la
 407f83fd8820812df0b089baeb5745626df9de6b assets/beyondtheveil/models/item/liquid_glowstone_bucket.json
 3b2f41d3661716255fbd5918b5de7a351c9c0443 assets/beyondtheveil/models/item/liquid_gold_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/man_o_war.json
+4058da2b522eccfc42b4b6fa80074e72b97a5e3b assets/beyondtheveil/models/item/megydrea.json
 ea16a452d68cb56fb0644cc1a4560b1a72505c16 assets/beyondtheveil/models/item/memory_hormones_bucket.json
 dace1b7f17be45d4271adc00f6b2e50b24f1d7b7 assets/beyondtheveil/models/item/memory_phial.json
 abfcc384873b0b3feea19c1626831b13257cea67 assets/beyondtheveil/models/item/memory_sieve.json
