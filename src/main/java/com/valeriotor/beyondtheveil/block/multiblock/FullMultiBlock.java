@@ -7,6 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -191,5 +192,138 @@ public abstract class FullMultiBlock extends Block{
         return getDepthProperty() == null ? 0 : state.getValue(getDepthProperty());
     }
 
+    private int[] getIndicesForNeighbour(BlockState yourState, Direction direction, LevelAccessor l) {
+        int[] ret = new int[3];
+        Direction facing = yourState.getValue(FACING);
+        if (getLevelProperty() != null) {
+            int levelProperty = yourState.getValue(getLevelProperty());
+            if (direction == Direction.UP) {
+                ret[1] = levelProperty + 1;
+            } else if (direction == Direction.DOWN) {
+                ret[1] = levelProperty - 1;
+            } else {
+                ret[1] = levelProperty;
+            }
+        } else {
+            if (direction.getAxis().isVertical()) {
+                ret[1] = -1;
+            }
+        }
+        if (getSideProperty() != null) {
+            int sideProperty = yourState.getValue(getSideProperty());
+            if (facing.getAxis() == Direction.Axis.X) { // then facing is on x-axis and side is on z-axis
+                if (direction.getAxis() != Direction.Axis.Z) {
+                    ret[0] = sideProperty;
+                } else if (facing == Direction.EAST) {
+                    if (direction == Direction.NORTH) {
+                        ret[0] = sideProperty + 1;
+                    } else {
+                        ret[0] = sideProperty - 1;
+                    }
+                } else {
+                    if (direction == Direction.NORTH) {
+                        ret[0] = sideProperty - 1;
+                    } else {
+                        ret[0] = sideProperty + 1;
+                    }
+                }
+            } else { // then facing is on z-axis and side is on x-axis
+                if (direction.getAxis() != Direction.Axis.X) {
+                    ret[0] = sideProperty;
+                } else if (facing == Direction.SOUTH) {
+                    if (direction == Direction.EAST) {
+                        ret[0] = sideProperty + 1;
+                    } else {
+                        ret[0] = sideProperty - 1;
+                    }
+                } else {
+                    if (direction == Direction.EAST) {
+                        ret[0] = sideProperty - 1;
+                    } else {
+                        ret[0] = sideProperty + 1;
+                    }
+                }
+            }
+        } else {
+            if (direction.getAxis().isHorizontal() && facing.getAxis() != direction.getAxis()) {
+                ret[0] = -1;
+            }
+        }
+        if (getDepthProperty() != null) {
+            int depthProperty = yourState.getValue(getDepthProperty());
+            if (facing.getAxis() == Direction.Axis.Z) { // then depth is on z-axis
+                if (direction.getAxis() != Direction.Axis.Z) {
+                    ret[2] = depthProperty;
+                } else if (facing == Direction.SOUTH) {
+                    if (direction == Direction.NORTH) {
+                        ret[2] = depthProperty + 1;
+                    } else {
+                        ret[2] = depthProperty - 1;
+                    }
+                } else {
+                    if (direction == Direction.NORTH) {
+                        ret[2] = depthProperty - 1;
+                    } else {
+                        ret[2] = depthProperty + 1;
+                    }
+                }
+            } else { // then depth is on x-axis
+                if (direction.getAxis() != Direction.Axis.X) {
+                    ret[2] = depthProperty;
+                } else if (facing == Direction.EAST) {
+                    if (direction == Direction.WEST) {
+                        ret[2] = depthProperty + 1;
+                    } else {
+                        ret[2] = depthProperty - 1;
+                    }
+                } else {
+                    if (direction == Direction.WEST) {
+                        ret[2] = depthProperty - 1;
+                    } else {
+                        ret[2] = depthProperty + 1;
+                    }
+                }
+            }
+        } else {
+            if (facing.getAxis() == direction.getAxis()) { // then we're out of the multiblock, as we went over or below depth bound of 0
+                ret[2] = -1;
+            }
+        }
+        return ret;
+    }
 
+    @Override
+    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
+        if (pLevel.isClientSide()) {
+            return super.updateShape(pState, pDirection, pNeighborState, pLevel, pPos, pNeighborPos);
+        }
+        int[] indicesForNeighbour = getIndicesForNeighbour(pState, pDirection, pLevel);
+        // any of the following 3 ifs being true indicates that nothing changed in the multiblock structure, as the change was outside
+        IntegerProperty sideProperty = getSideProperty();
+        if ((indicesForNeighbour[0] < 0 || indicesForNeighbour[0] >= getHorizontalRadius() * 2 + 1)) {
+            return pState;
+        }
+        IntegerProperty depthProperty = getDepthProperty();
+        if ((indicesForNeighbour[2] < 0 || indicesForNeighbour[2] >= horizontalDepth)) {
+            return pState;
+        }
+        IntegerProperty levelProperty = getLevelProperty();
+        if ((indicesForNeighbour[1] < 0 || indicesForNeighbour[1] >= levels)) {
+            return pState;
+        }
+
+        if (!pNeighborState.is(this)) {
+            return Blocks.AIR.defaultBlockState();
+        }
+        if (sideProperty != null && pNeighborState.getValue(sideProperty) != indicesForNeighbour[0]) {
+            return Blocks.AIR.defaultBlockState();
+        }
+        if (depthProperty != null && pNeighborState.getValue(depthProperty) != indicesForNeighbour[2]) {
+            return Blocks.AIR.defaultBlockState();
+        }
+        if (levelProperty != null && pNeighborState.getValue(levelProperty) != indicesForNeighbour[1]) {
+            return Blocks.AIR.defaultBlockState();
+        }
+        return pState;
+    }
 }
