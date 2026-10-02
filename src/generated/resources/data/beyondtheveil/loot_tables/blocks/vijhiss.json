@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "beyondtheveil:vijhiss",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "level": "0"
+              }
+            }
+          ],
+          "name": "beyondtheveil:vijhiss"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "beyondtheveil:blocks/vijhiss"
+}

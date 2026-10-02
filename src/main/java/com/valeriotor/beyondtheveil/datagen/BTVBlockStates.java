@@ -112,6 +112,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerBlackTallSeagrass();
         registerSolidAndTranslucentThin2By1("megydrea", "flask_shelf_empty", modLoc("block/megydrea"), MEGYDREA.get());
         registerThin1By2("arboreal_generator", ARBOREAL_GENERATOR.get());
+        registerThin1By2("vijhiss", VIJHISS.get());
 
         registerWeed("grass_weed", Registration.GRASS_WEED.get());
         registerWeed("redstone_weed", Registration.REDSTONE_WEED.get());
@@ -496,8 +497,8 @@ public class BTVBlockStates extends BlockStateProvider {
         getVariantBuilder(block)
                 .forAllStates(state -> ConfiguredModel.builder()
                         .modelFile(state.getValue(block.getLevelProperty()) == 0 ? lower : upper)
+                        //.rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)) // eh if I allow this I will have to fix the bounding boxes for every rotation... maybe future update since it drains mental energy
                         .build());
-
     }
 
     private void registerFullMultiBlock(String modelName, String emptyModelName, FullMultiBlock block) {

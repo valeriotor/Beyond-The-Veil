@@ -120,6 +120,7 @@ public class BTVLootTables extends BlockLootSubProvider {
         dropSelf(Registration.DREAM_FOCUS.get());
         dropSelf(Registration.DREAM_FOCUS_FLUIDS.get());
         dropSelf(Registration.CURTAIN.get());
+        dropSelf(Registration.VIJHISS.get());
         LootItemCondition.Builder lootitemcondition$ghost_weed = LootItemBlockStatePropertyCondition.hasBlockStateProperties(Registration.GHOST_WEED.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
         LootItemCondition.Builder lootitemcondition$redstone_weed = LootItemBlockStatePropertyCondition.hasBlockStateProperties(Registration.REDSTONE_WEED.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
         LootItemCondition.Builder lootitemcondition$grass_weed = LootItemBlockStatePropertyCondition.hasBlockStateProperties(Registration.GRASS_WEED.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));

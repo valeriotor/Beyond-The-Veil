@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-02T03:16:23.7267456	Loot Tables
+// 1.20.1	2026-10-02T22:39:23.8339852	Loot Tables
 dd3accd54512dee8c12b56c173be0101b70d5a38 data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 d4bc5b32a05a5bc243e6ae10ad45d729d684e262 data/beyondtheveil/loot_tables/blocks/arboreal_generator.json
@@ -72,6 +72,7 @@ e0294830ff18d46ba4eb2c93376446aaa712ca17 data/beyondtheveil/loot_tables/blocks/s
 8c741fc31d5bfe500dbf78210a725c5dfd06ff7a data/beyondtheveil/loot_tables/blocks/surgery_bed.json
 70b7bd2bb78b117a5c3b163de56ae2715b73bf26 data/beyondtheveil/loot_tables/blocks/vein_stone.json
 b7c63f9e4d4185807bd44acff9acece6c893e461 data/beyondtheveil/loot_tables/blocks/vein_stone_vessel.json
+eb1e4a0ba8197ffc13e3e0f1bd747bc811425e65 data/beyondtheveil/loot_tables/blocks/vijhiss.json
 6fb5a66c1808b5431f22644d298a0dd0381605a0 data/beyondtheveil/loot_tables/blocks/watery_cradle.json
 b7bdd4602b6a5d3d86a11124c16d66bd346a1edd data/beyondtheveil/loot_tables/blocks/worn_bricks.json
 44abe2da680857c5b63ce6cd5c43a0ebb312790f data/beyondtheveil/loot_tables/blocks/worn_brick_stairs.json

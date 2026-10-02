@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-01T02:06:06.534405	Item Models: beyondtheveil
+// 1.20.1	2026-10-02T22:29:27.993409	Item Models: beyondtheveil
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/adeline.json
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
@@ -188,6 +188,7 @@ b07bf344cb7ec5c4b4900b798a13b3c9b0ee092d assets/beyondtheveil/models/item/vasoco
 c6e7ab35f0e7f4cd7a7e9600b5feca59502453de assets/beyondtheveil/models/item/vein_stone.json
 db6e1f77eebdde12e085b1576198fe128214d74a assets/beyondtheveil/models/item/vein_stone_vessel.json
 bd8e426be46016d2b9441889b9fc52d8e7ceb757 assets/beyondtheveil/models/item/vessel_stone.json
+a970e248f16fb246999f5d3e074159fd554b2b5c assets/beyondtheveil/models/item/vijhiss.json
 2621db672264d178b8cd091e9f4b5543ddb01ec8 assets/beyondtheveil/models/item/wart_serum_bucket.json
 a31fd4ede196339e363150cded841b3d43e23f05 assets/beyondtheveil/models/item/watery_cradle.json
 60df310a7297071aa3aecddc8844deb71ae11b14 assets/beyondtheveil/models/item/water_breathing_serum_bucket.json
