@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.tile;
 
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.block.FlaskBlock;
 import com.valeriotor.beyondtheveil.item.SurgeryIngredient;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -18,59 +17,35 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class FlaskBE extends BlockEntity {
+public class MegydreaBE extends BlockEntity {
 
     private FluidTank tank;
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
-    public static ItemStackHandler createStackHandler(FlaskBlock.FlaskShape size) {
-        return new FlaskStackHandler(size);
-    }
 
-    private final ItemStackHandler stackHandler;
-    private final LazyOptional<IItemHandler> stackHolder;
-    public static final ModelProperty<ItemStack> STACK_PROPERTY = new ModelProperty<>();
-
-
-    public FlaskBE(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(BTVBlockEntities.FLASK_BE.get(), pWorldPosition, pBlockState);
-        FlaskBlock.FlaskShape size = ((FlaskBlock) pBlockState.getBlock()).shape;
-        tank = getTankByFlaskType(size);
-        stackHandler = createStackHandler(size);
-        stackHolder = LazyOptional.of(() -> stackHandler);
-    }
-
-    public static FluidTank getTankByFlaskType(FlaskBlock.FlaskShape size) {
-        return new FluidTank(size.getCapacity());
+    public MegydreaBE(BlockPos pPos, BlockState pBlockState) {
+        super(BTVBlockEntities.MEGYDREA_BE.get(), pPos, pBlockState);
+        tank = new FluidTank(40 * 1000);
     }
 
     public FluidTank getTank() {
         return tank;
     }
 
-    public ItemStackHandler getStackHandler() {
-        return stackHandler;
-    }
 
-    /**
-     * Server-Side only
-     */
+    /* Server-side only */
     public InteractionResult tryFillFromItem(Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
 
@@ -111,28 +86,16 @@ public class FlaskBE extends BlockEntity {
                 }
                 return InteractionResult.SUCCESS;
             }
-        } else if (itemStack.getItem() instanceof SurgeryIngredient) {
-            if (!pLevel.isClientSide) {
-                pPlayer.setItemInHand(pHand, stackHandler.insertItem(0, itemStack, false));
-                setChanged();
-                if (level != null) {
-                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-                }
-                return InteractionResult.SUCCESS;
-            }
-            return InteractionResult.SUCCESS;
-        } else if (itemStack.isEmpty()) {
-            if (!pLevel.isClientSide) {
-                pPlayer.setItemInHand(pHand, stackHandler.extractItem(0, 16, false));
-                setChanged();
-                if (level != null) {
-                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-                }
-                return InteractionResult.SUCCESS;
-            }
-            return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
+    }
+
+    @Override
+    @NotNull
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
+        if (capability == ForgeCapabilities.FLUID_HANDLER)
+            return holder.cast();
+        return super.getCapability(capability, facing);
     }
 
     @Override
@@ -145,9 +108,6 @@ public class FlaskBE extends BlockEntity {
 
     private void loadCommonData(CompoundTag tag) {
         tank.readFromNBT(tag);
-        if (tag.contains("stack")) {
-            stackHandler.deserializeNBT(tag.getCompound("stack"));
-        }
     }
 
     @Override
@@ -158,18 +118,6 @@ public class FlaskBE extends BlockEntity {
 
     private void saveCommonData(CompoundTag tag) {
         tank.writeToNBT(tag);
-        tag.put("stack", stackHandler.serializeNBT());
-    }
-
-    @Override
-    @NotNull
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
-        if (capability == ForgeCapabilities.FLUID_HANDLER)
-            return holder.cast();
-        if (capability == ForgeCapabilities.ITEM_HANDLER) {
-            return stackHolder.cast();
-        }
-        return super.getCapability(capability, facing);
     }
 
     @Override
@@ -195,55 +143,8 @@ public class FlaskBE extends BlockEntity {
         if (pkt.getTag() != null) {
             load(pkt.getTag());
         }
-
-        requestModelDataUpdate();
-        if (level != null) {
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
-        }
+        //if (level != null) {
+        //    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        //}
     }
-
-    @Override
-    public @NotNull ModelData getModelData() {
-        return ModelData.builder()
-                .with(STACK_PROPERTY, stackHandler.getStackInSlot(0).copy())
-                .build();
-    }
-
-
-    /**
-     * Currently same as FluidTank. Later, it might combine FluidTank and ItemHandler so that it can check if there's
-     * already a liquid when trying to add an item and viceversa, and the Flask will be able to contain both
-     */
-    public static class FlaskTank extends FluidTank {
-
-        public FlaskTank(int capacity) {
-            super(capacity);
-        }
-
-        @Override
-        public int fill(FluidStack resource, FluidAction action) {
-            return super.fill(resource, action);
-        }
-    }
-
-    public static class FlaskStackHandler extends ItemStackHandler {
-
-        private final FlaskBlock.FlaskShape size;
-
-        public FlaskStackHandler(FlaskBlock.FlaskShape size) {
-            this.size = size;
-        }
-
-        @Override
-        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return size.allowsItems() && stack.getItem() instanceof SurgeryIngredient;
-        }
-
-        @Override
-        public int getSlotLimit(int slot) {
-            return size.allowsItems() ? 16 : 0;
-        }
-    }
-
-
 }

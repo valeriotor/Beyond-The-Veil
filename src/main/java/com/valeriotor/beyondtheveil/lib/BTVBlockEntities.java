@@ -32,6 +32,7 @@ public class BTVBlockEntities {
     public static final RegistryObject<BlockEntityType<DreamFocusBE>> DREAM_FOCUS_BE = BLOCK_ENTITIES.register(Registration.DREAM_FOCUS.getId().getPath(), () -> BlockEntityType.Builder.of((pos, state) -> new DreamFocusBE(pos, state, DreamFocusBlock.FocusType.ITEM), Registration.DREAM_FOCUS.get()).build(null));
     public static final RegistryObject<BlockEntityType<DreamFocusBE>> DREAM_FOCUS_FLUID_BE = BLOCK_ENTITIES.register(Registration.DREAM_FOCUS_FLUIDS.getId().getPath(), () -> BlockEntityType.Builder.of((pos, state) -> new DreamFocusBE(pos, state, DreamFocusBlock.FocusType.FLUID), Registration.DREAM_FOCUS_FLUIDS.get()).build(null));
     public static final RegistryObject<BlockEntityType<ArborealGeneratorBE>> ARBOREAL_GENERATOR_BE = BLOCK_ENTITIES.register(Registration.ARBOREAL_GENERATOR.getId().getPath(), () -> BlockEntityType.Builder.of(ArborealGeneratorBE::new, Registration.ARBOREAL_GENERATOR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<MegydreaBE>> MEGYDREA_BE = BLOCK_ENTITIES.register(Registration.MEGYDREA.getId().getPath(), () -> BlockEntityType.Builder.of(MegydreaBE::new, Registration.MEGYDREA.get()).build(null));
 
     public static void init(IEventBus bus) {
         BLOCK_ENTITIES.register(bus);

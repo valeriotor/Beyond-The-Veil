@@ -109,7 +109,7 @@ public class Registration {
     public static final RegistryObject<WateryCradleBlock> WATERY_CRADLE = BLOCKS.register("watery_cradle", () -> new WateryCradleBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<PatientPodBlock> PATIENT_POD = BLOCKS.register("patient_pod", () -> new PatientPodBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<FlaskShelfBlock> FLASK_SHELF = BLOCKS.register("flask_shelf", () -> new FlaskShelfBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
-    public static final RegistryObject<FleboBlock> FLEBO = BLOCKS.register("flebo", () -> new FleboBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
+    public static final RegistryObject<FleboBlock> FLEBO = BLOCKS.register("flebo", () -> new FleboBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).pushReaction(PushReaction.BLOCK).noOcclusion().forceSolidOn())); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<SurgeryBedBlock> SURGERY_BED = BLOCKS.register("surgery_bed", () -> new SurgeryBedBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<AlembicsBlock> ALEMBICS = BLOCKS.register("alembics", () -> new AlembicsBlock(BRICK_PROPERTIES)); // new BlockWateryCradle(BlockNames.WATERYCRADLE);
     public static final RegistryObject<Block> LACRYMATORY = BLOCKS.register("lacrymatory", () -> new LacrymatoryBlock(BRICK_PROPERTIES)); // new BlockLacrymatory(BlockNames.LACRYMATORY);
@@ -148,7 +148,7 @@ public class Registration {
     public static final RegistryObject<Block> CURTAIN = BLOCKS.register("curtain", () -> new CurtainBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).noCollission().pushReaction(PushReaction.DESTROY))); // new BlockCurtain(BlockNames.CURTAIN);
     public static final RegistryObject<ThinMultiBlock1by2> ARBOREAL_GENERATOR = BLOCKS.register("arboreal_generator", () -> new ArborealGeneratorBlock(BRICK_PROPERTIES)); // new BlockMegydrea(BlockNames.MEGYDREA);
     public static final RegistryObject<Block> SAPLING_SHRUB = BLOCKS.register("sapling_shrub", () -> new SaplingShrubBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY))); // new BlockMegydrea(BlockNames.MEGYDREA);
-    public static final RegistryObject<MegydreaBlock> MEGYDREA = BLOCKS.register("megydrea", () -> new MegydreaBlock(BRICK_PROPERTIES)); // new BlockMegydrea(BlockNames.MEGYDREA);
+    public static final RegistryObject<MegydreaBlock> MEGYDREA = BLOCKS.register("megydrea", () -> new MegydreaBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.BLOCK).noOcclusion().forceSolidOn())); // new BlockMegydrea(BlockNames.MEGYDREA);
     //public static final RegistryObject<Block> THICK_ALGAE = BLOCKS.register("thick_algae", () -> new Block(BRICK_PROPERTIES)); // new BlockThickAlgae(BlockNames.THICK_ALGAE);
     //public static final RegistryObject<Block> ARCHE_PORTAL = BLOCKS.register("arche_portal", () -> new Block(BRICK_PROPERTIES)); // new BlockArchePortal(BlockNames.ARCHE_PORTAL);
     public static final RegistryObject<Block> DARK_GLASS = BLOCKS.register("dark_glass", () -> new Block(BRICK_PROPERTIES)); // new BlockDarkGlass(BlockNames.DARK_GLASS);

@@ -3,11 +3,13 @@ package com.valeriotor.beyondtheveil.item;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.AlembicsBlock;
 import com.valeriotor.beyondtheveil.block.FlaskBlock;
+import com.valeriotor.beyondtheveil.block.MegydreaBlock;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.AlembicsBE;
 import com.valeriotor.beyondtheveil.tile.FlaskBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
+import com.valeriotor.beyondtheveil.tile.MegydreaBE;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -67,6 +69,11 @@ public class SyringeItem extends SurgeryItem {
             }
         } else if (lookedAtState.getBlock() instanceof FlaskBlock && blockEntity instanceof FlaskBE flaskBE) {
             flaskBE.tryFillFromItem(level, pos, p, InteractionHand.MAIN_HAND, bhr);
+        } else if (lookedAtState.getBlock() == Registration.MEGYDREA.get()) {
+            BlockPos centerPos = Registration.MEGYDREA.get().findCenter(pos, lookedAtState);
+            if (level.getBlockEntity(centerPos) instanceof MegydreaBE be) {
+                be.tryFillFromItem(level, pos, p, InteractionHand.MAIN_HAND, bhr);
+            }
         } else {
             super.interactWithBE(p, level, pos, lookedAtState, blockEntity, bhr);
         }

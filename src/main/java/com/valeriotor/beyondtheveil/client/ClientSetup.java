@@ -241,6 +241,7 @@ public class ClientSetup {
         event.registerBlockEntityRenderer(BTVBlockEntities.LACRYMATORY_BE.get(), LacrymatoryBER::new);
         event.registerBlockEntityRenderer(BTVBlockEntities.PATIENT_POD_BE.get(), PatientPodBER::new);
         event.registerBlockEntityRenderer(BTVBlockEntities.BLOOD_WELL_BE.get(), BloodWellBER::new);
+        event.registerBlockEntityRenderer(BTVBlockEntities.MEGYDREA_BE.get(), MegydreaBER::new);
     }
 
     public static Map<PlayerTransformation, LivingEntityRenderer<LivingEntity, ?>> moreRenderers = new EnumMap<>(PlayerTransformation.class);
