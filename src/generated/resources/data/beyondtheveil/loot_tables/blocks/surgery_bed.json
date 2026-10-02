@@ -11,6 +11,16 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "beyondtheveil:surgery_bed",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "level": "0",
+                "side": "1"
+              }
+            }
+          ],
           "name": "beyondtheveil:surgery_bed"
         }
       ],

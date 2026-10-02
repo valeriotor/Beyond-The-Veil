@@ -11,6 +11,16 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "beyondtheveil:sacrifice_altar",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "depth": "0",
+                "side": "1"
+              }
+            }
+          ],
           "name": "beyondtheveil:sacrifice_altar"
         }
       ],

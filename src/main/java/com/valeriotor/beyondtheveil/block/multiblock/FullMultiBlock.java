@@ -91,6 +91,10 @@ public abstract class FullMultiBlock extends Block{
 
     @Override
     public void playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
+        if (true) {
+            super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
+            return;
+        }
         BlockPos center = findCenter(pPos, pState);
         for (int i = -horizontalRadius; i <= horizontalRadius; i++) {
             for (int y = -centerY; y <= levels - 1 - centerY; y++) {

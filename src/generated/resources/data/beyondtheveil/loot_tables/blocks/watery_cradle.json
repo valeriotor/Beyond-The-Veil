@@ -11,6 +11,15 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "beyondtheveil:watery_cradle",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "side": "1"
+              }
+            }
+          ],
           "name": "beyondtheveil:watery_cradle"
         }
       ],

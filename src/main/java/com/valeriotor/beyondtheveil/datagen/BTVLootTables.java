@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.multiblock.FullMultiBlock;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Set;
@@ -132,6 +134,27 @@ public class BTVLootTables extends BlockLootSubProvider {
         });
         add(Registration.SAPLING_SHRUB.get(), noDrop());
 
+    }
+
+    @Override
+    protected void dropSelf(@NotNull Block pBlock) {
+        if (pBlock instanceof FullMultiBlock fmb) {
+            StatePropertiesPredicate.Builder propertiesBuilder = StatePropertiesPredicate.Builder.properties();
+            if (fmb.getLevelProperty() != null) {
+                propertiesBuilder = propertiesBuilder.hasProperty(fmb.getLevelProperty(), 0);
+            }
+            if (fmb.getSideProperty() != null) {
+                propertiesBuilder = propertiesBuilder.hasProperty(fmb.getSideProperty(), fmb.getHorizontalRadius());
+            }
+            if (fmb.getDepthProperty() != null) {
+                propertiesBuilder = propertiesBuilder.hasProperty(fmb.getDepthProperty(), 0);
+            }
+            LootItemBlockStatePropertyCondition.Builder condition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(pBlock).setProperties(propertiesBuilder);
+            LootTable.Builder lootTableBuilder = LootTable.lootTable().withPool(this.applyExplosionCondition(pBlock, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(pBlock).when(condition))));
+            add(pBlock, lootTableBuilder);
+        } else {
+            super.dropSelf(pBlock);
+        }
     }
 
     @Override

@@ -11,6 +11,15 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "beyondtheveil:flebo",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "level": "0"
+              }
+            }
+          ],
           "name": "beyondtheveil:flebo"
         }
       ],
