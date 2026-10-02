@@ -285,8 +285,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("memory.metal.2.1", "§oPath Sigil§r: Starts the search at the target area.");
         add("memory.metal.4.1", "§oImmortal Sigil§r: Starts the search below the target human.");
 
-        add("memory.plant.name", "Flora");
-        add("memory.plant.brief", "Flora");
+        add("memory.plant.name", "Plants");
+        add("memory.plant.brief", "What is this?");
+        add("memory.plant.brief.2", "The Dreamlands... Carter was right!");
+        add("memory.plant.0.1", "Grants me a seed from another world.");
+        add("memory.plant.1.1", "↳ §lVoid§r: Grants me Vijhiss.");
+        add("memory.plant.2.1", "§oPath Sigil§r: Does not appear to change the Dream.");
+        add("memory.plant.4.1", "§oImmortal Sigil§r: Does not appear to change the Dream.");
 
         add("memory.power.name", "Power");
         add("memory.power.brief", "Felling a fearsome foe is a cherished memory – though I should not let it go to my head.");
@@ -2185,6 +2190,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("reminiscence.change.0", "%1$s of my effects changed.");
         add("reminiscence.change.1", "%1$s of the target's effects changed.");
         add("reminiscence.change.2", "Of the creatures near the target area, %1$s had their effects changed.");
+        add("reminiscence.plant", "Seeds from another world appeared in my hands.");
+        add("reminiscence.plant.vijhiss", "A weird plant from another world appear in my hands.");
     }
 
     private void addGuis() {

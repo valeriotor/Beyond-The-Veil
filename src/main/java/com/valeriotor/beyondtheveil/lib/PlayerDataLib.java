@@ -27,6 +27,8 @@ public enum PlayerDataLib {
     change_memory_progress,
     repair_memory_progress,
     stillness_memory_progress,
+    plant_dream_counter,
+    plant_memory_unlock,
     //ints temporary
     open_journal_page,
     // FLAGS (NON TEMPORARY)
@@ -99,7 +101,11 @@ public enum PlayerDataLib {
     scaled_player,
     scaled_player_death,
     metamorphosis,
-    player_surgery
+    player_surgery,
+    grass_weed_seeds,
+    redstone_weed_seeds,
+    ghost_weed_seeds,
+    vijhiss,
     ;
 
     // Longs

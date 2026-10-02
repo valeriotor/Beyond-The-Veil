@@ -193,6 +193,40 @@
         ]
       },
       {
+        "key": "PLANT_DREAMS",
+        "name": "research.PLANT_DREAMS.title",
+        "icons": [ "beyondtheveil:grass_weed_seeds" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 9,4 ],
+        "hiders": ["COMMUNION", "grass_weed_seeds"],
+        "parents": ["COMMUNION"],
+        "stages": [
+          {
+            "text": "research.PLANT_DREAMS.stage.0",
+            "required_research": ["redstone_weed_seeds"]
+          },
+          {
+            "text": "research.PLANT_DREAMS.stage.1",
+            "required_research": ["ghost_weed_seeds"]
+          },
+          {
+            "text": "research.PLANT_DREAMS.stage.2"
+          }
+        ]
+      },
+      {
+        "key": "VIJHISS",
+        "name": "research.VIJHISS.title",
+        "icons": [ "beyondtheveil:vijhiss" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 7,5 ],
+        "hiders": ["COMMUNION", "vijhiss"],
+        "parents": ["PLANT_DREAMS"],
+        "stages": [
+          {
+            "text": "research.VIJHISS.stage.0"
+          }
+        ]
+      },
+      {
         "key": "CORRESPONDENCE",
         "name": "research.CORRESPONDENCE.title",
         "icons": [ "beyondtheveil:letter_box" ],

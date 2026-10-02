@@ -25,7 +25,7 @@ public enum Memory {
     //INTROSPECTION(Items.PAPER, 0xFFFFFFFF),
     NULL(Items.AIR, 0xFF998b69, new int[]{0, 0, 0, 0, 0, 0}),
     METAL(Items.IRON_INGOT, 0xFF8c8c8c, new int[]{1, 1, 1, 0, 1, 0}),
-    //PLANT(Items.JUNGLE_SAPLING, 0xFF00FF00),
+    PLANT(Items.JUNGLE_SAPLING, 0xFF00FF00, new int[]{1, 1, 1, 0, 1, 0}),
     POWER(Items.BLAZE_POWDER, 0xFFff9300, new int[]{1, 1, 1, 0, 1, 0}),
     REPAIR(Items.ANVIL, 0xFF99f19d, new int[]{1, 1, 0, 0, 1, 1}),
     SENTIENCE(Items.BOOK, 0xFFd87474, new int[]{2, 0, 1, 0, 1, 0}),

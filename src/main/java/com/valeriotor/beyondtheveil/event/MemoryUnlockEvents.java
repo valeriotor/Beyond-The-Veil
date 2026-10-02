@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -36,8 +37,16 @@ public class MemoryUnlockEvents {
 
     @SubscribeEvent
     public static void breakBlockEvent(BlockEvent.BreakEvent event) {
-        if (event.getPlayer() instanceof ServerPlayer sp && CRYSTAL_BLOCKS.contains(event.getState().getBlock()) && ResearchUtil.getResearchStage(sp, "FIRSTDREAMS") >= 2) {
-            Memory.CRYSTAL.unlock(sp);
+        if (event.getPlayer() instanceof ServerPlayer sp) {
+            if (CRYSTAL_BLOCKS.contains(event.getState().getBlock()) && ResearchUtil.getResearchStage(sp, "FIRSTDREAMS") >= 2) {
+                Memory.CRYSTAL.unlock(sp);
+            }
+            if (event.getState().is(BlockTags.CROPS) && ResearchUtil.isResearchComplete(sp, "COMMUNION")) {
+                int counter = DataUtil.incrementOrSetInteger(sp, PlayerDataLib.plant_memory_unlock.name(), 1, 0, false);
+                if (counter > 50) {
+                    Memory.PLANT.unlock(sp);
+                }
+            }
         }
     }
 

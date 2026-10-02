@@ -42,6 +42,7 @@ public class DreamRegistry {
     public static final Dream ANIMAL = new DreamAnimal();
     public static final Dream REPAIR = new DreamRepair();
     public static final Dream BEHEADING = new DreamBeheading();
+    public static final Dream PLANTS = new DreamPlants();
 
     static {
         DreamRegistry.REMINISCENCE_REGISTRY.put("none", Reminiscence.EmptyReminiscence::new);

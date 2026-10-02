@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.client.gui.elements.Element;
 import com.valeriotor.beyondtheveil.client.gui.elements.ScrollableList;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
@@ -310,12 +311,20 @@ public class MemoryRegistryGui extends Screen {
             super(RIGHT_PAGE_WIDTH, RIGHT_PAGE_HEIGHT);
             this.memory = memory;
             title = Component.translatable(memory.getLocalizationKey());
-            brief = Minecraft.getInstance().font.split(Component.translatable("memory." + memory.name().toLowerCase() + ".brief"), 170);
+            String briefKey = "memory." + memory.name().toLowerCase() + ".brief";
+            LocalPlayer p = Minecraft.getInstance().player;
+            boolean knowsPlantDream = p != null && memory == Memory.PLANT && (DataUtil.getBoolean(p, PlayerDataLib.grass_weed_seeds.name()) || DataUtil.getBoolean(p, PlayerDataLib.vijhiss.name()));
+            if (knowsPlantDream) {
+                briefKey += ".2";
+            }
+            brief = Minecraft.getInstance().font.split(Component.translatable(briefKey), 170);
             ingredient = memory.getItem();
-            LocalPlayer player = Minecraft.getInstance().player;
             lines = new ArrayList<>();
-            if (player != null) {
-                PlayerData.MemoryStatus status = DataUtil.getMemoryStatus(player, memory);
+            if (memory == Memory.PLANT && !knowsPlantDream) {
+                return;
+            }
+            if (p != null) {
+                PlayerData.MemoryStatus status = DataUtil.getMemoryStatus(p, memory);
                 int[] values = status.getValues();
                 for (int i = 0; i < values.length; i++) {
                     int value = values[i];
