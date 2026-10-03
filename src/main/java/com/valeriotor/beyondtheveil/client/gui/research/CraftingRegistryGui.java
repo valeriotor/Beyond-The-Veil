@@ -373,7 +373,7 @@ public class CraftingRegistryGui extends Screen {
                 grid = new CraftingGrid(craftingGridWidth, 100, currentSelectionRecipes.get(gridIndex), currentSelectionItem, gridFactor);
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
             }
-        } else if (selectedText.mouseClicked(pMouseX - textBlockX, pMouseY - textBlockY, pButton)) {
+        } else if (selectedText != null && selectedText.mouseClicked(pMouseX - textBlockX, pMouseY - textBlockY, pButton)) {
             return true;
         }
         return super.mouseClicked(pMouseX, pMouseY, pButton);

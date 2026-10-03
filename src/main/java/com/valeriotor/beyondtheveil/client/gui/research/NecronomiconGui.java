@@ -26,6 +26,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 
@@ -46,29 +47,40 @@ public class NecronomiconGui extends Screen {
     private int pupilYOffset = 0;
     private int highlightOriginX = 0;
     private int highlightOriginY = 0;
-    private List<Research> newClickables = new ArrayList<>();
-    private List<Research> clickables = new ArrayList<>();
-    private List<Research> visibles = new ArrayList<>();
-    private Set<Research> updated = new HashSet<>();
-    private List<ResearchConnection> connections = new ArrayList<>();
-    private List<Point> stars = new ArrayList<>();
+    private final List<Research> newClickables = new ArrayList<>();
+    private final List<Research> clickables = new ArrayList<>();
+    private final List<Research> visibles = new ArrayList<>();
+    private final Set<Research> updated = new HashSet<>();
+    private final List<ResearchConnection> connections = new ArrayList<>();
+    private final List<Point> stars = new ArrayList<>();
     private int counter = 0;
     private Research highlightedMarkedResearch;
     private Iterator<Research> highlightIterator;
     private int highlightCounter = 0;
-    private int connectionColor;
-    private List<Research> bookmarks = new ArrayList<>();
+    private final int connectionColor;
+    private final List<Research> bookmarks = new ArrayList<>();
     private boolean showBookmarkHint;
+    private int imageWidth; // helper variable to copy JournalGui's logic
+    private int imageHeight; // helper variable to copy JournalGui's logic
+    private float scaleFactor = 1.5F;
+    private static final int BACKGROUND_BASE_WIDTH = 843;
+    private static final int BACKGROUND_BASE_HEIGHT = 505;
 
     private static final ResourceLocation RESEARCH_BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/res_background.png");
+    private static final ResourceLocation RESEARCH_BACKGROUND_2 = new ResourceLocation(References.MODID, "textures/gui/res_background_2.png");
+    private static final ResourceLocation RESEARCH_BACKGROUND_3 = new ResourceLocation(References.MODID, "textures/gui/res_background_3.png");
     private static final ResourceLocation RESEARCH_BACKGROUND_WHITE = new ResourceLocation(References.MODID, "textures/gui/res_background_white.png");
     public static final ResourceLocation RESEARCH_HIGHLIGHT = new ResourceLocation(References.MODID, "textures/gui/res_highlight.png");
     public static final ResourceLocation RESEARCH_UPDATED_MARKER = new ResourceLocation(References.MODID, "textures/gui/res_marker.png");
     private static final ResourceLocation EYE = new ResourceLocation(References.MODID, "textures/gui/eye.png");
     private static final ResourceLocation EYE_PUPIL = new ResourceLocation(References.MODID, "textures/gui/eye_pupil.png");
+    private static final ResourceLocation TENDRIL_EYE = new ResourceLocation(References.MODID, "textures/gui/tendril_eye.png");
     private static final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/bookmark_grayed.png");
     private static final ResourceLocation MOUSE_RIGHT_CLICK = new ResourceLocation(References.MODID, "textures/gui/mouse_right_click.png");
     private int firstBookmarkMadeCounter = 0;
+    private static final int JSON_TO_REAL_COORD_FACTOR = 32;
+    private static final int RESEARCH_BACKGROUND_SIZE = 48;
+    private float baseFactor;
 
     public NecronomiconGui() {
         super(Component.translatable("gui.necronomicon")); // TODO change to TranslatableComponent("gui.necronomicon")
@@ -81,7 +93,7 @@ public class NecronomiconGui extends Screen {
             this.topX = -400;
             this.topY = -200;
         }
-        this.factor = data.getOrSetInteger(PlayerDataLib.necro_fac.name(), 3, false);
+        this.scaleFactor = data.getOrSetInteger(PlayerDataLib.necro_fac.name(), 3, false) / 4F;
         for (Entry<String, ResearchStatus> entry : map.entrySet()) {
             if (entry.getValue().isKnown(map, data)) {
                 if (entry.getValue().getStage() == -1) {
@@ -112,12 +124,16 @@ public class NecronomiconGui extends Screen {
                 connections.add(rc);
             }
         }
-        this.connectionColor = (255 << 24) | (ConfigLib.connectionRed << 16) | (ConfigLib.connectionGreen << 8) | ConfigLib.connectionBlue;
+        this.connectionColor = (255 << 24) | (ConfigLib.connectionRed << 16) | (20 << 8) | ConfigLib.connectionBlue;
         showBookmarkHint = !data.getBoolean(PlayerDataLib.made_bookmark.name()) && map.get("SLEEP_CHAMBER").getStage() >= 1; // TODO this should be SLEEP_CHAMBER, change if otherwise
     }
 
     @Override
     public void init() {
+        // A scaleFactor of 1 will mean that 30 is one 30th of the screen height
+        // this is achieved via the baseFactor
+        int b = height / 30; // E.g., is the height 1800? Then we need to zoom everything 2x by default. Is the height 450? Zoom out by 2x.
+        baseFactor = b / 30F;
         stars.clear();
         RandomSource r = minecraft.player.getRandom();
         int a = 100 + r.nextInt(50);
@@ -140,20 +156,35 @@ public class NecronomiconGui extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        PoseStack pPoseStack = guiGraphics.pose();
+        PoseStack pose = guiGraphics.pose();
+        guiGraphics.fill(0, 0, width, height, 0xFF000000);
+        //guiGraphics.drawString(minecraft.font, String.format("X: %f, Y: %f", ((pMouseX + topX)) / JSON_TO_REAL_COORD_FACTOR / scaleFactor / baseFactor, (pMouseY + topY) / JSON_TO_REAL_COORD_FACTOR / scaleFactor / baseFactor), 0, 15, 0xFFFFFFFF);
+        for (Point p : stars) {
+            pose.pushPose();
+            pose.translate(p.x, p.y, 0);
+            pose.scale(baseFactor * 2.5F, baseFactor * 2.5F, 1);
+            guiGraphics.fill(0, 0, 1, 1, 0xFFFFFFFF);
+            pose.popPose();
+        }
+        pose.pushPose();
+        pose.scale(baseFactor, baseFactor, 1);
+        pose.scale(scaleFactor, scaleFactor, 1);
+        pMouseX /= scaleFactor * baseFactor;
+        pMouseY /= scaleFactor * baseFactor;
+        //guiGraphics.drawString(minecraft.font, String.format("X: %f, Y: %f", ((pMouseX + topX)) / JSON_TO_REAL_COORD_FACTOR / scaleFactor, (pMouseY + topY) / JSON_TO_REAL_COORD_FACTOR / scaleFactor), 0, 30, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, String.format("X: %f, Y: %f", ((topX)) / JSON_TO_REAL_COORD_FACTOR / scaleFactor, (topY) / JSON_TO_REAL_COORD_FACTOR / scaleFactor), 0, 45, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, String.format("X: %f, Y: %f", ((width)) / JSON_TO_REAL_COORD_FACTOR / scaleFactor / baseFactor / scaleFactor, (height) / JSON_TO_REAL_COORD_FACTOR / scaleFactor / baseFactor / scaleFactor), 0, 60, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", ((width)), (height)), 0, 75, 0xFFFFFFFF);
         if (highlightedMarkedResearch != null && counter - highlightCounter < 10) {
             float magnitude = (float) Math.log10((1 + pPartialTick + counter - highlightCounter));
-            topX = (int) ((highlightedMarkedResearch.getX()*15*factor - width / 2 - highlightOriginX) * magnitude) + highlightOriginX;
-            topY = (int) ((highlightedMarkedResearch.getY()*15*factor - height / 2 - highlightOriginY) * magnitude) + highlightOriginY;
+            topX = (int) ((highlightedMarkedResearch.getX()*JSON_TO_REAL_COORD_FACTOR*scaleFactor - width / scaleFactor / baseFactor / 2 - highlightOriginX) * magnitude) + highlightOriginX;
+            topY = (int) ((highlightedMarkedResearch.getY()*JSON_TO_REAL_COORD_FACTOR*scaleFactor - height / scaleFactor / baseFactor / 2 - highlightOriginY) * magnitude) + highlightOriginY;
         }
 
 
-        guiGraphics.fill(0, 0, width, height, 0xFF000000);
         for (ResearchConnection rc : connections)
             this.drawConnection(guiGraphics, rc, pPartialTick);
-        for (Point p : stars) {
-            guiGraphics.fill(p.x, p.y, p.x + 1, p.y + 1, 0xFFFFFFFF);
-        }
+
         guiGraphics.setColor(0.8F, 0.8F, 0.8F, 1);
         for (Research r : clickables) this.drawResearchBackground(r, guiGraphics, pPartialTick);
         guiGraphics.setColor(0.25F, 0.25F, 0.25F, 1);
@@ -168,6 +199,10 @@ public class NecronomiconGui extends Screen {
         drawEye(guiGraphics, pPartialTick, pMouseX, pMouseY);
 
         super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
+        pose.popPose();
+        //guiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, String.format("Width: %d, Height: %d", guiGraphics.guiWidth(), guiGraphics.guiHeight()), 0, 15, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, String.format("Width: %d, Height: %d", width, height), 0, 30, 0xFFFFFFFF);
         //super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 
@@ -177,9 +212,13 @@ public class NecronomiconGui extends Screen {
         if ((counter & 31) == 0) {
             int mouseX = (int)(this.minecraft.mouseHandler.xpos() * (double)this.minecraft.getWindow().getGuiScaledWidth() / (double)this.minecraft.getWindow().getScreenWidth());
             int mouseY = (int)(this.minecraft.mouseHandler.ypos() * (double)this.minecraft.getWindow().getGuiScaledHeight() / (double)this.minecraft.getWindow().getScreenHeight());
-            if (mouseX > width - 142 && mouseY > height - 142) {
-                double degree = Math.atan2(mouseY-(height-142+64), mouseX-(width-142+64));
-                double magnitude = Math.min(11, Math.sqrt(Math.pow(mouseX-(width-142+64), 2) + Math.pow(mouseY-(height-142+64), 2)))/2;
+            mouseX /= scaleFactor * baseFactor;
+            mouseY /= scaleFactor * baseFactor;
+            float adjustedWidth = width / scaleFactor / baseFactor;
+            float adjustedHeight = height / scaleFactor / baseFactor;
+            if (mouseX > adjustedWidth - 142 && mouseY > adjustedHeight - 142) {
+                double degree = Math.atan2(mouseY-(adjustedHeight-142+64), mouseX-(adjustedWidth-142+64));
+                double magnitude = Math.min(11, Math.sqrt(Math.pow(mouseX-(adjustedWidth-142+64), 2) + Math.pow(mouseY-(adjustedHeight-142+64), 2)))/2;
                 double xMul = Math.cos(degree);
                 double yMul = Math.sin(degree);
                 pupilNextXOffset = (int) (magnitude * xMul);
@@ -230,19 +269,33 @@ public class NecronomiconGui extends Screen {
 
     private void drawResearch(GuiGraphics guiGraphics, Research res, int mouseX, int mouseY) {
         PoseStack poseStack = guiGraphics.pose();
-        int resX = res.getX() * 15 * factor, resY = res.getY() * 15 * factor;
-        if (resX > topX - 24 && resX < topX + this.width && resY > topY - 24 && resY < topY + this.height) {
+        double i1 = JSON_TO_REAL_COORD_FACTOR * scaleFactor;
+        double resX = res.getX() * i1, resY = res.getY() * i1;
+        if (resX > topX - 24 && resX < topX + this.width / baseFactor && resY > topY - 24 && resY < topY + this.height / baseFactor) {
+            int rbs = RESEARCH_BACKGROUND_SIZE;
             ItemStack[] icons = res.getIconStacks();
             if (icons.length > 0) {
                 guiGraphics.setColor(1, 1, 1,1);
-                guiGraphics.renderItem(icons[counter % 20 % icons.length], resX - topX, resY - topY);
+                poseStack.pushPose();
+                poseStack.translate(resX - topX, resY - topY, 0);
+                poseStack.scale(1.25F, 1.25F, 1);
+                guiGraphics.renderItem(icons[counter % 20 % icons.length], -8, -8);
+                poseStack.popPose();
             }
             if (updated.contains(res)) {
-                guiGraphics.blit(RESEARCH_UPDATED_MARKER, resX - topX + 4, resY - topY - 12, 0, 0, 24, 24, 24, 24);
+                poseStack.pushPose();
+                poseStack.translate(resX - topX, resY - topY, 0);
+                poseStack.scale(1.25F, 1.25F, 1);
+                guiGraphics.blit(RESEARCH_UPDATED_MARKER, -rbs / 2, -rbs / 2, 0, 0, rbs, rbs, rbs, rbs);
+                poseStack.popPose();
             }
-            if (mouseX > resX - topX - 4 && mouseX < resX - topX + 20 && mouseY > resY - topY - 4 && mouseY < resY - topY + 20) {
+            if (mouseX > resX - topX - (rbs * 1.2) / 2D && mouseX < resX - topX + (rbs * 1.2) / 2D && mouseY > resY - topY - (rbs * 1.2) / 2D && mouseY < resY - topY + (rbs * 1.2) / 2D) {
                 //RenderSystem.depthFunc(3);
-                guiGraphics.renderTooltip(minecraft.font, Component.translatable(res.getName()), mouseX, mouseY);
+                poseStack.pushPose();
+                poseStack.translate(mouseX, mouseY, 0);
+                poseStack.scale(1.3F, 1.3F, 1);
+                guiGraphics.renderTooltip(minecraft.font, Component.translatable(res.getName()), 0, 0);
+                poseStack.popPose();
                 if (showBookmarkHint) {
                     RenderSystem.enableBlend();
                     guiGraphics.blit(MOUSE_RIGHT_CLICK, mouseX + 5, mouseY + 10, 0, 0, 32, 32, 32, 32);
@@ -253,48 +306,71 @@ public class NecronomiconGui extends Screen {
     }
 
     private void drawResearchBackground(Research res, GuiGraphics guiGraphics, float partialTicks) {
-        PoseStack pPoseStack = guiGraphics.pose();
-        int resX = res.getX() * 15 * factor, resY = res.getY() * 15 * factor;
-        if (resX > topX - 24 && resX < topX + this.width && resY > topY - 24 && resY < topY + this.height) {
+        PoseStack pose = guiGraphics.pose();
+        pose.pushPose();
+        double resX = res.getX() * JSON_TO_REAL_COORD_FACTOR * scaleFactor, resY = res.getY() * JSON_TO_REAL_COORD_FACTOR * scaleFactor;
+        if (resX > topX - 48 && resX < topX + this.width / baseFactor && resY > topY - 48 && resY < topY + this.height / baseFactor) {
+            pose.translate(resX - topX, resY - topY, 0);
+            int rbs = RESEARCH_BACKGROUND_SIZE * 4 / 4;
             if (res != highlightedMarkedResearch || counter - highlightCounter > 10) {
-                guiGraphics.blit(RESEARCH_BACKGROUND, resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
+                RenderSystem.disableBlend();
+                guiGraphics.blit(RESEARCH_BACKGROUND_2, -rbs / 2, -rbs / 2, 0, 0, rbs, rbs, rbs, rbs);
                 if (res == highlightedMarkedResearch) {
                     RenderSystem.enableBlend();
                     int increase = (int) ((partialTicks + counter - highlightCounter - 10) * 3);
+                    pose.translate(-increase, -increase, 0);
                     guiGraphics.setColor(0.8F, 0.8F, 0.8F, Math.max(0, Math.min(1, (highlightCounter + 31 - counter - partialTicks) / 11F)));
-                    guiGraphics.blit(RESEARCH_HIGHLIGHT, resX - topX - 4 - increase, resY - topY - 4 - increase, 0, 0, 24 + increase * 2, 24 + increase * 2, 24 + increase * 2, 24 + increase * 2);
+                    guiGraphics.blit(RESEARCH_HIGHLIGHT, -rbs / 2, -rbs / 2, 0, 0, rbs + increase * 2, rbs + increase * 2, rbs + increase * 2, rbs + increase * 2);
                     guiGraphics.setColor(0.8F, 0.8F, 0.8F, 1);
                 }
             } else {
                 guiGraphics.setColor((partialTicks + counter - highlightCounter) / 20F + 0.5F, (partialTicks + counter - highlightCounter) / 20F + 0.5F, (partialTicks + counter - highlightCounter) / 20F + 0.5F, 1);
-                guiGraphics.blit(RESEARCH_BACKGROUND_WHITE, resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
+                guiGraphics.blit(RESEARCH_BACKGROUND_WHITE, -rbs / 2, -rbs / 2, 0, 0, rbs, rbs, rbs, rbs);
                 guiGraphics.setColor(0.8F, 0.8F, 0.8F, 1);
 
             }
             //drawModalRectWithCustomSizedTexture(resX - topX - 4, resY - topY - 4, 0, 0, 24, 24, 24, 24);
         }
+        pose.popPose();
         // TEST FOR FOREGROUND renderTooltip(pPoseStack, new TranslatableComponent(res.getName()), resX - topX, resY - topY);
 
     }
 
     private void drawConnection(GuiGraphics guiGraphics, ResearchConnection rc, float partialTicks) {
-        PoseStack pPoseStack = guiGraphics.pose();
-        if (rc.shouldRender(topX, topY, width, height)) {
+        PoseStack pose = guiGraphics.pose();
+        if (rc.shouldRender((int) (topX / JSON_TO_REAL_COORD_FACTOR / scaleFactor), (int) (topY / JSON_TO_REAL_COORD_FACTOR / scaleFactor), (int) (width / JSON_TO_REAL_COORD_FACTOR / scaleFactor / baseFactor / scaleFactor), (int) (height / JSON_TO_REAL_COORD_FACTOR / scaleFactor / baseFactor / scaleFactor))) {
             Point left = rc.getLeftPoint(), right = rc.getRightPoint();
-            double dist = left.distance(right) * 15 * factor;
-            int lx = left.x * 15 * factor, ly = left.y * 15 * factor, rx = right.y * 15 * factor, ry = right.y * 15 * factor;
-            pPoseStack.pushPose();
-            double phi = Math.asin((right.y - left.y) * 15 * factor / dist);
-            pPoseStack.translate(lx - topX + 8, ly - topY + 8, 0);
+            double i1 = JSON_TO_REAL_COORD_FACTOR * scaleFactor;
+            float dist = (float) (left.distance(right) * i1);
+            double lx = left.x * i1, ly = left.y * i1, rx = right.y * i1, ry = right.y * i1;
+            pose.pushPose();
+            double phi = Math.asin((right.y - left.y) * i1 / dist);
+            pose.translate(lx - topX, ly - topY, 0);
 
-            pPoseStack.mulPose(Axis.ZP.rotation((float) (phi)));
-            for (int i = 0; i < dist; i++) {
+            pose.mulPose(Axis.ZP.rotation((float) (phi)));
+            for (int i = 0; i < dist; i+=4) {
                 int signum = (int) Math.signum(counter % 80 - 40);
-                double amplifier = 15 * (signum * Math.pow((counter % 40 + partialTicks) / 20 - 1, 4) - signum);
-                int y = (int) (amplifier * Math.sin(i * Math.PI / dist));
-                guiGraphics.fill(i, y, i + 1, y + 1, connectionColor);
+                float a = (counter % 40 + partialTicks) / 20 - 1;
+                a = a * a * a * a;
+                float amplifier = 12 * (signum * a - signum);
+                //amplifier = 0;
+                int y = (int) (amplifier * Mth.sin(i * Mth.PI / dist));
+                boolean notEye = (i / 4) % 5 < 4 || i < 25 || i > dist - 35;
+                if (notEye || true) {
+                    guiGraphics.fill(i, y + (notEye ? 0 : -1), i + 4, y + (notEye ? 3 : 4), notEye ? connectionColor : 0xFF00231A);
+                    //pose.pushPose();
+                    ////pose.scale(1, 0.5F, 1);
+                    //guiGraphics.fill(i, y + (notEye ? 1 : -1), i + 4, y + (notEye ? 2 : 4), 0xFF400000);
+                    //pose.popPose();
+                } else {
+                    pose.pushPose();
+                    pose.translate(0, 0, 10);
+                    int b = 10;
+                    guiGraphics.blit(TENDRIL_EYE, i, y-4, 0, 0, b, b, b, b);
+                    pose.popPose();
+                }
             }
-            pPoseStack.popPose();
+            pose.popPose();
         }
     }
 
@@ -307,8 +383,8 @@ public class NecronomiconGui extends Screen {
             int pupilY = (int) (pupilYOffset + (pupilNextYOffset - pupilYOffset) * (counterMod32 + partialTicks) / 4);
 
             poseStack.pushPose();
-            poseStack.translate(width - 142 + 64, height - 142 + 64, 200);
-            if (mouseX > width - 142 && mouseY > height - 142) {
+            poseStack.translate(width / scaleFactor / baseFactor - 142 + 64, height / scaleFactor / baseFactor - 142 + 64, 200);
+            if (mouseX > width / scaleFactor / baseFactor - 142 && mouseY > height / scaleFactor / baseFactor - 142) {
                 poseStack.scale(1.1F, 1.1F, 0);
             }
 
@@ -322,14 +398,15 @@ public class NecronomiconGui extends Screen {
 
     @Override
     public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
-        topX = (int) MathHelperBTV.clamp(-700, 3840 - this.width / 2F, topX - pDragX);
-        topY = (int) MathHelperBTV.clamp(-700, 2160 - this.height / 2F, topY - pDragY);
-        return super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
+        topX = (int) MathHelperBTV.clamp(-700, 3840 - this.width / 2F, topX - pDragX / baseFactor / 1.5);
+        topY = (int) MathHelperBTV.clamp(-700, 2160 - this.height / 2F, topY - pDragY / baseFactor / 1.5);
+        return true;
     }
 
     @Override
     public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
-        this.factor = MathHelperBTV.clamp(2, 5, this.factor + (int) Math.signum(pDelta));
+        //this.factor = MathHelperBTV.clamp(2, 5, this.factor + (int) Math.signum(pDelta));
+        this.scaleFactor = Mth.clamp(this.scaleFactor + (int) Math.signum(pDelta) * 0.25F, 1.75F, 3.25F);
         return super.mouseScrolled(pMouseX, pMouseY, pDelta);
     }
 
@@ -338,6 +415,8 @@ public class NecronomiconGui extends Screen {
         if (super.mouseClicked(pMouseX, pMouseY, pButton)) {
             return true;
         }
+        pMouseX /= scaleFactor * baseFactor;
+        pMouseY /= scaleFactor * baseFactor;
         if (pMouseX > width - 142 && pMouseY > height - 142) {
             if (!updated.isEmpty()) {
                 if (highlightIterator == null || !highlightIterator.hasNext()) {
@@ -401,8 +480,10 @@ public class NecronomiconGui extends Screen {
     }
 
     private boolean openResearch(Research res, double mouseX, double mouseY, int mouseButton) {
-        int resX = res.getX() * 15 * factor - topX - 4, resY = res.getY() * 15 * factor - topY - 4;
-        if (mouseX > resX - 4 && mouseX < resX + 24 && mouseY > resY - 4 && mouseY < resY + 24) {
+        float i1 = JSON_TO_REAL_COORD_FACTOR * scaleFactor;
+        float resX = res.getX() * i1, resY = res.getY() * i1;
+        int rbs = RESEARCH_BACKGROUND_SIZE;
+        if (mouseX > resX - topX - (rbs * 1.2) / 2D && mouseX < resX - topX + (rbs * 1.2) / 2D && mouseY > resY - topY - (rbs * 1.2) / 2D && mouseY < resY - topY + (rbs * 1.2) / 2D) {
             if (mouseButton == 0) {
                 ResearchStatus status = ResearchUtil.getResearch(minecraft.player, res.getKey());
                 if (status.getStage() == -1) ResearchUtilClient.progressResearchClientAndSync(res.getKey());
@@ -468,6 +549,6 @@ public class NecronomiconGui extends Screen {
     private void savePositionData() {
         DataUtilClient.setIntAndSync(PlayerDataLib.necro_x.name(), this.topX, false);
         DataUtilClient.setIntAndSync(PlayerDataLib.necro_y.name(), this.topY, false);
-        DataUtilClient.setIntAndSync(PlayerDataLib.necro_fac.name(), this.factor, false);
+        DataUtilClient.setIntAndSync(PlayerDataLib.necro_fac.name(), (int) (this.scaleFactor * 4), false);
     }
 }

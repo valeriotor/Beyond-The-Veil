@@ -36,7 +36,7 @@ public class ResearchConnection {
     }
 
     public boolean shouldRender(int topX, int topY, int width, int height) {
-        if((bottomRight.x > topX && bottomRight.y > topY) || (topLeft.x < topX + width && topLeft.y < topY + height))
+        if((bottomRight.x > topX - 1 && bottomRight.y > topY - 1 && bottomRight.x < topX + 2 + width && bottomRight.y < topY + 2 + height) || (topLeft.x > topX - 1 && topLeft.y > topY - 1 && topLeft.x < topX + 2 + width && topLeft.y < topY + 2 + height))
             return true;
         return false;
     }
