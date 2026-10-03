@@ -2,6 +2,8 @@ package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -57,6 +59,8 @@ public class VijhissBlock extends ThinMultiBlock1by2 {
                     }
                 } else {
                     toGive = new ItemStack(Registration.MEGYDREA.get());
+                    decrease = true;
+                    DataUtil.setBooleanOnServerAndSync(pPlayer, PlayerDataLib.megydrea.name(), true);
                 }
                 if (!pPlayer.getAbilities().instabuild && decrease) {
                     stack.shrink(1);

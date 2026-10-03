@@ -196,20 +196,38 @@
         "key": "PLANT_DREAMS",
         "name": "research.PLANT_DREAMS.title",
         "icons": [ "beyondtheveil:grass_weed_seeds" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 9,4 ],
-        "hiders": ["COMMUNION", "grass_weed_seeds"],
+        "category": "BEYOND_THE_VEIL", "location": [ 12,3 ],
+        "hiders": ["grass_weed_seeds"],
         "parents": ["COMMUNION"],
         "stages": [
           {
-            "text": "research.PLANT_DREAMS.stage.0",
-            "required_research": ["redstone_weed_seeds"]
-          },
+            "text": "research.PLANT_DREAMS.stage.0"
+          }
+        ]
+      },
+      {
+        "key": "REDSTONE_WEED",
+        "name": "research.REDSTONE_WEED.title",
+        "icons": [ "beyondtheveil:redstone_weed_seeds" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 13,1 ],
+        "hiders": ["redstone_weed_seeds"],
+        "parents": ["PLANT_DREAMS"],
+        "stages": [
           {
-            "text": "research.PLANT_DREAMS.stage.1",
-            "required_research": ["ghost_weed_seeds"]
-          },
+            "text": "research.REDSTONE_WEED.stage.0"
+          }
+        ]
+      },
+      {
+        "key": "GHOST_WEED",
+        "name": "research.GHOST_WEED.title",
+        "icons": [ "beyondtheveil:ghost_weed_seeds" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 14,-1 ],
+        "hiders": ["ghost_weed_seeds"],
+        "parents": ["REDSTONE_WEED"],
+        "stages": [
           {
-            "text": "research.PLANT_DREAMS.stage.2"
+            "text": "research.GHOST_WEED.stage.0"
           }
         ]
       },
@@ -217,12 +235,38 @@
         "key": "VIJHISS",
         "name": "research.VIJHISS.title",
         "icons": [ "beyondtheveil:vijhiss" ],
-        "category": "BEYOND_THE_VEIL", "location": [ 7,5 ],
-        "hiders": ["COMMUNION", "vijhiss"],
+        "category": "BEYOND_THE_VEIL", "location": [ 14,2 ],
+        "hiders": ["vijhiss"],
         "parents": ["PLANT_DREAMS"],
         "stages": [
           {
             "text": "research.VIJHISS.stage.0"
+          }
+        ]
+      },
+      {
+        "key": "ARBOREAL_GENERATOR",
+        "name": "research.ARBOREAL_GENERATOR.title",
+        "icons": [ "beyondtheveil:arboreal_generator" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 15,3 ],
+        "hiders": ["arboreal_generator"],
+        "parents": ["PLANT_DREAMS"],
+        "stages": [
+          {
+            "text": "research.ARBOREAL_GENERATOR.stage.0"
+          }
+        ]
+      },
+      {
+        "key": "MEGYDREA",
+        "name": "research.MEGYDREA.title",
+        "icons": [ "beyondtheveil:megydrea" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 16,1 ],
+        "hiders": ["VIJHISS", "megydrea"],
+        "parents": ["VIJHISS"],
+        "stages": [
+          {
+            "text": "research.MEGYDREA.stage.0"
           }
         ]
       },

@@ -106,6 +106,8 @@ public enum PlayerDataLib {
     redstone_weed_seeds,
     ghost_weed_seeds,
     vijhiss,
+    arboreal_generator,
+    megydrea,
     ;
 
     // Longs

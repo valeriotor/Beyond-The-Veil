@@ -1776,6 +1776,32 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Grant us strength, so we may survive the Truth.\\n" +
                 "Grant us courage... so we may hear Your Holy Voice.");
 
+        add("research.PLANT_DREAMS.title", "Dreams of Greenery");
+        add("research.PLANT_DREAMS.stage.0", "In its long, instantaneous journey, the dreams saw shrubbery and boscage and groves and jungles, vegetation so wild that no worldly biome could host.\\n" +
+                "But, this time, there was no need to reminisce: as I opened my eyes, seeds lay in my hands. The dream brought them back, a keepsake from a place only thoughts can reach.\\n" +
+                "Matter, transported to our plane from another world yet one so much farther away than Nether or the End, one massive and immaterial all at once. And a living, yet dormant, being breaching the veil: these little seeds of grass.\\n" +
+                "The tiny things can be planted like wheat on tilled ground, and grown to multiply. If planted on dirt instead, they will immediately grow grass on it. At a frightening speed, I admit, but they are gentle, kindly, and shall not take over this world.\\n" +
+                "Can another dream bring me more? Can the result even be replicated, or does it rely on external factors? After all, I do not know how the dream obtained them: were the seeds plucked from the ground... or were they a gift?");
+
+        add("research.REDSTONE_WEED.title", "Redstone Weed");
+        add("research.REDSTONE_WEED.stage.0", "Different seeds, this time. Redstone weed seeds can be grown on tilled soil like their grass weed counterparts. When placed on dirt or grass, they will turn it into a particular block: though it looks exactly like grass, it will respond to the external stimulus of a creature walking on it by producing a very faint redstone signal.");
+
+        add("research.GHOST_WEED.title", "Ghost Weed");
+        add("research.GHOST_WEED.stage.0", "Another kind of seed. Ghost weed seeds may still be grown on tilled soil like the others. When placed on dirt or grass they turn it immaterial: a block looking exactly like grass but devoid of any substance. A pitfall for unwanted guests.\\n" +
+                "Another gift from the Dreamlands, and yes, it was a gift. I saw the tiny paws of the little rat-like creatures giving it to my dream, in its hands or limbs or tendrils or whatever shape it may take in its journeys.");
+
+        add("research.VIJHISS.title", "Vijhiss");
+        add("research.VIJHISS.stage.0", "An unsettling thing. Not only because of its appearance, betraying no sense of belonging to this world, but because, for the first time, I have met a plant that is §ogreedy§r.\\n" +
+                "I mean that in the most literal sense: Vijhiss wants and accepts gold. Ingots fashioned from the noble yellow metal will solicit a reward from the plant, as it will grant me one among several kinds of seeds, from this world and not. And, perhaps, a larger offering of gold may even induce a larger reward.\\n" +
+                "My only worry lies in the faint sense of glee that the plant emanates at every trade.");
+
+        add("research.ARBOREAL_GENERATOR.title", "Arboreal Generator");
+        add("research.ARBOREAL_GENERATOR.stage.0", "This small, pretty tree is known as an Arboreal Generator. It is a useful plant that slowly generates saplings on each of its four sides. It first creates small shrubs, all of which emit a very faint redstone signal and are then eventually turned into saplings of various kinds.\\n" +
+                "Yet, perhaps, the greater research contribution of this experiment stems from the way the dream acted: the diamond I was holding vanished from my hands, as the dream took it straight from my grasp. What chaos this could imply if used maliciously! Perhaps, then, the ethical response would be to forgo fame and not disclose this publicly, at least for the time being.");
+
+        add("research.MEGYDREA.title", "Megydrea");
+        add("research.MEGYDREA.stage.0", "A gift from Vijhiss, in exchange for a gold block. A large plant that hangs from the ceiling and that acts as a fluid tank, storing up to forty buckets of liquid.");
+
         add("research.CORRESPONDENCE.title", "Correspondence");
         add("research.CORRESPONDENCE.stage.0", "It would be useful to begin a letter exchange with the shoremen, in order to avoid having to travel to their hamlet for every need.\\n" +
                 "I should create a letter box, so that I may send and receive mail to and from the wider world.");

@@ -134,9 +134,9 @@ public class ResearchStatus {
     }
 
     public ResearchStatus readFromNBT(CompoundTag nbt) {
-        if (nbt.contains("stage")) this.stage = nbt.getInt("stage");
+        if (nbt.contains("stage")) this.stage = Math.min(res.getStages().length - 1, nbt.getInt("stage"));
         if (nbt.contains("learned")) this.learned = this.learned || nbt.getBoolean("learned");
-        if (nbt.contains("complete")) this.complete = nbt.getBoolean("complete");
+        if (nbt.contains("complete")) this.complete = nbt.getBoolean("complete"); // why are we even putting this into NBT? It's just (stage == res.getStages().length - 1)
         if (nbt.contains("updated")) this.updated = nbt.getBoolean("updated");
         return this;
     }
