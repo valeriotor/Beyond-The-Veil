@@ -40,7 +40,10 @@ public class NecronomiconGui extends Screen {
     private static final int MAX_BOOKMARKS = 16;
     private int topX;
     private int topY;
-    private int factor = 3;
+    private int dragX;
+    private int dragY;
+    private int dragMouseX;
+    private int dragMouseY;
     private int pupilNextXOffset;
     private int pupilNextYOffset;
     private int pupilXOffset = 0;
@@ -421,8 +424,12 @@ public class NecronomiconGui extends Screen {
 
     @Override
     public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
-        topX = (int) MathHelperBTV.clamp(-700, 3840 - this.width / 2F, topX - pDragX / baseFactor / 1.5);
-        topY = (int) MathHelperBTV.clamp(-700, 2160 - this.height / 2F, topY - pDragY / baseFactor / 1.5);
+        //topX = (int) MathHelperBTV.clamp(-700, 3840 - this.width / 2F, topX - pDragX / baseFactor / 1.5);
+        //topY = (int) MathHelperBTV.clamp(-700, 2160 - this.height / 2F, topY - pDragY / baseFactor / 1.5);
+        pMouseX /= scaleFactor * baseFactor;
+        pMouseY /= scaleFactor * baseFactor;
+        topX = (int) (dragX - (pMouseX - dragMouseX));
+        topY = (int) (dragY - (pMouseY - dragMouseY));
         return true;
     }
 
@@ -489,7 +496,11 @@ public class NecronomiconGui extends Screen {
         for (Research res : this.newClickables) {
             if (openResearch(res, pMouseX, pMouseY, pButton)) return true;
         }
-        return false;
+        dragX = topX;
+        dragY = topY;
+        dragMouseX = (int) pMouseX;
+        dragMouseY = (int) pMouseY;
+        return true;
     }
 
     @Override
