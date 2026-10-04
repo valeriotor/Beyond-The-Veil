@@ -81,6 +81,7 @@ public class NecronomiconGui extends Screen {
     private static final int JSON_TO_REAL_COORD_FACTOR = 32;
     private static final int RESEARCH_BACKGROUND_SIZE = 48;
     private float baseFactor;
+    private final int stage;
 
     public NecronomiconGui() {
         super(Component.translatable("gui.necronomicon")); // TODO change to TranslatableComponent("gui.necronomicon")
@@ -126,6 +127,14 @@ public class NecronomiconGui extends Screen {
         }
         this.connectionColor = (255 << 24) | (ConfigLib.connectionRed << 16) | (20 << 8) | ConfigLib.connectionBlue;
         showBookmarkHint = !data.getBoolean(PlayerDataLib.made_bookmark.name()) && map.get("SLEEP_CHAMBER").getStage() >= 1; // TODO this should be SLEEP_CHAMBER, change if otherwise
+
+        if (DataUtil.getBoolean(p, PlayerDataLib.slew_keeper.name()) && !DataUtil.getBoolean(p, PlayerDataLib.met_mirror.name())) {
+            stage = 2;
+        } else if (ResearchUtil.isResearchComplete(p, "COMMUNION")) {
+            stage = 1;
+        } else {
+            stage = 0;
+        }
     }
 
     @Override
@@ -311,10 +320,13 @@ public class NecronomiconGui extends Screen {
         double resX = res.getX() * JSON_TO_REAL_COORD_FACTOR * scaleFactor, resY = res.getY() * JSON_TO_REAL_COORD_FACTOR * scaleFactor;
         if (resX > topX - 48 && resX < topX + this.width / baseFactor && resY > topY - 48 && resY < topY + this.height / baseFactor) {
             pose.translate(resX - topX, resY - topY, 0);
-            int rbs = RESEARCH_BACKGROUND_SIZE * 4 / 4;
+            int rbs = RESEARCH_BACKGROUND_SIZE;
+            if (stage == 2) {
+                rbs = rbs * 5 / 4;
+            }
             if (res != highlightedMarkedResearch || counter - highlightCounter > 10) {
                 RenderSystem.disableBlend();
-                guiGraphics.blit(RESEARCH_BACKGROUND_2, -rbs / 2, -rbs / 2, 0, 0, rbs, rbs, rbs, rbs);
+                guiGraphics.blit(backgroundForStage(), -rbs / 2, -rbs / 2, 0, 0, rbs, rbs, rbs, rbs);
                 if (res == highlightedMarkedResearch) {
                     RenderSystem.enableBlend();
                     int increase = (int) ((partialTicks + counter - highlightCounter - 10) * 3);
@@ -346,29 +358,40 @@ public class NecronomiconGui extends Screen {
             pose.pushPose();
             double phi = Math.asin((right.y - left.y) * i1 / dist);
             pose.translate(lx - topX, ly - topY, 0);
+            int counter1 = counter;
+            if (stage == 2) {
+                counter1 *= 2;
+                partialTicks *= 2;
+            }
 
             pose.mulPose(Axis.ZP.rotation((float) (phi)));
-            for (int i = 0; i < dist; i+=4) {
-                int signum = (int) Math.signum(counter % 80 - 40);
-                float a = (counter % 40 + partialTicks) / 20 - 1;
-                a = a * a * a * a;
-                float amplifier = 12 * (signum * a - signum);
-                //amplifier = 0;
-                int y = (int) (amplifier * Mth.sin(i * Mth.PI / dist));
-                boolean notEye = (i / 4) % 5 < 4 || i < 25 || i > dist - 35;
-                if (notEye || true) {
-                    guiGraphics.fill(i, y + (notEye ? 0 : -1), i + 4, y + (notEye ? 3 : 4), notEye ? connectionColor : 0xFF00231A);
-                    //pose.pushPose();
-                    ////pose.scale(1, 0.5F, 1);
-                    //guiGraphics.fill(i, y + (notEye ? 1 : -1), i + 4, y + (notEye ? 2 : 4), 0xFF400000);
-                    //pose.popPose();
-                } else {
-                    pose.pushPose();
-                    pose.translate(0, 0, 10);
-                    int b = 10;
-                    guiGraphics.blit(TENDRIL_EYE, i, y-4, 0, 0, b, b, b, b);
-                    pose.popPose();
+            for (int x = 0; x < (stage == 2 ? 2 : 1); x++) {
+                for (int i = 0; i < dist; i+=4) {
+                    int signum = (int) Math.signum(counter1 % 80 - 40);
+                    float a = (counter1 % 40 + partialTicks) / 20 - 1;
+                    a = a * a * a * a;
+                    float amplifier = 12 * (signum * a - signum);
+                    if (stage == 0) {
+                        amplifier = 0;
+                    }
+                    int y = (int) (amplifier * Mth.sin(i * Mth.PI / dist));
+                    boolean notEye = (i / 4) % 5 < 4 || i < 25 || i > dist - 35;
+                    if ((notEye || stage != 2) && x == 0) {
+                        guiGraphics.fill(i, y, i + 4, y + 4, notEye ? connectionColor : 0xFF00231A);
+                        //guiGraphics.fill(i, y + (notEye ? 0 : -1), i + 4, y + (notEye ? 3 : 4), notEye ? connectionColor : 0xFF00231A);
+                        pose.pushPose();
+                        pose.translate(0, y + 2, 0);
+                        pose.scale(1, 0.325F, 1);
+                        guiGraphics.fill(i, -2, i + 4, 2, 0xFF002F00);
+                        pose.popPose();
+                    } else if (!(notEye || stage != 2) && x == 1) {
+                        pose.pushPose();
+                        int b = 10;
+                        guiGraphics.blit(TENDRIL_EYE, i, y - 3, 0, 0, b, b, b, b);
+                        pose.popPose();
+                    }
                 }
+
             }
             pose.popPose();
         }
@@ -550,5 +573,13 @@ public class NecronomiconGui extends Screen {
         DataUtilClient.setIntAndSync(PlayerDataLib.necro_x.name(), this.topX, false);
         DataUtilClient.setIntAndSync(PlayerDataLib.necro_y.name(), this.topY, false);
         DataUtilClient.setIntAndSync(PlayerDataLib.necro_fac.name(), (int) (this.scaleFactor * 4), false);
+    }
+
+    private ResourceLocation backgroundForStage() {
+        return switch (stage) {
+            case 0 -> RESEARCH_BACKGROUND;
+            case 1 -> RESEARCH_BACKGROUND_2;
+            default -> RESEARCH_BACKGROUND_3;
+        };
     }
 }
