@@ -440,7 +440,7 @@ public class NecronomiconGui extends Screen {
         }
         pMouseX /= scaleFactor * baseFactor;
         pMouseY /= scaleFactor * baseFactor;
-        if (pMouseX > width - 142 && pMouseY > height - 142) {
+        if (pMouseX > width / scaleFactor / baseFactor - 142 && pMouseY > height / scaleFactor / baseFactor - 142) {
             if (!updated.isEmpty()) {
                 if (highlightIterator == null || !highlightIterator.hasNext()) {
                     highlightIterator = updated.iterator();
