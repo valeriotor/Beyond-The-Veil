@@ -143,13 +143,13 @@ public class ResearchPageGui extends Screen {
         imageHeight = height;
 
         final double MIN_STRING_PROPORTION = 30 / 1440D;
-        final double MAX_STRING_PROPORTION = 60 / 1440D;
+        final double MAX_STRING_PROPORTION = 45 / 1440D;
         if (MIN_STRING_PROPORTION > 15D / imageHeight) {
             scaleFactor = (float) ((MIN_STRING_PROPORTION) / (15D / imageHeight));
         } else if (MAX_STRING_PROPORTION < 15D / imageHeight) {
             scaleFactor = (float) ((MAX_STRING_PROPORTION) / (15D / imageHeight));
         }
-        int blackPageMargin = Math.min(200 * width / 1400 + 75, 300);
+        int blackPageMargin = Math.min(150 * width / 1400 + 75, 200);
         pageTopY = height * blackPageMargin / 1440;
         pageBottomY = (height * (1440 - blackPageMargin)) / 1440;
         this.blackPageHeight = pageBottomY - pageTopY;
