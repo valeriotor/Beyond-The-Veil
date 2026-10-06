@@ -96,8 +96,10 @@ public class DataUtilClient {
     }
 
     public static void setBooleanAndSync(String key, boolean value, boolean temporary) {
-        setBoolean(key, value, temporary);
-        Messages.sendToServer(SyncPlayerDataPacket.toServer(key).setBoolean(value));
+        if (DataUtil.getBoolean(getPlayer(), key) != value) {
+            setBoolean(key, value, temporary);
+            Messages.sendToServer(SyncPlayerDataPacket.toServer(key).setBoolean(value));
+        }
     }
 
     public static void setStringAndSync(String key, String value, boolean temporary) {

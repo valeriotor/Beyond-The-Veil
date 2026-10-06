@@ -181,6 +181,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("message.transformation.cooldown", "The transformation requires %1$s seconds of cooldown.");
         add("message.transformation.holding", "I cannot transform while carrying a patient.");
         add("message.transformation.sleep", "I can't sleep while non-human.");
+        add("key.reminisce", "Reminisce");
+        add("key.transform", "Transform/Explode");
     }
 
     private void addEntities() {
@@ -2230,6 +2232,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dagon.title", "Communion");
         add("gui.metamorphosis.title", "Metamorphosis");
         add("gui.research_page.complete", "Progress");
+        add("gui.research_page.back_to_azif", "Back to Al Azif");
+        add("gui.research_page.back_to_necro", "Back to Necronomicon");
+        add("gui.research_page.back_to_page", "Back to Page");
+        add("gui.research_page.back_to_mc", "Exit");
 
         addJournal();
         addLetterBox();

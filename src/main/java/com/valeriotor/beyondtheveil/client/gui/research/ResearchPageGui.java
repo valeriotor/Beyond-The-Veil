@@ -5,10 +5,11 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
-import com.valeriotor.beyondtheveil.client.Fonts;
 import com.valeriotor.beyondtheveil.client.gui.elements.DoubleTextPages;
 import com.valeriotor.beyondtheveil.client.gui.elements.MultiblockGrid;
+import com.valeriotor.beyondtheveil.client.gui.elements.ShortcutHint;
 import com.valeriotor.beyondtheveil.client.research.ResearchUtilClient;
+import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -17,6 +18,7 @@ import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
 import com.valeriotor.beyondtheveil.research.Research;
 import com.valeriotor.beyondtheveil.research.ResearchStatus;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.util.DataUtil;
@@ -126,6 +128,10 @@ public class ResearchPageGui extends Screen {
     private int pamphletX;
     private int pamphletY;
     private final List<Tuple<Button, Component>> bindingButtons = new ArrayList<>();
+    private ShortcutHint backPageHint;
+    private ShortcutHint exitPageHint;
+    private ShortcutHint backGridHint;
+    private ShortcutHint exitGridHint;
 
 
     public ResearchPageGui(ResearchStatus status) {
@@ -211,9 +217,10 @@ public class ResearchPageGui extends Screen {
             init();
         }).bounds(width / 2 - 60, height / 2 + blackPageHeight * 35 / 100, 120, 20).build();
         progress = addRenderableWidget(b);
+        LocalPlayer p = minecraft.player;
         if (currentStage < status.getStage()) {
             progress.visible = progress.active = false;
-        } else if (!status.canProgressStage(minecraft.player)) {
+        } else if (!status.canProgressStage(p)) {
             progress.visible = progress.active = false;
             String[] reqs = status.res.getStages()[this.status.getStage()].getRequirements();
             if (reqs != null) {
@@ -310,6 +317,22 @@ public class ResearchPageGui extends Screen {
         }
 
         buildBindingButtons();
+        if (ResearchUtil.getResearchStage(p, "FIRSTDREAMS") >= 1) {
+            if (!DataUtil.getBoolean(p, PlayerDataLib.exited_research_page.name())) {
+                Component back = DataUtil.getBoolean(p, PlayerDataLib.renamed_necronomicon.name()) ? Component.translatable("gui.research_page.back_to_necro") : Component.translatable("gui.research_page.back_to_azif");
+                Component exit = Component.translatable("gui.research_page.back_to_mc");
+                int hintsTextWidth = Math.max(minecraft.font.width(back), minecraft.font.width(exit)) + 20;
+                backPageHint = new ShortcutHint(20, back, minecraft.options.keyInventory, hintsTextWidth, 70);
+                exitPageHint = new ShortcutHint(20, exit, Component.translatable("key.keyboard.escape"), hintsTextWidth, 70);
+            }
+            if (!DataUtil.getBoolean(p, PlayerDataLib.exited_crafting_grid.name())) {
+                Component back = Component.translatable("gui.research_page.back_to_page");
+                Component exit = Component.translatable("gui.research_page.back_to_mc");
+                int hintsTextWidth = Math.max(minecraft.font.width(back), minecraft.font.width(exit)) + 20;
+                backGridHint = new ShortcutHint(20, back, minecraft.options.keyInventory, hintsTextWidth, 70);
+                exitGridHint = new ShortcutHint(20, exit, Component.translatable("key.keyboard.escape"), hintsTextWidth, 70);
+            }
+        }
     }
 
     //private void makeRecipes(String[] recipes) {
@@ -454,6 +477,32 @@ public class ResearchPageGui extends Screen {
         //for (int i = 0; i < status.getStage() + 1; i++) {
         //    guiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", stageButtonX, stageButtonYs[i]), 0, (i + 1) * 20, 0xFFFFFFFF);
         //}
+
+        if (selectedRecipeType == null) {
+            if (backPageHint != null && exitPageHint != null) {
+                guiGraphics.fill(0, height - 60, backPageHint.getWidth() + 40, height - 5, 0x77000000);
+                pose.pushPose();
+                pose.translate(20, height - 55, 0);
+                backPageHint.render(pose, guiGraphics, 0xFFFFFFFF, 0, 0, partialTicks);
+                pose.popPose();
+                pose.pushPose();
+                pose.translate(20, height - 30, 0);
+                exitPageHint.render(pose, guiGraphics, 0xFFFFFFFF, 0, 0, partialTicks);
+                pose.popPose();
+            }
+        } else {
+            if (backGridHint != null && exitGridHint != null) {
+                guiGraphics.fill(0, height - 60, backGridHint.getWidth() + 40, height - 5, 0x77000000);
+                pose.pushPose();
+                pose.translate(20, height - 55, 0);
+                backGridHint.render(pose, guiGraphics, 0xFFFFFFFF, 0, 0, partialTicks);
+                pose.popPose();
+                pose.pushPose();
+                pose.translate(20, height - 30, 0);
+                exitGridHint.render(pose, guiGraphics, 0xFFFFFFFF, 0, 0, partialTicks);
+                pose.popPose();
+            }
+        }
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
@@ -788,8 +837,14 @@ public class ResearchPageGui extends Screen {
         if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
             if (selectedRecipeType != null) {
                 resetRecipe();
+                if (backGridHint != null) {
+                    DataUtilClient.setBooleanAndSync(PlayerDataLib.exited_crafting_grid.name(), true, false);
+                }
             } else {
                 minecraft.setScreen(new NecronomiconGui());
+                if (backPageHint != null) {
+                    DataUtilClient.setBooleanAndSync(PlayerDataLib.exited_research_page.name(), true, false);
+                }
             }
         } else if (this.minecraft.options.keyLeft.matches(pKeyCode, pScanCode)) {
             leftArrowClick();

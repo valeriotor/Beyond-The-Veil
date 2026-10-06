@@ -48,6 +48,8 @@ public enum PlayerDataLib {
     thebeginning,
     didDream,
     made_bookmark,
+    exited_research_page,
+    exited_crafting_grid,
     void_,
     drankmemory,
     drank_dream,
@@ -144,6 +146,8 @@ public enum PlayerDataLib {
         allowedKeys.add(necro_y.name());
         allowedKeys.add(necro_fac.name());
         allowedKeys.add(made_bookmark.name());
+        allowedKeys.add(exited_research_page.name());
+        allowedKeys.add(exited_crafting_grid.name());
         allowedKeys.add("eldritchDream");
         allowedKeys.add("LHKeeper");
         allowedKeys.add("carpenter");
