@@ -78,6 +78,8 @@ public class NecronomiconGui extends Screen {
     private static final ResourceLocation EYE = new ResourceLocation(References.MODID, "textures/gui/eye.png");
     private static final ResourceLocation EYE_PUPIL = new ResourceLocation(References.MODID, "textures/gui/eye_pupil.png");
     private static final ResourceLocation TENDRIL_EYE = new ResourceLocation(References.MODID, "textures/gui/tendril_eye.png");
+    private static final ResourceLocation TENDRIL_SEGMENT = new ResourceLocation(References.MODID, "textures/gui/tendril_segment.png");
+    private static final ResourceLocation TENDRIL_SEGMENT2 = new ResourceLocation(References.MODID, "textures/gui/tendril_segment2.png");
     private static final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/bookmark_grayed.png");
     private static final ResourceLocation MOUSE_RIGHT_CLICK = new ResourceLocation(References.MODID, "textures/gui/mouse_right_click.png");
     private int firstBookmarkMadeCounter = 0;
@@ -367,9 +369,10 @@ public class NecronomiconGui extends Screen {
                 partialTicks *= 2;
             }
 
+            RenderSystem.enableBlend();
             pose.mulPose(Axis.ZP.rotation((float) (phi)));
             for (int x = 0; x < (stage == 2 ? 2 : 1); x++) {
-                for (int i = 0; i < dist; i+=4) {
+                for (int i = 0; i < dist; i+=6) {
                     int signum = (int) Math.signum(counter1 % 80 - 40);
                     float a = (counter1 % 40 + partialTicks) / 20 - 1;
                     a = a * a * a * a;
@@ -378,19 +381,28 @@ public class NecronomiconGui extends Screen {
                         amplifier = 0;
                     }
                     int y = (int) (amplifier * Mth.sin(i * Mth.PI / dist));
-                    boolean notEye = (i / 4) % 5 < 4 || i < 25 || i > dist - 35;
+                    boolean notEye = (i / 6) % 5 < 4 || i < 25 || i > dist - 35;
                     if ((notEye || stage != 2) && x == 0) {
-                        guiGraphics.fill(i, y, i + 4, y + 4, notEye ? connectionColor : 0xFF00231A);
-                        //guiGraphics.fill(i, y + (notEye ? 0 : -1), i + 4, y + (notEye ? 3 : 4), notEye ? connectionColor : 0xFF00231A);
+
+                        int b = 8;
+                        RenderSystem.enableBlend();
                         pose.pushPose();
-                        pose.translate(0, y + 2, 0);
-                        pose.scale(1, 0.325F, 1);
-                        guiGraphics.fill(i, -2, i + 4, 2, 0xFF002F00);
+                        pose.translate(i, y - 3, 0);
+                        float pRadians = Mth.cos(i * Mth.PI / dist) * Mth.PI / dist * amplifier;
+                        pose.mulPose(Axis.ZP.rotation(pRadians));
+                        guiGraphics.blit(notEye ? TENDRIL_SEGMENT : TENDRIL_SEGMENT2, 0, 0, 0, 0, b, b-4, b, b);
                         pose.popPose();
+                        //guiGraphics.fill(i, y, i + 10, y + 4, notEye ? connectionColor : 0xFF00231A);
+                        ////guiGraphics.fill(i, y + (notEye ? 0 : -1), i + 4, y + (notEye ? 3 : 4), notEye ? connectionColor : 0xFF00231A);
+                        //pose.pushPose();
+                        //pose.translate(0, y + 2, 0);
+                        //pose.scale(1, 0.325F, 1);
+                        //guiGraphics.fill(i, -2, i + 10, 2, 0xFF002F00);
+                        //pose.popPose();
                     } else if (!(notEye || stage != 2) && x == 1) {
                         pose.pushPose();
                         int b = 10;
-                        guiGraphics.blit(TENDRIL_EYE, i, y - 3, 0, 0, b, b, b, b);
+                        guiGraphics.blit(TENDRIL_EYE, i, y - 5, 0, 0, b, b, b, b);
                         pose.popPose();
                     }
                 }
