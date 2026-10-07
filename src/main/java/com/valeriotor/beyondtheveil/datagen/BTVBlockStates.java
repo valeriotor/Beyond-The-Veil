@@ -46,7 +46,7 @@ public class BTVBlockStates extends BlockStateProvider {
         logBlock(DAMP_LOG.get());
         simpleBlock(WORN_BRICKS.get());
         horizontalBlock(IDOL.get(), new ExistingModelFile(modLoc("block/idol"), models().existingFileHelper));
-        simpleBlock(FISH_BARREL.get(), new ExistingModelFile(modLoc("block/fish_barrel"), models().existingFileHelper));
+        registerSimpleBakedModel("fish_barrel", FISH_BARREL.get(), modLoc("block/barrel_side"));
         simpleBlock(SLUG_BAIT.get(), new ExistingModelFile(modLoc("block/slug_bait"), models().existingFileHelper));
         simpleBlock(LAMP.get(), new ExistingModelFile(modLoc("block/lamp"), models().existingFileHelper));
         simpleBlock(BLUE_BRICKS.get());
@@ -422,6 +422,24 @@ public class BTVBlockStates extends BlockStateProvider {
             };
             return ConfiguredModel.builder().modelFile(file).build();
         });
+    }
+
+    private void registerSimpleBakedModel(String name, Block block, ResourceLocation particleTexture) {
+        ExistingModelFile base = new ExistingModelFile(modLoc("block/" + name), models().existingFileHelper);
+        ExistingModelFile loader = new ExistingModelFile(modLoc("block/" + name + "_to_bake"), models().existingFileHelper);
+        BlockModelBuilder baseBuilder = new BlockModelBuilder(modLoc("block/" + name + "1"), models().existingFileHelper);
+        baseBuilder.parent(base);
+        baseBuilder.renderType("solid");
+        BlockModelBuilder loaderBuilder = new BlockModelBuilder(modLoc("block/" + name + "_to_bake1"), models().existingFileHelper);
+        loaderBuilder.parent(loader);
+        loaderBuilder.renderType("solid");
+        BlockModelBuilder builder = models().getBuilder("beyondtheveil:block/" + name + "_complete")
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", particleTexture)
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("base", baseBuilder).child("loader", loaderBuilder))
+                .end();
+        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(builder).build());
     }
 
     private void registerThinMultiBlock(String modelName, String emptyModelName, ThinMultiBlock block) {

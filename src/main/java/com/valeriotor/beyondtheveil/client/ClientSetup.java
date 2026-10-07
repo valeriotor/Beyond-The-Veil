@@ -12,10 +12,7 @@ import com.valeriotor.beyondtheveil.client.gui.dialogue.MirrorDialogueGui;
 import com.valeriotor.beyondtheveil.client.gui.dialogue.EntityDialogueGui;
 import com.valeriotor.beyondtheveil.client.gui.dialogue.ShoremanCultistDialogueGui;
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodGemGui;
-import com.valeriotor.beyondtheveil.client.model.baked.AlembicsModelLoader;
-import com.valeriotor.beyondtheveil.client.model.baked.FlaskShelfModelLoader;
-import com.valeriotor.beyondtheveil.client.model.baked.ForcepsModelLoader;
-import com.valeriotor.beyondtheveil.client.model.baked.ItemFlaskModelLoader;
+import com.valeriotor.beyondtheveil.client.model.baked.*;
 import com.valeriotor.beyondtheveil.client.model.entity.*;
 import com.valeriotor.beyondtheveil.client.model.entity.layer.*;
 import com.valeriotor.beyondtheveil.client.particle.BloodspillParticle;
@@ -279,6 +276,7 @@ public class ClientSetup {
         event.register(AlembicsModelLoader.ALEMBICS_LOADER.getPath(), new AlembicsModelLoader());
         event.register(ForcepsModelLoader.FORCEPS_LOADER.getPath(), new ForcepsModelLoader());
         event.register(ItemFlaskModelLoader.ITEM_FLASK_LOADER.getPath(), new ItemFlaskModelLoader());
+        event.register(FishBarrelModelLoader.FISH_BARREL_LOADER.getPath(), new FishBarrelModelLoader());
         //ModelLoaderRegistry.registerLoader(FlaskModelLoader.FLASK_LOADER, new FlaskModelLoader());
         //ModelLoaderRegistry.registerLoader(FlaskShelfModelLoader.FLASK_SHELF_LOADER, new FlaskShelfModelLoader());
     }
