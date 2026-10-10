@@ -1,0 +1,23 @@
+model: weeper
+length: 43
+start: 0: 4
+    rotz: body: 0.2: linear: absolute
+start: 0: 10
+    roty: right_arm1: 1.43: linear: absolute
+    rotz: right_arm1: 2.63: linear: absolute
+    rotx: right_arm2: 1.25: linear: absolute
+start: 11: 15:
+    rotz: right_arm1: 2.03: linear: absolute
+start: 16: 20:
+    rotz: right_arm1: 2.63: linear: absolute
+start: 21: 25:
+    rotz: right_arm1: 2.03: linear: absolute
+start: 26: 30:
+    rotz: right_arm1: 2.63: linear: absolute
+start: 31: 35:
+    rotz: right_arm1: 2.03: linear: absolute
+start: 36: 42
+    rotz: body: 0: linear: absolute
+    roty: right_arm1: 0: linear: absolute
+    rotz: right_arm1: 0.4363: linear: absolute
+    rotx: right_arm2: 0.8727: linear: absolute

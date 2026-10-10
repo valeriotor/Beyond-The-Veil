@@ -1,0 +1,143 @@
+{
+  "id": "arche_binding",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "stopsDialogueUnlock": false,
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "shoremen": {
+      "id": "shoremen",
+      "dialogueOptions": [
+        {
+          "id": "i_",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        },
+        {
+          "id": "to_",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "keeper": {
+      "id": "keeper",
+      "dialogueOptions": [
+        {
+          "id": "there",
+          "branchLength": 2,
+          "endingNodeID": "tell",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "tell": {
+      "id": "tell",
+      "dialogueOptions": [
+        {
+          "id": "where",
+          "branchLength": 1,
+          "endingNodeID": "me",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "no_",
+          "branchLength": 1,
+          "endingNodeID": "shoremen",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "wait,",
+          "branchLength": 1,
+          "endingNodeID": "me",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "me": {
+      "id": "me",
+      "dialogueOptions": [
+        {
+          "id": "i",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        },
+        {
+          "id": "to",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "a",
+          "branchLength": 1,
+          "endingNodeID": "keeper",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "tell",
+          "branchLength": 2,
+          "endingNodeID": "tell",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    }
+  },
+  "type": "weeper",
+  "dialogueUnlocks": ["weeper:fletum"],
+  "dataUnlocks": ["weeper_arche"]
+}

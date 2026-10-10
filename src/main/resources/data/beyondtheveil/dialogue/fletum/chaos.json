@@ -1,0 +1,33 @@
+{
+  "id": "chaos",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "stopsDialogueUnlock": false,
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "___",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    }
+  },
+  "type": "fletum",
+  "dialogueUnlocks": [],
+  "dataUnlocks": []
+}

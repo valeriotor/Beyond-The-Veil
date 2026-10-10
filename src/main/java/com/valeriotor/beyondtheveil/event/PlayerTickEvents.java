@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
@@ -8,6 +9,8 @@ import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
+import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
+import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceWaypoint;
@@ -19,6 +22,8 @@ import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingEvents;
 import com.valeriotor.beyondtheveil.surgery.surgeon.BellData;
 import com.valeriotor.beyondtheveil.tile.SacrificeAltarBE;
@@ -96,6 +101,7 @@ public class PlayerTickEvents {
             sendOtherPlayerDeathCoords(event);
             surgeonBellParticles(event);
             transformationTickEvents(event);
+            periodicUnlockCheck(event);
             if (p instanceof ServerPlayer sp) {
                 bloodPoolEvents(sp);
                 BindingEvents.playerTickEvent(event, sp);
@@ -110,6 +116,20 @@ public class PlayerTickEvents {
         }
         if (event.player.tickCount == 3) {
             event.player.refreshDimensions();
+        }
+    }
+
+    private static void periodicUnlockCheck(TickEvent.PlayerTickEvent event) {
+        Player p = event.player;
+        if (p.tickCount % 2000 == 0) {
+            BindingData bindingData = DataUtil.getBindingData(p);
+            DialogueData dialogueData = DialogueData.for_(p);
+            String currentWeeperDialogue = dialogueData.getDialogue(DialogueType.WEEPER).getID();
+            if (DataUtil.getBoolean(p, PlayerDataLib.slew_keeper.name()) && !DataUtil.getBoolean(p, PlayerDataLib.weeper_arche.name()) && bindingData != null && bindingData.getBinding() != Binding.ARCHE && currentWeeperDialogue.equals("fletum")) {
+                dialogueData.setDialogue(DialogueType.WEEPER, DialogueRegistry.getTemplate(DialogueType.WEEPER, "arche_binding"));
+            } else if (DataUtil.getBoolean(p, PlayerDataLib.ghost_weed_seeds.name()) && !DataUtil.getBoolean(p, PlayerDataLib.weeper_plant_dream.name())) {
+                dialogueData.setDialogue(DialogueType.WEEPER, DialogueRegistry.getTemplate(DialogueType.WEEPER, "plant_dream"));
+            }
         }
     }
 

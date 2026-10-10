@@ -76,6 +76,7 @@ public class AnimationRegistry {
     public static AnimationTemplate weeper_get_up;
     public static AnimationTemplate weeper_get_up_spineless;
     public static AnimationTemplate weeper_ritual;
+    public static AnimationTemplate weeper_wave;
 
     public static void loadAnimations(boolean client) {
         if (client) {
@@ -142,6 +143,7 @@ public class AnimationRegistry {
         weeper_get_up = registerAnimation("weeper_get_up", client, i++);
         weeper_get_up_spineless = registerAnimation("weeper_get_up_spineless", client, i++);
         weeper_ritual = registerAnimation("weeper_ritual", client, i++);
+        weeper_wave = registerAnimation("weeper_wave", client, i++);
     }
 
 

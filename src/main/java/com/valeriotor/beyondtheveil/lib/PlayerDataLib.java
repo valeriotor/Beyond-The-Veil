@@ -110,6 +110,10 @@ public enum PlayerDataLib {
     vijhiss,
     arboreal_generator,
     megydrea,
+    talked_to_fletum,
+    talked_to_fletum2,
+    weeper_arche,
+    weeper_plant_dream
     ;
 
     // Longs

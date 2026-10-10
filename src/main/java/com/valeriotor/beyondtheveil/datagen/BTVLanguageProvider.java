@@ -558,6 +558,98 @@ public class BTVLanguageProvider extends LanguageProvider {
         addShoremanDialogue();
         addBloodCultistDialogue();
         addShoremanCultistDialogue();
+        addWeeperDialogue();
+        addFletumDialogue();
+    }
+
+    private void addFletumDialogue() {
+        add("dialogue.fletum.happy.start.0", "I am happy.");
+        add("dialogue.fletum.happy.happy.0", "I am happy.");
+        add("dialogue.fletum.happy.happy.option", "Happy to hear.");
+        add("dialogue.fletum.happy.indeed___.option", "Indeed...");
+        add("dialogue.fletum.happy.because.option", "Because you no longer sense anything?");
+        add("dialogue.fletum.happy.i.option", "I envy you.");
+
+        add("dialogue.fletum.rubies.start.0", "Big red rubies at the top of the bottom of the ocean. Red like coral like fire like blood.");
+        add("dialogue.fletum.rubies.i've.option", "I've been there.");
+        add("dialogue.fletum.rubies.good.option", "Good to know.");
+
+        add("dialogue.fletum.splish.start.0", "Splish splash.");
+        add("dialogue.fletum.splish.plip.option", "Plip Plop.");
+
+        add("dialogue.fletum.cry.start.0", "Oh no, little one! I cry of joy, not grief!");
+        add("dialogue.fletum.cry.the.option", "The beauty of ignorance.");
+        add("dialogue.fletum.cry.do.option", "Do you see more or less than we do?");
+        add("dialogue.fletum.cry.the_.option", "The beauty of knowledge.");
+
+        add("dialogue.fletum.chaos.start.0", "I heard Chaos Crawling into my ear.\nHe said I'm his favourite! Tee-hee.");
+        add("dialogue.fletum.chaos.___.option", "...");
+
+    }
+
+    private void addWeeperDialogue() {
+
+        add("dialogue.weeper.initial.start.0", "It swirls and churns and rumbles and flows. A stream, all inside of me.");
+        add("dialogue.weeper.initial.areyouthere.0", "My... my maker. Are you there?\nI can see you. I can hear you. But I am still not sure.");
+        add("dialogue.weeper.initial.senses.0", "It just doesn't make sense. None of it. Was it always like this? Like... pieces of cardboard. All of you.\nAll written, all predetermined... to deceive me.\nBut I can still see you! Still hear you! And it hurts... so, so very much.");
+        add("dialogue.weeper.initial.do.option", "Do you no longer trust your senses?");
+        add("dialogue.weeper.initial.i_.option", "I am sorry.");
+        add("dialogue.weeper.initial.how.option", "How do you see without eyes?");
+        add("dialogue.weeper.initial.perhaps.option", "Perhaps I can fix that.");
+        add("dialogue.weeper.initial.you.option", "You mean the water?");
+        add("dialogue.weeper.initial.i.option", "I am here.");
+        add("dialogue.weeper.initial.then.option", "Then weep your grief away.");
+        add("dialogue.weeper.initial.what.option", "What do you feel?");
+        add("dialogue.weeper.initial.do_.option", "Do you remember who you were?");
+
+        add("dialogue.weeper.riddle.start.0", "I have no eyes but I can weep,\nI have a body but I cannot feel,\nMy blood is pale, my heart pumps tears.\nWhat am I?");
+        add("dialogue.weeper.riddle.riddle.0", "Yes. But I don't know the answer.");
+        add("dialogue.weeper.riddle.i'll.option", "I'll think about it.");
+        add("dialogue.weeper.riddle.i.option", "I might have a hunch...");
+        add("dialogue.weeper.riddle.you_.option", "You are an abomination");
+        add("dialogue.weeper.riddle.you.option", "You are a miracle.");
+        add("dialogue.weeper.riddle.is.option", "Is this a riddle?");
+
+        add("dialogue.weeper.fletum.start.0", "I see, I hear, and it hurts so very much.\nPlease, Maker, sever it! My last bond with your world!");
+        add("dialogue.weeper.fletum.i.option", "I can... but it will be painful.");
+        add("dialogue.weeper.fletum.no_.option", "No. I need you as you are.");
+
+        add("dialogue.weeper.arche_binding.start.0", "Maker! I have a secret to share.\nBut, why do you weep?");
+        add("dialogue.weeper.arche_binding.keeper.0", "A bond of tears! Of course, that is what I wished to speak about!\nAnd, perhaps, next time no one shall pass!");
+        add("dialogue.weeper.arche_binding.me.0", "Me, of course!");
+        add("dialogue.weeper.arche_binding.shoremen.0", "No, not them! Me, of course!");
+        add("dialogue.weeper.arche_binding.tell.0", "Your binding was forged in the red, earthly blood – the one that once coursed through me.\nBut there is a fourth binding, fashioned in the oldest and palest of bloods: tears.");
+        add("dialogue.weeper.arche_binding.tell.1", "Bind yourself to the Overworld, but, this time, sacrifice someone who bleeds white!");
+        add("dialogue.weeper.arche_binding.there.option", "There won't be a next time. Please, tell me your secret.");
+        add("dialogue.weeper.arche_binding.i_.option", "I understand. Thank you.");
+        add("dialogue.weeper.arche_binding.i.option", "I understand. Thank you.");
+        add("dialogue.weeper.arche_binding.where.option", "Where would I find someone like that?");
+        add("dialogue.weeper.arche_binding.to_.option", "To willingly relinquish your life... I am sorry for creating you.");
+        add("dialogue.weeper.arche_binding.a.option", "A friend has passed on.");
+        add("dialogue.weeper.arche_binding.tell.option", "Tell me the secret.");
+        add("dialogue.weeper.arche_binding.no_.option", "No. The Shoremen shall no longer suffer at my hands.");
+        add("dialogue.weeper.arche_binding.wait,.option", "Wait, you don't mean...");
+        add("dialogue.weeper.arche_binding.to.option", "To willingly relinquish your life... I am sorry for creating you.");
+
+        add("dialogue.weeper.plant_dream.start.0", "Maker, maker! Have you ever dreamt of plants?|\nThen hold a diamond in your hands!");
+        add("dialogue.weeper.plant_dream.what?.option", "What?");
+        add("dialogue.weeper.plant_dream.diamonds.option", "Diamonds are precious. I hope this is not a trick.");
+
+        add("dialogue.weeper.master.know.0", "Oh, no, you have lost your master too! Then let us weep together, to await master's return!");
+        add("dialogue.weeper.master.free.0", "No. No one is free. We all have a master, at the bottom of the sea.");
+        add("dialogue.weeper.master.me.0", "No... no! My master lies deep down below, at the bottom of the sea!");
+        add("dialogue.weeper.master.start.0", "Where is my master?");
+        add("dialogue.weeper.master.i.option", "I am free.");
+        add("dialogue.weeper.master._____.option", "...");
+        add("dialogue.weeper.master.___.option", "...");
+        add("dialogue.weeper.master.____.option", "...");
+        add("dialogue.weeper.master.let.option", "Let us weep, then.");
+        add("dialogue.weeper.master.you_.option", "You have no master. You are free!");
+        add("dialogue.weeper.master.you.option", "You lost your wits.");
+        add("dialogue.weeper.master.your.option", "Your master is never coming back.");
+        add("dialogue.weeper.master.i_.option", "I am your master.");
+        add("dialogue.weeper.master.i__.option", "I don't know.");
+
     }
 
     private void addShoremanCultistDialogue() {
@@ -2255,6 +2347,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dialogue.miner.display_name", "Miner");
         add("gui.dialogue.scholar.display_name", "Scholar");
         add("gui.dialogue.smith.display_name", "Smith");
+        add("gui.dialogue.weeper.display_name", "Weeper");
+        add("gui.dialogue.fletum.display_name", "Fletum");
 
         add("gui.multiblock.layer", "Layer %d");
 

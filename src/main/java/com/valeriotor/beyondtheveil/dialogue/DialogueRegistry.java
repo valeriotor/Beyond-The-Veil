@@ -78,6 +78,19 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.DROWNED, "gnawing");
         registerDialogue(DialogueType.DROWNED, "ocean");
         registerDialogue(DialogueType.DROWNED, "you");
+
+        registerDialogue(DialogueType.WEEPER, "initial");
+        registerDialogue(DialogueType.WEEPER, "fletum");
+        registerDialogue(DialogueType.WEEPER, "riddle");
+        registerDialogue(DialogueType.WEEPER, "arche_binding");
+        registerDialogue(DialogueType.WEEPER, "plant_dream");
+        registerDialogue(DialogueType.WEEPER, "master");
+
+        registerDialogue(DialogueType.FLETUM, "happy");
+        registerDialogue(DialogueType.FLETUM, "rubies");
+        registerDialogue(DialogueType.FLETUM, "splish");
+        registerDialogue(DialogueType.FLETUM, "cry");
+        registerDialogue(DialogueType.FLETUM, "chaos");
     }
 
     private static void registerDialogue(DialogueType type, String id) {

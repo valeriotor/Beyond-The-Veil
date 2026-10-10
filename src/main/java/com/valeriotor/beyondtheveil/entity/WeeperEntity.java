@@ -1,6 +1,8 @@
 package com.valeriotor.beyondtheveil.entity;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
+import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
@@ -9,7 +11,13 @@ import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
+import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
+import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
+import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
+import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.WeepGoal;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
@@ -17,6 +25,7 @@ import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
@@ -28,6 +37,7 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -37,24 +47,29 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
-public class WeeperEntity extends PathfinderMob implements AnimatedEntity, AmmunitionEntity, PlayerMinion, SurgeryPatient, Weeping {
+public class WeeperEntity extends PathfinderMob implements AnimatedEntity, AmmunitionEntity, PlayerMinion, SurgeryPatient, Talkable, Weeping {
 
     private static final EntityDataAccessor<Integer> DATA_BLEEDING = SynchedEntityData.defineId(WeeperEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_TARGETING = SynchedEntityData.defineId(WeeperEntity.class, EntityDataSerializers.BOOLEAN);
@@ -72,6 +87,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     private boolean inPod;
     private Animation ritualAnimation;
     private boolean startedRitualAnimation;
+    private Player talkingPlayer;
 
 
     public WeeperEntity(EntityType<? extends PathfinderMob> type, Level world) {
@@ -85,12 +101,41 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D) {
             @Override
             public boolean canUse() {
-                return super.canUse() && lacrymatoryPos == null && tickCount > 60;
+                boolean firstReturn = super.canUse() && lacrymatoryPos == null && tickCount > 60;
+                if (!firstReturn) {
+                    return false;
+                }
+                if (mob instanceof WeeperEntity weeper) {
+                    ServerPlayer player = weeper.getMaster();
+                    if (player != null && player.distanceToSqr(weeper) < 40 * 40) {
+                        DialogueTemplate template = DialogueData.for_(player).getDialogue(DialogueType.WEEPER);
+                        return template == null || (!template.getID().equals("arche_binding") && !template.getID().equals("plant_dream"));
+                    }
+                }
+                return true;
             }
         });
         this.goalSelector.addGoal(0, new HurtByTargetGoal(this));
         this.goalSelector.addGoal(2, new LivingAmmunitionGoal<>(this, 1.8D, false));
         this.goalSelector.addGoal(3, new WeepGoal<>(this, 1));
+        this.goalSelector.addGoal(1, new TalkToPlayerGoal<>(this));
+        this.goalSelector.addGoal(1, new LookAtTalkingPlayerGoal<>(this));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 40) {
+            @Override
+            public boolean canUse() {
+                if (mob instanceof WeeperEntity weeper) {
+                    ServerPlayer player = weeper.getMaster();
+                    if (player != null && player.distanceToSqr(weeper) < lookDistance * lookDistance) {
+                        DialogueTemplate template = DialogueData.for_(player).getDialogue(DialogueType.WEEPER);
+                        if (template != null && (template.getID().equals("arche_binding") || template.getID().equals("plant_dream"))) {
+                            lookAt = player;
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -287,6 +332,17 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
                     }
                     deathTimer = 15;
                 }
+            } else {
+                if (tickCount % 150 == 0) {
+                    ServerPlayer player = getMaster();
+                    if (player != null) {
+                        DialogueTemplate template = DialogueData.for_(player).getDialogue(DialogueType.WEEPER);
+                        if (template != null && (template.getID().equals("arche_binding") || template.getID().equals("plant_dream"))) {
+                            AnimationTemplate animationTemplate = AnimationRegistry.weeper_wave;
+                            sendAnimation(animationTemplate, 0);
+                        }
+                    }
+                }
             }
         }
     }
@@ -450,5 +506,42 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
 
     public Animation getRitualAnimation() {
         return ritualAnimation;
+    }
+
+    @Override
+    public Player getTalkingPlayer() {
+        return talkingPlayer;
+    }
+
+    @Override
+    public void setTalkingPlayer(Player player) {
+        talkingPlayer = player;
+    }
+
+    @Override
+    public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+        //System.out.println(getProfession() + " " + level().isClientSide);
+        ItemStack itemstack = pPlayer.getItemInHand(pHand);
+        if (itemstack.getItem() != Registration.WEEPER_EGG.get() && this.isAlive() && !this.isTalking() && !pPlayer.isSecondaryUseActive() && (!pPlayer.isShiftKeyDown() || !pPlayer.getUUID().equals(master))) {
+            if (!this.level().isClientSide) {
+                this.startTalking((ServerPlayer) pPlayer);
+            }
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        } else {
+            return super.mobInteract(pPlayer, pHand);
+        }
+    }
+
+    public void startTalking(ServerPlayer player) {
+        DialogueType dialogueType = DialogueType.WEEPER;
+        DialogueTemplate template = Objects.equals(player.getUUID(), master) ? DialogueData.for_(player).getDialogue(dialogueType) : DialogueRegistry.getTemplate(DialogueType.WEEPER, "master");
+        if (template != null) {
+            setTalkingPlayer(player);
+            NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, this, template, getId()), Component.translatable("gui.dialogue.weeper.display_name")), b -> {
+                b.writeUtf(dialogueType.name());
+                b.writeUtf(template.getID());
+                b.writeInt(getId());
+            });
+        }
     }
 }

@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueBranch;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
+import com.valeriotor.beyondtheveil.entity.FletumEntity;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
@@ -34,6 +35,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
 
     private static final ResourceLocation SHOREMAN_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/shoreman.png");
     public static final ResourceLocation BLOOD_CULTIST_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/blood_cultist.png");
+    public static final ResourceLocation WEEPER_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/weeper.png");
     private static final float TEXT_WIDTH_RATIO = 0.9F;
     private static final float TEXT_HEIGHT_RATIO = 0.85F;
     private final float startYRot;
@@ -58,6 +60,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
         indexInBranch = pMenu.getIndexInBranch();
         texture = switch (pMenu.getTemplate().getType()) {
             case BLOOD_CULTIST -> BLOOD_CULTIST_TEXTURE;
+            case WEEPER, FLETUM -> WEEPER_TEXTURE;
             default -> SHOREMAN_TEXTURE;
         };
         LocalPlayer p = Minecraft.getInstance().player;
@@ -156,7 +159,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
         LocalPlayer p = Minecraft.getInstance().player;
         if (entity != null && p != null) {
             double d0 = entity.getX() - p.getX();
-            double d1 = entity.getY() - p.getY();
+            double d1 = entity.getY() - p.getY() - (entity instanceof FletumEntity ? 1 : 0);
             double d2 = entity.getZ() - p.getZ();
             double d3 = Math.sqrt(d0 * d0 + d2 * d2);
             p.setYRot(Mth.wrapDegrees(p.getYRot()));
