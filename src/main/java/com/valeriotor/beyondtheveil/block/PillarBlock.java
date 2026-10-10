@@ -97,7 +97,7 @@ public class PillarBlock extends Block {
     public void setPlacedBy(Level level, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
         super.setPlacedBy(level, pPos, pState, pPlacer, pStack);
         if (level instanceof ServerLevel sl) {
-            LifeEconomyData.getInstance(sl).addPillarFromItem(pPos, pStack);
+            LifeEconomyData.getInstance(sl).addPillarFromItem(pPos, pStack, pPlacer);
         }
     }
 

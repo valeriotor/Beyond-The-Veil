@@ -4,7 +4,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.gui.elements.DialogueOptions;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueBranch;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
@@ -159,7 +162,8 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
         LocalPlayer p = Minecraft.getInstance().player;
         if (entity != null && p != null) {
             double d0 = entity.getX() - p.getX();
-            double d1 = entity.getY() - p.getY() - (entity instanceof FletumEntity ? 1 : 0);
+            CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+            double d1 = entity.getY() - p.getY() - (entity instanceof FletumEntity ? 1 : 0) - (crossSync != null && crossSync.getTransformation() == PlayerTransformation.DEEP_ONE ? 1 : 0);
             double d2 = entity.getZ() - p.getZ();
             double d3 = Math.sqrt(d0 * d0 + d2 * d2);
             p.setYRot(Mth.wrapDegrees(p.getYRot()));

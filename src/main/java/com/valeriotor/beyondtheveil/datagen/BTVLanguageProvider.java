@@ -818,6 +818,24 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.blood_cultist.immortal2.and.option", "And you wish to study §ome§r?");
         add("dialogue.blood_cultist.immortal2.i'm.option", "I'm not \"undying\". I just come back after death.");
 
+        add("dialogue.blood_cultist.gift.course.0", "Now our bond is sealed – let it triumph over bonds forged in lesser blood!");
+        add("dialogue.blood_cultist.gift.away.0", "I'll just put it on the floor...");
+        add("dialogue.blood_cultist.gift.partnership.0", "First one is on the house – in honour of our burgeoning partnership!\nOf course, the next ones won't be free.");
+        add("dialogue.blood_cultist.gift.shoulder.0", "No space – let me put it on the floor instead.");
+        add("dialogue.blood_cultist.gift.start.0", "Here – a gift!");
+        add("dialogue.blood_cultist.gift.thanks.0", "Where should I put it?");
+        add("dialogue.blood_cultist.gift.farewell_.option", "Farewell.");
+        add("dialogue.blood_cultist.gift.___.option", "...");
+        add("dialogue.blood_cultist.gift.____.option", "...");
+        add("dialogue.blood_cultist.gift.on_.option", "On my shoulder.");
+        add("dialogue.blood_cultist.gift.of.option", "Of course.");
+        add("dialogue.blood_cultist.gift.what.option", "What the §kheck§r?");
+        add("dialogue.blood_cultist.gift.on__.option", "On my shoulder.");
+        add("dialogue.blood_cultist.gift.you.option", "You won't dictate whom I may bond with.");
+        add("dialogue.blood_cultist.gift.thanks!.option", "Thanks!");
+        add("dialogue.blood_cultist.gift.thanks___.option", "Thanks...");
+        add("dialogue.blood_cultist.gift.on.option", "On the floor.");
+        add("dialogue.blood_cultist.gift.heavens,.option", "Heavens, take him away!");
 
     }
 

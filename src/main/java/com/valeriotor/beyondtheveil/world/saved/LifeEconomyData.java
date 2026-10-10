@@ -1,24 +1,39 @@
 package com.valeriotor.beyondtheveil.world.saved;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
+import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
+import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
+import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
+import com.valeriotor.beyondtheveil.dialogue.DialogueType;
+import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.tile.PatientPodBE;
+import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
+import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import oshi.util.tuples.Pair;
 
 import java.util.*;
@@ -164,7 +179,7 @@ public class LifeEconomyData extends SavedData {
         }
     }
 
-    public void addPillarFromItem(BlockPos pos, ItemStack stack) {
+    public void addPillarFromItem(BlockPos pos, ItemStack stack, @Nullable LivingEntity placer) {
         // three possibilities: either has no connection, or the old connection is alive and well, or the old connection was replaced and we need to remove this from the new data
         CompoundTag tag = stack.getOrCreateTag().copy();
         tag.putLong("currentPos", pos.asLong());
@@ -183,6 +198,31 @@ public class LifeEconomyData extends SavedData {
                 } else {
                     data = new PillarData(tag);
                     pillarsByConnection.put(connection, isOffer ? new Pair<>(data, pair.getB()) : new Pair<>(pair.getA(), data));
+                    if (placer instanceof ServerPlayer sp) {
+                        if (!DataUtil.getBoolean(sp, PlayerDataLib.use_pillars.name())) {
+                            DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.use_pillars.name(), true);
+                            BloodCultistEntity cultist = new BloodCultistEntity(BTVEntities.BLOOD_CULTIST.get(), sp.level());
+                            cultist.setPos(pos.getCenter());
+                            VillagerType[] types = new VillagerType[]{VillagerType.DESERT, VillagerType.JUNGLE, VillagerType.PLAINS, VillagerType.SAVANNA, VillagerType.SNOW, VillagerType.SWAMP, VillagerType.TAIGA};
+                            cultist.setHeldVillagerType(types[cultist.getRandom().nextInt(types.length)]);
+                            cultist.doParticles();
+                            sp.level().addFreshEntity(cultist);
+                            PlayerTimer timer = new PlayerTimer.Builder("cultist_gift", 20)
+                                    .addFinalActions((player, playerTimer) -> {
+                                        if (player instanceof ServerPlayer sp1) {
+                                            cultist.setTalkingPlayer(player);
+                                            DialogueTemplate template = DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "gift");
+                                            NetworkHooks.openScreen(sp1, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, cultist, template, cultist.getId()), Component.translatable("gui.dialogue.blood_cultist.display_name")), b -> {
+                                                b.writeUtf(DialogueType.BLOOD_CULTIST.name());
+                                                b.writeUtf(template.getID());
+                                                b.writeInt(cultist.getId());
+                                            });
+
+                                        }
+                                    }).toTimer();
+                            PlayerTimerData.for_(sp).addTimer(timer);
+                        }
+                    }
                 }
             }
         }

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,26 +31,26 @@ public class DialogueBranch {
         return I18n.get("dialogue.%s.%s.%s.%d".formatted(template.getType().name().toLowerCase(), template.getID(), key, indexInBranch));
     }
 
-    public List<DialogueOption> getDialogueOptions(PlayerData data, DialogueTemplate template, int indexInBranch) {
-        return getDialogueOptionKeys(data, template, indexInBranch).stream().map(o -> new DialogueOption(I18n.get(o.line), o.type)).toList();
+    public List<DialogueOption> getDialogueOptions(Player player, PlayerData data, DialogueTemplate template, int indexInBranch) {
+        return getDialogueOptionKeys(player, data, template, indexInBranch).stream().map(o -> new DialogueOption(I18n.get(o.line), o.type)).toList();
     }
 
-    private List<DialogueOption> getDialogueOptionKeys(PlayerData data, DialogueTemplate template, int indexInBranch) {
+    private List<DialogueOption> getDialogueOptionKeys(Player player, PlayerData data, DialogueTemplate template, int indexInBranch) {
         if (indexInBranch >= branchLength - 1) {
             if (endsDialogue) {
                 return List.of(new DialogueOption("dialogue.end", OptionType.END));
             }
-            return template.getNodeByID(endingNodeID).getDialogueOptions(data).stream().map(b -> new DialogueOption("dialogue.%s.%s.%s.option".formatted(template.getType().name().toLowerCase(), template.getID(), b.getBranchID()), OptionType.fromBranch(b))).collect(Collectors.toList());
+            return template.getNodeByID(endingNodeID).getDialogueOptions(player, data, template).stream().map(b -> new DialogueOption("dialogue.%s.%s.%s.option".formatted(template.getType().name().toLowerCase(), template.getID(), b.getBranchID()), OptionType.fromBranch(b))).collect(Collectors.toList());
         }
         return List.of(new DialogueOption("dialogue.continue", OptionType.CONTINUE));
     }
 
-    public int getNumberOfDialogueOptions(PlayerData data, DialogueTemplate template, int indexInBranch) {
+    public int getNumberOfDialogueOptions(Player player, PlayerData data, DialogueTemplate template, int indexInBranch) {
         if (indexInBranch >= branchLength - 1) {
             if (endsDialogue) {
                 return 1;
             }
-            return template.getNodeByID(endingNodeID).getDialogueOptions(data).size();
+            return template.getNodeByID(endingNodeID).getDialogueOptions(player, data, template).size();
         }
         return 1;
     }

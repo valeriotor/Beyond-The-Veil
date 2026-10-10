@@ -27,6 +27,7 @@ import java.util.Objects;
 
 public class EntityDialogueMenu extends AbstractContainerMenu {
 
+    private final Player player;
     private final Talkable npc;
     private final DialogueTemplate template;
     private final int entityId;
@@ -43,6 +44,7 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
 
     public EntityDialogueMenu(int pContainerId, Inventory playerInventory, Player player, Talkable talkable, DialogueTemplate template, int entityId) {
         super(Registration.SHOREMAN_DIALOGUE_MENU.get(), pContainerId);
+        this.player = player;
         this.npc = talkable;
         this.template = template;
         this.entityId = entityId;
@@ -63,7 +65,7 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
     }
 
     public void chooseOptionOnServer(ServerPlayer player, int option) {
-        player.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(data -> dialogue.chooseOption(player, option));
+        player.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(data -> dialogue.chooseOption(player, option, this));
         if (!dialogue.isFinished()) {
             this.branch.set(allBranches.indexOf(dialogue.getCurrentBranch()));
             this.indexInBranch.set(dialogue.getIndexInBranch());
@@ -81,7 +83,7 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
     }
 
     private void additionalEndEffects() {
-        if (this.npc instanceof BloodCultistEntity bc && (template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal") || template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal2"))) {
+        if (this.npc instanceof BloodCultistEntity bc && (template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal") || template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal2") || template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "gift"))) {
             if (Objects.equals(dialogue.getCurrentBranch().getBranchID(), "§omadman_§r")) {
                 DialogueData.for_(bc.getTalkingPlayer()).setDialogue(DialogueType.BLOOD_CULTIST, DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal2"));
                 bc.sendAnimation(AnimationRegistry.blood_cultist_killed_by_player, 0);
@@ -116,7 +118,7 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
     }
 
     public List<DialogueBranch.DialogueOption> getDialogueOptions(PlayerData data) {
-        return allBranches.get(branch.get()).getDialogueOptions(data, template, indexInBranch.get());
+        return allBranches.get(branch.get()).getDialogueOptions(player, data, template, indexInBranch.get());
     }
 
     public int getBranch() {
@@ -162,5 +164,9 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
 
     public int getEntityId() {
         return entityId;
+    }
+
+    public Talkable getNpc() {
+        return npc;
     }
 }

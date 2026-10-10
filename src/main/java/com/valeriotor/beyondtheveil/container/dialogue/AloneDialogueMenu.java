@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 
 public class AloneDialogueMenu extends AbstractContainerMenu {
+    private final Player player;
     private final DialogueTemplate template;
     private final DataSlot counter;
     private final DataSlot branch;
@@ -23,6 +24,7 @@ public class AloneDialogueMenu extends AbstractContainerMenu {
 
     public AloneDialogueMenu(MenuType<?> type, int pContainerId, Inventory playerInventory, Player player, DialogueTemplate template) {
         super(type, pContainerId);
+        this.player = player;
         this.template = template;
         this.counter = DataSlot.standalone();
         this.branch = DataSlot.standalone(); // TODO consider making it an array of two ints? In case they don't get sent together otherwise
@@ -41,7 +43,7 @@ public class AloneDialogueMenu extends AbstractContainerMenu {
     }
 
     public void chooseOptionOnServer(ServerPlayer player, int option) {
-        player.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(data -> dialogue.chooseOption(player, option));
+        player.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(data -> dialogue.chooseOption(player, option, this));
         if (!dialogue.isFinished()) {
             this.branch.set(allBranches.indexOf(dialogue.getCurrentBranch()));
             this.indexInBranch.set(dialogue.getIndexInBranch());
@@ -65,7 +67,7 @@ public class AloneDialogueMenu extends AbstractContainerMenu {
     }
 
     public List<DialogueBranch.DialogueOption> getDialogueOptions(PlayerData data) {
-        return allBranches.get(branch.get()).getDialogueOptions(data, template, indexInBranch.get());
+        return allBranches.get(branch.get()).getDialogueOptions(player, data, template, indexInBranch.get());
     }
 
     public int getCounter() {

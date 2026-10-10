@@ -101,6 +101,7 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
 
     @Override
     public void prepareMobModel(BloodCultistEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+        markDirty();
         resetParts();
         super.prepareMobModel(pEntity, pLimbSwing, pLimbSwingAmount, pPartialTick);
         if (pEntity.getHeldVillager() != null) {

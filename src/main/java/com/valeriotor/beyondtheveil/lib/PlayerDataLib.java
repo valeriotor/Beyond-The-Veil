@@ -113,7 +113,8 @@ public enum PlayerDataLib {
     talked_to_fletum,
     talked_to_fletum2,
     weeper_arche,
-    weeper_plant_dream
+    weeper_plant_dream,
+    use_pillars
     ;
 
     // Longs

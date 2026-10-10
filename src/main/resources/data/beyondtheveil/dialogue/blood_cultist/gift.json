@@ -1,0 +1,168 @@
+{
+  "id": "gift",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "stopsDialogueUnlock": false,
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "thanks": {
+      "id": "thanks",
+      "dialogueOptions": [
+        {
+          "id": "on",
+          "branchLength": 1,
+          "endingNodeID": "partnership",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "on_",
+          "branchLength": 1,
+          "endingNodeID": "partnership",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "on__",
+          "branchLength": 1,
+          "endingNodeID": "shoulder",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "heavens,",
+          "branchLength": 1,
+          "endingNodeID": "away",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "away": {
+      "id": "away",
+      "dialogueOptions": [
+        {
+          "id": "___",
+          "branchLength": 1,
+          "endingNodeID": "partnership",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "partnership": {
+      "id": "partnership",
+      "dialogueOptions": [
+        {
+          "id": "of",
+          "branchLength": 1,
+          "endingNodeID": "course",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "thanks!",
+          "branchLength": 1,
+          "endingNodeID": "thanks",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "thanks___",
+          "branchLength": 1,
+          "endingNodeID": "thanks",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "what",
+          "branchLength": 1,
+          "endingNodeID": "thanks",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "course": {
+      "id": "course",
+      "dialogueOptions": [
+        {
+          "id": "farewell_",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        },
+        {
+          "id": "you",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "shoulder": {
+      "id": "shoulder",
+      "dialogueOptions": [
+        {
+          "id": "____",
+          "branchLength": 1,
+          "endingNodeID": "partnership",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    }
+  },
+  "type": "blood_cultist",
+  "dialogueUnlocks": [],
+  "dataUnlocks": []
+}

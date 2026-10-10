@@ -49,6 +49,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.Nullable;
 
 public class BloodCultistEntity extends PathfinderMob implements Talkable, AnimatedEntity {
 
@@ -131,10 +132,8 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                 killCutsceneTicks++;
             }
             if (heldVillager == null && !entityData.get(HELD_VILLAGER_TYPE).equals("null")) {
-                heldVillager = new CrawlerEntity(BTVEntities.CRAWLER.get(), level());
+                heldVillager = createHeldEntity();
                 heldVillager.setHolderType(PatientHolderType.CULTIST);
-                VillagerType villagerType = BuiltInRegistries.VILLAGER_TYPE.get(new ResourceLocation(entityData.get(HELD_VILLAGER_TYPE)));
-                heldVillager.setVillagerData(heldVillager.getVillagerData().setType(villagerType));
                 heldVillager.setHeld(true);
             } else if (heldVillager != null && entityData.get(HELD_VILLAGER_TYPE).equals("null")) {
                 heldVillager = null;
@@ -240,7 +239,14 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
         }
     }
 
-    private void doParticles() {
+    public CrawlerEntity createHeldEntity() {
+        CrawlerEntity heldVillager = new CrawlerEntity(BTVEntities.CRAWLER.get(), level());
+        VillagerType villagerType = BuiltInRegistries.VILLAGER_TYPE.get(new ResourceLocation(entityData.get(HELD_VILLAGER_TYPE)));
+        heldVillager.setVillagerData(heldVillager.getVillagerData().setType(villagerType));
+        return heldVillager;
+    }
+
+    public void doParticles() {
         if (level() instanceof ServerLevel sl) {
             for (int x = -1; x <= 1; x++) {
                 for (int z = -1; z <= 1; z++) {
@@ -347,7 +353,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
         return false;
     }
 
-    public void setHeldVillagerType(VillagerType type) {
+    public void setHeldVillagerType(@Nullable VillagerType type) {
         if (type == null) {
             entityData.set(HELD_VILLAGER_TYPE, "null");
         } else {
