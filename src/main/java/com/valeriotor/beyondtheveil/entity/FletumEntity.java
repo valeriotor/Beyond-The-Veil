@@ -67,7 +67,7 @@ public class FletumEntity extends PathfinderMob implements PlayerMinion, Talkabl
         if (pPlayer.level().isClientSide) {
             return InteractionResult.PASS;
         }
-        if (pPlayer.isShiftKeyDown() && pPlayer.getUUID().equals(master)) {
+        if (pPlayer.isShiftKeyDown() && (pPlayer.getUUID().equals(master) || pPlayer.isCreative())) {
             ItemHandlerHelper.giveItemToPlayer(pPlayer, new ItemStack(Registration.HELD_FLETUM.get()));
             discard();
             return InteractionResult.SUCCESS;
