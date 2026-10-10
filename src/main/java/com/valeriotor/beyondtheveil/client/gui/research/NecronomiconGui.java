@@ -185,8 +185,11 @@ public class NecronomiconGui extends Screen {
         pose.scale(scaleFactor, scaleFactor, 1);
         pMouseX /= scaleFactor * baseFactor;
         pMouseY /= scaleFactor * baseFactor;
-        //guiGraphics.drawString(minecraft.font, String.format("X: %f, Y: %f", ((pMouseX + topX)) / JSON_TO_REAL_COORD_FACTOR / scaleFactor, (pMouseY + topY) / JSON_TO_REAL_COORD_FACTOR / scaleFactor), 0, 30, 0xFFFFFFFF);
-        //guiGraphics.drawString(minecraft.font, String.format("X: %f, Y: %f", ((topX)) / JSON_TO_REAL_COORD_FACTOR / scaleFactor, (topY) / JSON_TO_REAL_COORD_FACTOR / scaleFactor), 0, 45, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", ((pMouseX + topX)), (pMouseY + topY)), 0, 30, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, String.format("X: %f, Y: %f", ((pMouseX)) / JSON_TO_REAL_COORD_FACTOR / scaleFactor, (pMouseY) / JSON_TO_REAL_COORD_FACTOR / scaleFactor), 0, 45, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, String.format("X: %f, Y: %f", ((pMouseX)) / scaleFactor, (pMouseY) / scaleFactor), 0, 45, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, String.format("X: %f, Y: %f", ((pMouseX + topX)) / JSON_TO_REAL_COORD_FACTOR / scaleFactor, (pMouseY + topY) / JSON_TO_REAL_COORD_FACTOR / scaleFactor), 0, 60, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", ((topX)), (topY)), 0, 75, 0xFFFFFFFF);
         //guiGraphics.drawString(minecraft.font, String.format("X: %f, Y: %f", ((width)) / JSON_TO_REAL_COORD_FACTOR / scaleFactor / baseFactor / scaleFactor, (height) / JSON_TO_REAL_COORD_FACTOR / scaleFactor / baseFactor / scaleFactor), 0, 60, 0xFFFFFFFF);
         //guiGraphics.drawString(minecraft.font, String.format("X: %d, Y: %d", ((width)), (height)), 0, 75, 0xFFFFFFFF);
         if (highlightedMarkedResearch != null && counter - highlightCounter < 10) {
@@ -448,7 +451,14 @@ public class NecronomiconGui extends Screen {
     @Override
     public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
         //this.factor = MathHelperBTV.clamp(2, 5, this.factor + (int) Math.signum(pDelta));
+        pMouseX /= scaleFactor * baseFactor;
+        pMouseY /= scaleFactor * baseFactor;
+        double posX = (pMouseX + topX) / scaleFactor;
+        double posY = (pMouseY + topY) / scaleFactor;
+        float prevScaleFactor = scaleFactor;
         this.scaleFactor = Mth.clamp(this.scaleFactor + (int) Math.signum(pDelta) * 0.25F, 1.75F, 3.25F);
+        topX = (int) ((posX * scaleFactor) - pMouseX * prevScaleFactor / scaleFactor);
+        topY = (int) ((posY * scaleFactor) - pMouseY * prevScaleFactor / scaleFactor);
         return super.mouseScrolled(pMouseX, pMouseY, pDelta);
     }
 
