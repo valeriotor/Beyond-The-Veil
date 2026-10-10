@@ -5,6 +5,8 @@ import com.valeriotor.beyondtheveil.lib.BTVSimpleGuis;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -117,6 +119,7 @@ public class SleepChamberBlock extends Block {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         state = state.cycle(OPEN);
         level.setBlock(pos, state, 10);
+        level.playSound(player, pos, state.getValue(OPEN) ? SoundEvents.WOODEN_DOOR_OPEN : SoundEvents.WOODEN_DOOR_CLOSE, SoundSource.BLOCKS);
         level.levelEvent(player, state.getValue(OPEN) ? 1006 : 1012, pos, 0);
         level.gameEvent(player, state.getValue(OPEN) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
         if (!state.getValue(OPEN) && level.isClientSide && hand == InteractionHand.MAIN_HAND && getPlayerInside(level, pos) == player) {
