@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 
+/* Lowercase for legacy reasons */
 public enum PlayerDataLib {
     // longs
     vein_pos,
@@ -114,7 +115,9 @@ public enum PlayerDataLib {
     talked_to_fletum2,
     weeper_arche,
     weeper_plant_dream,
-    use_pillars
+    use_pillars,
+    saved_keeper,
+    keeper_tears
     ;
 
     // Longs

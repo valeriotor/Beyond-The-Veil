@@ -23,8 +23,10 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
 import com.valeriotor.beyondtheveil.item.DrinkItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.Util;
@@ -73,6 +75,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
 
     private static final EntityDataAccessor<Integer> PROFESSION = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> SUSPICIOUS_LOOK = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> FINS = SynchedEntityData.defineId(ShoremanEntity.class, EntityDataSerializers.BOOLEAN);
 
     private Player talkingPlayer;
     private Vec3 lighthouseKeeperStand;
@@ -145,6 +148,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
         super.defineSynchedData();
         this.entityData.define(PROFESSION, ShoremanProfession.FISHERMAN.ordinal());
         this.entityData.define(SUSPICIOUS_LOOK, false);
+        this.entityData.define(FINS, false);
     }
 
     @Override
@@ -155,6 +159,13 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
     @Override
     public boolean getSuspiciousLook() {
         return entityData.get(SUSPICIOUS_LOOK);
+    }
+
+    public void setShowFins(boolean showFins) {
+        entityData.set(FINS, showFins);
+    }
+    public boolean isShowFins() {
+        return entityData.get(FINS);
     }
 
     public ShoremanProfession getProfession() {
@@ -472,6 +483,9 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
             } else if (aboutToDieByPlayerCountdown > 0) {
                 aboutToDieByPlayerCountdown--;
                 if (aboutToDieByPlayerCountdown == 0) {
+                    if (getTalkingPlayer() != null) {
+                        DataUtil.setBooleanOnServerAndSync(getTalkingPlayer(), PlayerDataLib.slew_keeper.name(), true);
+                    }
                     kill();
                 } else if (aboutToDieByPlayerCountdown == 120) {
                     level().playSound(null, blockPosition(), BTVSounds.SPINE_RIP.get(), SoundSource.NEUTRAL, 0.7F, 1);

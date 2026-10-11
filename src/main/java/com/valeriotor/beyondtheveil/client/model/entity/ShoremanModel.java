@@ -22,6 +22,9 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
     private final ModelPart nose;
     private final ModelPart LeftEye;
     private final ModelPart RightEye;
+    private final ModelPart dorsal_fin;
+    private final ModelPart left_fin;
+    private final ModelPart right_fin;
     private final ModelPart arms;
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
@@ -34,6 +37,9 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
         this.nose = registerAnimatedPart(this.head, "nose");
         this.LeftEye = registerAnimatedPart(this.head, "LeftEye");
         this.RightEye = registerAnimatedPart(this.head, "RightEye");
+        this.dorsal_fin = registerAnimatedPart(this.head, "dorsal_fin");
+        this.left_fin = registerAnimatedPart(this.head, "left_fin");
+        this.right_fin = registerAnimatedPart(this.head, "right_fin");
         this.arms = registerAnimatedPart(this.body, "arms");
         this.RightLeg = registerAnimatedPart(this.body, "RightLeg");
         this.LeftLeg = registerAnimatedPart(this.body, "LeftLeg");
@@ -47,13 +53,38 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
                 .texOffs(0, 38).addBox(-4.0F, -24.0F, -3.0F, 8.0F, 20.0F, 6.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
         PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -10.0F, -4.0F, 8.0F, 10.0F, 8.0F, new CubeDeformation(0.0F))
-                .texOffs(28, 50).addBox(-2.75F, -7.5F, -6.32F, 10.0F, 10.0F, 4.0F, new CubeDeformation(-2.0F)), PartPose.offset(0.0F, -24.0F, 0.0F));
+                .texOffs(28, 50).addBox(-2.75F, -7.5F, -6.1F, 10.0F, 10.0F, 4.0F, new CubeDeformation(-2.0F)), PartPose.offset(0.0F, -24.0F, 0.0F));
 
         PartDefinition nose = head.addOrReplaceChild("nose", CubeListBuilder.create().texOffs(24, 0).addBox(-1.0F, -1.0F, -6.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -2.0F, 0.0F));
 
         PartDefinition LeftEye = head.addOrReplaceChild("LeftEye", CubeListBuilder.create().texOffs(60, 62).addBox(-0.5F, -0.5F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(1.75F, -3.75F, -3.55F));
 
         PartDefinition RightEye = head.addOrReplaceChild("RightEye", CubeListBuilder.create().texOffs(60, 62).addBox(-0.25F, -0.5F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, -3.75F, -3.55F));
+
+        PartDefinition dorsal_fin = head.addOrReplaceChild("dorsal_fin", CubeListBuilder.create().texOffs(60, 16).addBox(-0.5F, -3.0F, -1.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -10.0F, 0.0F));
+
+        PartDefinition cube_r1 = dorsal_fin.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(35, -11).addBox(1.0F, -3.0F, -5.0F, 0.0F, 9.0F, 11.0F, new CubeDeformation(0.0F))
+                .texOffs(60, 16).addBox(0.5F, -3.0F, -1.0F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 2.0F, 5.0F, -1.309F, 0.0F, 0.0F));
+
+        PartDefinition cube_r2 = dorsal_fin.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(60, 16).addBox(0.0F, -3.0F, -1.0F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.5F, 5.5F, 4.25F, -1.7453F, 0.0F, 0.0F));
+
+        PartDefinition cube_r3 = dorsal_fin.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(60, 16).addBox(0.0F, -3.0F, -1.0F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.5F, 0.0F, 3.0F, -0.3927F, 0.0F, 0.0F));
+
+        PartDefinition left_fin = head.addOrReplaceChild("left_fin", CubeListBuilder.create().texOffs(56, 17).addBox(-0.5F, -0.5F, -0.2246F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.25F, -5.0F, -0.7754F, 0.0F, 0.5672F, 0.0F));
+
+        PartDefinition cube_r4 = left_fin.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(56, 17).addBox(-0.5F, -0.8214F, -0.383F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
+                .texOffs(60, 5).addBox(0.0F, -1.8214F, 0.117F, 0.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.5F, -0.2246F, -0.8727F, 0.0F, 0.0F));
+
+        PartDefinition cube_r5 = left_fin.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(56, 5).addBox(0.5F, -0.8214F, 0.883F, 0.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(56, 17).addBox(0.0F, -0.8214F, 0.383F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.5F, 0.5F, -0.2246F, 0.8727F, 0.0F, 0.0F));
+
+        PartDefinition right_fin = head.addOrReplaceChild("right_fin", CubeListBuilder.create().texOffs(56, 17).addBox(-0.5F, -0.5F, -0.2246F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.25F, -5.0F, -0.7754F, 0.0F, -0.5672F, 0.0F));
+
+        PartDefinition cube_r6 = right_fin.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(56, 17).addBox(-0.5F, -0.8214F, -0.383F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
+                .texOffs(60, 5).addBox(0.0F, -1.8214F, 0.117F, 0.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.5F, -0.2246F, -0.8727F, 0.0F, 0.0F));
+
+        PartDefinition cube_r7 = right_fin.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(56, 5).addBox(0.5F, -0.8214F, 0.883F, 0.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(56, 17).addBox(0.0F, -0.8214F, 0.383F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.5F, 0.5F, -0.2246F, 0.8727F, 0.0F, 0.0F));
 
         PartDefinition arms = body.addOrReplaceChild("arms", CubeListBuilder.create().texOffs(40, 38).addBox(-4.0F, 2.0F, -2.0F, 8.0F, 4.0F, 4.0F, new CubeDeformation(0.0F))
                 .texOffs(44, 22).addBox(-8.0F, -2.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F))
@@ -127,6 +158,9 @@ public class ShoremanModel extends AnimatedModel<ShoremanEntity>{
         head.xRot += pHeadPitch * ((float) Math.PI / 180F) + Mth.sin(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.02F;
         body.y = 24 + Mth.cos(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.04F;
         arms.xRot = -0.7854F + Mth.cos(pAgeInTicks * 2 * Mth.PI / 4.5F / 20) * 0.03F;
+        dorsal_fin.visible = pEntity.isShowFins();
+        left_fin.visible = pEntity.isShowFins();
+        right_fin.visible = pEntity.isShowFins();
     }
 
     @Override

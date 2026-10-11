@@ -49,5 +49,5 @@
   },
   "type": "shoreman_lighthouse_keeper",
   "dialogueUnlocks": [],
-  "dataUnlocks": []
+  "dataUnlocks": ["saved_keeper"]
 }

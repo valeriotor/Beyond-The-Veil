@@ -17,8 +17,10 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.MiscUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -222,6 +224,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
             if (killCutsceneTicks >= 0) {
                 killCutsceneTicks++;
                 if (talkingPlayer instanceof ServerPlayer sp && killCutsceneTicks >= 112) {
+                    DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.keeper_tears.name(), true);
                     if (killCutsceneTicks == 112) {
                         talkingPlayer.startRiding(this);
                         Messages.sendToTrackingAndSelf(GenericToClientPacket.startPlayerAnimation(sp, AnimationRegistry.player_slim_kill_cultist_tp), sp);

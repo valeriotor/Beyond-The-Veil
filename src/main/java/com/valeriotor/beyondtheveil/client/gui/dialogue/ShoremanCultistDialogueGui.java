@@ -190,19 +190,21 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        LocalPlayer p = minecraft.player;
-        Entity entity = minecraft.level.getEntity(menu.getEntityId());
-        if (entity != null && p != null) {
-            double d0 = entity.getX() - p.getX();
-            CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
-            double d1 = entity.getY() - p.getY() - (entity instanceof FletumEntity ? 1 : 0) - (crossSync != null && crossSync.getTransformation() == PlayerTransformation.DEEP_ONE ? 1 : 0);
-            double d2 = entity.getZ() - p.getZ();
-            double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-            p.setYRot(Mth.wrapDegrees(p.getYRot()));
-            float xRot = (float) -(Mth.atan2(d1, d3) * (double) (180F / (float) Math.PI)) + 10;
-            float yRot = Mth.wrapDegrees((float) (Mth.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F);
-            p.setXRot(xRot + (p.getXRot() - xRot) * 0.99F);
-            p.setYRot(yRot + (p.getYRot() - yRot) * 0.99F);
+        if (minecraft != null && minecraft.level != null) {
+            LocalPlayer p = minecraft.player;
+            Entity entity = minecraft.level.getEntity(menu.getEntityId());
+            if (entity != null && p != null) {
+                double d0 = entity.getX() - p.getX();
+                CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+                double d1 = entity.getY() - p.getY() - (entity instanceof FletumEntity ? 1 : 0) - (crossSync != null && crossSync.getTransformation() == PlayerTransformation.DEEP_ONE ? 1 : 0);
+                double d2 = entity.getZ() - p.getZ();
+                double d3 = Math.sqrt(d0 * d0 + d2 * d2);
+                p.setYRot(Mth.wrapDegrees(p.getYRot()));
+                float xRot = (float) -(Mth.atan2(d1, d3) * (double) (180F / (float) Math.PI)) + 10;
+                float yRot = Mth.wrapDegrees((float) (Mth.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F);
+                p.setXRot(xRot + (p.getXRot() - xRot) * 0.99F);
+                p.setYRot(yRot + (p.getYRot() - yRot) * 0.99F);
+            }
         }
 
         if (archeEnding) {
