@@ -90,6 +90,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
     private boolean inFinalCutscene;
     private final Set<PlayerTransformation> monstrousTransformations = Set.of(PlayerTransformation.ABOMINATION_0, PlayerTransformation.ABOMINATION_1, PlayerTransformation.ABOMINATION_2);
     private int aboutToDieByPlayerCountdown = -1;
+    private boolean archeEnding;
 
 
     public ShoremanEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -479,6 +480,9 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
                 }
             }
         }
+        if (archeEnding) {
+            getNavigation().stop();
+        }
     }
 
     public int getTalkingTicks() {
@@ -512,7 +516,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
     }
 
     public boolean isAboutToDie() {
-        return aboutToDieByCultistCountdown >= 0;
+        return aboutToDieByCultistCountdown >= 0 || (aboutToDieByPlayerCountdown >= 0 && aboutToDieByPlayerCountdown <= 4);
     }
 
     public void aboutToDieByCultist() {
@@ -525,6 +529,10 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
 
     public boolean isInFinalCutscene() {
         return inFinalCutscene;
+    }
+
+    public void setArcheEnding() {
+        archeEnding = true;
     }
 
     public void startKeeperDeath() {

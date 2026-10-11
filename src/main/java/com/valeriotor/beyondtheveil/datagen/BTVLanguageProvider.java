@@ -653,6 +653,7 @@ public class BTVLanguageProvider extends LanguageProvider {
     }
 
     private void addShoremanCultistDialogue() {
+        add("dialogue.shoreman_cultist.arche.option", "[BINDING OF ARCHE] *push the cultist away and break its grasp*");
         add("dialogue.shoreman_cultist.do_not.option", "The Keeper must die, but on his own terms. §oDo not§r take his life, or you too shall meet your end.");
         add("dialogue.shoreman_cultist.go_ahead.option", "If he must die, then it matters not in what manner – the dead do not regret. Go ahead.");
         add("dialogue.shoreman_cultist.0", "What?! What is this??");
@@ -1736,6 +1737,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.death.i.option", "I won't forget you.");
         add("dialogue.shoreman_lighthouse_keeper.death.but.option", "But why, §owhy§r would Dagon ask that of me?");
         add("dialogue.shoreman_lighthouse_keeper.death.but_________.option", "But why, §owhy§r would Dagon ask that of me?");
+
+        add("dialogue.shoreman_lighthouse_keeper.arche_ending.start.0", "Oh, gracious Father Dagon, hallowed be thy name! A blessing, that I shall caress the Veil not in dream but in flesh! I arrive!");
+        add("dialogue.shoreman_lighthouse_keeper.arche_ending.start.1", "And you friend, have shattered my beliefs once more. Though you may never change the fates of the stars, you may yet change those of people.\nThank you,| and farewell,| Seeker of Truth.");
+        add("dialogue.shoreman_lighthouse_keeper.arche_ending.farewell,.option", "Farewell, friend.");
+        add("dialogue.shoreman_lighthouse_keeper.arche_ending.i'll.option", "I'll come visit.");
+        add("dialogue.shoreman_lighthouse_keeper.arche_ending.no___.option", "No... §oplease§r, do not leave me.");
+
     }
 
     private void addResearch() {

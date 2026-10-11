@@ -154,6 +154,9 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
         //this.renderBackground(guiGraphics);
         //super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
         //this.renderTooltip(guiGraphics, pMouseX, pMouseY);
+        if (menu.isHide()) {
+            return;
+        }
         renderBg(guiGraphics, pPartialTick, pMouseX, pMouseY);
     }
 

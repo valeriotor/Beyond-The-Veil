@@ -9,11 +9,14 @@ import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
+import com.valeriotor.beyondtheveil.container.dialogue.DoubleDialogueMenu;
+import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceWaypoint;
+import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.CanoeEntity;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.entity.SurgeonEntity;
@@ -44,6 +47,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -105,6 +110,20 @@ public class PlayerTickEvents {
             if (p instanceof ServerPlayer sp) {
                 bloodPoolEvents(sp);
                 BindingEvents.playerTickEvent(event, sp);
+                if (sp.containerMenu instanceof DoubleDialogueMenu) {
+                    for (int x = -1; x <= 1; x++) {
+                        for (int y = 0; y < 2; y++) {
+                            for (int z = -1; z <= 1; z++) {
+                                BlockPos offset = sp.blockPosition().offset(x, y, z);
+                                BlockState state = sp.level().getBlockState(offset);
+                                if (state.getBlock() == Blocks.DARK_PRISMARINE || state.getBlock() == Blocks.NETHERRACK) {
+                                    sp.level().destroyBlock(offset, true);
+                                }
+
+                            }
+                        }
+                    }
+                }
             }
         }
 

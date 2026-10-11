@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
+import com.valeriotor.beyondtheveil.client.MiscModels;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
@@ -18,6 +19,7 @@ import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.util.MiscUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -214,6 +216,9 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                     doParticles();
                 }
             }
+            if (getTalkingPlayer() == null && !getPassengers().isEmpty() && getPassengers().get(0) instanceof ShoremanEntity) {
+                ejectPassengers();
+            }
             if (killCutsceneTicks >= 0) {
                 killCutsceneTicks++;
                 if (talkingPlayer instanceof ServerPlayer sp && killCutsceneTicks >= 112) {
@@ -247,15 +252,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
     }
 
     public void doParticles() {
-        if (level() instanceof ServerLevel sl) {
-            for (int x = -1; x <= 1; x++) {
-                for (int z = -1; z <= 1; z++) {
-                    for (int y = 0; y < 7; y++) {
-                        sl.sendParticles(BTVParticles.BLOODSPILL.get(), getX() + x * 0.3, getY() + y * 0.2, getZ() + z * 0.3, 3, 0, 0, 0, 0.1);
-                    }
-                }
-            }
-        }
+        MiscUtils.doParticles(level(), this, BTVParticles.BLOODSPILL.get());
     }
 
     public void killKeeperAnimationServer() {
@@ -353,6 +350,19 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
         return false;
     }
 
+    public ShoremanEntity ejectKeeper() {
+        for(int i = this.getPassengers().size() - 1; i >= 0; --i) {
+            Entity entity = this.getPassengers().get(i);
+            entity.stopRiding();
+            if (entity instanceof ShoremanEntity shoreman) {
+                Vec3 vec3 = (new Vec3(0.7, 0, 0.0D)).yRot(-this.getYRot() * ((float) Math.PI / 180F) - ((float) Math.PI / 2F) * 1.35F).multiply(1.1, 0, 1.1);
+                entity.setPos(this.getX() + vec3.x, this.getY() + vec3.y, this.getZ() + vec3.z);
+                return shoreman;
+            }
+        }
+        return null;
+    }
+
     public void setHeldVillagerType(@Nullable VillagerType type) {
         if (type == null) {
             entityData.set(HELD_VILLAGER_TYPE, "null");
@@ -428,7 +438,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
             cultist.setKillingEntity(keeper);
             cultist.setTalkingPlayer(sp);
             cultist.lookAt(sp, 360, 360);
-            NetworkHooks.openScreen(sp, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new DoubleDialogueMenu(pContainerId, cultist), Component.translatable("gui.dialogue.blood_cultist.display_name")));
+            NetworkHooks.openScreen(sp, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new DoubleDialogueMenu(pContainerId, cultist, pPlayer, cultist.getId()), Component.translatable("gui.dialogue.blood_cultist.display_name")), byteBuf -> byteBuf.writeInt(cultist.getId()));
             sp.serverLevel().playSound(null, sp.getOnPos(), SoundEvents.TRIDENT_RETURN, SoundSource.NEUTRAL, 1, 1);
             //sp.serverLevel().playSound(null, keeper.blockPosition(), BTVSounds.SHOREMAN_CULTIST_TENSION.get(), SoundSource.NEUTRAL, 1, 1);
             keeper.setTalkingPlayer(sp);

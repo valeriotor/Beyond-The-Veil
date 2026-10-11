@@ -28,6 +28,7 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism2");
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism3");
         registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death");
+        registerDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "arche_ending");
 
         registerDialogue(DialogueType.SHOREMAN_BARTENDER, "initial");
         registerDialogue(DialogueType.SHOREMAN_BARTENDER, "communed1");

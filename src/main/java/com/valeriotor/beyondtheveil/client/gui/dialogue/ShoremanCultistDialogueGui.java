@@ -4,23 +4,34 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.gui.elements.DialogueOptions;
+import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.container.dialogue.DoubleDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueBranch;
+import com.valeriotor.beyondtheveil.entity.FletumEntity;
+import com.valeriotor.beyondtheveil.entity.Talkable;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SendDialogueOptionToServerPacket;
+import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -44,6 +55,7 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
     private int startTicks = 0;
     private int deathTicks = -1;
     private int bowTicks = -1;
+    private boolean archeEnding;
 
     public ShoremanCultistDialogueGui(DoubleDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -77,17 +89,35 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
         cultistBox = new EntityDialogueBox((int) (textWidth * 45 / 100), 75, cultistBox.getLines());
 //
         Optional<PlayerData> resolve = minecraft.player.getCapability(PlayerDataProvider.PLAYER_DATA).resolve();
-        List<DialogueBranch.DialogueOption> dialogueOptions = List.of(new DialogueBranch.DialogueOption(I18n.get("dialogue.shoreman_cultist.do_not.option"), DialogueBranch.OptionType.NORMAL),
-                new DialogueBranch.DialogueOption(I18n.get("dialogue.shoreman_cultist.go_ahead.option"), DialogueBranch.OptionType.NORMAL));
+        List<DialogueBranch.DialogueOption> dialogueOptions = new ArrayList<>(List.of(new DialogueBranch.DialogueOption(I18n.get("dialogue.shoreman_cultist.do_not.option"), DialogueBranch.OptionType.NORMAL),
+                new DialogueBranch.DialogueOption(I18n.get("dialogue.shoreman_cultist.go_ahead.option"), DialogueBranch.OptionType.NORMAL)));
+        int archeOption, doNotOption, goAheadOption;
+        BindingData bindingData = DataUtil.getBindingData(minecraft.player);
+        if (true || (bindingData != null && bindingData.getBinding() == Binding.ARCHE)) {
+            dialogueOptions.add(0, new DialogueBranch.DialogueOption(I18n.get("dialogue.shoreman_cultist.arche.option"), DialogueBranch.OptionType.NORMAL));
+            archeOption = 0;
+            doNotOption = 1;
+            goAheadOption = 2;
+        } else {
+            archeOption = 99999;
+            doNotOption = 0;
+            goAheadOption = 1;
+        }
 
         BiConsumer<DialogueOptions, Integer> optionChosen = (o, i) -> {
             Messages.sendToServer(new SendDialogueOptionToServerPacket(i));
-            if (i == 0) {
+            if (i == doNotOption) {
                 exchangeIndex = 11;
                 cultistBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 45 / 100), 75, I18n.get("dialogue.shoreman_cultist.do_not.0"));
-            } else {
+            } else if (i == goAheadOption){
                 exchangeIndex = 20;
                 shoremanBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 45 / 100), 75, I18n.get("dialogue.shoreman_cultist.go_ahead.0"));
+            } else if (i == archeOption) {
+                exchangeIndex = 9999;
+                Messages.sendToServer(GenericToServerPacket.archeCultist());
+                archeEnding = true;
+                //exchangeIndex = 1200; // idk kinda random
+                //shoremanBox = new EntityDialogueBox((int) (imageWidth * TEXT_WIDTH_RATIO * 45 / 100), 75, I18n.get("dialogue.shoreman_cultist.go_ahead.0"));
             }
         };
         this.options = DialogueOptions.makeOptions(dialogueOptions, (int) (textWidth * 38 / 100), minecraft.font, (int) (textWidth * 45 / 100), 45, (int) (textWidth * 2 / 100), optionChosen);
@@ -97,6 +127,9 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
     @Override
     protected void containerTick() {
         super.containerTick();
+        if (archeEnding) {
+            return;
+        }
         startTicks++;
         if (startTicks > TICKS_TO_START && deathTicks == -1) {
             shoremanBox.tick();
@@ -157,6 +190,24 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
+        LocalPlayer p = minecraft.player;
+        Entity entity = minecraft.level.getEntity(menu.getEntityId());
+        if (entity != null && p != null) {
+            double d0 = entity.getX() - p.getX();
+            CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+            double d1 = entity.getY() - p.getY() - (entity instanceof FletumEntity ? 1 : 0) - (crossSync != null && crossSync.getTransformation() == PlayerTransformation.DEEP_ONE ? 1 : 0);
+            double d2 = entity.getZ() - p.getZ();
+            double d3 = Math.sqrt(d0 * d0 + d2 * d2);
+            p.setYRot(Mth.wrapDegrees(p.getYRot()));
+            float xRot = (float) -(Mth.atan2(d1, d3) * (double) (180F / (float) Math.PI)) + 10;
+            float yRot = Mth.wrapDegrees((float) (Mth.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F);
+            p.setXRot(xRot + (p.getXRot() - xRot) * 0.99F);
+            p.setYRot(yRot + (p.getYRot() - yRot) * 0.99F);
+        }
+
+        if (archeEnding) {
+            return;
+        }
         PoseStack pose = guiGraphics.pose();
         pose.pushPose();
         pose.translate(width / 2F, height, 0);
@@ -256,6 +307,11 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
         if (options != null) {
             return options.mouseReleased((int) optionsMouseX(pMouseX), (int) ((pMouseY - height + 60 * scaleFactor) / scaleFactor), pButton);
         }
+        return false;
+    }
+
+    @Override
+    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
         return false;
     }
 }

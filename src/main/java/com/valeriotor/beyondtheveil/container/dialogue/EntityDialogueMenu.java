@@ -10,8 +10,13 @@ import com.valeriotor.beyondtheveil.dialogue.*;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.entity.Talkable;
+import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.MiscUtils;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,6 +26,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 import java.util.Objects;
@@ -97,8 +104,23 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
             }
         } else if (this.npc instanceof ShoremanEntity e) {
             ShoremanEntity.ShoremanProfession profession = e.getProfession();
-            if (profession == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && template == DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death")) {
-                if (DataUtil.getBoolean(e.getTalkingPlayer(), PlayerDataLib.bound_cult.name())) {
+            if (profession == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && template == DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "arche_ending")) {
+                MiscUtils.doParticles(e.level(), e, ParticleTypes.DRIPPING_WATER);
+            }
+            if (true || (profession == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && template == DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death"))) {
+                if (DataUtil.getBoolean(e.getTalkingPlayer(), PlayerDataLib.use_pillars.name()) || true) {
+                    for (int x = -1; x <= 1; x++) {
+                        for (int y = 0; y < 2; y++) {
+                            for (int z = -1; z <= 1; z++) {
+                                BlockPos offset = e.getTalkingPlayer().blockPosition().offset(x, y, z);
+                                BlockState state = e.getTalkingPlayer().level().getBlockState(offset);
+                                if (state.getBlock() == Blocks.DARK_PRISMARINE || state.getBlock() == Blocks.NETHERRACK) {
+                                    e.getTalkingPlayer().level().destroyBlock(offset, true);
+                                }
+
+                            }
+                        }
+                    }
                     BloodCultistEntity.startKeeperKill(e);
                 } else {
                     e.startKeeperDeath();

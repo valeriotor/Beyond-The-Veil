@@ -136,6 +136,10 @@ public class GenericToServerPacket {
         return new GenericToServerPacket(MessageType.SPARE_CULTIST, new CompoundTag());
     }
 
+    public static GenericToServerPacket archeCultist() {
+        return new GenericToServerPacket(MessageType.ARCHE_CULTIST, new CompoundTag());
+    }
+
     public static GenericToServerPacket toggleBindingPower(BindingData.PowerToggles power, boolean value) {
         CompoundTag tag = new CompoundTag();
         tag.putString("power", power.name());
@@ -273,6 +277,11 @@ public class GenericToServerPacket {
                             menu.spareCultist();
                         }
                     }
+                    case ARCHE_CULTIST -> {
+                        if (player.containerMenu instanceof DoubleDialogueMenu menu) {
+                            menu.archeCultist();
+                        }
+                    }
                     case TOGGLE_BINDING_POWER -> {
                         BindingData bindingData = DataUtil.getBindingData(player);
                         if (bindingData != null) {
@@ -326,6 +335,7 @@ public class GenericToServerPacket {
         TRANSFORM,
         KILL_KEEPER,
         SPARE_CULTIST,
+        ARCHE_CULTIST,
         TOGGLE_BINDING_POWER,
         SET_ARCHE_DAMAGE_TYPE,
     }
