@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.effect.ImmunityEffect;
+import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.entity.Weeping;
@@ -114,6 +115,9 @@ public class PlayerEvents {
                     }
                     heldPatientEntity.setPos(event.getHitVec().getLocation());
                     //TODO wait why did I comment this? ((SurgeryPatient) heldPatientEntity).setHeld(false);
+                    if (heldPatientEntity instanceof CrawlerEntity crawler) {
+                        crawler.setKONoAi(false);
+                    }
                     level.addFreshEntity(heldPatientEntity);
                     crossSync.setHeldPatient(null, player);
                     if (heldPatientEntity instanceof WeeperEntity weeper) {

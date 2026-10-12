@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentBreedAnimalsGoal;
@@ -47,11 +48,12 @@ import javax.annotation.Nullable;
 import java.util.Set;
 import java.util.UUID;
 
-public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, SurgeryPatient, PlayerMinion {
+public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, SurgeryPatient, PlayerMinion, AnimatedEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final EntityDataAccessor<VillagerData> DATA_VILLAGER_DATA = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.VILLAGER_DATA);
     private static final EntityDataAccessor<Boolean> DATA_CRAWLING = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_SCALED = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_KO_NO_AI = SynchedEntityData.defineId(CrawlerEntity.class, EntityDataSerializers.BOOLEAN);
     private int startCrawl = -20;
     private boolean surgeryPatient = false;
     @Nullable
@@ -68,6 +70,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     private PatientHolderType holderType;
     private UUID master;
     private int getUpCounter;
+    private Animation fallAnimation;
 
 
     public CrawlerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
@@ -153,6 +156,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
             pCompound.putUUID("master", master);
         }
         pCompound.putInt("getUpCounter", getUpCounter);
+        pCompound.putBoolean("KONoAi", entityData.get(DATA_KO_NO_AI));
     }
 
     @Override
@@ -181,7 +185,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
             master = pCompound.getUUID("master");
         }
         getUpCounter = pCompound.getInt("getUpCounter");
-
+        setKONoAi(pCompound.getBoolean("KONoAi"));
     }
 
 
@@ -213,6 +217,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         this.entityData.define(DATA_VILLAGER_DATA, new VillagerData(VillagerType.PLAINS, VillagerProfession.NONE, 1));
         this.entityData.define(DATA_CRAWLING, false);
         this.entityData.define(DATA_SCALED, false);
+        this.entityData.define(DATA_KO_NO_AI, false);
     }
 
     public int getCrawling() {
@@ -252,6 +257,12 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                 if (crawl && getCrawling() < 1) {
                     startCrawl = tickCount;
                 }
+                if (fallAnimation != null) {
+                    fallAnimation.update();
+                    if (fallAnimation.isDone()) {
+                        fallAnimation = null;
+                    }
+                }
             } else {
                 if (tickCount >= 5) {
                     if (tickCount > 100) {
@@ -265,7 +276,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                             }
                         });
                     }
-                    if (getUpCounter >= 300 * 20) {
+                    if (getUpCounter >= 100 * 20) {
                         getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
                             if (!c.getFlags().containsKey(OperationRegistry.SPINELESS) && !c.getFlags().containsKey(OperationRegistry.IRON_SPINE)) {
                                 Villager villager = convertTo(EntityType.VILLAGER, false);
@@ -435,6 +446,22 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         return ritualAnimation;
     }
 
+    public void setKONoAi(boolean noAi) {
+        entityData.set(DATA_KO_NO_AI, noAi);
+        if (!level().isClientSide) {
+            if (noAi) {
+                goalSelector.removeAllGoals(p -> true);
+            } else {
+                goalSelector.removeAllGoals(p -> true);
+                registerGoals();
+            }
+        }
+    }
+
+    public boolean isKONoAi() {
+        return entityData.get(DATA_KO_NO_AI);
+    }
+
     public void setScaled(boolean scaled) {
         entityData.set(DATA_SCALED, scaled);
     }
@@ -473,6 +500,11 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         return false;
     }
 
+    @Override
+    public void startAnimation(AnimationTemplate animationTemplate, int channel) {
+        fallAnimation = new Animation(animationTemplate);
+    }
+
     private static class CrawlerMoveControl extends MoveControl {
         public CrawlerMoveControl(CrawlerEntity pMob) {
             super(pMob);
@@ -499,4 +531,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         }
     }
 
+    public Animation getFallAnimation() {
+        return fallAnimation;
+    }
 }

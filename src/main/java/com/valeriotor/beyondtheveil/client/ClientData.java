@@ -10,7 +10,6 @@ import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
 import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 import com.valeriotor.beyondtheveil.client.sounds.CurrentSoundInstance;
-import com.valeriotor.beyondtheveil.client.sounds.NautilusPropellerSoundInstance;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
@@ -42,6 +41,7 @@ public class ClientData {
     private static ClientData instance = new ClientData();
     private boolean thirdPersonAnimOn;
     private int dreamFocusTime;
+    private Map<Integer, Integer> knockedOutVillagerIds = new HashMap<>();
 
     public static ClientData getInstance() {
         return instance;
@@ -217,11 +217,21 @@ public class ClientData {
                     }
                 }
             }
+            knockedOutVillagerIds.replaceAll((id, counter) -> counter - 1);
+            knockedOutVillagerIds.entrySet().removeIf(e -> e.getValue() <= 0);
         }
+    }
+
+    public boolean isVillagerKnockedOut(int id) {
+        return knockedOutVillagerIds.containsKey(id);
     }
 
     public int getDreamFocusTime() {
         return dreamFocusTime;
+    }
+
+    public void knockoutVillager(int id) {
+        knockedOutVillagerIds.put(id, 20);
     }
 
     public void toggleThirdPersonAnimations(boolean on) {

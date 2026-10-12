@@ -5,6 +5,7 @@ package com.valeriotor.beyondtheveil.client.model.entity;// Made with Blockbench
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -74,7 +75,7 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 	@Override
 	public void setupAnim(CrawlerEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		int crawling = entity.getCrawling();
-		if(!entity.isSurgeryPatient()) {
+		if(!entity.isSurgeryPatient() && entity.getFallAnimation() == null && !ClientData.getInstance().isVillagerKnockedOut(entity.getId())) {
 			float armSwing = crawling < -1 || entity.isSurgeryPatient() ? 0 : Mth.cos((float) ((crawling - ageInTicks + Math.floor(ageInTicks)) * 2 * Math.PI / 20));
 			arms.xRot = -2.3998F - armSwing;
 			if (entity.isHeld()) {
@@ -162,7 +163,36 @@ public class CrawlerModel extends AnimatedModel<CrawlerEntity> implements Headed
 				float xRot = (TICKS_HEAD_FALL - entity.tickCount - pPartialTick) * -1.3526F / TICKS_HEAD_FALL;
 				head.xRot = Mth.clamp(xRot, -1.3526F, 0);
 			}
+			if (entity.isKONoAi()) {
+				head.xRot = 0;
+			}
+			if (ClientData.getInstance().isVillagerKnockedOut(entity.getId())) {
+				head.xRot = -0.5F;
+				head.zRot = -0.35F;
+				arms.xRot = -1.4F;
+				body.xRot = 0;
+				leftLeg.xRot = 0;
+				rightLeg.xRot = 0;
+				body.y = 8;
+			}
+			if (entity.getFallAnimation() != null) {
+				entity.getFallAnimation().apply(pPartialTick);
+			}
 		}
+		//head.xRot = -0.5F;
+		//head.zRot = -0.35F;
+		//arms.xRot = -1.4F;
+		//body.xRot = 0;
+		//leftLeg.xRot = 0;
+		//rightLeg.xRot = 0;
+		//body.y = 8;
+		//head.xRot = -1.3526F;
+		//head.zRot = 0;
+		//arms.xRot = -2.3998F;
+		//body.xRot = 1.5708F;
+		//leftLeg.xRot = -0.1745F;
+		//rightLeg.xRot = -0.1745F;
+		//body.y = 20.75F;
 
 	}
 

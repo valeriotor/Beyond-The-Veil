@@ -219,6 +219,12 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.KILL_KEEPER, new CompoundTag());
     }
 
+    public static GenericToClientPacket knockoutVillager(int id) {
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("id", id);
+        return new GenericToClientPacket(MessageType.KNOCKOUT_VILLAGER, tag);
+    }
+
     //public static GenericToClientPacket coloredParticle(ParticleOptions particle, double x, double y, double z, int color, double xSpeed, double ySpeed, double zSpeed) {
     //    CompoundTag tag = new CompoundTag();
     //    tag.putInt("particle", BuiltInRegistries.PARTICLE_TYPE.getId(particle.getType()));
@@ -283,6 +289,8 @@ public class GenericToClientPacket {
                     case MAKE_EXPLOSION_BLOOD -> LivingAmmunitionEntity.makeExplosionBleed(ClientMethods.getLevel(), tag.getInt("burst"), tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z"));
                     case SYNC_BINDING_DATA -> ClientData.getInstance().syncBindingData(tag);
                     case DIALOGUE_ANIMATION -> ClientMethods.dialogueAnimation(tag);
+                    case KILL_KEEPER -> {}
+                    case KNOCKOUT_VILLAGER -> ClientData.getInstance().knockoutVillager(tag.getInt("id"));
                 }
             });
         });
@@ -318,7 +326,8 @@ public class GenericToClientPacket {
         MAKE_EXPLOSION_BLOOD,
         SYNC_BINDING_DATA,
         DIALOGUE_ANIMATION,
-        KILL_KEEPER
+        KILL_KEEPER,
+        KNOCKOUT_VILLAGER
     }
 
 }
