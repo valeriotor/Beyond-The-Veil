@@ -63,7 +63,7 @@ public class BlackjackItem extends Item {
                 villager.discard();
                 ConvalescentData.applyConvalescentAttributes(crawler);
                 crawler.setHealth(villager.getHealth());
-                crawler.sendAnimation(AnimationRegistry.crawler_fall_down, 0); // this will glitch in multiplayer, won't it? The crawler should *start* in the upright position, but then we can't differentiate it from those that are spawned in other ways
+                crawler.sendAnimation(AnimationRegistry.crawler_fall_down, 0);
                 crawler.level().playSound(null, crawler.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS);
                 crawler.setKONoAi(true);
                 if (l instanceof ServerLevel sl) {
