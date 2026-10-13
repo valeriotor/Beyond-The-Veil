@@ -8,8 +8,9 @@ import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
-import com.valeriotor.beyondtheveil.client.animation.Animation;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationClient;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.ConvalescentBreedAnimalsGoal;
@@ -42,6 +43,8 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
@@ -313,23 +316,23 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                 int currentAbsolutePainThreshold = patientStatus.getCurrentAbsolutePainThreshold();
                 int currentMissingPainThreshold = patientStatus.getCurrentMissingPainThreshold();
                 if (currentMissingPainThreshold >= 3 || currentAbsolutePainThreshold >= 3) {
-                    painAnimation = new Animation(switch (patientStatus.getExposedLocation()){
+                    painAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(switch (patientStatus.getExposedLocation()){
                         case BACK -> AnimationRegistry.crawler_back_pain_high_1;
                         case CHEST -> AnimationRegistry.crawler_chest_pain_high;
                         case SKULL -> AnimationRegistry.crawler_skull_pain_high;
-                    });
+                    }));
                 } else if (currentMissingPainThreshold == 2 || currentAbsolutePainThreshold == 2) {
-                    painAnimation = new Animation(switch (patientStatus.getExposedLocation()){
+                    painAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(switch (patientStatus.getExposedLocation()){
                         case BACK -> AnimationRegistry.crawler_back_pain_medium;
                         case CHEST -> AnimationRegistry.crawler_chest_pain_medium;
                         case SKULL -> AnimationRegistry.crawler_skull_pain_medium;
-                    });
+                    }));
                 } else if (currentMissingPainThreshold == 1 || currentAbsolutePainThreshold == 1) {
-                    painAnimation = new Animation(switch (patientStatus.getExposedLocation()){
+                    painAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(switch (patientStatus.getExposedLocation()){
                         case BACK -> AnimationRegistry.crawler_back_pain_low;
                         case CHEST -> AnimationRegistry.crawler_chest_pain_low;
                         case SKULL -> AnimationRegistry.crawler_skull_pain_low;
-                    });
+                    }));
                 }
             } else {
                 if (painAnimation != null) {
@@ -342,9 +345,9 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                 if (deathAnimation == null) {
                     if (patientStatus.isDead() && !patientStatus.didFinalAnimation()) {
                         deathAnimation = switch (patientStatus.getExposedLocation()) {
-                            case BACK -> new Animation(AnimationRegistry.crawler_back_death);
-                            case CHEST -> new Animation(AnimationRegistry.crawler_chest_death);
-                            case SKULL -> new Animation(AnimationRegistry.crawler_skull_death);
+                            case BACK -> DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(AnimationRegistry.crawler_back_death));
+                            case CHEST -> DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(AnimationRegistry.crawler_chest_death));
+                            case SKULL -> DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(AnimationRegistry.crawler_skull_death));
                         };
                     }
                 } else {
@@ -356,7 +359,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                 }
                 if (ritualAnimation == null) {
                     if (patientStatus.isInRitual() && !startedRitualAnimation) {
-                        ritualAnimation = new Animation(AnimationRegistry.crawler_ritual);
+                        ritualAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(AnimationRegistry.crawler_ritual));
                         startedRitualAnimation = true;
                     }
                 } else {
@@ -502,7 +505,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
 
     @Override
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
-        fallAnimation = new Animation(animationTemplate);
+        fallAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(animationTemplate));
     }
 
     private static class CrawlerMoveControl extends MoveControl {

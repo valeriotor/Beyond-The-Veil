@@ -3,8 +3,9 @@ package com.valeriotor.beyondtheveil.entity;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
-import com.valeriotor.beyondtheveil.client.animation.Animation;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationClient;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.entity.ai.goals.MinionFollowMasterGoal;
@@ -36,10 +37,11 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -271,7 +273,7 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
     @Override
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
         if (channel == 0) {
-            mainAnimation = new Animation(animationTemplate);
+            mainAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((animationTemplate)));
         }
     }
 
@@ -295,12 +297,12 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
             if (entityData.get(PERFORMING_SURGERY)) {
                 if (!wasPerformingSurgery) {
                     wasPerformingSurgery = true;
-                    mainAnimation = new Animation(AnimationRegistry.surgeon_operate_start);
+                    mainAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((AnimationRegistry.surgeon_operate_start)));
                 }
             } else {
                 if (wasPerformingSurgery) {
                     wasPerformingSurgery = false;
-                    mainAnimation = new Animation(AnimationRegistry.surgeon_operate_stop);
+                    mainAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((AnimationRegistry.surgeon_operate_stop)));
                 }
             }
         } else {

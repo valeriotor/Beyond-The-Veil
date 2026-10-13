@@ -6,9 +6,8 @@ package com.valeriotor.beyondtheveil.client.model.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.valeriotor.beyondtheveil.client.animation.Animation;
+import com.valeriotor.beyondtheveil.animation.Animation;
 import com.valeriotor.beyondtheveil.entity.ictya.SandflatterEntity;
-import com.valeriotor.beyondtheveil.entity.ictya.SeaSnakeEntity;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;

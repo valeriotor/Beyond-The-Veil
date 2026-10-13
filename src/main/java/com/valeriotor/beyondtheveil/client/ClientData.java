@@ -5,8 +5,9 @@ import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.block.DreamFocusBlock;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
-import com.valeriotor.beyondtheveil.client.animation.Animation;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationClient;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
 import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 import com.valeriotor.beyondtheveil.client.sounds.CurrentSoundInstance;
@@ -244,7 +245,7 @@ public class ClientData {
 
     public Animation getFirstPersonAnimations(AnimatedModel<?> model) {
         for (Animation firstPersonAnimation : firstPersonAnimations) {
-            if (firstPersonAnimation.matchesModel(model)) {
+            if (firstPersonAnimation instanceof AnimationClient animClient && animClient.matchesModel(model)) {
                 return firstPersonAnimation;
             }
         }
@@ -256,7 +257,7 @@ public class ClientData {
             return null;
         }
         for (Animation animation : playerAnimations.getOrDefault(uuid, new ArrayList<>())) {
-            if (animation.matchesModel(model)) {
+            if (animation instanceof AnimationClient animClient && animClient.matchesModel(model)) {
                 return animation;
             }
         }
@@ -265,13 +266,13 @@ public class ClientData {
 
     public void startPlayerAnimation(UUID playerId, int animationId) {
         AnimationTemplate template = AnimationRegistry.animationFromId(animationId);
-        playerAnimations.computeIfAbsent(playerId, uuid -> new ArrayList<>()).add(new Animation(template));
+        playerAnimations.computeIfAbsent(playerId, uuid -> new ArrayList<>()).add(AnimationClient.newAnimation(template));
         LocalPlayer p = Minecraft.getInstance().player;
         String name = template.getName();
         if (name.endsWith("_tp") && p != null && p.getUUID().equals(playerId)) {
             AnimationTemplate firstPersonVersion = AnimationRegistry.animationFromName(name.substring(0, name.length() - 2) + "fp");
             if (firstPersonVersion != null) {
-                firstPersonAnimations.add(new Animation(firstPersonVersion));
+                firstPersonAnimations.add(AnimationClient.newAnimation(firstPersonVersion));
             }
         }
     }

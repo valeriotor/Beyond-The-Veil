@@ -2,9 +2,9 @@ package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
-import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
-import com.valeriotor.beyondtheveil.client.animation.Animation;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationClient;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.ai.attacks.AttackArea;
 import com.valeriotor.beyondtheveil.entity.ai.attacks.AttackList;
 import com.valeriotor.beyondtheveil.entity.ai.attacks.TelegraphedAttackTemplate;
@@ -18,13 +18,14 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -38,7 +39,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fml.DistExecutor;
 
 public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapper {
 
@@ -160,7 +163,7 @@ public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapp
             }
             if (contactType == ContactType.TRADE.ordinal()) {
                 if (!startedTrade) {
-                    mainAnimation = new Animation(AnimationRegistry.deep_one_trade);
+                    mainAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(AnimationRegistry.deep_one_trade));
                     startedTrade = true;
                     yBodyRot = 0;
                     yRotO = 0;
@@ -169,10 +172,10 @@ public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapp
                     //mainAnimation = new Animation(AnimationRegistry.deep_one_trade_1);
                 }
                 if (tickCount == 60) {
-                    mainAnimation = new Animation(AnimationRegistry.deep_one_trade2);
+                    mainAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(AnimationRegistry.deep_one_trade2));
                 }
                 if (tickCount >= 110 && (tickCount - 110) % 120 == 0) {
-                    mainAnimation = new Animation(AnimationRegistry.deep_one_trade3);
+                    mainAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(AnimationRegistry.deep_one_trade3));
                 }
             }
 
@@ -334,8 +337,10 @@ public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapp
     @Override
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
         switch (channel) {
-            case 0 -> mainAnimation = new Animation(animationTemplate);
-            case 1 -> attackAnimation = new Animation(animationTemplate);
+            case 0 ->
+                    mainAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((animationTemplate)));
+            case 1 ->
+                    attackAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((animationTemplate)));
         }
         if (animationTemplate == AnimationRegistry.deep_one_trade4) {
             finishedTradeClient = true;

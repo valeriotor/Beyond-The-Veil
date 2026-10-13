@@ -7,8 +7,9 @@ import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
-import com.valeriotor.beyondtheveil.client.animation.Animation;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationClient;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
@@ -25,7 +26,6 @@ import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
-import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
@@ -60,7 +60,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -173,9 +175,9 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     @Override
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
         if (channel == 0) {
-            explodingAnimation = new Animation(animationTemplate);
+            explodingAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((animationTemplate)));
         } else if (channel == 1) {
-            standUpAnimation = new Animation(animationTemplate);
+            standUpAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((animationTemplate)));
         }
     }
 
@@ -219,7 +221,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
             if(isSurgeryPatient()) {
                 if (ritualAnimation == null) {
                     if (patientStatus.isInRitual() && !startedRitualAnimation) {
-                        ritualAnimation = new Animation(AnimationRegistry.weeper_ritual);
+                        ritualAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((AnimationRegistry.weeper_ritual)));
                         startedRitualAnimation = true;
                     }
                 } else {

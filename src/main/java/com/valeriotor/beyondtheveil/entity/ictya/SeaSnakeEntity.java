@@ -1,6 +1,6 @@
 package com.valeriotor.beyondtheveil.entity.ictya;
 
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;

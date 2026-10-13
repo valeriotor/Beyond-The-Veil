@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.client.animation;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.valeriotor.beyondtheveil.BeyondTheVeil;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 import it.unimi.dsi.fastutil.floats.FloatBinaryOperator;
 import net.minecraft.client.model.geom.ModelPart;
@@ -12,7 +13,12 @@ import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
 
-public class AnimationTemplate {
+public class AnimationTemplateClient implements AnimationTemplate {
+
+    public static AnimationTemplate makeAnimationTemplate(String name, int id) {
+        return new AnimationTemplateClient(name, true, id);
+    }
+
     private final String name;
     private final int id;
     private int length;
@@ -21,7 +27,7 @@ public class AnimationTemplate {
     private static final boolean DEBUG = false;
 
 
-    public AnimationTemplate(String name, boolean client, int id) {
+    public AnimationTemplateClient(String name, boolean client, int id) {
         this.name = name;
         this.id = id;
         if(client)

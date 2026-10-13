@@ -1,16 +1,14 @@
 package com.valeriotor.beyondtheveil.client.animation;
 
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate.FloatBinaryOperatorWithInterval;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate.Period;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate.TransformationType;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.valeriotor.beyondtheveil.client.animation.AnimationTemplate.TransformationType.*;
+import static com.valeriotor.beyondtheveil.client.animation.AnimationTemplateClient.*;
+import static com.valeriotor.beyondtheveil.client.animation.AnimationTemplateClient.TransformationType.*;
+
 
 public abstract class Transformer {
 
@@ -45,7 +43,7 @@ public abstract class Transformer {
             throw new IllegalArgumentException("Null list of animation operators");
         }
         FloatBinaryOperatorWithInterval dynamicStartOperator = null;
-        if (operators.get(0).relativity == AnimationTemplate.Relativity.DYNAMIC) {
+        if (operators.get(0).relativity == Relativity.DYNAMIC) {
             dynamicStartOperator = operators.get(0);
         }
         List<OperatorWithStartAmount> transformerOperators = new ArrayList<>();
@@ -54,9 +52,9 @@ public abstract class Transformer {
         for (FloatBinaryOperatorWithInterval operator : operators) {
             if (operator.period.start() > currentTick) {
                 final float constant = currentAmount;
-                transformerOperators.add(new OperatorWithStartAmount(new FloatBinaryOperatorWithInterval(AnimationTemplate.Relativity.RELATIVE, new Period(currentTick, operator.period.start()), 0, (a, b)->constant), currentAmount));
+                transformerOperators.add(new OperatorWithStartAmount(new FloatBinaryOperatorWithInterval(Relativity.RELATIVE, new Period(currentTick, operator.period.start()), 0, (a, b)->constant), currentAmount));
             }
-            if (operator.relativity != AnimationTemplate.Relativity.DYNAMIC) {
+            if (operator.relativity != Relativity.DYNAMIC) {
                 transformerOperators.add(new OperatorWithStartAmount(operator, currentAmount));
             }
             currentAmount = operator.relativity.isAbsolute ? operator.amount : operator.amount + currentAmount;
@@ -64,7 +62,7 @@ public abstract class Transformer {
         }
         if (currentTick < length - 1) {
             final float constant = currentAmount;
-            transformerOperators.add(new OperatorWithStartAmount(new FloatBinaryOperatorWithInterval(AnimationTemplate.Relativity.RELATIVE, new Period(currentTick, length), 0, (a, b)->constant), currentAmount));
+            transformerOperators.add(new OperatorWithStartAmount(new FloatBinaryOperatorWithInterval(Relativity.RELATIVE, new Period(currentTick, length), 0, (a, b)->constant), currentAmount));
         }
         return switch (type) {
             case ROTX -> new RotatorX(transformerOperators, dynamicStartOperator, part);

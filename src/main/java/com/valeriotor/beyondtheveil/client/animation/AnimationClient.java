@@ -1,28 +1,32 @@
 package com.valeriotor.beyondtheveil.client.animation;
 
-import com.valeriotor.beyondtheveil.client.animation.Transformer.OperatorWithStartAmount;
+import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Animation {
+public class AnimationClient implements Animation {
 
-    private final AnimationTemplate template;
-    private OperatorWithStartAmount[] currentOperators;
-    private List<Iterator<OperatorWithStartAmount>> iterators;
+    public static Animation newAnimation(AnimationTemplate template) {
+        return new AnimationClient(template);
+    }
+    private final AnimationTemplateClient template;
+    private Transformer.OperatorWithStartAmount[] currentOperators;
+    private List<Iterator<Transformer.OperatorWithStartAmount>> iterators;
     private boolean dynamicStart = false;
     private boolean started = false;
     private int ticks = 0;
 
-    public Animation(AnimationTemplate template) {
-        this.template = template;
-        currentOperators = new OperatorWithStartAmount[template.transformers.size()];
+    public AnimationClient(AnimationTemplate template) {
+        this.template = (AnimationTemplateClient) template;
+        currentOperators = new Transformer.OperatorWithStartAmount[this.template.transformers.size()];
         iterators = new ArrayList<>();
 
-        for (int i = 0; i < template.transformers.size(); i++) {
-            Transformer t = template.transformers.get(i);
+        for (int i = 0; i < this.template.transformers.size(); i++) {
+            Transformer t = this.template.transformers.get(i);
             iterators.add(t.newIterator());
             if (t.getDynamicStartOperator() == null) {
                 currentOperators[i] = iterators.get(i).next();
@@ -41,7 +45,7 @@ public class Animation {
         for (int i = 0; i < template.transformers.size(); i++) {
             Transformer t = template.transformers.get(i);
             if (t.getDynamicStartOperator() != null) {
-                currentOperators[i] = new OperatorWithStartAmount(t.getDynamicStartOperator(), t.getType().amountFromPart.apply(t.getPart()));
+                currentOperators[i] = new Transformer.OperatorWithStartAmount(t.getDynamicStartOperator(), t.getType().amountFromPart.apply(t.getPart()));
                 flag = true;
             }
         }
@@ -71,7 +75,7 @@ public class Animation {
                 continue;
             }
             while (ticks + partialTicks > currentOperators[i].operator().period.end()) {
-                Iterator<OperatorWithStartAmount> iter = iterators.get(i);
+                Iterator<Transformer.OperatorWithStartAmount> iter = iterators.get(i);
                 if (iter.hasNext()) {
                     currentOperators[i] = iter.next();
                 } else {
@@ -84,5 +88,4 @@ public class Animation {
             }
         }
     }
-
 }

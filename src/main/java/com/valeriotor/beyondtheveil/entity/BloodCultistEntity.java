@@ -2,9 +2,9 @@ package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
-import com.valeriotor.beyondtheveil.client.MiscModels;
-import com.valeriotor.beyondtheveil.client.animation.Animation;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationClient;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.render.PatientHolderType;
 import com.valeriotor.beyondtheveil.container.dialogue.DoubleDialogueMenu;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
@@ -30,7 +30,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -52,6 +51,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -155,12 +156,12 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                     if (!didBackStabAnimation) {
                         if (entity instanceof ShoremanEntity) {
                             if (tickCount > 10) {
-                                backStabAnimation = new Animation(AnimationRegistry.blood_cultist_backstab_keeper_1);
+                                backStabAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(AnimationRegistry.blood_cultist_backstab_keeper_1));
                                 didBackStabAnimation = true;
                                 inBackStabPosition = true;
                             }
                         } else {
-                            backStabAnimation = new Animation(AnimationRegistry.blood_cultist_backstab);
+                            backStabAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(AnimationRegistry.blood_cultist_backstab));
                             didBackStabAnimation = true;
                         }
                     }
@@ -168,7 +169,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
             }
             if (entityData.get(BOWING) && !startedBowing) {
                 startedBowing = true;
-                bowingAnimation = new Animation(AnimationRegistry.blood_cultist_bow);
+                bowingAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(AnimationRegistry.blood_cultist_bow));
             }
 
             if (backStabAnimation != null) {
@@ -452,7 +453,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
         switch (channel) {
             case 0:
-                killAnimation = new Animation(animationTemplate);
+                killAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation(animationTemplate));
         }
         if (animationTemplate == AnimationRegistry.blood_cultist_kill_keeper_spare_cultist || animationTemplate == AnimationRegistry.blood_cultist_kill_keeper) {
             inBackStabPosition = false;

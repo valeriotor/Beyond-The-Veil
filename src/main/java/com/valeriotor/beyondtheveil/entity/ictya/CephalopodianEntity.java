@@ -1,8 +1,9 @@
 package com.valeriotor.beyondtheveil.entity.ictya;
 
 import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
-import com.valeriotor.beyondtheveil.client.animation.Animation;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationClient;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import com.valeriotor.beyondtheveil.entity.ai.attacks.AttackArea;
 import com.valeriotor.beyondtheveil.entity.ai.attacks.AttackList;
@@ -12,10 +13,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.eventbus.api.BusBuilder;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 
 public class CephalopodianEntity extends IctyaEntity implements AnimatedEntity {
     private Animation attackAnimation;
@@ -44,7 +45,7 @@ public class CephalopodianEntity extends IctyaEntity implements AnimatedEntity {
 
     @Override
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
-        attackAnimation = new Animation(animationTemplate);
+        attackAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((animationTemplate)));
     }
 
     @Override

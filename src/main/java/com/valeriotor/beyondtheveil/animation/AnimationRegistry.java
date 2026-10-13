@@ -1,12 +1,9 @@
 package com.valeriotor.beyondtheveil.animation;
 
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.client.animation.AnimationTemplateClient;
 import com.valeriotor.beyondtheveil.client.model.entity.AnimatedModel;
-import com.valeriotor.beyondtheveil.client.model.entity.wrapper.PlayerDefaultModelWrapper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -151,7 +148,7 @@ public class AnimationRegistry {
 
 
     private static AnimationTemplate registerAnimation(String name, boolean client, int id) {
-        AnimationTemplate anim = new AnimationTemplate(name, client, id);
+        AnimationTemplate anim = client ? DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationTemplateClient.makeAnimationTemplate(name, id)) : new AnimationTemplate.AnimationTemplateServer();
         animations.add(anim);
         animationsByName.put(name, anim);
         return anim;

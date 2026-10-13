@@ -1,12 +1,5 @@
 package com.valeriotor.beyondtheveil.entity.ictya;
 
-import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
-import com.valeriotor.beyondtheveil.client.animation.Animation;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
-import com.valeriotor.beyondtheveil.entity.ai.attacks.AttackArea;
-import com.valeriotor.beyondtheveil.entity.ai.attacks.AttackList;
-import com.valeriotor.beyondtheveil.entity.ai.attacks.TelegraphedAttackTemplate;
-import com.valeriotor.beyondtheveil.entity.ai.goals.TelegraphedAttackGoal;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;

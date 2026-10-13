@@ -1,8 +1,7 @@
 package com.valeriotor.beyondtheveil.entity.ictya;
 
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
-import com.valeriotor.beyondtheveil.entity.ai.goals.TelegraphedAttackGoal;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;

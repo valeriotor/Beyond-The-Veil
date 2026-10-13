@@ -1,7 +1,7 @@
 package com.valeriotor.beyondtheveil.entity.ai.attacks;
 
 import com.google.common.collect.ImmutableList;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;

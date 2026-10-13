@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.entity.ictya;
 
 import com.mojang.datafixers.DataFixUtils;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;

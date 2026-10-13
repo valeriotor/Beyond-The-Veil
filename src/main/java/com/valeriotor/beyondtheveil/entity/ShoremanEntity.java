@@ -9,8 +9,9 @@ import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
-import com.valeriotor.beyondtheveil.client.animation.Animation;
-import com.valeriotor.beyondtheveil.client.animation.AnimationTemplate;
+import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.client.animation.AnimationClient;
+import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
@@ -66,6 +67,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -419,7 +422,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
             countdownTillDialogueAnimation = 45;
         } else {
             if (dialogueAnimation != null) {
-                finishDialogueAnimation = new Animation(AnimationRegistry.shoreman_dialogue_reset);
+                finishDialogueAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((AnimationRegistry.shoreman_dialogue_reset)));
             }
             countdownTillDialogueAnimation = -1;
         }
@@ -432,7 +435,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
             if (countdownTillDialogueAnimation >= 0) {
                 countdownTillDialogueAnimation--;
                 if (countdownTillDialogueAnimation == 0) {
-                    dialogueAnimation = new Animation(AnimationRegistry.shoreman_dialogue1);
+                    dialogueAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((AnimationRegistry.shoreman_dialogue1)));
                 }
                 if (finishDialogueAnimation != null) {
                     finishDialogueAnimation.update();
@@ -444,7 +447,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
                 dialogueAnimation.update();
                 if (dialogueAnimation.isDone()) {
                     if (dialogueAnimation.getTemplate() == AnimationRegistry.shoreman_dialogue1) {
-                        dialogueAnimation = new Animation(AnimationRegistry.shoreman_dialogue2);
+                        dialogueAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((AnimationRegistry.shoreman_dialogue2)));
                     } else if (dialogueAnimation.getTemplate() == AnimationRegistry.shoreman_dialogue2) {
                         countdownTillDialogueAnimation = 30;
                         dialogueAnimation = null;
@@ -522,7 +525,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
     @Override
     public void startAnimation(AnimationTemplate animationTemplate, int channel) {
         if (channel == 0) {
-            deathAnimation = new Animation(animationTemplate);
+            deathAnimation = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AnimationClient.newAnimation((animationTemplate)));
             if (animationTemplate == AnimationRegistry.shoreman_keeper_death_cultist) {
                 aboutToDieByCultistCountdown = 500;
             }
