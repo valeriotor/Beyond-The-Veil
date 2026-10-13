@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.animation.AnimationClient;
 import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.model.entity.SurgeryPatient;
@@ -80,6 +81,17 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
         super(p_21683_, p_21684_);
         this.moveControl = new CrawlerMoveControl(this);
         setPersistenceRequired();
+        if (level().isClientSide) {
+            Float pYRot = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> ClientData.knockedOutVillagerYRot(getId()));
+            if (pYRot != null) {
+                setYRot(pYRot);
+                setYHeadRot(pYRot);
+                setYBodyRot(pYRot);
+                yRotO = pYRot;
+                yBodyRotO = pYRot;
+                yHeadRotO = pYRot;
+            }
+        }
     }
 
 
@@ -264,6 +276,14 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
                     fallAnimation.update();
                     if (fallAnimation.isDone()) {
                         fallAnimation = null;
+                    }
+                }
+                if (ClientData.getInstance().isVillagerKnockedOut(getId())) {
+                    Float pYRot = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> ClientData.knockedOutVillagerYRot(getId()));
+                    if (pYRot != null) {
+                        setYRot(pYRot);
+                        setYHeadRot(pYRot);
+                        setYBodyRot(pYRot);
                     }
                 }
             } else {

@@ -52,7 +52,9 @@ public class BlackjackItem extends Item {
         if (!l.isClientSide) {
             CrawlerEntity crawler = convertVillager(BTVEntities.CRAWLER.get(), villager, false);
             if (crawler != null) {
-                Messages.sendToTracking(GenericToClientPacket.knockoutVillager(crawler.getId()), villager);
+                crawler.setYBodyRot(villager.getYHeadRot());
+                crawler.setYHeadRot(villager.getYHeadRot());
+                Messages.sendToTracking(GenericToClientPacket.knockoutVillager(crawler.getId(), villager.yBodyRot), villager);
                 crawler.setData(villager);
                 crawler.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(crawlerCap -> {
                     if (convalescentData != null) {

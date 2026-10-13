@@ -27,6 +27,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -42,7 +43,7 @@ public class ClientData {
     private static ClientData instance = new ClientData();
     private boolean thirdPersonAnimOn;
     private int dreamFocusTime;
-    private Map<Integer, Integer> knockedOutVillagerIds = new HashMap<>();
+    private Map<Integer, Tuple<Integer, Float>> knockedOutVillagerIds = new HashMap<>();
 
     public static ClientData getInstance() {
         return instance;
@@ -218,8 +219,8 @@ public class ClientData {
                     }
                 }
             }
-            knockedOutVillagerIds.replaceAll((id, counter) -> counter - 1);
-            knockedOutVillagerIds.entrySet().removeIf(e -> e.getValue() <= 0);
+            knockedOutVillagerIds.replaceAll((id, counter) -> new Tuple<>(counter.getA() - 1, counter.getB()));
+            knockedOutVillagerIds.entrySet().removeIf(e -> e.getValue().getA() <= 0);
         }
     }
 
@@ -227,12 +228,16 @@ public class ClientData {
         return knockedOutVillagerIds.containsKey(id);
     }
 
+    public static float knockedOutVillagerYRot(int id) {
+        return getInstance().knockedOutVillagerIds.getOrDefault(id, new Tuple<>(0, 0F)).getB();
+    }
+
     public int getDreamFocusTime() {
         return dreamFocusTime;
     }
 
-    public void knockoutVillager(int id) {
-        knockedOutVillagerIds.put(id, 20);
+    public void knockoutVillager(int id, float yRot) {
+        knockedOutVillagerIds.put(id, new Tuple<>(20, yRot));
     }
 
     public void toggleThirdPersonAnimations(boolean on) {

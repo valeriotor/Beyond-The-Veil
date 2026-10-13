@@ -219,9 +219,10 @@ public class GenericToClientPacket {
         return new GenericToClientPacket(MessageType.KILL_KEEPER, new CompoundTag());
     }
 
-    public static GenericToClientPacket knockoutVillager(int id) {
+    public static GenericToClientPacket knockoutVillager(int id, float yRot) {
         CompoundTag tag = new CompoundTag();
         tag.putInt("id", id);
+        tag.putFloat("yRot", yRot);
         return new GenericToClientPacket(MessageType.KNOCKOUT_VILLAGER, tag);
     }
 
@@ -290,7 +291,7 @@ public class GenericToClientPacket {
                     case SYNC_BINDING_DATA -> ClientData.getInstance().syncBindingData(tag);
                     case DIALOGUE_ANIMATION -> ClientMethods.dialogueAnimation(tag);
                     case KILL_KEEPER -> {}
-                    case KNOCKOUT_VILLAGER -> ClientData.getInstance().knockoutVillager(tag.getInt("id"));
+                    case KNOCKOUT_VILLAGER -> ClientData.getInstance().knockoutVillager(tag.getInt("id"), tag.getFloat("yRot"));
                 }
             });
         });
