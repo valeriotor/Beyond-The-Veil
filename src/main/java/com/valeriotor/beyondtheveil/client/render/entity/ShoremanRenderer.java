@@ -17,6 +17,7 @@ import java.util.Map;
 public class ShoremanRenderer extends LivingEntityRenderer<ShoremanEntity, ShoremanModel> {
 
     public static final Map<ShoremanEntity.ShoremanProfession, ResourceLocation> TEXTURES = new EnumMap<ShoremanEntity.ShoremanProfession, ResourceLocation>(ShoremanEntity.ShoremanProfession.class);
+    private static final ResourceLocation KEEPER_ARCHE_ENDING_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/shoreman/lighthouse_keeper_arche.png");
 
     static {
         TEXTURES.put(ShoremanEntity.ShoremanProfession.BARTENDER, new ResourceLocation(References.MODID, "textures/entity/shoreman/bartender.png"));
@@ -51,6 +52,9 @@ public class ShoremanRenderer extends LivingEntityRenderer<ShoremanEntity, Shore
 
     @Override
     public ResourceLocation getTextureLocation(ShoremanEntity pEntity) {
+        if (pEntity.isShowFins()) {
+            return KEEPER_ARCHE_ENDING_TEXTURE;
+        }
         return TEXTURES.get(pEntity.getProfession());
     }
 
