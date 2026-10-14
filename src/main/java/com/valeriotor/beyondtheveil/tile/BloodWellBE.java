@@ -14,6 +14,7 @@ import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -31,6 +32,7 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,7 +41,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class BloodWellBE extends BlockEntity {
@@ -70,10 +74,22 @@ public class BloodWellBE extends BlockEntity {
             }
             List<ServerPlayer> players = level.getEntities(EntityTypeTest.forClass(ServerPlayer.class), AABB.ofSize(new Vec3(worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5), 7, 1, 7), p -> true);
             for (ServerPlayer player : players) {
-                Item main = player.getItemInHand(InteractionHand.MAIN_HAND).getItem();
-                Item off = player.getItemInHand(InteractionHand.OFF_HAND).getItem();
-                if ((main == Items.ROTTEN_FLESH && off == Items.COAL) || (off == Items.ROTTEN_FLESH && main == Items.COAL)) {
-                    TeleportUtil.teleportToArche(player, player.level());
+                ItemStack main = player.getItemInHand(InteractionHand.MAIN_HAND);
+                ItemStack off = player.getItemInHand(InteractionHand.OFF_HAND);
+                Item v = Registration.VESSEL_STONE.get();
+                Set<Item> allowedItems = Set.of(Items.ROTTEN_FLESH, Items.COAL);
+                Long teleportDest = null;
+                ItemStack vesselStoneStack = null;
+                if (main.getItem() == v && allowedItems.contains(off.getItem())) {
+                    vesselStoneStack = main;
+                } else if (off.getItem() == v && allowedItems.contains(main.getItem())) {
+                    vesselStoneStack = off;
+                }
+                if (vesselStoneStack != null && vesselStoneStack.getOrCreateTag().contains("position", Tag.TAG_LONG)) {
+                    teleportDest = vesselStoneStack.getTag().getLong("position");
+                }
+                if (teleportDest != null || (main.getItem() == Items.ROTTEN_FLESH && off.getItem() == Items.COAL) || (off.getItem() == Items.ROTTEN_FLESH && main.getItem() == Items.COAL)) {
+                    TeleportUtil.teleportToArche(player, player.level(), teleportDest);
                 }
             }
             if (creator != null && level instanceof ServerLevel sl) {

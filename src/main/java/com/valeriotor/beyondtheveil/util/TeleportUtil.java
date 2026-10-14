@@ -9,7 +9,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
@@ -18,13 +17,13 @@ import java.util.function.Function;
 
 public class TeleportUtil {
 
-    public static void teleportToArche(ServerPlayer player, Level originLevel) {
+    public static void teleportToArche(ServerPlayer player, Level originLevel, Long teleportDest) {
         MinecraftServer server = originLevel.getServer();
         if (server != null) {
             ServerLevel archeLevel = server.getLevel(BTVDimensions.ARCHE_LEVEL);
             if (archeLevel != null) {
                 if (player.getCapability(PlayerDataProvider.PLAYER_DATA, null).isPresent()) {
-                    Long posLong = player.getCapability(PlayerDataProvider.PLAYER_DATA, null).resolve().get().getLong(PlayerDataLib.vein_pos.name());
+                    Long posLong = teleportDest != null ? teleportDest : player.getCapability(PlayerDataProvider.PLAYER_DATA, null).resolve().get().getLong(PlayerDataLib.vein_pos.name());
                     if (posLong == null) {
                         BlockPos posToSearchFrom = new BlockPos(player.getRandom().nextInt(-500000, 500000), 70, player.getRandom().nextInt(-500000, 500000));
                         BlockPos nearestVein = archeLevel.findNearestMapStructure(BTVTags.DEEP_VEIN, posToSearchFrom, 200, false);
@@ -39,7 +38,7 @@ public class TeleportUtil {
                         @Override
                         public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                             Entity entity1 = repositionEntity.apply(false);
-                            entity.teleportTo(toTeleport.getX() + 6, 111, toTeleport.getZ() + 4);;
+                            entity.teleportTo(toTeleport.getX() + (teleportDest != null ? 0 : 6), teleportDest != null ? toTeleport.getY() : 111, toTeleport.getZ() + (teleportDest != null ? 0 : 4));;
                             return entity;
                         }
                     });

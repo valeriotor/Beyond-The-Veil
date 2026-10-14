@@ -156,6 +156,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("tooltip.repair_hammer.2", "§e§lOnly works from outside.§r");
         add("tooltip.flask.contained_empty", "Contained: 0/%1$s mB");
         add("tooltip.flask.contained", "Contained: %1$s/%2$s mB of %3$s");
+        add("tooltip.vessel_stone.1", "§eBound to a position in Arche. Hold instead of either coal or flesh while");
+        add("tooltip.vessel_stone.2", "§ein the Blood Well to be transported back to the bound position.");
+        add("tooltip.vessel_stone.3", "Used to return from Arche.");
+        add("tooltip.vessel_stone.4", "It may then be used to re-enter Arche from the position where it was last used.");
 
         add("sleep.transformed", "I cannot sleep while transformed.");
         add("sleep.parasite", "I don't feel all too well.. I can't sleep.");
@@ -2503,7 +2507,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "• Up to three stacks of raw iron, of any size. One living iron will be created for every four chunks of raw material.");
         add("research.thesis.ritual.vessel_stone.title", "Vessel Stone");
         add("research.thesis.ritual.vessel_stone.text", "Vessel stones have become widely known in recent years due to their usage by Arché prospectors and hunters: their serendipitous discovery within the blood corals of the deepest ocean proved to be a way out of Arché for what would have otherwise been a suicide mission for the brave hunters. However, unbeknownst to them, vessel stones had already been discovered by ancient peoples, and even been replicated via blood rituals.\\n" +
-                "We describe here a ritual used in the creation of such an object. Vessel stones allow their user to return to the surface when wielded in Arché.\\n" +
+                "We describe here a ritual used in the creation of such an object. Vessel stones allow their user to return to the surface when wielded in Arché. They also become bound to the position where they were last used: they may thus also be employed to return to Arché in the same place where the user last left from.\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
                 "• A heart.\\1" +

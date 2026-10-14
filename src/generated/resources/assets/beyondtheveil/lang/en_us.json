@@ -2143,7 +2143,7 @@
   "research.thesis.ritual.title": "Performing the Ritual",
   "research.thesis.ritual.vein_miner.text": "A belt to be worn around the waist, adorned with small thorns. Whenever harm befell the wearer, the belt would prick the skin of the stomach, drawing blood.\\nIn so doing, the item would protect its owner from any damage, for as long as their stomach was not empty. Excessive use within a short timeframe could weaken the belt, but never irreversibly, as it would quickly repair itself on its own.\\n\\nIngredients:\\n• A heart.\\1• A diamond pickaxe.\\1• An empty bladder.",
   "research.thesis.ritual.vein_miner.title": "Vein Miner",
-  "research.thesis.ritual.vessel_stone.text": "Vessel stones have become widely known in recent years due to their usage by Arché prospectors and hunters: their serendipitous discovery within the blood corals of the deepest ocean proved to be a way out of Arché for what would have otherwise been a suicide mission for the brave hunters. However, unbeknownst to them, vessel stones had already been discovered by ancient peoples, and even been replicated via blood rituals.\\nWe describe here a ritual used in the creation of such an object. Vessel stones allow their user to return to the surface when wielded in Arché.\\n\\nIngredients:\\n• A heart.\\1• A block of emerald.\\1• An empty bladder.\\1• A chorus fruit.",
+  "research.thesis.ritual.vessel_stone.text": "Vessel stones have become widely known in recent years due to their usage by Arché prospectors and hunters: their serendipitous discovery within the blood corals of the deepest ocean proved to be a way out of Arché for what would have otherwise been a suicide mission for the brave hunters. However, unbeknownst to them, vessel stones had already been discovered by ancient peoples, and even been replicated via blood rituals.\\nWe describe here a ritual used in the creation of such an object. Vessel stones allow their user to return to the surface when wielded in Arché. They also become bound to the position where they were last used: they may thus also be employed to return to Arché in the same place where the user last left from.\\n\\nIngredients:\\n• A heart.\\1• A block of emerald.\\1• An empty bladder.\\1• A chorus fruit.",
   "research.thesis.ritual.vessel_stone.title": "Vessel Stone",
   "research.thesis.title.author": "Georg Ferdinand Mauer",
   "research.thesis.title.institute1": "Institute of",
@@ -2186,5 +2186,9 @@
   "tooltip.repair_hammer.2": "§e§lOnly works from outside.§r",
   "tooltip.sample_tube.stored": "Contains 100mB of %1$s.",
   "tooltip.sigil.area": "Bound to x: %1$s, y: %2$s, z: %3$s.",
-  "tooltip.sigil.player": "Bound to %1$s."
+  "tooltip.sigil.player": "Bound to %1$s.",
+  "tooltip.vessel_stone.1": "§eBound to a position in Arche. Hold instead of either coal or flesh while",
+  "tooltip.vessel_stone.2": "§ein the Blood Well to be transported back to the bound position.",
+  "tooltip.vessel_stone.3": "Used to return from Arche.",
+  "tooltip.vessel_stone.4": "It may then be used to re-enter Arche from the position where it was last used."
 }
