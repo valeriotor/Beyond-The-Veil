@@ -40,10 +40,11 @@ public class LivingTickEvents {
     @SubscribeEvent
     public static void tickEvent(LivingEvent.LivingTickEvent event) {
         doArcheCurrent(event);
-        if (event.getEntity().level().isClientSide) {
+        LivingEntity e = event.getEntity();
+        if (e.level().isClientSide) {
             return;
         }
-        if (event.getEntity() instanceof Player player) {
+        if (e instanceof Player player) {
             CuriosApi.getCuriosInventory(player).ifPresent(inv -> {
                 inv.getStacksHandler("head").ifPresent(slot -> {
                     ItemStack stackInSlot = slot.getStacks().getStackInSlot(0);
@@ -59,6 +60,9 @@ public class LivingTickEvents {
         convalescentCounters(event);
         doProcession(event);
         doArcheDrownDamage(event);
+        if (e.level() instanceof ServerLevel sl && e.tickCount % 20 == 0) {
+            e.getCapability(ProcessionDataProvider.PROCESSION_DATA).ifPresent(c -> c.every20Ticks(sl));
+        }
     }
 
     private static void convalescentCounters(LivingEvent.LivingTickEvent event) {
