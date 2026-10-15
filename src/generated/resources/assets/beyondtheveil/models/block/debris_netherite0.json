@@ -1,0 +1,7 @@
+{
+  "parent": "beyondtheveil:block/debris_height2",
+  "textures": {
+    "particle": "minecraft:block/ancient_debris_side",
+    "texture": "minecraft:block/ancient_debris_side"
+  }
+}

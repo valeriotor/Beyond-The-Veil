@@ -26,6 +26,9 @@
     [
       "beyondtheveil:black_kelp",
       "beyondtheveil:black_seagrass"
+    ],
+    [
+      "beyondtheveil:arche_debris"
     ]
   ],
   "has_precipitation": false,

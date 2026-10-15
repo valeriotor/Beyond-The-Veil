@@ -35,6 +35,7 @@ public class BTVBiomes {
         BiomeGenerationSettings.Builder biomegenerationsettings$builder = new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
         biomegenerationsettings$builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BTVPlacements.BLACK_KELP);
         biomegenerationsettings$builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BTVPlacements.BLACK_SEAGRASS);
+        biomegenerationsettings$builder.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, BTVPlacements.ARCHE_DEBRIS);
 
         MobSpawnSettings.Builder mobspawnsettings$builder = new MobSpawnSettings.Builder();
         commonArcheSpawns(mobspawnsettings$builder);
@@ -48,6 +49,7 @@ public class BTVBiomes {
         BiomeGenerationSettings.Builder biomegenerationsettings$builder = new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
         biomegenerationsettings$builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BTVPlacements.BLACK_KELP);
         biomegenerationsettings$builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BTVPlacements.BLACK_SEAGRASS);
+        biomegenerationsettings$builder.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, BTVPlacements.ARCHE_DEBRIS);
         MobSpawnSettings.Builder mobspawnsettings$builder = new MobSpawnSettings.Builder();
         commonArcheSpawns(mobspawnsettings$builder);
         mobspawnsettings$builder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BTVEntities.SANDFLATTER.get(), 4, 1, 1));

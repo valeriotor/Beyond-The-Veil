@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "height=0": {
+      "model": "beyondtheveil:block/debris_netherite0"
+    },
+    "height=1": {
+      "model": "beyondtheveil:block/debris_netherite1"
+    },
+    "height=2": {
+      "model": "beyondtheveil:block/debris_netherite2"
+    }
+  }
+}

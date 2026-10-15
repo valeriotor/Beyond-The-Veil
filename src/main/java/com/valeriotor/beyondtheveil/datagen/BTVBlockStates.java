@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -113,6 +114,7 @@ public class BTVBlockStates extends BlockStateProvider {
         registerSolidAndTranslucentThin2By1("megydrea", "flask_shelf_empty", modLoc("block/megydrea"), MEGYDREA.get());
         registerThin1By2("arboreal_generator", ARBOREAL_GENERATOR.get());
         registerThin1By2("vijhiss", VIJHISS.get());
+        registerDebris(DEBRIS_NETHERITE.get(), mcLoc("block/ancient_debris_side"), "debris_netherite");
 
         registerWeed("grass_weed", Registration.GRASS_WEED.get());
         registerWeed("redstone_weed", Registration.REDSTONE_WEED.get());
@@ -577,6 +579,13 @@ public class BTVBlockStates extends BlockStateProvider {
             int age = state.getValue(CropBlock.AGE);
             return ConfiguredModel.builder().modelFile(models().crop(modelName + "_stage" + age, modLoc("block/crops/" + modelName + "/stage" + age)).renderType("cutout")).build();
         });
+    }
+
+    private void registerDebris(DebrisBlock block, ResourceLocation texture, String name) {
+        getVariantBuilder(block)
+                .partialState().with(DebrisBlock.HEIGHT, 0).addModels(new ConfiguredModel(models().withExistingParent(name + "0", modLoc("block/debris_height2")).texture("texture", texture).texture("particle", texture)))
+                .partialState().with(DebrisBlock.HEIGHT, 1).addModels(new ConfiguredModel(models().withExistingParent(name + "1", modLoc("block/debris_height4")).texture("texture", texture).texture("particle", texture)))
+                .partialState().with(DebrisBlock.HEIGHT, 2).addModels(new ConfiguredModel(models().withExistingParent(name + "2", modLoc("block/debris_height6")).texture("texture", texture).texture("particle", texture)));
     }
 
 }

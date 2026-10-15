@@ -10,6 +10,7 @@ import com.valeriotor.beyondtheveil.container.dialogue.MirrorDialogueMenu;
 import com.valeriotor.beyondtheveil.item.*;
 import com.valeriotor.beyondtheveil.lib.*;
 import com.valeriotor.beyondtheveil.recipes.GearBenchRecipe;
+import com.valeriotor.beyondtheveil.world.feature.arche.ArcheDebrisFeature;
 import com.valeriotor.beyondtheveil.world.feature.arche.BlackKelpFeature;
 import com.valeriotor.beyondtheveil.world.feature.arche.BlackSeagrassFeature;
 import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
@@ -124,6 +126,7 @@ public class Registration {
     public static final RegistryObject<Block> ELDER_SMOOTH_STONE = BLOCKS.register("elder_smooth_stone", () -> new Block(ELDER_BRICK_PROPERTIES)); // new ModStairs(BlockStoneElderBrick.getDefaultState(), BlockNames.ELDER_STONE_BRICK_STAIRS);
     public static final RegistryObject<SlabBlock> ELDER_SMOOTH_STONE_SLAB = BLOCKS.register("elder_smooth_stone_slab", () -> new SlabBlock(ELDER_BRICK_PROPERTIES)); // new ModStairs(BlockStoneElderBrick.getDefaultState(), BlockNames.ELDER_STONE_BRICK_STAIRS);
     public static final RegistryObject<Block> BLOOD_BRICK = BLOCKS.register("blood_brick", () -> new Block(BRICK_PROPERTIES)); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
+    public static final RegistryObject<DebrisBlock> DEBRIS_NETHERITE = BLOCKS.register("debris_netherite", () -> new DebrisBlock(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<Block> VEIN_STONE = BLOCKS.register("vein_stone", () -> new Block(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<Block> VEIN_STONE_VESSEL = BLOCKS.register("vein_stone_vessel", () -> new Block(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<SacrificeAltarBlock> SACRIFICE_ALTAR = BLOCKS.register("sacrifice_altar", () -> new SacrificeAltarBlock(BlockBehaviour.Properties.of().noOcclusion().strength(3.0F, 1000.0F).requiresCorrectToolForDrops())); // new BlockSacrificeAltarCore(Material.IRON, BlockNames.SACRIFICE_ALTAR);
@@ -221,6 +224,7 @@ public class Registration {
     public static final RegistryObject<Item> SACRIFICE_ALTAR_ITEM = fromBlock(SACRIFICE_ALTAR);
     public static final RegistryObject<Item> BLOOD_BASIN_ITEM = fromBlock(BLOOD_BASIN);
     public static final RegistryObject<Item> BLOOD_BRICK_ITEM = fromBlock(BLOOD_BRICK);
+    public static final RegistryObject<Item> DEBRIS_NETHERITE_ITEM = fromBlock(DEBRIS_NETHERITE);
     public static final RegistryObject<Item> VEIN_STONE_ITEM = fromBlock(VEIN_STONE);
     public static final RegistryObject<Item> VEIN_STONE_VESSEL_ITEM = fromBlock(VEIN_STONE_VESSEL);
     public static final RegistryObject<Item> BLOOD_BRICK_SLAB_ITEM = fromBlock(BLOOD_BRICK_SLAB);
@@ -427,6 +431,7 @@ public class Registration {
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLACK_KELP_FEATURE = FEATURES.register("black_kelp", () -> new BlackKelpFeature(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<Feature<ProbabilityFeatureConfiguration>> BLACK_SEAGRASS_FEATURE = FEATURES.register("black_seagrass", () -> new BlackSeagrassFeature(ProbabilityFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<ProbabilityFeatureConfiguration>> ARCHE_DEBRIS_FEATURE = FEATURES.register("arche_debris", () -> new ArcheDebrisFeature(ProbabilityFeatureConfiguration.CODEC));
 
     public static final RegistryObject<StructureType<DeepCityStructure>> DEEP_CITY = STRUCTURE_TYPES.register("deep_city", () -> () -> DeepCityStructure.CODEC);
     public static final RegistryObject<StructureType<HamletStructure>> HAMLET = STRUCTURE_TYPES.register("hamlet", () -> () -> HamletStructure.CODEC);
@@ -514,6 +519,7 @@ public class Registration {
                 output.accept(ELDER_SMOOTH_STONE.get());
                 output.accept(ELDER_SMOOTH_STONE_SLAB.get());
                 output.accept(BLOOD_BRICK.get());
+                output.accept(DEBRIS_NETHERITE.get());
                 output.accept(VEIN_STONE.get());
                 output.accept(VEIN_STONE_VESSEL.get());
                 output.accept(SACRIFICE_ALTAR.get());

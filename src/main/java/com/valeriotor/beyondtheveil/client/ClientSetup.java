@@ -109,6 +109,7 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(Registration.DARK_GLASS.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(Registration.GHOST_GRASS.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(Registration.REDSTONE_GRASS.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(Registration.DEBRIS_NETHERITE.get(), RenderType.cutout());
             ResearchRegistryClient.registerConnectionsAndRecipes();
             MiscModels.createInstance();
             BlockColors blockColors = Minecraft.getInstance().getBlockColors();

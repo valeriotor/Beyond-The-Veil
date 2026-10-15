@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-08T01:27:47.1044289	Block States: beyondtheveil
+// 1.20.1	2026-10-16T01:06:30.8940166	Block States: beyondtheveil
 a7b07515384d6495a401aeb9bb0ea24bb97f33d4 assets/beyondtheveil/blockstates/alembics.json
 e7ea9ccdb7e2573dcbc4046f269a918f4022acf7 assets/beyondtheveil/blockstates/algae_block.json
 8873909c619253397c1a10876038ee70191bb230 assets/beyondtheveil/blockstates/arboreal_generator.json
@@ -27,6 +27,7 @@ aebabb2f388fa82c6fc15d1f063c8d902ae9633a assets/beyondtheveil/blockstates/damp_w
 ff08e7c92a9b3f4d41c1261c8a94bf2960f9a1a0 assets/beyondtheveil/blockstates/damp_wood_stairs.json
 5b65067863122cdb0c3e8870b83ed642fc873e82 assets/beyondtheveil/blockstates/dark_glass.json
 28d44d7251b6660d331717c142e54f13392c11e7 assets/beyondtheveil/blockstates/dark_sand.json
+3174d7440f48d864974c58493e4ad37a27ca8b39 assets/beyondtheveil/blockstates/debris_netherite.json
 7397c86a4520b25978aab0f9d38eda02fe94766e assets/beyondtheveil/blockstates/deep_chest.json
 8fd02314c50d8e708feabca30b79ce48ea2f03aa assets/beyondtheveil/blockstates/demand_pillar.json
 c7ad19eb669fe250c59c264e5cbc739dc7c19a3b assets/beyondtheveil/blockstates/dream_focus.json
@@ -106,6 +107,9 @@ d8d301426c8361ddd15c98833b9b8493aa543ca9 assets/beyondtheveil/models/block/damp_
 30ed38dc3116837439abfe8f5f46c9b94c0708e6 assets/beyondtheveil/models/block/damp_wood_stairs_outer.json
 32b68e0542edc05f3c99f02083a691be27a53ee4 assets/beyondtheveil/models/block/dark_glass.json
 dff5cb42e5abefd4e83c700a5c0904521b3885d4 assets/beyondtheveil/models/block/dark_sand.json
+2a7063660e1ee7f8c671f98d14f6eabd653be2ac assets/beyondtheveil/models/block/debris_netherite0.json
+642977c955ea9b710cff9387f55757a945038823 assets/beyondtheveil/models/block/debris_netherite1.json
+861c211066e8c36832104fe456c7535e71e49c71 assets/beyondtheveil/models/block/debris_netherite2.json
 8ae4c38c86d9897e86cbfb8913c3da4ef7f0e76b assets/beyondtheveil/models/block/dream_focus.json
 1c8ce8fba3906a38fccc0364eba88eb9c762b04b assets/beyondtheveil/models/block/dream_focus_fluids.json
 fbbb8162ea6121c36cc11590ea17e7b68763fb6c assets/beyondtheveil/models/block/elder_brick.json
