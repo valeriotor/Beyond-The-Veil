@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
-import com.valeriotor.beyondtheveil.block.DebrisBlock;
 import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
@@ -89,9 +88,6 @@ public class PlayerEvents {
         Player player = event.getEntity();
         Level level = player.level();
         Block block = level.getBlockState(event.getPos()).getBlock();
-        if (block instanceof DebrisBlock && !level.isClientSide && event.getHand() == InteractionHand.MAIN_HAND) {
-            player.level().setBlock(event.getPos(), level.getBlockState(event.getPos()).cycle(DebrisBlock.HEIGHT), 3);
-        }
         //if (block instanceof FlaskBlock || block == Registration.FLASK_SHELF.get()) {
         //    if (player.getItemInHand(event.getHand()).getItem() == Registration.SYRINGE.get()) {
         //        //event.setUseItem(Event.Result.DENY);
