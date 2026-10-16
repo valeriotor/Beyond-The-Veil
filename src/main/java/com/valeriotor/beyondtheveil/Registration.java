@@ -127,6 +127,8 @@ public class Registration {
     public static final RegistryObject<SlabBlock> ELDER_SMOOTH_STONE_SLAB = BLOCKS.register("elder_smooth_stone_slab", () -> new SlabBlock(ELDER_BRICK_PROPERTIES)); // new ModStairs(BlockStoneElderBrick.getDefaultState(), BlockNames.ELDER_STONE_BRICK_STAIRS);
     public static final RegistryObject<Block> BLOOD_BRICK = BLOCKS.register("blood_brick", () -> new Block(BRICK_PROPERTIES)); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<DebrisBlock> DEBRIS_NETHERITE = BLOCKS.register("debris_netherite", () -> new DebrisBlock(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
+    public static final RegistryObject<DebrisBlock> DEBRIS_DIAMOND = BLOCKS.register("debris_diamond", () -> new DebrisBlock(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
+    public static final RegistryObject<DebrisBlock> DEBRIS_GOLD = BLOCKS.register("debris_gold", () -> new DebrisBlock(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<Block> VEIN_STONE = BLOCKS.register("vein_stone", () -> new Block(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<Block> VEIN_STONE_VESSEL = BLOCKS.register("vein_stone_vessel", () -> new Block(BlockBehaviour.Properties.of().strength(3.0F, 7.0F).sound(SoundType.MUD))); // new ModBlock(Material.ROCK, BlockNames.BLOODBRICKS);
     public static final RegistryObject<SacrificeAltarBlock> SACRIFICE_ALTAR = BLOCKS.register("sacrifice_altar", () -> new SacrificeAltarBlock(BlockBehaviour.Properties.of().noOcclusion().strength(3.0F, 1000.0F).requiresCorrectToolForDrops())); // new BlockSacrificeAltarCore(Material.IRON, BlockNames.SACRIFICE_ALTAR);
@@ -225,6 +227,8 @@ public class Registration {
     public static final RegistryObject<Item> BLOOD_BASIN_ITEM = fromBlock(BLOOD_BASIN);
     public static final RegistryObject<Item> BLOOD_BRICK_ITEM = fromBlock(BLOOD_BRICK);
     public static final RegistryObject<Item> DEBRIS_NETHERITE_ITEM = fromBlock(DEBRIS_NETHERITE);
+    public static final RegistryObject<Item> DEBRIS_DIAMOND_ITEM = fromBlock(DEBRIS_DIAMOND);
+    public static final RegistryObject<Item> DEBRIS_GOLD_ITEM = fromBlock(DEBRIS_GOLD);
     public static final RegistryObject<Item> VEIN_STONE_ITEM = fromBlock(VEIN_STONE);
     public static final RegistryObject<Item> VEIN_STONE_VESSEL_ITEM = fromBlock(VEIN_STONE_VESSEL);
     public static final RegistryObject<Item> BLOOD_BRICK_SLAB_ITEM = fromBlock(BLOOD_BRICK_SLAB);
@@ -520,6 +524,8 @@ public class Registration {
                 output.accept(ELDER_SMOOTH_STONE_SLAB.get());
                 output.accept(BLOOD_BRICK.get());
                 output.accept(DEBRIS_NETHERITE.get());
+                output.accept(DEBRIS_DIAMOND.get());
+                output.accept(DEBRIS_GOLD.get());
                 output.accept(VEIN_STONE.get());
                 output.accept(VEIN_STONE_VESSEL.get());
                 output.accept(SACRIFICE_ALTAR.get());

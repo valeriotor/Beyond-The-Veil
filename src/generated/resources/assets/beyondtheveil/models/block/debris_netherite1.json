@@ -1,7 +1,7 @@
 {
   "parent": "beyondtheveil:block/debris_height4",
   "textures": {
-    "particle": "minecraft:block/ancient_debris_side",
-    "texture": "minecraft:block/ancient_debris_side"
+    "particle": "beyondtheveil:block/debris_netherite",
+    "texture": "beyondtheveil:block/debris_netherite"
   }
 }

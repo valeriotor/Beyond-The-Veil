@@ -5,13 +5,147 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "condition": "minecraft:survives_explosion"
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {}
         }
       ],
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "beyondtheveil:debris_netherite"
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:alternatives",
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "beyondtheveil:debris_netherite",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "height": "0"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": {
+                        "type": "minecraft:binomial",
+                        "n": 1.0,
+                        "p": 0.2
+                      },
+                      "function": "minecraft:set_count"
+                    },
+                    {
+                      "conditions": [
+                        {
+                          "block": "beyondtheveil:debris_netherite",
+                          "condition": "minecraft:block_state_property",
+                          "properties": {
+                            "height": "0"
+                          }
+                        }
+                      ],
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:binomial_with_bonus_count",
+                      "function": "minecraft:apply_bonus",
+                      "parameters": {
+                        "extra": 1,
+                        "probability": 0.25
+                      }
+                    }
+                  ],
+                  "name": "minecraft:netherite_scrap"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "beyondtheveil:debris_netherite",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "height": "1"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": {
+                        "type": "minecraft:binomial",
+                        "n": 2.0,
+                        "p": 0.2
+                      },
+                      "function": "minecraft:set_count"
+                    },
+                    {
+                      "conditions": [
+                        {
+                          "block": "beyondtheveil:debris_netherite",
+                          "condition": "minecraft:block_state_property",
+                          "properties": {
+                            "height": "1"
+                          }
+                        }
+                      ],
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:binomial_with_bonus_count",
+                      "function": "minecraft:apply_bonus",
+                      "parameters": {
+                        "extra": 2,
+                        "probability": 0.25
+                      }
+                    }
+                  ],
+                  "name": "minecraft:netherite_scrap"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "beyondtheveil:debris_netherite",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "height": "2"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": {
+                        "type": "minecraft:binomial",
+                        "n": 3.0,
+                        "p": 0.2
+                      },
+                      "function": "minecraft:set_count"
+                    },
+                    {
+                      "conditions": [
+                        {
+                          "block": "beyondtheveil:debris_netherite",
+                          "condition": "minecraft:block_state_property",
+                          "properties": {
+                            "height": "2"
+                          }
+                        }
+                      ],
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:binomial_with_bonus_count",
+                      "function": "minecraft:apply_bonus",
+                      "parameters": {
+                        "extra": 3,
+                        "probability": 0.25
+                      }
+                    }
+                  ],
+                  "name": "minecraft:netherite_scrap"
+                }
+              ]
+            }
+          ]
         }
       ],
       "rolls": 1.0

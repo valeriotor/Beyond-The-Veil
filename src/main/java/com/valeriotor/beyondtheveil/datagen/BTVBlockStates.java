@@ -114,7 +114,9 @@ public class BTVBlockStates extends BlockStateProvider {
         registerSolidAndTranslucentThin2By1("megydrea", "flask_shelf_empty", modLoc("block/megydrea"), MEGYDREA.get());
         registerThin1By2("arboreal_generator", ARBOREAL_GENERATOR.get());
         registerThin1By2("vijhiss", VIJHISS.get());
-        registerDebris(DEBRIS_NETHERITE.get(), mcLoc("block/ancient_debris_side"), "debris_netherite");
+        registerDebris(DEBRIS_NETHERITE.get(), modLoc("block/debris_netherite"), "debris_netherite");
+        registerDebris(DEBRIS_DIAMOND.get(), modLoc("block/debris_diamond"), "debris_diamond");
+        registerDebris(DEBRIS_GOLD.get(), modLoc("block/debris_gold"), "debris_gold");
 
         registerWeed("grass_weed", Registration.GRASS_WEED.get());
         registerWeed("redstone_weed", Registration.REDSTONE_WEED.get());

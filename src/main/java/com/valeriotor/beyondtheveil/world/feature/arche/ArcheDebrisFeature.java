@@ -4,9 +4,12 @@ import com.mojang.serialization.Codec;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.DebrisBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -28,19 +31,43 @@ public class ArcheDebrisFeature extends Feature<ProbabilityFeatureConfiguration>
             return false;
         }
         WorldGenLevel worldgenlevel = p_160210_.level();
-        int i = 0;
         BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
-        int j = 2 + 1;
-        int k = 1 + 1;
+        float v = randomsource.nextFloat();
+        Block block = v < 0.4 ? Registration.DEBRIS_GOLD.get() : (v < 0.75 ? Registration.DEBRIS_DIAMOND.get() : Registration.DEBRIS_NETHERITE.get());
+        boolean flag = false;
 
-        for (int l = 0; l < 12; ++l) {
-            m.setWithOffset(blockpos, randomsource.nextInt(j) - randomsource.nextInt(j), randomsource.nextInt(k) - randomsource.nextInt(k), randomsource.nextInt(j) - randomsource.nextInt(j));
-            if (worldgenlevel.getBlockState(m).is(Blocks.WATER) && worldgenlevel.getBlockState(m.above()).is(Blocks.WATER) && worldgenlevel.getBlockState(m.below()).is(Registration.DARK_SAND.get())) {
-                worldgenlevel.setBlock(m, Registration.DEBRIS_NETHERITE.get().defaultBlockState().setValue(DebrisBlock.HEIGHT, randomsource.nextInt(3)).setValue(BlockStateProperties.WATERLOGGED, true), 2);
-                ++i;
+        for (int manhattan = 0; manhattan < 3; manhattan++) {
+            for (int x = -manhattan; x <= manhattan; x++) {
+                boolean edge = x == -manhattan || x == manhattan;
+                int z;
+                if (edge) z = 0;
+                else z = manhattan - Math.abs(x);
+                m.setWithOffset(blockpos, x, 0, z);
+                flag |= placeBlock(manhattan, worldgenlevel, m, block.defaultBlockState(), randomsource);
+                if (z != 0) {
+                    m.setWithOffset(blockpos, x, 0, -z);
+                    flag |= placeBlock(manhattan, worldgenlevel, m, block.defaultBlockState(), randomsource);
+                }
             }
         }
 
-        return i > 0;
+        return flag;
+    }
+
+    private boolean placeBlock(int manhattan, WorldGenLevel worldgenlevel, BlockPos.MutableBlockPos pos, BlockState state, RandomSource randomsource) {
+        if (worldgenlevel.getBlockState(pos.below()).is(Blocks.WATER)) {
+            pos.move(Direction.DOWN);
+        }
+        if (!worldgenlevel.getBlockState(pos).is(Blocks.WATER)) {
+            pos.move(Direction.UP);
+        }
+        if (worldgenlevel.getBlockState(pos).is(Blocks.WATER) && worldgenlevel.getBlockState(pos.below()).is(Registration.DARK_SAND.get())) {
+            int height = 1 + randomsource.nextInt(2) - manhattan;
+            if (height > -1) {
+                worldgenlevel.setBlock(pos, state.setValue(DebrisBlock.HEIGHT, height).setValue(BlockStateProperties.WATERLOGGED, true), 2);
+                return true;
+            }
+        }
+        return false;
     }
 }

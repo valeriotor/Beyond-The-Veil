@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "height=0": {
+      "model": "beyondtheveil:block/debris_gold0"
+    },
+    "height=1": {
+      "model": "beyondtheveil:block/debris_gold1"
+    },
+    "height=2": {
+      "model": "beyondtheveil:block/debris_gold2"
+    }
+  }
+}

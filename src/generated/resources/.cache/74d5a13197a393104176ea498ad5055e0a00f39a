@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-16T01:06:30.8891661	Item Models: beyondtheveil
+// 1.20.1	2026-10-17T00:09:44.0246381	Item Models: beyondtheveil
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/adeline.json
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
@@ -62,6 +62,8 @@ a524405ae8a54976a681432840ada52da85f71cc assets/beyondtheveil/models/item/damp_w
 feb0d16e525df1960f4f292ac16d8a089b016ba0 assets/beyondtheveil/models/item/damp_wood_stairs.json
 6902fd74aa1240244ba631c29104e15499638af8 assets/beyondtheveil/models/item/dark_glass.json
 ce03b66c65988dad3ce2de96d5130c07aef1be20 assets/beyondtheveil/models/item/dark_sand.json
+53a0c8067138224366e2ca2c51342cc3a8ef0ba8 assets/beyondtheveil/models/item/debris_diamond.json
+138c6525bedb89681bddd6d842efe48d22b1d9c5 assets/beyondtheveil/models/item/debris_gold.json
 7b11b02534b9a982316d1858317bbd2348c7c974 assets/beyondtheveil/models/item/debris_netherite.json
 c9a5a0db11dc2de4c054144a352510d7981c4e76 assets/beyondtheveil/models/item/deep_chest.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/deep_one.json

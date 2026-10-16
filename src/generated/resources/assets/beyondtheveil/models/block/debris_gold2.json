@@ -1,0 +1,7 @@
+{
+  "parent": "beyondtheveil:block/debris_height6",
+  "textures": {
+    "particle": "beyondtheveil:block/debris_gold",
+    "texture": "beyondtheveil:block/debris_gold"
+  }
+}

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.DebrisBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.FullMultiBlock;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -15,16 +16,18 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.DynamicLoot;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.entries.*;
 import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
+import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -80,7 +83,9 @@ public class BTVLootTables extends BlockLootSubProvider {
         dropSelf(Registration.ELDER_SMOOTH_STONE.get());
         dropSelf(Registration.ELDER_SMOOTH_STONE_SLAB.get());
         dropSelf(Registration.BLOOD_BRICK.get());
-        dropSelf(Registration.DEBRIS_NETHERITE.get());
+        addDebris(Registration.DEBRIS_NETHERITE.get(), Items.NETHERITE_SCRAP);
+        addDebris(Registration.DEBRIS_DIAMOND.get(), Items.DIAMOND);
+        addDebris(Registration.DEBRIS_GOLD.get(), Items.RAW_GOLD);
         dropSelf(Registration.VEIN_STONE.get());
         dropOther(Registration.VEIN_STONE_VESSEL.get(), Registration.VESSEL_STONE.get());
         dropSelf(Registration.SACRIFICE_ALTAR.get());
@@ -187,5 +192,12 @@ public class BTVLootTables extends BlockLootSubProvider {
         add(block, LootTable.lootTable().withPool(builder));
     }
 
-
+    private void addDebris(DebrisBlock block, Item drop) {
+        add(block, (p_251108_) -> {
+            return LootTable.lootTable().withPool(LootPool.lootPool().when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS)).add(AlternativesEntry.alternatives(AlternativesEntry.alternatives(DebrisBlock.HEIGHT.getPossibleValues(), (p_252097_) -> {
+                return LootItem.lootTableItem(drop).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(p_251108_).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DebrisBlock.HEIGHT, p_252097_))).apply(SetItemCountFunction.setCount(BinomialDistributionGenerator.binomial(p_252097_ + 1, 0.2F)))
+                        .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.25F, p_252097_ + 1).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(p_251108_).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DebrisBlock.HEIGHT, p_252097_))));
+            }))));
+        });
+    }
 }

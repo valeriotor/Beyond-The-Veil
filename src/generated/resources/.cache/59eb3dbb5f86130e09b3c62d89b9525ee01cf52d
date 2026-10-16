@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-16T00:57:51.6864199	Loot Tables
+// 1.20.1	2026-10-17T00:25:54.6361122	Loot Tables
 dd3accd54512dee8c12b56c173be0101b70d5a38 data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 d4bc5b32a05a5bc243e6ae10ad45d729d684e262 data/beyondtheveil/loot_tables/blocks/arboreal_generator.json
@@ -26,7 +26,9 @@ c14c2eb0c984852c87be35d7b7a6d4fac35d1ea1 data/beyondtheveil/loot_tables/blocks/d
 bf80f6456e9f92085375467c43062807c015f595 data/beyondtheveil/loot_tables/blocks/damp_wood_stairs.json
 5b04ce3487629d6f039a56522036168801ea0152 data/beyondtheveil/loot_tables/blocks/dark_glass.json
 35831b693a6b01a5a3bc80d661102fc8fab51c72 data/beyondtheveil/loot_tables/blocks/dark_sand.json
-07e36588c9c60dc97ed4b212ff19ded83ca13fab data/beyondtheveil/loot_tables/blocks/debris_netherite.json
+2f4d9adc212b7b5d6f3d71437a4e96bf439d99de data/beyondtheveil/loot_tables/blocks/debris_diamond.json
+d8321f73c15827cdfaa1649f13cef48ed6f4b3a0 data/beyondtheveil/loot_tables/blocks/debris_gold.json
+489e16020be89e80dcd28dc2fd46fbf218d7f0f3 data/beyondtheveil/loot_tables/blocks/debris_netherite.json
 c941ce032f908fa4ab0f6fc014ecfb2db563fa45 data/beyondtheveil/loot_tables/blocks/deep_chest.json
 a1192ff7ac47fbb6ce108b6ac2444ba076ec81bc data/beyondtheveil/loot_tables/blocks/demand_pillar.json
 ff1ee91c4458f572a7a2dfaafe09fe6cd3a46080 data/beyondtheveil/loot_tables/blocks/dream_focus.json
