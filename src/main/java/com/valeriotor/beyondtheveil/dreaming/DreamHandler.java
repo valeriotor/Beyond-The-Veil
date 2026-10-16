@@ -106,9 +106,9 @@ public class DreamHandler {
             return;
         }
         IFluidHandlerItem fluid = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().get();
-        boolean isRunningOnFluid = fluid.getFluidInTank(0).getAmount() < 100;
+        boolean isRunningOnFluid = fluid.getFluidInTank(0).getAmount() >= 100;
         if (!p.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() ||
-                (p.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getOrSetInteger(PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 0, false) >= 1 && isRunningOnFluid)) {
+                (p.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getOrSetInteger(PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 0, false) >= 1 && !isRunningOnFluid)) {
             return;
         }
         UUID target = null;
