@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-17T00:25:54.6361122	Loot Tables
+// 1.20.1	2026-10-18T19:39:58.4421866	Loot Tables
 dd3accd54512dee8c12b56c173be0101b70d5a38 data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 d4bc5b32a05a5bc243e6ae10ad45d729d684e262 data/beyondtheveil/loot_tables/blocks/arboreal_generator.json
@@ -79,4 +79,9 @@ eb1e4a0ba8197ffc13e3e0f1bd747bc811425e65 data/beyondtheveil/loot_tables/blocks/v
 6fb5a66c1808b5431f22644d298a0dd0381605a0 data/beyondtheveil/loot_tables/blocks/watery_cradle.json
 b7bdd4602b6a5d3d86a11124c16d66bd346a1edd data/beyondtheveil/loot_tables/blocks/worn_bricks.json
 44abe2da680857c5b63ce6cd5c43a0ebb312790f data/beyondtheveil/loot_tables/blocks/worn_brick_stairs.json
-d372039b236902383a67b91a1d52926b445fb354 data/beyondtheveil/loot_tables/deep_city_altar.json
+503854e88e2db10a50e57fceab0575ded976da7a data/beyondtheveil/loot_tables/deep_city_altar.json
+3d12d0bdbe4e206c549a47ca79f4f8f95d24f6a4 data/beyondtheveil/loot_tables/deep_city_beacon.json
+25a147038a5cf6512b4d9e33342a4287f8c7ac60 data/beyondtheveil/loot_tables/deep_city_corridor.json
+0d43748caa7540e1b8f26eea747966aa2a310acc data/beyondtheveil/loot_tables/hamlet_hall.json
+a9210ea73504e7c7f43ea6600100c95bb900dc4f data/beyondtheveil/loot_tables/hamlet_lighthouse.json
+ab89181943d17081344636054ef8b3e4f4dbd326 data/beyondtheveil/loot_tables/hamlet_storehouse.json

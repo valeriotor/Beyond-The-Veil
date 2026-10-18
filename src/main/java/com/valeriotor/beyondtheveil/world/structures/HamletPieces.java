@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.tile.FishBarrelBE;
 import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,12 +15,16 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -31,7 +36,9 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import java.util.*;
 
@@ -88,7 +95,34 @@ public class HamletPieces {
 
         @Override
         protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
-            if ("lighthouse_keeper".equals(pName)) {
+            if (pName.endsWith("_chest")) {
+                // name will be one of "lighthouse_chest", "storehouse_chest" or "hall_chest"
+                BlockPos blockpos = pPos.below();
+                if (pBox.isInside(blockpos)) {
+                    RandomizableContainerBlockEntity.setLootTable(pLevel, pRandom, blockpos, new ResourceLocation(References.MODID, "hamlet_" + pName.substring(0, pName.length() - 6)));
+                }
+            } else if ("barrel".equals(pName)) {
+                BlockPos blockpos = pPos.below();
+                if (pBox.isInside(blockpos) && pLevel.getBlockEntity(blockpos) instanceof FishBarrelBE be) {
+                    be.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(c -> {
+                        Item item;
+                        float v = pRandom.nextFloat();
+                        if (v < 0.25) {
+                            item = Items.COD;
+                        } else if (v < 0.375) {
+                            item = Items.SALMON;
+                        } else if (v < 0.425) {
+                            item = Items.PUFFERFISH;
+                        } else if (v < 0.5) {
+                            item = Items.TROPICAL_FISH;
+                        } else {
+                            item = Registration.SLUG.get();
+                        }
+                        int count = pRandom.nextInt(3, 21);
+                        c.insertItem(0, new ItemStack(item, count), false);
+                    });
+                }
+            } else if ("lighthouse_keeper".equals(pName)) {
                 ShoremanEntity shoreman = BTVEntities.SHOREMAN.get().create(pLevel.getLevel());
                 if (shoreman != null) {
                     shoreman.setProfession(ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER);

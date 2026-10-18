@@ -24,6 +24,7 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.StructureMode;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -108,7 +109,13 @@ public class DeepCityPiece extends TemplateStructurePiece {
 
     @Override
     protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
-
+        if (pName.endsWith("_chest")) {
+            BlockPos blockpos = pPos.below();
+            pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
+            if (pBox.isInside(blockpos)) {
+                RandomizableContainerBlockEntity.setLootTable(pLevel, pRandom, blockpos, new ResourceLocation(References.MODID, "deep_city_" + pName.substring(0, pName.length() - 6)));
+            }
+        }
     }
 
     @Override
@@ -141,13 +148,13 @@ public class DeepCityPiece extends TemplateStructurePiece {
                     pLevel.setBlock(structuretemplate$structureblockinfo1.pos(), blockstate, 3);
                 }
             }
-            if (Objects.equals(templateName, "altar")) {
-                for (int i = 0; i < 5; i++) {
-                    if (pLevel.getBlockEntity(this.getWorldPos(22 + i, 17, 7)) instanceof DeepChestBE be) {
-                        be.setLootTable(new ResourceLocation(References.MODID, "deep_city_altar"), pRandom.nextLong());
-                    }
-                }
-            }
+            //if (Objects.equals(templateName, "altar")) {
+            //    for (int i = 0; i < 5; i++) {
+            //        if (pLevel.getBlockEntity(this.getWorldPos(22 + i, 17, 7)) instanceof DeepChestBE be) {
+            //            be.setLootTable(new ResourceLocation(References.MODID, "deep_city_altar"), pRandom.nextLong());
+            //        }
+            //    }
+            //}
         }
         //this.boundingBox = new BoundingBox(centerPos.getX()-20, boundingBox.minY(), centerPos.getZ()-20, centerPos.getX()+20, boundingBox.maxY(), centerPos.getZ()+20);
         int DOOR_HEIGHT = 18;
@@ -155,7 +162,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
 
         for (int i = 0; i < corridors.length; i++) {
             if (corridors[i]) {
-                processCorridor(pLevel, pBox, new BlockPos(centerPos.getX(), pPos.getY() + DOOR_HEIGHT, centerPos.getZ()), Direction.from2DDataValue(i));
+                processCorridor(pLevel, pBox, new BlockPos(centerPos.getX(), pPos.getY() + DOOR_HEIGHT, centerPos.getZ()), Direction.from2DDataValue(i), pRandom);
             }
         }
         if (Objects.equals("altar", templateName)) {
@@ -166,7 +173,7 @@ public class DeepCityPiece extends TemplateStructurePiece {
         }
     }
 
-    private void processCorridor(WorldGenLevel level, BoundingBox box, BlockPos pos, Direction direction) {
+    private void processCorridor(WorldGenLevel level, BoundingBox box, BlockPos pos, Direction direction, RandomSource randomSource) {
         direction = direction.getOpposite();
         int distance = INDIVIDUAL_WIDTH / 2 + 1 - doorRadius - 1;
         pos = pos.relative(direction, doorRadius + 1);
@@ -190,6 +197,17 @@ public class DeepCityPiece extends TemplateStructurePiece {
         generateBox(level, box, Math.min(fromRightGlass.getX(), toRightGlass.getX()), Math.min(fromRightGlass.getY(), toRightGlass.getY()), Math.min(fromRightGlass.getZ(), toRightGlass.getZ()), Math.max(fromRightGlass.getX(), toRightGlass.getX()), Math.max(fromRightGlass.getY(), toRightGlass.getY()), Math.max(fromRightGlass.getZ(), toRightGlass.getZ()), Registration.DARK_GLASS.get().defaultBlockState(), Registration.DARK_GLASS.get().defaultBlockState(), false);
         generateBox(level, box, Math.min(fromGlassCeiling.getX(), toGlassCeiling.getX()), Math.min(fromGlassCeiling.getY(), toGlassCeiling.getY()), Math.min(fromGlassCeiling.getZ(), toGlassCeiling.getZ()), Math.max(fromGlassCeiling.getX(), toGlassCeiling.getX()), Math.max(fromGlassCeiling.getY(), toGlassCeiling.getY()), Math.max(fromGlassCeiling.getZ(), toGlassCeiling.getZ()), Registration.DARK_GLASS.get().defaultBlockState(), Registration.DARK_GLASS.get().defaultBlockState(), false);
         generateBox(level, box, Math.min(fromPrismarineFloor.getX(), toPrismarineFloor.getX()), Math.min(fromPrismarineFloor.getY(), toPrismarineFloor.getY()), Math.min(fromPrismarineFloor.getZ(), toPrismarineFloor.getZ()), Math.max(fromPrismarineFloor.getX(), toPrismarineFloor.getX()), Math.max(fromPrismarineFloor.getY(), toPrismarineFloor.getY()), Math.max(fromPrismarineFloor.getZ(), toPrismarineFloor.getZ()), Blocks.DARK_PRISMARINE.defaultBlockState(), Blocks.DARK_PRISMARINE.defaultBlockState(), false);
+        if (randomSource.nextFloat() < 0.1F) {
+            int chestDist = Math.min(4, distance - 1);
+            if (chestDist > 1) {
+                BlockPos chestPos = pos.relative(direction.getCounterClockWise(), 1).relative(direction, chestDist).above();
+                placeBlock(level, Registration.DEEP_CHEST.get().defaultBlockState(), chestPos.getX(), chestPos.getY(), chestPos.getZ(), box);
+                chestPos = getWorldPos(chestPos.getX(), chestPos.getY(), chestPos.getZ());
+                if (chestPos.getX() >= box.minX() && chestPos.getX() <= box.maxX() && chestPos.getZ() >= box.minZ() && chestPos.getZ() <= box.maxZ()) {
+                    RandomizableContainerBlockEntity.setLootTable(level, randomSource, chestPos, new ResourceLocation(References.MODID, "deep_city_corridor"));
+                }
+            }
+        }
         //generateBox(level, );
     }
 
