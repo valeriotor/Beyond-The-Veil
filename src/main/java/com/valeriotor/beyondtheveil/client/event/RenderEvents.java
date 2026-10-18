@@ -280,7 +280,7 @@ public class RenderEvents {
         ClientLevel level = Minecraft.getInstance().level;
         if (level != null && entity.hasEffect(BTVEffects.CAMOUFLAGE.get())) {
             BlockPos entityPos = entity.blockPosition();
-            BlockState blockState = level.getBlockState(entityPos.below());
+            BlockState blockState = level.getBlockState(new BlockPos(entityPos.getX(), (int) Math.floor(entity.getY() - 0.7), entityPos.getZ()));
             if (!blockState.canBeReplaced()) {
                 event.setCanceled(true);
 

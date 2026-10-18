@@ -42,7 +42,7 @@ public class AlembicsBakedModel implements IDynamicBakedModel {
             if (renderType == RenderType.translucent()) {
                 BlockPos pos = extraData.get(AlembicsBE.POS_PROPERTY);
                 FlaskShelfBE.Flask flask = extraData.get(AlembicsBE.FLASK_PROPERTY);
-                if (flask != null) {
+                if (flask != null && pos != null) {
                     return new ArrayList<>(getQuadsForFlask(state, flask, rand, pos, renderType));
                 }
                 return new ArrayList<>();

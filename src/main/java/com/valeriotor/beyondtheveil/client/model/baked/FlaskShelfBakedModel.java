@@ -51,8 +51,10 @@ public class FlaskShelfBakedModel implements IDynamicBakedModel {
                 BlockPos pos = extraData.get(FlaskShelfBE.POS_PROPERTY);
                 List<BakedQuad> quads = new ArrayList<>();
                 List<FlaskShelfBE.Flask> flasks = extraData.get(FlaskShelfBE.FLASK_PROPERTY);
-                for (FlaskShelfBE.Flask flask : flasks) {
-                    quads.addAll(getQuadsForFlask(state, flask, rand, pos, renderType));
+                if (flasks != null) {
+                    for (FlaskShelfBE.Flask flask : flasks) {
+                        quads.addAll(getQuadsForFlask(state, flask, rand, pos, renderType));
+                    }
                 }
                 return quads;
             }
