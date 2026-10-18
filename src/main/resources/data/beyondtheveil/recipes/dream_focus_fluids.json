@@ -1,0 +1,26 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "W": {
+      "item": "minecraft:water_bucket"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "QQQQ",
+    "WI W",
+    "W IW",
+    "QQQQ"
+  ],
+  "result": {
+    "item": "beyondtheveil:dream_focus_fluids"
+  },
+  "show_notification": true
+}

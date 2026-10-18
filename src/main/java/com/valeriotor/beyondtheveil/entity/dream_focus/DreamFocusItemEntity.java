@@ -11,7 +11,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,6 +24,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -43,6 +47,7 @@ public class DreamFocusItemEntity extends ItemEntity implements DreamFocusMovabl
     private BlockPos focusPos;
     private boolean toBeRemoved;
     private Set<BlockPos> checkedCurtainsCache = new HashSet<>();
+    private int cooldown;
 
     public DreamFocusItemEntity(EntityType<? extends DreamFocusItemEntity> pEntityType, Level pLevel) {
         this(pEntityType, pLevel, ItemStack.EMPTY, List.of(), null);
@@ -66,6 +71,9 @@ public class DreamFocusItemEntity extends ItemEntity implements DreamFocusMovabl
         if (!level().isClientSide) {
             if (!moveToNextPoint(points, pointCounter++)) {
                 toBeRemoved = true;
+            }
+            if (cooldown > 0) {
+                cooldown--;
             }
             interactWithEntity();
             BlockState inState = level().getBlockState(blockPosition());
@@ -105,6 +113,16 @@ public class DreamFocusItemEntity extends ItemEntity implements DreamFocusMovabl
             HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, e -> e instanceof Villager);
             if (hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult)hitResult).getEntity() instanceof Villager villager) {
                 BlackjackItem.knockDownVillager(villager);
+            }
+        } else if (item.getItem() instanceof SwordItem sword) {
+            HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, e -> e instanceof LivingEntity);
+            if (cooldown <= 0 && hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult)hitResult).getEntity() instanceof LivingEntity e) {
+                e.hurt(damageSources().generic(), sword.getDamage());
+                cooldown = 15;
+                if (item.hurt(1, random, null)) {
+                    playSound(SoundEvents.ITEM_BREAK);
+                    discard();
+                }
             }
         }
     }

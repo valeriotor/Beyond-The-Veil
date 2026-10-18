@@ -690,6 +690,53 @@
         ]
       },
       {
+        "key": "DREAM_FOCUS",
+        "name": "research.DREAM_FOCUS.title",
+        "icons": [ "beyondtheveil:dream_focus" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 5,16 ],
+        "hiders": ["FLETUM"],
+        "parents": ["FLETUM"],
+        "stages": [
+          {
+            "text": "research.DREAM_FOCUS.stage.0",
+            "required_research": ["crafted_dream_focus"],
+            "recipes": ["beyondtheveil:dream_focus"]
+          },
+          {
+            "text": "research.DREAM_FOCUS.stage.1",
+            "recipes": ["beyondtheveil:dream_focus"]
+          }
+        ]
+      },
+      {
+        "key": "DREAM_FOCUS_FLUIDS",
+        "name": "research.DREAM_FOCUS_FLUIDS.title",
+        "icons": [ "beyondtheveil:dream_focus_fluids" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 5,18 ],
+        "hiders": ["DREAM_FOCUS"],
+        "parents": ["DREAM_FOCUS"],
+        "stages": [
+          {
+            "text": "research.DREAM_FOCUS_FLUIDS.stage.0",
+            "recipes": ["beyondtheveil:dream_focus_fluids"]
+          }
+        ]
+      },
+      {
+        "key": "CURTAIN",
+        "name": "research.CURTAIN.title",
+        "icons": [ "beyondtheveil:curtain" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 4,17 ],
+        "hiders": ["DREAM_FOCUS"],
+        "parents": ["DREAM_FOCUS"],
+        "stages": [
+          {
+            "text": "research.CURTAIN.stage.0",
+            "recipes": ["beyondtheveil:curtain"]
+          }
+        ]
+      },
+      {
         "key": "BLOOD_FIST",
         "name": "research.BLOOD_FIST.title",
         "icons": [ "beyondtheveil:blood_fist" ],

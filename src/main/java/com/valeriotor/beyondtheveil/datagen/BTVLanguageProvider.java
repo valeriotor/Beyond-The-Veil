@@ -546,6 +546,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("caption.shift_right_click", "Sneak + Right Click");
         add("caption.shift_right_click_lacrymatory", "Sneak + Right Click on Lacrymatory");
         add("caption.shift_right_click_air", "Sneak + Right Click in the air or water");
+        add("caption.sneak", "Sneak");
         add("caption.transform", "Press %s");
         add("caption.reminisce", "Hold %s");
         add("caption.crafting", "Go to crafting entry");
@@ -2151,6 +2152,24 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Such a creature shall be called a Fletum. Fleti can be picked up and assigned to a lacrymatory like weepers, though they will produce fewer tears.\\n" +
                 "However, their dreamlike state may and should be leveraged, and if I find a way to focus their dreams then I might, perhaps, see their effects in the real world.");
 
+        add("research.DREAM_FOCUS.title", "Dream Focus");
+        add("research.crafted_dream_focus.text", "Craft a Dream Focus.");
+        add("research.DREAM_FOCUS.stage.0", "I must construct a device to channel dreams, deviating them from their natural downward path and instead directing them as I wish.\\n" +
+                "Not my dreams, of course, nor those of weepers, who yet hold on to our world. It is fleti who, dissociated into their own little universe, spend their existence dreaming, reminiscing.\\n" +
+                "A Dream Focus shall thus harness their dreams... to do what? With all I've seen them do, can I perhaps make them move objects?");
+        add("research.DREAM_FOCUS.stage.1", "A Dream Focus should be placed on the side of a container (such as a chest), with the small end of its pipe facing it. Its purpose is to extract its contents and move them towards a destination.\\n" +
+                "I will be the one dictating what path they will take: by interacting with the focus, I'll be transported to the end of its large pipe as a small \"wisp\" of sorts, and will automatically start moving in the direction I'm looking in (including in the air). This status lasts 15 seconds or until I {§ninterrupt§r}[caption:sneak] it, and the path I take during it will determine the path the extracted items take. It will also be visible to the eye; I can colour it with dyes or toggle its visibility with a clay ball.\\n" +
+                "Once the path is defined, I can place a fletum atop the Focus, and every few seconds an item will begin its journey. It can still be picked up while floating, by me or by hoppers, and items such as blackjacks or swords are still capable of striking foes.\\n" +
+                "I'll concede, the imagery of items moving around on their own does remain somewhat unsettling, reminiscent of ghost stories of old. Hah! Perhaps poltergeists came from our dreams all along!");
+
+        add("research.DREAM_FOCUS_FLUIDS.title", "Dream Focus: Fluids");
+        add("research.DREAM_FOCUS_FLUIDS.stage.0", "Dreams may also be able to transport fluids. I can build specialised Foci that will extract any fluids from the liquid container above them or above the block above them, and eject them from below. Just like regular Dream Foci, I can dictate the paths taken by the fluids. These Foci may be powered by up to 4 fleti, one on each side, and the more there are the more liquid is extracted each time. A transported fluid coming into contact with a liquid container will be inserted into it, as long as there is space.\\n" +
+                "Oh, how terrifying it becomes to bestow weight and force upon dreams, and how quickly the world would sunder if all dreaming creatures were capable of this!");
+
+        add("research.CURTAIN.title", "Curtain");
+        add("research.CURTAIN.stage.0", "A veil, divorcing stage from audience. On which side of the curtain are we?\\n" +
+                "This object may be used in conjunction with Dream Foci to stop the transit of floating items. The curtain should be placed below a container such as a chest. Every time a transported item touches the curtain, if the same type of item is present in the container above then the item will stop its movement and drop down – hopefully to be collected by a hopper. They can therefore be used to create effective – though admittedly bulky and expensive – sorting systems.");
+
         add("research.BLOOD_FIST.title", "Blood Fist");
         add("research.BLOOD_FIST.stage.0", "A tool used to focus the powers bestowed by worldly bindings. It is created from the heart of a still-living patient: the insertions of a silk gland, a marrow gland and a gunpowder bladder in the chest of a patient will let the subsequent extraction produce the blood fist. No capacity is needed.\\n" +
                 "These ingredients can be respectively obtained by killing spiders, skeletons, and creepers, all with the surgical precision of a scalpel.\\n" +
@@ -2322,6 +2341,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(GEAR.get().getDescriptionId() + ".crafting", "An ordinary component in several mechanical crafts.");
         add(SAMPLE_TUBE.get().getDescriptionId() + ".crafting", "Used to collect fluids dropped by creatures on death: simply having one in the inventory when slaying specific enemies will have a chance to fill it up.\\1" +
                 "The tube may then be emptied in a liquid container. Its contents may also be {§ndiscarded§r}[caption:shift_right_click_air].");
+        add(DREAM_FOCUS.get().getDescriptionId() + ".crafting", "Used to move objects by channeling the dreams of fleti.");
+        add(DREAM_FOCUS_FLUIDS.get().getDescriptionId() + ".crafting", "Used to move fluids by channeling the dreams of fleti.");
+        add(CURTAIN.get().getDescriptionId() + ".crafting", "Must be placed under an item container such as a chest. Any items transported by a Dream Focus that touch the curtain will stop moving and drop down if the same type of item is inside the container above the curtain.");
+
     }
 
     private void addReminiscence() {

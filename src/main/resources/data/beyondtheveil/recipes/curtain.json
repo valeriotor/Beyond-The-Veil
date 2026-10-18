@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "W": {
+      "item": "minecraft:red_wool"
+    },
+    "G": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "pattern": [
+    "WWWW",
+    "WWWW",
+    "GGGG",
+    "    "
+  ],
+  "result": {
+    "item": "beyondtheveil:curtain"
+  },
+  "show_notification": true
+}
