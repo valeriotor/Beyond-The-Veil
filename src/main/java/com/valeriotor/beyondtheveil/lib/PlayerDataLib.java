@@ -117,7 +117,8 @@ public enum PlayerDataLib {
     weeper_plant_dream,
     use_pillars,
     saved_keeper,
-    keeper_tears
+    keeper_tears,
+    found_bladder
     ;
 
     // Longs

@@ -49,7 +49,7 @@ public class SepiidModel extends EntityModel<SepiidEntity> {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition full = partdefinition.addOrReplaceChild("full", CubeListBuilder.create(), PartPose.offset(0.0F, 23.0F, 0.0F));
+        PartDefinition full = partdefinition.addOrReplaceChild("full", CubeListBuilder.create(), PartPose.offset(0.0F, 19.0F, 0.0F));
 
         PartDefinition left = full.addOrReplaceChild("left", CubeListBuilder.create().texOffs(0, 23).addBox(0.0F, -2.0F, 0.0F, 7.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(1, 1).addBox(1.25F, -1.1F, 2.0F, 5.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
@@ -83,7 +83,7 @@ public class SepiidModel extends EntityModel<SepiidEntity> {
 
     @Override
     public void setupAnim(SepiidEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        full.xRot = headPitch * ((float)Math.PI / 180F);
+        //full.xRot = headPitch * ((float)Math.PI / 180F);
         eye1.xScale = eye1.yScale = eye1.zScale = 0.5F;
         eye2.xScale = eye2.yScale = eye2.zScale = 0.5F;
         eye3.xScale = eye3.yScale = eye3.zScale = 0.5F;
@@ -116,10 +116,10 @@ public class SepiidModel extends EntityModel<SepiidEntity> {
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        left.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        right.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        tail1.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        full.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        //right.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        //tail1.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        //head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
 }

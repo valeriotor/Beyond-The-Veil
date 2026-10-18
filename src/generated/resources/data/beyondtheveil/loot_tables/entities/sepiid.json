@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
+            }
+          ],
+          "name": "beyondtheveil:tiny_skull",
+          "weight": 3
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:binomial",
+        "n": 1.0,
+        "p": 0.25
+      }
+    }
+  ],
+  "random_sequence": "beyondtheveil:entities/sepiid"
+}

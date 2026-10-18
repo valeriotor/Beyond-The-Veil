@@ -37,7 +37,9 @@ public class DataGenerators {
         //TODO create ConfiguredStructureTagsProvider
 
         generator.addProvider(event.includeServer(), new LootTableProvider(generator.getPackOutput(), Collections.emptySet(),
-                List.of(new LootTableProvider.SubProviderEntry(BTVLootTables::new, LootContextParamSets.BLOCK), new LootTableProvider.SubProviderEntry(BTVChestLootTables::new, LootContextParamSets.CHEST))));
+                List.of(new LootTableProvider.SubProviderEntry(BTVLootTables::new, LootContextParamSets.BLOCK),
+                        new LootTableProvider.SubProviderEntry(BTVChestLootTables::new, LootContextParamSets.CHEST),
+                        new LootTableProvider.SubProviderEntry(BTVLootTablesEntities::new, LootContextParamSets.ENTITY))));
 
 
         generator.addProvider(event.includeClient(), (DataProvider.Factory<BTVBlockStates>) output -> new BTVBlockStates(output, event.getExistingFileHelper()));

@@ -9,6 +9,7 @@ import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
 import com.valeriotor.beyondtheveil.entity.ictya.AdelineEntity;
 import com.valeriotor.beyondtheveil.item.SampleTubeItem;
+import com.valeriotor.beyondtheveil.item.ScalpelItem;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -31,7 +32,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -435,7 +435,19 @@ public class LivingEvents {
         }
     }
 
-
+    @SubscribeEvent
+    public static void livingDropsEvent(LivingDropsEvent event) {
+        LivingEntity e = event.getEntity();
+        if (!e.level().isClientSide) {
+            if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+                ItemStack itemInHand = attacker.getItemInHand(InteractionHand.MAIN_HAND);
+                if (itemInHand.is(Registration.SCALPEL.get())) { // i guess this launches even if not killed with the scalpel itself... ah who cares
+                    List<ItemStack> extraDropsForEntity = ScalpelItem.getExtraDropsForEntity(e, attacker, itemInHand);
+                    event.getDrops().addAll(extraDropsForEntity.stream().map(stack -> new ItemEntity(e.level(), e.getX(), e.getY(), e.getZ(), stack)).toList());
+                }
+            }
+        }
+    }
 
 
 }

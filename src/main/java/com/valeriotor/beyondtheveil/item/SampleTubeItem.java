@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.nbt.CompoundTag;
@@ -11,6 +12,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -30,6 +32,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -152,23 +155,25 @@ public class SampleTubeItem extends Item {
     }
 
     public static void livingDeathEvent(LivingDeathEvent event, ServerPlayer player) {
-        Fluid fluid = rollForEntity(event.getEntity(), player);
-        if (fluid != null) {
-            for (ItemStack item : player.getInventory().items) {
-                if (item.getItem() == Registration.SAMPLE_TUBE.get() && (!item.hasTag() || !item.getOrCreateTag().contains("fluid"))) {
-                    ItemStack filledTube = new ItemStack(Registration.SAMPLE_TUBE.get());
-                    setFluid(filledTube, fluid);
-                    boolean flag = player.getInventory().contains(filledTube);
-                    int freeSlot = -1;
-                    if (!flag) {
-                        freeSlot = player.getInventory().getFreeSlot();
-                    }
-                    if (flag || freeSlot != -1) {
-                        item.shrink(1);
-                        if (freeSlot != -1) {
-                            player.getInventory().setItem(freeSlot, filledTube);
-                        } else {
-                            ItemHandlerHelper.giveItemToPlayer(player, filledTube);
+        List<Fluid> fluids = rollForEntity(event.getEntity(), player);
+        if (!fluids.isEmpty()) {
+            for (Fluid fluid : fluids) {
+                for (ItemStack item : player.getInventory().items) {
+                    if (item.getItem() == Registration.SAMPLE_TUBE.get() && (!item.hasTag() || !item.getOrCreateTag().contains("fluid"))) {
+                        ItemStack filledTube = new ItemStack(Registration.SAMPLE_TUBE.get());
+                        setFluid(filledTube, fluid);
+                        boolean flag = player.getInventory().contains(filledTube);
+                        int freeSlot = -1;
+                        if (!flag) {
+                            freeSlot = player.getInventory().getFreeSlot();
+                        }
+                        if (flag || freeSlot != -1) {
+                            item.shrink(1);
+                            if (freeSlot != -1) {
+                                player.getInventory().setItem(freeSlot, filledTube);
+                            } else {
+                                ItemHandlerHelper.giveItemToPlayer(player, filledTube);
+                            }
                         }
                     }
                 }
@@ -177,19 +182,61 @@ public class SampleTubeItem extends Item {
         }
     }
 
-    private static Map<EntityType<?>, FluidRoll> rolls = new HashMap<>();
+    private static Map<EntityType<?>, List<FluidRoll>> rolls = new HashMap<>();
 
-    public static Fluid rollForEntity(LivingEntity e, ServerPlayer player) {
+    public static List<Fluid> rollForEntity(LivingEntity e, ServerPlayer player) {
         if (rolls.isEmpty()) {
-            rolls.put(EntityType.CAVE_SPIDER, new FluidRoll(0.9, BTVFluids.FLUID_POISON_SERUM.getA().get()));
+            rolls.computeIfAbsent(EntityType.CAVE_SPIDER, type -> List.of(new FluidRoll(0.9, BTVFluids.FLUID_POISON_SERUM.getA().get())));
+            rolls.computeIfAbsent(BTVEntities.CEPHALOPODIAN.get(), type -> List.of(
+                    new FluidRoll(0.9, BTVFluids.FLUID_GROWTH_STIMULANT.getA().get()),
+                    new FluidRoll(0.5, BTVFluids.FLUID_ORGANOCHLORIDE.getA().get()),
+                    new FluidRoll(0.9, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),
+                    new FluidRoll(0.2, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
+            rolls.computeIfAbsent(BTVEntities.BONECAGE.get(), type -> List.of(
+                    new FluidRoll(0.9, BTVFluids.FLUID_GROWTH_STIMULANT.getA().get()),
+                    new FluidRoll(0.5, BTVFluids.FLUID_ORGANOCHLORIDE.getA().get()),
+                    new FluidRoll(0.9, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),
+                    new FluidRoll(0.2, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
+            rolls.computeIfAbsent(BTVEntities.SANDFLATTER.get(), type -> List.of(
+                    new FluidRoll(0.9, BTVFluids.FLUID_GROWTH_STIMULANT.getA().get()),
+                    new FluidRoll(0.5, BTVFluids.FLUID_PHEROMONES.getA().get()),
+                    new FluidRoll(0.9, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),
+                    new FluidRoll(0.2, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
+            rolls.computeIfAbsent(BTVEntities.ADELINE.get(), type -> List.of(
+                    new FluidRoll(0.5, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),
+                    new FluidRoll(0.1, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
+            rolls.computeIfAbsent(BTVEntities.MAN_O_WAR.get(), type -> List.of(
+                    new FluidRoll(0.5, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),
+                    new FluidRoll(0.3, BTVFluids.FLUID_ORGANOCHLORIDE.getA().get()),
+                    new FluidRoll(0.1, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
+            rolls.computeIfAbsent(BTVEntities.UMANCALA.get(), type -> List.of(
+                    new FluidRoll(0.5, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),
+                    new FluidRoll(0.1, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
+            rolls.computeIfAbsent(BTVEntities.ANGLER.get(), type -> List.of(
+                    new FluidRoll(0.3, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),
+                    new FluidRoll(0.8, BTVFluids.FLUID_PHEROMONES.getA().get()),
+                    new FluidRoll(0.05, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
+            rolls.computeIfAbsent(BTVEntities.SEA_SNAKE.get(), type -> List.of(
+                    new FluidRoll(0.3, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),
+                    new FluidRoll(0.05, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
+            rolls.computeIfAbsent(BTVEntities.SEPIID.get(), type -> List.of(
+                    new FluidRoll(0.1, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),
+                    new FluidRoll(0.02, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
+            rolls.computeIfAbsent(BTVEntities.OCTID.get(), type -> List.of(
+                    new FluidRoll(0.1, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),
+                    new FluidRoll(0.1, BTVFluids.FLUID_PHEROMONES.getA().get()),
+                    new FluidRoll(0.02, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
         }
-        FluidRoll fluidRoll = rolls.get(e.getType());
-        if (fluidRoll != null) {
-            if (e.getRandom().nextDouble() < fluidRoll.chance) {
-                return fluidRoll.fluid;
+        List<Fluid> fluids = new ArrayList<>();
+        List<FluidRoll> fluidRolls = rolls.get(e.getType());
+        if (fluidRolls != null) {
+            for (FluidRoll fluidRoll : fluidRolls) {
+                if (e.getRandom().nextDouble() < fluidRoll.chance) {
+                    fluids.add(fluidRoll.fluid);
+                }
             }
         }
-        return null;
+        return fluids;
     }
     private record FluidRoll(double chance, Fluid fluid) {
 
