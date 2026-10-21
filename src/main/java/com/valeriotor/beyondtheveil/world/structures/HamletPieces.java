@@ -122,6 +122,7 @@ public class HamletPieces {
                         c.insertItem(0, new ItemStack(item, count), false);
                     });
                 }
+                pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
             } else if ("lighthouse_keeper".equals(pName)) {
                 ShoremanEntity shoreman = BTVEntities.SHOREMAN.get().create(pLevel.getLevel());
                 if (shoreman != null) {
@@ -149,6 +150,7 @@ public class HamletPieces {
                     shoreman.addLighthouseKeeperStandCoords(spawnPos, direction);
                     shoreman.setSpawnAndVillageCenter(new BlockPos((int) spawnPos.x, (int) spawnPos.y, (int) spawnPos.z), villageCenter);
                     pLevel.addFreshEntity(shoreman);
+                    pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
                 }
             } else {
                 for (ShoremanEntity.ShoremanProfession profession : ShoremanEntity.ShoremanProfession.values()) {
@@ -160,7 +162,7 @@ public class HamletPieces {
                             shoreman.setPos(spawnPos);
                             shoreman.setSpawnAndVillageCenter(new BlockPos((int) spawnPos.x, (int) spawnPos.y, (int) spawnPos.z), villageCenter);
                             pLevel.addFreshEntity(shoreman);
-                            //TODO test this pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
+                            pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
                         }
                         break;
                     }
@@ -187,6 +189,21 @@ public class HamletPieces {
         private static StructurePlaceSettings makeSettings(Rotation pRotation) {
             //BlockIgnoreProcessor blockignoreprocessor = pOverwrite ? BlockIgnoreProcessor.STRUCTURE_BLOCK : BlockIgnoreProcessor.STRUCTURE_AND_AIR;
             return (new StructurePlaceSettings()).setIgnoreEntities(false).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK).addProcessor(new HamletBuildingsProcessor()).setRotation(pRotation); // TODO add dark sand to wood planks processor
+        }
+
+        @Override
+        public void postProcess(WorldGenLevel pLevel, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource pRandom, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
+            super.postProcess(pLevel, pStructureManager, pGenerator, pRandom, pBox, pChunkPos, pPos);
+            for (int i = -1; i < pBox.maxX() - pBox.minX() + 1; i++) {
+                for (int j = -1; j < pBox.maxZ() - pBox.minZ() + 1; j++) {
+                    fillColumnDown(pLevel, Registration.DARK_SAND.get().defaultBlockState(), i, -1, j, pBox);
+                }
+            }
+        }
+
+        @Override
+        protected void fillColumnDown(WorldGenLevel pLevel, BlockState pState, int pX, int pY, int pZ, BoundingBox pBox) {
+            super.fillColumnDown(pLevel, pState, pX, pY, pZ, pBox);
         }
     }
 
