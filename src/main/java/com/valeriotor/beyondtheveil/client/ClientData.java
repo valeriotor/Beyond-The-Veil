@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.block.DreamFocusBlock;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.animation.AnimationClient;
 import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
@@ -14,8 +15,10 @@ import com.valeriotor.beyondtheveil.client.sounds.CurrentSoundInstance;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.WaypointType;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
@@ -26,6 +29,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
@@ -216,6 +220,11 @@ public class ClientData {
                         p.setDeltaMovement(lookAngle.x, lookAngle.y, lookAngle.z);
                     } else if (dreamFocusTime > 0) {
                         dreamFocusTime = 0;
+                    }
+                    if (p.tickCount % 10 == 0 && crossSync.getTransformation() == PlayerTransformation.DEEP_ONE && !DataUtil.getBoolean(p, PlayerDataLib.has_detransformed.name())) {
+                        Minecraft.getInstance().gui.setOverlayMessage(Component.translatable("overlay.detransform", KeyBindings.transform.getTranslatedKeyMessage().getString()), false);
+                    } else if (p.tickCount % 10 == 0 && crossSync.getTransformation() != null && crossSync.getTransformation().isCanExplode() && !DataUtil.getBoolean(p, PlayerDataLib.has_exploded.name())) {
+                        Minecraft.getInstance().gui.setOverlayMessage(Component.translatable("overlay.explode", KeyBindings.transform.getTranslatedKeyMessage().getString()), false);
                     }
                 }
             }

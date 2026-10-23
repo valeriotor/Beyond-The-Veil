@@ -118,7 +118,9 @@ public enum PlayerDataLib {
     use_pillars,
     saved_keeper,
     keeper_tears,
-    found_bladder
+    found_bladder,
+    has_exploded,
+    has_detransformed
     ;
 
     // Longs

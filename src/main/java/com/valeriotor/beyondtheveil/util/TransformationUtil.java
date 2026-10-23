@@ -31,6 +31,7 @@ public class TransformationUtil {
         player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
             CrossSync crossSync = c.getCrossSync();
             if (crossSync.getTransformation().isCanExplode() && !PlayerTimerData.for_(player).hasTimer("explosion")) {
+                DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.has_exploded.name(), true);
                 PlayerTimer timer = new PlayerTimer.Builder("explosion", 30).addFinalActions((player1, playerTimer) -> {
                     player1.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(conv -> {
                         TriggerData data = conv.getTriggerData();
@@ -81,6 +82,7 @@ public class TransformationUtil {
                     } else if (crossSync.getTransformation() == PlayerTransformation.DEEP_ONE) {
                         crossSync.setTransformation(null, player);
                         playerTimerData.addTimer(new PlayerTimer(TRANSFORM_COOLDOWN, "transform_cooldown", PersistentPlayerTimer.TRANSFORM_COOLDOWN, new HashMap<>()));
+                        DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.has_detransformed.name(), true);
                     }
                 }
             });

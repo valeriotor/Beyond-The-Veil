@@ -1830,6 +1830,8 @@
   "message.transformation.sleep": "I can't sleep while non-human.",
   "message.vessel_stone.in_water": "The vessel stone may not be used while in water.",
   "message.vessel_stone.not_in_arche": "The vessel stone must be used while in Arche.",
+  "overlay.detransform": "Press %s to return human",
+  "overlay.explode": "Press %s to explode",
   "overlay.repair_hammer.submarine": "Integrity: %.2f%%",
   "reminiscence.EMPTY": "The dream was not affected.",
   "reminiscence.blinded": "The target was blinded.",

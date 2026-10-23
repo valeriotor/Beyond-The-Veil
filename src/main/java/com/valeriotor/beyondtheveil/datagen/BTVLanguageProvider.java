@@ -2385,7 +2385,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         addJournal();
         addLetterBox();
         addBaptism();
-        addOverlays();
+        addOverlaysAndHints();
         addBloodPool();
         addBloodThesis();
         addDagon();
@@ -2676,8 +2676,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.blood_pool.levelup", "My connection to my Blood Pool has improved. Bound IV stands may transmit multiple patients.");
     }
 
-    private void addOverlays() {
+    private void addOverlaysAndHints() {
         add("overlay.repair_hammer.submarine", "Integrity: %.2f%%");
+        add("overlay.explode", "Press %s to explode");
+        add("overlay.detransform", "Press %s to return human");
     }
 
     private void addBaptism() {
