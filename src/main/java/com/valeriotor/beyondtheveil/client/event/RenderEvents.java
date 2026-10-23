@@ -657,6 +657,9 @@ public class RenderEvents {
     @SubscribeEvent
     public static void fogEvent(ViewportEvent.RenderFog event) {
         LocalPlayer p = Minecraft.getInstance().player;
+        if (p == null) {
+            return;
+        }
         if (ClientData.getInstance().isBlinded()) {
             event.setFarPlaneDistance(0);
             event.setNearPlaneDistance(0);
@@ -665,14 +668,21 @@ public class RenderEvents {
             event.setFarPlaneDistance(80);
             event.setNearPlaneDistance(40);
             event.setCanceled(true);
-        } else if (p.isUnderWater()) { // TODO eventually remove this...
-            event.setFarPlaneDistance(300);
-            //event.setNearPlaneDistance(-100);
-            event.setCanceled(true);
         } else if (ClientData.getInstance().getContactFogLevel() > 0) {
             event.setFarPlaneDistance(256 - ClientData.getInstance().getContactFogLevel());
             event.setNearPlaneDistance(0);
             event.setCanceled(true);
+        } else if (p.isUnderWater() && (p.getVehicle() instanceof NautilusEntity)) {
+            event.setFarPlaneDistance(300);
+            //event.setNearPlaneDistance(-100);
+            event.setCanceled(true);
+        } else {
+            CrossSync crossSync = CrossSyncHolder.getCrossSync(p);
+            if (crossSync != null && crossSync.getTransformation() == PlayerTransformation.DEEP_ONE && p.isUnderWater()) {
+                event.setFarPlaneDistance(300);
+                //event.setNearPlaneDistance(-100);
+                event.setCanceled(true);
+            }
         }
     }
 

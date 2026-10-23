@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
@@ -42,6 +43,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -122,6 +126,12 @@ public class PlayerTickEvents {
 
                             }
                         }
+                    }
+                }
+                if (!sp.hasEffect(MobEffects.NIGHT_VISION) || sp.tickCount % 20 == 0) {
+                    boolean deepOne = sp.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().isPresent() && sp.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve().get().getCrossSync().getTransformation() == PlayerTransformation.DEEP_ONE && sp.isInWater();
+                    if (sp.getVehicle() instanceof NautilusEntity || deepOne) {
+                        sp.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 15 * 20 * (deepOne ? 10 : 1), 3, false, false));
                     }
                 }
             }
