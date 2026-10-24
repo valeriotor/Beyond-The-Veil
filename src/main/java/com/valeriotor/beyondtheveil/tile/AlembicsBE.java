@@ -89,7 +89,7 @@ public class AlembicsBE extends BlockEntity {
     public void tickServer() {
         if (level instanceof ServerLevel sl) {
             counter++;
-            if (counter == 5) {
+            if (counter % 5 == 0) {
                 if (itemLeft > 0) {
                     Direction facing = getBlockState().getValue(AlembicsBlock.FACING);
                     final double a = 0.0625;
@@ -103,27 +103,28 @@ public class AlembicsBE extends BlockEntity {
                     ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x2, worldPosition.getY() + 0.01 + 10 * a, z2, 1, 0, 0, 0, 0.025);
                     ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x3, worldPosition.getY() + 0.01 + 1 - a, z3, 1, 0, 0, 0, 0.052);
                 }
-                counter = 0;
-                if (itemLeft == 0) {
-                    if (!inputTank1.isEmpty() && !stackHandler.getStackInSlot(0).isEmpty() && !inputTank2.isEmpty() && heldFlask != null) {
-                        Tuple<Fluid, Integer> output = AlembicsRecipeRegistry.getOutput(inputTank1.getFluid().getFluid(), stackHandler.getStackInSlot(0), inputTank2.getFluid().getFluid());
-                        if (output != null) {
-                            itemLeft = output.getB();
-                            burningStack = stackHandler.getStackInSlot(0).copy();
-                            stackHandler.extractItem(0, 1, false);
-                        }
-                    }
-                } else if (itemLeft > 0) {
-                    itemLeft--;
-                    if (!inputTank1.isEmpty() && !inputTank2.isEmpty()) {
-                        Tuple<Fluid, Integer> output = AlembicsRecipeRegistry.getOutput(inputTank1.getFluid().getFluid(), burningStack, inputTank2.getFluid().getFluid());
-                        if (output != null && heldFlask != null) {
-                            heldFlask.getTank().fill(new FluidStack(output.getA(), 1), IFluidHandler.FluidAction.EXECUTE);
-                            updateClient();
-                        }
-                    }
+                if (counter % 30 == 0) {
                     if (itemLeft == 0) {
-                        burningStack = null;
+                        if (!inputTank1.isEmpty() && !stackHandler.getStackInSlot(0).isEmpty() && !inputTank2.isEmpty() && heldFlask != null) {
+                            Tuple<Fluid, Integer> output = AlembicsRecipeRegistry.getOutput(inputTank1.getFluid().getFluid(), stackHandler.getStackInSlot(0), inputTank2.getFluid().getFluid());
+                            if (output != null) {
+                                itemLeft = output.getB();
+                                burningStack = stackHandler.getStackInSlot(0).copy();
+                                stackHandler.extractItem(0, 1, false);
+                            }
+                        }
+                    } else if (itemLeft > 0) {
+                        itemLeft--;
+                        if (!inputTank1.isEmpty() && !inputTank2.isEmpty()) {
+                            Tuple<Fluid, Integer> output = AlembicsRecipeRegistry.getOutput(inputTank1.getFluid().getFluid(), burningStack, inputTank2.getFluid().getFluid());
+                            if (output != null && heldFlask != null) {
+                                heldFlask.getTank().fill(new FluidStack(output.getA(), 1), IFluidHandler.FluidAction.EXECUTE);
+                                updateClient();
+                            }
+                        }
+                        if (itemLeft == 0) {
+                            burningStack = null;
+                        }
                     }
                 }
             }

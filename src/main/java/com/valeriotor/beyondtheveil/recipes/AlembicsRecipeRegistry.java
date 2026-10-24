@@ -18,6 +18,8 @@ public class AlembicsRecipeRegistry {
 
     public static void registerRecipes() {
         registerRecipe(Fluids.WATER, new ItemStack(Items.HONEYCOMB), Fluids.WATER, 20, BTVFluids.SOURCE_FLUID_SEDATIVE.get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.SCUTE), Fluids.WATER, 20, BTVFluids.SOURCE_FLUID_COAGULANT.get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.FEATHER), Fluids.WATER, 9, BTVFluids.SOURCE_FLUID_SOFTENER.get());
         registerRecipe(Fluids.WATER, new ItemStack(Items.NETHER_WART), Fluids.WATER, 20, BTVFluids.FLUID_WART_SERUM.getA().get());
         registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.SUGAR), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_MOVEMENT_SPEED_SERUM.getA().get());
         registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.NAUTILUS_SHELL), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM.getA().get());
@@ -39,6 +41,11 @@ public class AlembicsRecipeRegistry {
         registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.TURTLE_EGG), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_WEAKNESS_SERUM.getA().get());
         registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.SPIDER_EYE), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_POISON_SERUM.getA().get());
         registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.WITHER_ROSE), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_WITHER_SERUM.getA().get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.COD), Fluids.WATER, 3, BTVFluids.FLUID_MEMORY_HORMONES.getA().get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.AMETHYST_BLOCK), Fluids.WATER, 40, BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get());
+        registerRecipe(BTVFluids.FLUID_MEMORY_HORMONES.getA().get(), new ItemStack(Registration.HEART.get()), BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get(), 60, BTVFluids.FLUID_PARENTAL_HORMONES.getA().get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.CLAY_BALL), Fluids.WATER, 40, BTVFluids.FLUID_GS121_SERUM.getA().get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.SAND), Fluids.WATER, 40, BTVFluids.FLUID_SA245_SERUM.getA().get());
     }
 
     private static void registerRecipe(Fluid input1, ItemStack stack, Fluid input2, int mBPerItem, Fluid output) {
