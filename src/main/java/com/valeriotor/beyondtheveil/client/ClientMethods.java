@@ -220,9 +220,13 @@ public class ClientMethods {
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "jar_large")));
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "jar_medium")));
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "jar_small")));
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "flask_item")));
             } else if (item == Registration.DEMAND_PILLAR_ITEM.get()) {
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "demand_pillar")));
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "offer_pillar")));
+            } else if (item == Registration.DAMP_CANOPY_ITEM.get()) {
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "damp_canopy")));
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "damp_filled_canopy")));
             } else {
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key)));
             }

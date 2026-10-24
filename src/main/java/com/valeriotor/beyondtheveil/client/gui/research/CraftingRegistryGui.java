@@ -23,6 +23,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -47,24 +48,18 @@ public class CraftingRegistryGui extends Screen {
     private static final ResourceLocation GRID_ARROW = new ResourceLocation(References.MODID, "textures/gui/research/crafting_registry_grid_arrow.png");
 
 
-    private int pageLeftX;
-    private int pageTopY;
-    private int pageRightX;
-    private int pageBottomY;
-    private int pageHeight;
-    private int pageWidth;
-    private int entryListWidth;
-    private int entryListHeight;
-    private int entryListStart;
-    private int scrollbarWidth;
+    private float entryListWidth;
+    private float entryListHeight;
+    private float entryListStart;
+    private float scrollbarWidth;
     private ScrollableList<CraftingEntry> itemList;
     private ScrollableList<CraftingEntry> fullList;
-    private int listLeftX, listLeftY;
-    private int titleX, titleY;
-    private int textBlockX, textBlockY;
-    private int gridX, gridY, gridWidth;
+    private float listLeftX, listLeftY;
+    private float titleX, titleY;
+    private float textBlockX, textBlockY;
+    private float gridX, gridY, gridWidth;
     private float gridFactor;
-    private int CTCategoryX, CTCategoryY, GBCategoryX, GBCategoryY;
+    private float CTCategoryX, CTCategoryY, GBCategoryX, GBCategoryY;
     private boolean CTCategory = true, GBCategory;
     private final ItemStack craftingTable = new ItemStack(Blocks.CRAFTING_TABLE);
     private final ItemStack gearBench = new ItemStack(Registration.GEAR_BENCH.get());
@@ -72,18 +67,27 @@ public class CraftingRegistryGui extends Screen {
     private final List<List<GearBenchRecipe>> gearBenchRecipes;
     private final Map<String, Research> knownRecipesByName;
     private Component selectedTitle;
-    private TextBlock selectedText;
     private CraftingGrid grid;
     private CraftingEntry selectedEntry;
     private List<? extends Recipe<?>> currentSelectionRecipes = new ArrayList<>();
-    private int arrowXOffset;
-    private int arrowYOffset;
-    private final int ARROW_WIDTH = 16;
-    private final int ARROW_HEIGHT = 16;
+    private float arrowXOffset;
+    private float arrowYOffset;
+    private float textArrowXOffset;
+    private float textArrowYOffset;
+    private final int ARROW_WIDTH = 24;
+    private final int ARROW_HEIGHT = 24;
     private int gridIndex;
     private Item currentSelectionItem;
-    private int craftingGridWidth;
+    private float craftingGridWidth;
     private static final float ARROW_DISCOLOR = 0.35F;
+    private float scaleFactor = 1;
+    private static final int BACKGROUND_BASE_WIDTH = 1577;
+    private static final int BACKGROUND_BASE_HEIGHT = 1261;
+    private float imageWidth;
+    private float imageHeight;
+    private final float BASE_IMAGE_TO_GUI_MULTIPLIER = 0.45F;
+    private int selectedBlockIndex;
+    private List<TextBlock> selectedTextBlocks = new ArrayList<>();
 
 
     public CraftingRegistryGui(ResearchStatus status) {
@@ -119,59 +123,61 @@ public class CraftingRegistryGui extends Screen {
 
     @Override
     protected void init() {
-        int blackPageMargin = Math.min(100 * width / 1400, 200);
-        pageTopY = height * blackPageMargin / 1440;
-        pageBottomY = (height * (1440 - blackPageMargin)) / 1440;
-        this.pageHeight = pageBottomY - pageTopY;
-        this.pageWidth = pageHeight * 1577 / 1261;
-        pageLeftX = width / 2 - pageWidth / 2;
-        pageRightX = width / 2 + pageWidth / 2;
-        if (pageLeftX < 20) {
-            pageLeftX = 20;
-            pageRightX = width - 20;
-            pageWidth = width - 40;
-            pageHeight = pageWidth * 1261 / 1577;
-            pageTopY = height / 2 - pageHeight / 2;
-            pageBottomY = height / 2 + pageHeight / 2;
+        scaleFactor = 1;
+        imageWidth = (int) (BACKGROUND_BASE_WIDTH * 1.5F);
+        imageHeight = (int) (BACKGROUND_BASE_HEIGHT * 1.5F);
+        float bitgm = BASE_IMAGE_TO_GUI_MULTIPLIER;
+        imageWidth = BACKGROUND_BASE_WIDTH * bitgm;
+        imageHeight = BACKGROUND_BASE_HEIGHT * bitgm;
+        //entryListWidth = 343;
+        //entryListHeight = 357;
+
+        if (imageHeight > height * 95 / 100F) {
+            scaleFactor = height * 95F / 100 / imageHeight;
+        }
+        if (imageWidth > width * 95 / 100F) {
+            scaleFactor = Math.min(width * 95F / 100 / imageWidth, scaleFactor);
         }
 
-        entryListWidth = 489 * pageWidth / 1577;
-        entryListHeight = 839 * pageHeight / 1261;
-        entryListStart = 44 * pageWidth / 1577;
-        scrollbarWidth = 20 * pageWidth / 1577;
+        entryListWidth = 489 * bitgm;// * pageWidth / 1577;
+        entryListHeight = 839 * bitgm;// * pageHeight / 1261;
+        entryListStart = 44 * bitgm;// * pageWidth / 1577;
+        scrollbarWidth = 20 * bitgm;// * pageWidth / 1577;
 
-        listLeftX = pageLeftX + 44 * pageWidth / 1577;
-        listLeftY = pageTopY + 381 * pageHeight / 1261;
+        listLeftX = -imageWidth / 2 + 44 * bitgm;//pageLeftX + 44 * pageWidth / 1577;
+        listLeftY = -imageHeight / 2 + 381 * bitgm;//pageTopY + 381 * pageHeight / 1261;
 
         itemList = initList();
         fullList = initList(true);
 
         if (gearBenchRecipes.isEmpty()) {
-            CTCategoryX = pageLeftX + 290 * pageWidth / 1577;
-            CTCategoryY = pageTopY + 180 * pageHeight / 1261;
+            CTCategoryX = -imageWidth / 2 + 290 * bitgm;//pageLeftX + 290 * pageWidth / 1577;
+            CTCategoryY = -imageHeight / 2 + 180 * bitgm;//pageTopY + 180 * pageHeight / 1261;
         } else {
-            CTCategoryX = pageLeftX + 190 * pageWidth / 1577;
-            CTCategoryY = pageTopY + 180 * pageHeight / 1261;
-            GBCategoryX = pageLeftX + 390 * pageWidth / 1577;
-            GBCategoryY = pageTopY + 180 * pageHeight / 1261;
+            CTCategoryX = -imageWidth / 2 + 190 * bitgm;//pageLeftX + 190 * pageWidth / 1577;
+            CTCategoryY = -imageHeight / 2 + 180 * bitgm;//pageTopY + 180 * pageHeight / 1261;
+            GBCategoryX = -imageWidth / 2 + 390 * bitgm;//pageLeftX + 390 * pageWidth / 1577;
+            GBCategoryY = -imageHeight / 2 + 180 * bitgm;//pageTopY + 180 * pageHeight / 1261;
         }
 
-        titleX = pageLeftX + (555 + 489) * pageWidth / 1577;
-        titleY = pageTopY + 100 * pageHeight / 1261;
-        textBlockX = pageLeftX + 670 * pageWidth / 1577;
-        textBlockY = pageTopY + 220 * pageHeight / 1261;
-        gridX = pageLeftX + (556 + 70) * pageWidth / 1577;
-        gridY = pageTopY + 651 * pageHeight / 1261;
-        gridWidth = 949 * pageWidth / 1577;
+        titleX = -imageWidth / 2 + (555 + 489) * bitgm;//pageLeftX + (555 + 489) * pageWidth / 1577;
+        titleY = -imageHeight / 2 + 100 * bitgm;//pageTopY + 100 * pageHeight / 1261;
+        textBlockX = -imageWidth / 2 + 670 * bitgm;//pageLeftX + 670 * pageWidth / 1577;
+        textBlockY = -imageHeight / 2 + 210 * bitgm;//pageTopY + 220 * pageHeight / 1261;
+        gridX = -imageWidth / 2 + (556 + 70) * bitgm;//pageLeftX + (556 + 70) * pageWidth / 1577;
+        gridY = -imageHeight / 2 + 711 * bitgm;//pageTopY + 651 * pageHeight / 1261;
+        gridWidth = 949 * bitgm;// * pageWidth / 1577;
         gridFactor = gridWidth / 200F;
 
         if (selectedEntry != null) {
             selectEntry(selectedEntry.stack.getItem(), selectedEntry.recipes);
         }
 
-        arrowXOffset = (gridX + gridWidth / 2);
-        arrowYOffset = 1150 * pageWidth / 1577;
-        craftingGridWidth = 800 * pageWidth / 1577;
+        arrowXOffset = (gridX + gridWidth / 2) - 20;
+        arrowYOffset = 520 * bitgm;// * pageWidth / 1577;
+        textArrowXOffset = titleX + 20;
+        textArrowYOffset = 10;
+        craftingGridWidth = 800 * bitgm;// * pageWidth / 1577;
     }
 
     private ScrollableList<CraftingEntry> initList() {
@@ -201,7 +207,7 @@ public class CraftingRegistryGui extends Screen {
             entries.add(new CraftingEntry(itemListEntry.getKey(), itemListEntry.getValue()));
         }
         entries.sort(Comparator.comparing(e -> e.stack.getItem().getDescription().getString()));
-        return new ScrollableList<>(entryListWidth, entryListHeight, entries, entryListHeight / 6, scrollbarWidth);
+        return new ScrollableList<>((int) entryListWidth, (int) entryListHeight, entries, (int) (entryListHeight / 6), (int) scrollbarWidth);
     }
 
     @Override
@@ -218,13 +224,23 @@ public class CraftingRegistryGui extends Screen {
         PoseStack pose = guiGraphics.pose();
         //guiGraphics.blit(BACKGROUND, 0, 0, 0, 0, width, height, 2560, 1440);
         guiGraphics.blit(BACKGROUND, 0, 0, width, height, 0, 0, 2560, 1440, 2560, 1440);
-        guiGraphics.blit(PAGE, pageLeftX, pageTopY, pageWidth, pageHeight, 0, 0, 1577, 1261, 1577, 1261);
+        pose.pushPose();
+        pose.translate(width / 2F, height / 2F, 0);
+        pose.scale(scaleFactor, scaleFactor, 1);
+        pMouseX = (int) ((pMouseX - width / 2) / scaleFactor);
+        pMouseY = (int) ((pMouseY - height / 2) / scaleFactor);
+
+        pose.pushPose();
+        pose.translate(-imageWidth / 2, -imageHeight / 2, 0);
+        guiGraphics.blit(PAGE, 0, 0, (int) imageWidth, (int) imageHeight, 0, 0, BACKGROUND_BASE_WIDTH, BACKGROUND_BASE_HEIGHT, BACKGROUND_BASE_WIDTH, BACKGROUND_BASE_HEIGHT);
+        pose.popPose();
+        //guiGraphics.blit(PAGE, pageLeftX, pageTopY, pageWidth, pageHeight, 0, 0, 1577, 1261, 1577, 1261);
 
         renderSelections(guiGraphics, pMouseX, pMouseY, pose, pPartialTick);
 
         pose.pushPose();
         pose.translate(listLeftX, listLeftY, 0);
-        itemList.render(pose, guiGraphics, 0xFFFFFFFF, pMouseX - listLeftX, pMouseY - listLeftY, pPartialTick);
+        itemList.render(pose, guiGraphics, 0xFFFFFFFF, (int) (pMouseX - listLeftX), (int) (pMouseY - listLeftY), pPartialTick);
         pose.popPose();
 
         if (selectedTitle != null) {
@@ -234,26 +250,38 @@ public class CraftingRegistryGui extends Screen {
             guiGraphics.drawCenteredString(Minecraft.getInstance().font, selectedTitle, 0, 0, 0xFFAAFFAA);
             pose.popPose();
         }
-        if (selectedText != null) {
+        if (!selectedTextBlocks.isEmpty()) {
             pose.pushPose();
             pose.translate(textBlockX, textBlockY, 0);
-            selectedText.render(pose, guiGraphics, 0xFFFFFFFF, pMouseX - textBlockX, pMouseY - textBlockY, pPartialTick);
+            selectedTextBlocks.get(selectedBlockIndex).render(pose, guiGraphics, 0xFFFFFFFF, (int) (pMouseX - textBlockX), (int) (pMouseY - textBlockY), pPartialTick);
             pose.popPose();
         }
         //guiGraphics.drawString(font, String.format("X: %d, Y: %d", pMouseX, pMouseY), 10, 10, 0xFFFFFFFF);
         if (currentSelectionRecipes.size() > 1) {
             if (currentSelectionRecipes.size() == gridIndex + 1) {
-                RenderSystem.setShaderColor(ARROW_DISCOLOR,ARROW_DISCOLOR,ARROW_DISCOLOR,1);
+                RenderSystem.setShaderColor(ARROW_DISCOLOR, ARROW_DISCOLOR, ARROW_DISCOLOR, 1);
             }
             renderArrow(pose, guiGraphics, pMouseX, pMouseY, false);
-            RenderSystem.setShaderColor(1,1,1,1);
+            RenderSystem.setShaderColor(1, 1, 1, 1);
             if (gridIndex == 0) {
-                RenderSystem.setShaderColor(ARROW_DISCOLOR,ARROW_DISCOLOR,ARROW_DISCOLOR,1);
+                RenderSystem.setShaderColor(ARROW_DISCOLOR, ARROW_DISCOLOR, ARROW_DISCOLOR, 1);
             }
             renderArrow(pose, guiGraphics, pMouseX, pMouseY, true);
-            RenderSystem.setShaderColor(1,1,1,1);
+            RenderSystem.setShaderColor(1, 1, 1, 1);
         }
-
+        if (selectedTextBlocks.size() > 1) {
+            if (selectedTextBlocks.size() == selectedBlockIndex + 1) {
+                RenderSystem.setShaderColor(ARROW_DISCOLOR, ARROW_DISCOLOR, ARROW_DISCOLOR, 1);
+            }
+            renderTextArrow(pose, guiGraphics, pMouseX, pMouseY, false);
+            RenderSystem.setShaderColor(1, 1, 1, 1);
+            if (selectedBlockIndex == 0) {
+                RenderSystem.setShaderColor(ARROW_DISCOLOR, ARROW_DISCOLOR, ARROW_DISCOLOR, 1);
+            }
+            renderTextArrow(pose, guiGraphics, pMouseX, pMouseY, true);
+            RenderSystem.setShaderColor(1, 1, 1, 1);
+        }
+        pose.popPose();
     }
 
     private void renderSelections(GuiGraphics guiGraphics, int pMouseX, int pMouseY, PoseStack pose, float pPartialTick) {
@@ -300,16 +328,40 @@ public class CraftingRegistryGui extends Screen {
         pose.popPose();
     }
 
+    private void renderTextArrow(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, boolean left) {
+        pose.pushPose();
+        pose.translate(textArrowXOffset + (left ? -1 : 1) * ARROW_WIDTH * (left ? 7 + 1.5 : 6 + 1.5), textArrowYOffset, 0);
+        if ((hoveringLeftTextArrow(mouseX, mouseY) && left) || ((hoveringRightTextArrow(mouseX, mouseY) && !left))) {
+            pose.scale(1.5F, 1.5F, 1);
+        }
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        guiGraphics.blit(left ? ResearchPageGui.LEFT_ARROW : ResearchPageGui.RIGHT_ARROW, -ARROW_WIDTH / 2, -ARROW_HEIGHT / 2, ARROW_WIDTH * 2 / 3, ARROW_HEIGHT, 0, 0, 54, 53, 54, 53);
+        pose.popPose();
+    }
+
     private boolean hoveringLeftArrow(double mouseX, double mouseY) {
-        int leftX = arrowXOffset - 7 * ARROW_WIDTH / 2;
-        int topY = arrowYOffset - ARROW_HEIGHT / 2;
+        float leftX = arrowXOffset - 7 * ARROW_WIDTH / 2F;
+        float topY = arrowYOffset - ARROW_HEIGHT / 2F;
         return mouseX >= leftX && mouseX <= leftX + ARROW_WIDTH && mouseY >= topY && mouseY < topY + ARROW_HEIGHT;
     }
 
     private boolean hoveringRightArrow(double mouseX, double mouseY) {
-        int leftX = arrowXOffset + 3 * ARROW_WIDTH / 2;
-        int topY = arrowYOffset - ARROW_HEIGHT / 2;
+        float leftX = arrowXOffset + 3 * ARROW_WIDTH / 2F;
+        float topY = arrowYOffset - ARROW_HEIGHT / 2F;
         return mouseX >= leftX && mouseX <= leftX + ARROW_WIDTH && mouseY >= topY && mouseY <= topY + ARROW_HEIGHT;
+    }
+
+    private boolean hoveringLeftTextArrow(double mouseX, double mouseY) {
+        float leftX = textArrowXOffset - 18 * ARROW_WIDTH / 2F;
+        float topY = textArrowYOffset - ARROW_HEIGHT / 2F;
+        return mouseX >= leftX - 3 && mouseX <= leftX + ARROW_WIDTH + 3 && mouseY >= topY - 3 && mouseY < topY + ARROW_HEIGHT + 3;
+    }
+
+    private boolean hoveringRightTextArrow(double mouseX, double mouseY) {
+        float leftX = textArrowXOffset + 13.5F * ARROW_WIDTH / 2F;
+        float topY = textArrowYOffset - ARROW_HEIGHT / 2F;
+        return mouseX >= leftX - 3 && mouseX <= leftX + ARROW_WIDTH + 3 && mouseY >= topY - 3 && mouseY <= topY + ARROW_HEIGHT + 3;
     }
 
     private boolean hoveringCTSelection(int mouseX, int mouseY) {
@@ -340,14 +392,16 @@ public class CraftingRegistryGui extends Screen {
     @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
         InputConstants.Key mouseKey = InputConstants.getKey(pKeyCode, pScanCode);
-        if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
-            minecraft.setScreen(new NecronomiconGui());
+        if (Minecraft.getInstance().options.keyInventory.isActiveAndMatches(mouseKey)) {
+            Minecraft.getInstance().setScreen(new NecronomiconGui());
         }
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
 
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+        pMouseX = (int) ((pMouseX - width / 2) / scaleFactor);
+        pMouseY = (int) ((pMouseY - height / 2) / scaleFactor);
         if (itemList.mouseClicked(pMouseX - listLeftX, pMouseY - listLeftY, pButton)) {
             return true;
         } else if (hoveringCTSelection((int) pMouseX, (int) pMouseY)) {
@@ -363,35 +417,51 @@ public class CraftingRegistryGui extends Screen {
         } else if (hoveringLeftArrow(pMouseX, pMouseY)) {
             gridIndex = Math.max(gridIndex - 1, 0);
             if (gridIndex < currentSelectionRecipes.size()) {
-                grid = new CraftingGrid(craftingGridWidth, 100, currentSelectionRecipes.get(gridIndex), currentSelectionItem, gridFactor);
+                grid = new CraftingGrid((int) craftingGridWidth, 100, currentSelectionRecipes.get(gridIndex), currentSelectionItem, gridFactor);
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
             }
         } else if (hoveringRightArrow(pMouseX, pMouseY)) {
             gridIndex = Math.min(gridIndex + 1, currentSelectionRecipes.size() - 1);
             if (gridIndex < currentSelectionRecipes.size()) {
-                grid = new CraftingGrid(craftingGridWidth, 100, currentSelectionRecipes.get(gridIndex), currentSelectionItem, gridFactor);
+                grid = new CraftingGrid((int) craftingGridWidth, 100, currentSelectionRecipes.get(gridIndex), currentSelectionItem, gridFactor);
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
             }
-        } else if (selectedText != null && selectedText.mouseClicked(pMouseX - textBlockX, pMouseY - textBlockY, pButton)) {
-            return true;
+        } else if (hoveringLeftTextArrow(pMouseX, pMouseY)) {
+            selectedBlockIndex = Math.max(0, selectedBlockIndex - 1);
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+        } else if (hoveringRightTextArrow(pMouseX, pMouseY)) {
+            selectedBlockIndex = Math.max(0, Math.min(selectedBlockIndex + 1, selectedTextBlocks.size() - 1));
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+        } else {
+            TextBlock textBlock = currentBlock();
+            if (textBlock != null && textBlock.mouseClicked(pMouseX - textBlockX, pMouseY - textBlockY, pButton)) {
+                return true;
+            }
         }
         return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 
+
     @Override
     public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
+        pMouseX = (int) ((pMouseX - width / 2) / scaleFactor);
+        pMouseY = (int) ((pMouseY - height / 2) / scaleFactor);
         itemList.mouseDragged(pMouseX - listLeftX, pMouseY - listLeftY, pButton, pDragX, pDragY);
         return super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
     }
 
     @Override
     public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
+        pMouseX = (int) ((pMouseX - width / 2) / scaleFactor);
+        pMouseY = (int) ((pMouseY - height / 2) / scaleFactor);
         itemList.mouseReleased(pMouseX - listLeftX, pMouseY - listLeftY, pButton);
         return super.mouseReleased(pMouseX, pMouseY, pButton);
     }
 
     @Override
     public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
+        pMouseX = (int) ((pMouseX - width / 2) / scaleFactor);
+        pMouseY = (int) ((pMouseY - height / 2) / scaleFactor);
         itemList.mouseScrolled(pMouseX - listLeftX, pMouseY - listLeftY, pDelta);
         return super.mouseScrolled(pMouseX, pMouseY, pDelta);
     }
@@ -400,6 +470,7 @@ public class CraftingRegistryGui extends Screen {
         if (recipes.isEmpty()) {
             return;
         }
+        selectedBlockIndex = 0;
         currentSelectionRecipes = recipes;
         currentSelectionItem = item;
         selectedTitle = item.getDescription();
@@ -422,12 +493,33 @@ public class CraftingRegistryGui extends Screen {
         localizedText += "\\n";
         Research research = knownRecipesByName.get(ForgeRegistries.ITEMS.getKey(item).toString());
         localizedText += I18n.get("research.CRAFTING.introduced", Component.translatable(research.getName()).getString(), research.getKey());
-        int width = 800 * pageWidth / 1577;
         List<Element> elements = new TextUtil().parseText(localizedText, width, Minecraft.getInstance().font);
         //elements.add(new CraftingGrid(width, 100, recipe));
-        selectedText = TextBlock.fillBlockWithElements(elements, 0, width, 400 * pageHeight / 1261, Minecraft.getInstance().font).getA();
-        grid = new CraftingGrid(craftingGridWidth, 100, recipes.get(0), item, gridFactor);
+        selectedTextBlocks = makePages(localizedText);
+        //selectedText = TextBlock.fillBlockWithElements(elements, 0, width, (int) (520 * BASE_IMAGE_TO_GUI_MULTIPLIER), Minecraft.getInstance().font).getA();
+        grid = new CraftingGrid((int) craftingGridWidth, 100, recipes.get(0), item, gridFactor);
         gridIndex = 0;
+    }
+
+
+    private List<TextBlock> makePages(String localized) {
+        List<TextBlock> blocks = new ArrayList<>();
+        int blockWidth = (int) (800 * BASE_IMAGE_TO_GUI_MULTIPLIER);
+        List<Element> lines = new TextUtil().parseText(localized, blockWidth, Minecraft.getInstance().font);
+        int i = 0;
+        while (i < lines.size()) {
+            Tuple<TextBlock, Integer> tuple = TextBlock.fillBlockWithElements(lines, i, blockWidth, (int) (420 * BASE_IMAGE_TO_GUI_MULTIPLIER), Minecraft.getInstance().font);
+            blocks.add(tuple.getA());
+            i = tuple.getB();
+        }
+        return blocks;
+    }
+
+    private TextBlock currentBlock() {
+        if (selectedTextBlocks.size() <= selectedBlockIndex) {
+            return null;
+        }
+        return selectedTextBlocks.get(selectedBlockIndex);
     }
 
     private class CraftingEntry extends Element {
@@ -438,7 +530,7 @@ public class CraftingRegistryGui extends Screen {
         private final MutableComponent descriptionId;
 
         protected CraftingEntry(Item result, List<? extends Recipe<?>> recipes) {
-            super(entryListWidth - scrollbarWidth, entryListHeight / 6);
+            super((int) (entryListWidth - scrollbarWidth), (int) (entryListHeight / 6));
             stack = new ItemStack(result);
             this.recipes = recipes;
             scaleFactor = Math.min(1, getHeight() / 40F);

@@ -102,7 +102,7 @@ public class ResearchUtil {
                 for (int i = 0; i < value.res.getStages().length && i <= value.getStage(); i++) {
                     for (String recipe : value.res.getStages()[i].getRecipes()) {
                         if (!knownRecipes.containsKey(recipe)) {
-                            if (recipe.equals("beyondtheveil:offer_pillar")) {
+                            if (recipe.equals("beyondtheveil:offer_pillar") || recipe.equals("beyondtheveil:damp_filled_canopy")) {
                                 continue;
                             }
                             knownRecipes.put(recipe, value.res);
@@ -119,7 +119,6 @@ public class ResearchUtil {
             knownRecipes.put(Registration.SYRINGE.getId().toString(), status.res);
             knownRecipes.put(Registration.TONGS.getId().toString(), status.res);
             knownRecipes.put(Registration.FLASK_LARGE_ITEM.getId().toString(), status.res);
-            knownRecipes.put(Registration.FLASK_ITEM_ITEM.getId().toString(), status.res);
             knownRecipes.put(Registration.ALEMBICS_ITEM.getId().toString(), status.res);
             knownRecipes.put(Registration.FLASK_SHELF_ITEM.getId().toString(), status.res);
             knownRecipes.put(Registration.SURGERY_BED_ITEM.getId().toString(), status.res);

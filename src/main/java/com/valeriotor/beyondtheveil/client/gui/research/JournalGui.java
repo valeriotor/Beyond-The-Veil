@@ -394,11 +394,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (ResearchUtil.isResearchComplete(Minecraft.getInstance().player, "HEARTS")) {
             entries.add(new StacksItemEntry(Registration.FLEBO_ITEM.get(), "flebo", JournalCategory.TOOLS));
         }
-        Minecraft.getInstance().player.getCapability(ResearchProvider.RESEARCH).ifPresent(c -> {
-            if (ResearchUtil.getKnownRecipes(Minecraft.getInstance().player).containsKey("beyondtheveil:watery_cradle")) { // TODO check if key contains namespace
-                entries.add(new StacksItemEntry(Registration.WATERY_CRADLE_ITEM.get(), "watery_cradle", JournalCategory.TOOLS));
-            }
-        });
+        if (ResearchUtil.getResearchStage(Minecraft.getInstance().player, "WATERY_CRADLE") > 0) {
+            entries.add(new StacksItemEntry(Registration.WATERY_CRADLE_ITEM.get(), "watery_cradle", JournalCategory.TOOLS));
+        }
         return entries;
     }
 
