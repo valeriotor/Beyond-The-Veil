@@ -19,6 +19,7 @@ import com.valeriotor.beyondtheveil.surgery.*;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -35,6 +36,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -282,7 +285,8 @@ public class SacrificeAltarBE extends BlockEntity {
                     level.addAlwaysVisibleParticle(patientStatus != null && patientStatus.getPatientType() == PatientType.WEEPER ? BTVParticles.TEARSPILL.get() : BTVParticles.BLOODSPILL.get(), prev.x(), prev.y() - 0.2, prev.z(), (Math.random() - 0.5) * 1.25, 0.1, (Math.random() - 0.5) * 1.25);
                 }
                 if (ritualStatus != null || true) {
-                    ClientMethods.playRitualSound(getBlockPos());
+                    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientMethods.playRitualSound(getBlockPos()));
+
                 }
             }
             if (counter % 4 == 0) {

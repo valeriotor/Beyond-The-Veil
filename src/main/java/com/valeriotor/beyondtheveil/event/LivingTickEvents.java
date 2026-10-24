@@ -27,8 +27,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.CuriosApi;
 
@@ -159,7 +161,9 @@ public class LivingTickEvents {
                     }
                 }
             } else if (e.level().isClientSide) { // Client side stuff
-                ClientMethods.doArcheEffects(event);
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+                    ClientMethods.doArcheEffects(event);
+                });
             }
         }
     }

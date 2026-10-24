@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.entity.dream_focus;
 
 import com.valeriotor.beyondtheveil.client.ClientMethods;
+import com.valeriotor.beyondtheveil.lib.BTVSimpleGuis;
 import com.valeriotor.beyondtheveil.tile.DreamFocusBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,9 +20,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -109,7 +112,7 @@ public class DreamFocusFluidEntity extends Entity implements DreamFocusMovable {
             noPhysics = false;
             this.move(MoverType.SELF, this.getDeltaMovement());
             if (tickCount % 3 == 0) {
-                ClientMethods.colorParticle(DustParticleOptions.REDSTONE, getX(), getY(), getZ(), 0,0,0, entityData.get(COLOR));
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientMethods.colorParticle(DustParticleOptions.REDSTONE, getX(), getY(), getZ(), 0,0,0, entityData.get(COLOR)));
             }
         }
     }

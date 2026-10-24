@@ -32,7 +32,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fml.DistExecutor;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -103,7 +105,7 @@ public class DreamFocusItemEntity extends ItemEntity implements DreamFocusMovabl
                 discard();
             }
         } else {
-            ClientMethods.colorParticle(DustParticleOptions.REDSTONE, getX(), getY(), getZ(), 0,0,0, entityData.get(COLOR));
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientMethods.colorParticle(DustParticleOptions.REDSTONE, getX(), getY(), getZ(), 0,0,0, entityData.get(COLOR)));
         }
     }
 

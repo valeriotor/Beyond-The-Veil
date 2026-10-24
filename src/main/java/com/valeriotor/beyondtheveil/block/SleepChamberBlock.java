@@ -29,6 +29,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -123,7 +125,7 @@ public class SleepChamberBlock extends Block {
         level.levelEvent(player, state.getValue(OPEN) ? 1006 : 1012, pos, 0);
         level.gameEvent(player, state.getValue(OPEN) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
         if (!state.getValue(OPEN) && level.isClientSide && hand == InteractionHand.MAIN_HAND && getPlayerInside(level, pos) == player) {
-            ClientMethods.openSimpleGui(BTVSimpleGuis.SLEEP_CHAMBER);
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientMethods.openSimpleGui(BTVSimpleGuis.SLEEP_CHAMBER));
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
 

@@ -27,9 +27,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -160,7 +162,8 @@ public class DreamFocusBE extends BlockEntity {
                     Vec3 vec3 = points.get(i);
                     if (level != null) {
                         int c = color.getTextColor();
-                        ClientMethods.colorParticle(DustParticleOptions.REDSTONE, vec3.x, vec3.y, vec3.z, 0, 0, 0, c >> 16, ((c >> 8) & 255), c & 255);
+
+                        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientMethods.colorParticle(DustParticleOptions.REDSTONE, vec3.x, vec3.y, vec3.z, 0, 0, 0, c >> 16, ((c >> 8) & 255), c & 255));
                     }
                 }
             }
