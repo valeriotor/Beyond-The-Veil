@@ -266,8 +266,7 @@ public class TestNautilus<T extends NautilusEntity> extends EntityModel<T> {
 
         PartDefinition left_side = partdefinition.addOrReplaceChild("left_side", CubeListBuilder.create().texOffs(146, 143).addBox(-2.0F, -30.0F, -26.5F, 2.0F, 60.0F, 53.0F, new CubeDeformation(0.0F))
                 .texOffs(146, 37).addBox(0.0F, -26.0F, -26.5F, 2.0F, 52.0F, 53.0F, new CubeDeformation(0.0F))
-                .texOffs(238, 0).addBox(2.0F, -15.0F, 15.0F, 2.0F, 9.0F, 7.0F, new CubeDeformation(0.0F))
-                .texOffs(246, 16).addBox(2.0F, -25.0F, 10.0F, 2.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(32.0F, -9.0F, 19.5F));
+                .texOffs(238, 0).addBox(2.0F, -15.0F, 15.0F, 2.0F, 9.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(32.0F, -9.0F, 19.5F));
 
         PartDefinition right_side = partdefinition.addOrReplaceChild("right_side", CubeListBuilder.create().texOffs(146, 143).mirror().addBox(-2.0F, -30.0F, -26.5F, 2.0F, 60.0F, 53.0F, new CubeDeformation(0.0F)).mirror(false)
                 .texOffs(146, 37).mirror().addBox(-4.0F, -26.0F, -26.5F, 2.0F, 52.0F, 53.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-30.0F, -9.0F, 19.5F));
