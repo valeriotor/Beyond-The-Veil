@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "W": {
+      "item": "beyondtheveil:damp_wood"
+    }
+  },
+  "pattern": [
+    "WSW",
+    "WSW",
+    "WSW"
+  ],
+  "result": {
+    "item": "beyondtheveil:slug_bait"
+  },
+  "show_notification": true
+}

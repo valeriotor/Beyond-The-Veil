@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "W": {
+      "item": "beyondtheveil:damp_wood"
+    }
+  },
+  "pattern": [
+    " WI",
+    " IW",
+    "I  "
+  ],
+  "result": {
+    "item": "beyondtheveil:slug_catcher"
+  },
+  "show_notification": true
+}

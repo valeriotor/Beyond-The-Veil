@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "W": {
+      "item": "minecraft:red_wool"
+    },
+    "P": {
+      "item": "minecraft:prismarine_bricks"
+    }
+  },
+  "pattern": [
+    "    ",
+    "WWWW",
+    "PPPP",
+    "PPPP"
+  ],
+  "result": {
+    "item": "beyondtheveil:sacrifice_altar"
+  },
+  "show_notification": true
+}

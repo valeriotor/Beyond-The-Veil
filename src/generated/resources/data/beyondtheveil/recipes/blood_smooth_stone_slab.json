@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "W": {
+      "item": "beyondtheveil:blood_smooth_stone"
+    }
+  },
+  "pattern": [
+    "   ",
+    "   ",
+    "WWW"
+  ],
+  "result": {
+    "count": 6,
+    "item": "beyondtheveil:blood_smooth_stone_slab"
+  },
+  "show_notification": true
+}

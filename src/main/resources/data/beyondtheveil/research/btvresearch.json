@@ -322,7 +322,8 @@
           },
           {
             "epigraph": "research.HEARTS.epigraph",
-            "text": "research.HEARTS.stage.1"
+            "text": "research.HEARTS.stage.1",
+            "recipes": ["beyondtheveil:flebo"]
           }
         ]
       },
@@ -572,11 +573,25 @@
           {
             "text": "research.BLOOD_RITUALS.stage.1",
             "required_research": ["performed_ritual"],
-            "recipes": ["beyondtheveil:blood_thesis"]
+            "recipes": ["beyondtheveil:sacrifice_altar", "beyondtheveil:blood_basin","beyondtheveil:sacrificial_knife"]
           },
           {
             "text": "research.BLOOD_RITUALS.stage.2",
-            "recipes": ["beyondtheveil:blood_thesis"]
+            "recipes": ["beyondtheveil:sacrifice_altar", "beyondtheveil:blood_basin","beyondtheveil:sacrificial_knife"]
+          }
+        ]
+      },
+      {
+        "key": "BLOOD_SIGILS",
+        "name": "research.BLOOD_SIGILS.title",
+        "icons": [ "beyondtheveil:sigil_player" ],
+        "category": "BEYOND_THE_VEIL", "location": [ 12,8 ],
+        "hiders": ["BLOOD_RITUALS"],
+        "parents": ["BLOOD_RITUALS"],
+        "stages": [
+          {
+            "text": "research.BLOOD_SIGILS.stage.0",
+            "recipes": ["beyondtheveil:sigil_player", "beyondtheveil:sigil_pathway"]
           }
         ]
       },

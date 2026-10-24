@@ -102,6 +102,9 @@ public class ResearchUtil {
                 for (int i = 0; i < value.res.getStages().length && i <= value.getStage(); i++) {
                     for (String recipe : value.res.getStages()[i].getRecipes()) {
                         if (!knownRecipes.containsKey(recipe)) {
+                            if (recipe.equals("beyondtheveil:offer_pillar")) {
+                                continue;
+                            }
                             knownRecipes.put(recipe, value.res);
                         }
                     }
@@ -121,6 +124,17 @@ public class ResearchUtil {
             knownRecipes.put(Registration.FLASK_SHELF_ITEM.getId().toString(), status.res);
             knownRecipes.put(Registration.SURGERY_BED_ITEM.getId().toString(), status.res);
             knownRecipes.put(Registration.SAMPLE_TUBE.getId().toString(), status.res);
+            knownRecipes.put(Registration.PATIENT_POD.getId().toString(), status.res);
+            knownRecipes.put(Registration.BLACKJACK.getId().toString(), status.res);
+        }
+        status = researches.get("FIRSTDREAMS");
+        if (status.getStage() >= 0) {
+            knownRecipes.put(Registration.NECRONOMICON.getId().toString(), status.res);
+        }
+        status = researches.get("CUSTOMS");
+        if (status.getStage() >= 1) {
+            knownRecipes.put(Registration.SLUG_BAIT.getId().toString(), status.res);
+            knownRecipes.put(Registration.SLUG_CATCHER.getId().toString(), status.res);
         }
         return knownRecipes;
     }

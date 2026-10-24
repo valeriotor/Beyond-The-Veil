@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-19T00:16:44.9927722	Loot Tables
+// 1.20.1	2026-10-24T00:12:15.4063943	Loot Tables
 dd3accd54512dee8c12b56c173be0101b70d5a38 data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 d4bc5b32a05a5bc243e6ae10ad45d729d684e262 data/beyondtheveil/loot_tables/blocks/arboreal_generator.json
@@ -86,7 +86,7 @@ edcbb7421de94927d01f52cf9f6669126d55f692 data/beyondtheveil/loot_tables/deep_cit
 0851f1aaddb9a36e3409d2f3384ae16d0d54df7b data/beyondtheveil/loot_tables/entities/abomination_1.json
 67a7affa384184088a798b3ac25f6f0778611529 data/beyondtheveil/loot_tables/entities/abomination_2.json
 69e6226d687dbcd3cb0ca728b01af3efa48c7c5c data/beyondtheveil/loot_tables/entities/adeline.json
-1c0d3b39af514eac871390ca039029d63468ac43 data/beyondtheveil/loot_tables/entities/angler.json
+1d10411aeb266a7c3b3fac346542444af1ea3407 data/beyondtheveil/loot_tables/entities/angler.json
 e5cbd0292de0fea9d03c1e83e0ef94b71fbc3bee data/beyondtheveil/loot_tables/entities/blood_cultist.json
 6259b28ed18e7ce0573db8e2b3c5328823222275 data/beyondtheveil/loot_tables/entities/blood_skeleton.json
 a3a2baaf52d0ed916cf6ce908b124bb81d6ca080 data/beyondtheveil/loot_tables/entities/blood_wraith.json

@@ -1,0 +1,20 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    " SS ",
+    " SS ",
+    " SS ",
+    "SSSS"
+  ],
+  "result": {
+    "item": "beyondtheveil:offer_pillar"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "H": {
+      "item": "beyondtheveil:heart"
+    },
+    "P": {
+      "item": "minecraft:prismarine_bricks"
+    }
+  },
+  "pattern": [
+    "    ",
+    "PHHP",
+    " PP ",
+    " PP "
+  ],
+  "result": {
+    "item": "beyondtheveil:blood_basin"
+  },
+  "show_notification": true
+}

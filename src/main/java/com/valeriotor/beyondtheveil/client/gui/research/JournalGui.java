@@ -391,6 +391,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         entries.add(new StacksItemEntry(Registration.FLASK_SHELF_ITEM.get(), "flask_shelf", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.SURGERY_BED_ITEM.get(), "surgery_bed", JournalCategory.TOOLS));
         entries.add(new StacksItemEntry(Registration.PATIENT_POD_ITEM.get(), "patient_pod", JournalCategory.TOOLS));
+        if (ResearchUtil.isResearchComplete(Minecraft.getInstance().player, "HEARTS")) {
+            entries.add(new StacksItemEntry(Registration.FLEBO_ITEM.get(), "flebo", JournalCategory.TOOLS));
+        }
         Minecraft.getInstance().player.getCapability(ResearchProvider.RESEARCH).ifPresent(c -> {
             if (ResearchUtil.getKnownRecipes(Minecraft.getInstance().player).containsKey("beyondtheveil:watery_cradle")) { // TODO check if key contains namespace
                 entries.add(new StacksItemEntry(Registration.WATERY_CRADLE_ITEM.get(), "watery_cradle", JournalCategory.TOOLS));

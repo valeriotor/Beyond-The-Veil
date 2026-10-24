@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "pattern": [
+    "   N",
+    " NI ",
+    " NI ",
+    "II  "
+  ],
+  "result": {
+    "item": "beyondtheveil:sacrificial_knife"
+  },
+  "show_notification": true
+}

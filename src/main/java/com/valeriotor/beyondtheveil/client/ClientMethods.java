@@ -205,6 +205,9 @@ public class ClientMethods {
     // Just hardcoding exceptions (items with multiple recipes). Should not be an issue
     public static List<Optional<? extends Recipe<?>>> recipesForModItem(String key) {
         List<Optional<? extends Recipe<?>>> recipes = new ArrayList<>();
+        if (Minecraft.getInstance().level == null) {
+            return recipes;
+        }
         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(key));
         if (item != null) {
             if (item == Registration.ANTIDOTE_CAPSULE.get()) {
@@ -217,6 +220,9 @@ public class ClientMethods {
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "jar_large")));
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "jar_medium")));
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "jar_small")));
+            } else if (item == Registration.DEMAND_PILLAR_ITEM.get()) {
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "demand_pillar")));
+                recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(References.MODID, "offer_pillar")));
             } else {
                 recipes.add(Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(key)));
             }

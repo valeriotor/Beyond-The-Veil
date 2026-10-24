@@ -497,22 +497,22 @@ public class Registration {
                 output.accept(DAMP_FILLED_CANOPY.get());
                 output.accept(WORN_BRICKS.get());
                 output.accept(IDOL.get());
-                output.accept(FISH_BARREL.get()); // TODO CRAFTING
-                output.accept(SLUG_BAIT.get()); // TODO CRAFTING
-                output.accept(LAMP.get()); // TODO CRAFTING
+                output.accept(FISH_BARREL.get());
+                output.accept(SLUG_BAIT.get());
+                output.accept(LAMP.get());
                 output.accept(BLUE_BRICKS.get());
-                output.accept(WORN_BRICK_STAIRS.get()); // TODO CRAFTING
-                output.accept(DAMP_WOOD_FENCE.get()); // TODO CRAFTING
+                output.accept(WORN_BRICK_STAIRS.get());
+                output.accept(DAMP_WOOD_FENCE.get());
                 output.accept(FUME_SPREADER.get());
                 output.accept(SLEEP_CHAMBER.get());
                 output.accept(GEAR_BENCH.get());
                 output.accept(WATERY_CRADLE.get());
-                output.accept(PATIENT_POD.get()); // TODO CRAFTING
+                output.accept(PATIENT_POD.get());
                 output.accept(FLASK_SHELF.get());
-                output.accept(FLEBO.get()); // TODO CRAFTING
+                output.accept(FLEBO.get());
                 output.accept(SURGERY_BED.get());
                 output.accept(ALEMBICS.get());
-                output.accept(LACRYMATORY.get()); // TODO CRAFTING CAPTION
+                output.accept(LACRYMATORY.get());
                 output.accept(ELDER_STONE_BRICK.get());
                 output.accept(ELDER_STONE_BRICK_CHISELED.get());
                 output.accept(ELDER_STONE_BRICK_SLAB.get());
@@ -528,21 +528,23 @@ public class Registration {
                 output.accept(DEBRIS_GOLD.get());
                 output.accept(VEIN_STONE.get());
                 output.accept(VEIN_STONE_VESSEL.get());
-                output.accept(SACRIFICE_ALTAR.get()); // TODO CRAFTING
-                output.accept(BLOOD_BASIN.get()); // TODO CRAFTING
-                output.accept(BLOOD_BRICK_SLAB.get()); // TODO CRAFTING
-                output.accept(BLOOD_BRICK_STAIRS.get()); // TODO CRAFTING
-                output.accept(BLOOD_SMOOTH_STONE.get()); // TODO CRAFTING
-                output.accept(BLOOD_SMOOTH_STONE_SLAB.get()); // TODO CRAFTING
+                output.accept(SACRIFICE_ALTAR.get());
+                output.accept(BLOOD_BASIN.get());
+                output.accept(BLOOD_BRICK_SLAB.get());
+                output.accept(BLOOD_BRICK_STAIRS.get());
+                output.accept(BLOOD_SMOOTH_STONE.get());
+                output.accept(BLOOD_SMOOTH_STONE_SLAB.get());
                 output.accept(HEART.get());
                 output.accept(BLACK_KELP.get());
                 output.accept(BLACK_SEAGRASS.get());
                 output.accept(DARK_GLASS.get());
                 output.accept(ARENA.get());
                 output.accept(DEEP_CHEST.get());
+                output.accept(REDSTONE_GRASS.get());
+                output.accept(GHOST_GRASS.get());
 
                 output.accept(ONIRIC_INCENSE.get());
-                output.accept(SLUG_CATCHER.get()); // TODO CRAFTING
+                output.accept(SLUG_CATCHER.get());
                 output.accept(SLUG.get());
                 output.accept(SEAWEED_STEW.get());
                 output.accept(KELP_COD_BUNDLE.get());
@@ -562,9 +564,7 @@ public class Registration {
                 output.accept(REDSTONE_WEED_SEEDS.get());
                 output.accept(GHOST_WEED_SEEDS.get());
                 output.accept(GRASS_WEED_SEEDS.get());
-                output.accept(REDSTONE_GRASS.get());
-                output.accept(GHOST_GRASS.get());
-                output.accept(BLACKJACK.get()); // TODO CRAFTING
+                output.accept(BLACKJACK.get());
                 output.accept(SPINE.get());
                 output.accept(BLOOD_SHARD.get());
                 output.accept(HELD_VILLAGER.get());
@@ -585,12 +585,12 @@ public class Registration {
                 output.accept(CORAL_STAFF.get());
                 output.accept(SIGIL_ZOMBIE.get());
                 output.accept(SIGIL_SKELLIE.get());
-                output.accept(SIGIL_PLAYER.get()); // TODO OBTAINING
-                output.accept(SIGIL_PATHWAY.get()); // TODO OBTAINING
-                output.accept(SACRIFICIAL_KNIFE.get()); // TODO CRAFTING
+                output.accept(SIGIL_PLAYER.get());
+                output.accept(SIGIL_PATHWAY.get());
+                output.accept(SACRIFICIAL_KNIFE.get());
                 output.accept(MEMORY_PHIAL.get());
                 output.accept(SAMPLE_TUBE.get());
-                output.accept(NECRONOMICON.get()); // TODO CRAFTING
+                output.accept(NECRONOMICON.get());
                 output.accept(JOURNAL.get());
                 output.accept(BLOOD_ORB.get());
                 output.accept(GREAT_HEART.get());
@@ -611,7 +611,7 @@ public class Registration {
                 output.accept(ARCHE_DIAL.get());
                 output.accept(VESSEL_STONE.get());
                 output.accept(SURGERY_REPORT.get());
-                output.accept(SURGEON_BELL.get()); // TODO CRAFTING
+                output.accept(SURGEON_BELL.get());
                 output.accept(SURGEON_LARVA.get());
                 output.accept(BLOOD_FIST.get());
                 output.accept(PLUCKED_EYE.get()); // TODO LOOT DROP: cephalopodian, many ictya...

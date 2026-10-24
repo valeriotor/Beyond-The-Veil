@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "pattern": [
+    "  OO",
+    "  OO",
+    " I  ",
+    "I   "
+  ],
+  "result": {
+    "item": "beyondtheveil:blackjack"
+  },
+  "show_notification": true
+}

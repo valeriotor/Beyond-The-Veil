@@ -1,0 +1,29 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "B": {
+      "item": "minecraft:bone"
+    },
+    "E": {
+      "item": "beyondtheveil:empty_bladder"
+    },
+    "H": {
+      "item": "beyondtheveil:heart"
+    },
+    "F": {
+      "item": "minecraft:fire_coral"
+    }
+  },
+  "pattern": [
+    "HFFH",
+    "FBEF",
+    "FEBF",
+    "HFFH"
+  ],
+  "result": {
+    "item": "beyondtheveil:sigil_player"
+  },
+  "show_notification": true
+}

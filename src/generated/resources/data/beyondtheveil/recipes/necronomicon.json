@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "B": {
+      "item": "minecraft:book"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "pattern": [
+    " E ",
+    "EBE",
+    " E "
+  ],
+  "result": {
+    "item": "beyondtheveil:necronomicon"
+  },
+  "show_notification": true
+}

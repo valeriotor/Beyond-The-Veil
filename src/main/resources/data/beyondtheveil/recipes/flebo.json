@@ -1,0 +1,26 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "H": {
+      "item": "beyondtheveil:heart"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " SS ",
+    "HSSH",
+    "GSSG",
+    "SSSS"
+  ],
+  "result": {
+    "item": "beyondtheveil:flebo"
+  },
+  "show_notification": true
+}

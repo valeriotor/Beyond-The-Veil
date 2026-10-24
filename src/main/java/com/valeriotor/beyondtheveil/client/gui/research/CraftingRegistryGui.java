@@ -20,6 +20,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
@@ -33,8 +34,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class CraftingRegistryGui extends Screen {
@@ -404,6 +403,11 @@ public class CraftingRegistryGui extends Screen {
         currentSelectionRecipes = recipes;
         currentSelectionItem = item;
         selectedTitle = item.getDescription();
+        if (item == Registration.DEMAND_PILLAR_ITEM.get()) {
+            selectedTitle = Component.translatable("pillars.crafting");
+        } else if (item == Registration.FLASK_LARGE_ITEM.get()) {
+            selectedTitle = Component.translatable("flasks.crafting");
+        }
         String pTranslateKey = item.getDescriptionId() + ".crafting";
         if (item == Registration.DREAM_BOTTLE.get() && DataUtil.getBoolean(Minecraft.getInstance().player, PlayerDataLib.filled_bottle.name())) {
             pTranslateKey += "2";
@@ -431,12 +435,20 @@ public class CraftingRegistryGui extends Screen {
         private final ItemStack stack;
         private final List<? extends Recipe<?>> recipes;
         private final float scaleFactor;
+        private final MutableComponent descriptionId;
 
         protected CraftingEntry(Item result, List<? extends Recipe<?>> recipes) {
             super(entryListWidth - scrollbarWidth, entryListHeight / 6);
             stack = new ItemStack(result);
             this.recipes = recipes;
             scaleFactor = Math.min(1, getHeight() / 40F);
+            String translationKey = stack.getDescriptionId();
+            if (result == Registration.DEMAND_PILLAR_ITEM.get()) {
+                translationKey = "pillars.crafting";
+            } else if (result == Registration.FLASK_LARGE_ITEM.get()) {
+                translationKey = "flasks.crafting";
+            }
+            descriptionId = Component.translatable(translationKey);
         }
 
         @Override
@@ -448,7 +460,7 @@ public class CraftingRegistryGui extends Screen {
             poseStack.pushPose();
             poseStack.translate(getWidth() / 7, getHeight() / 2, 0);
             poseStack.scale(2.5F, 2.5F, 1);
-            poseStack.scale(scaleFactor, scaleFactor, 1);
+            poseStack.scale(scaleFactor * scaleFactor, scaleFactor * scaleFactor, 1);
             graphics.renderItem(stack, -8, -8);
             poseStack.popPose();
 
@@ -456,7 +468,7 @@ public class CraftingRegistryGui extends Screen {
             poseStack.translate(getWidth() / 3, getHeight() / 3, 0);
             //poseStack.scale(2.5F, 2.5F, 1);
             poseStack.scale(scaleFactor, scaleFactor, 1);
-            graphics.drawString(minecraft.font, Component.translatable(stack.getDescriptionId()), 0, 0, 0xFFFFFFFF);
+            graphics.drawString(minecraft.font, descriptionId, 0, 0, 0xFFFFFFFF);
             poseStack.popPose();
         }
 

@@ -1,0 +1,23 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "pattern": [
+    " GG ",
+    "G  G",
+    "C  C",
+    "CCCC"
+  ],
+  "result": {
+    "item": "beyondtheveil:patient_pod"
+  },
+  "show_notification": true
+}

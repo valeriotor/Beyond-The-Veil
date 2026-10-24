@@ -129,6 +129,81 @@ public class BTVRecipes extends RecipeProvider {
                 .unlockedBy("has_damp_wood", has(Registration.DAMP_WOOD.get()))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.FISH_BARREL.get(), 1)
+                .pattern("W W")
+                .pattern("W W")
+                .pattern("WWW")
+                .define('W', Registration.DAMP_WOOD.get())
+                .group("Beyond the Veil")
+                .unlockedBy("has_damp_wood", has(Registration.DAMP_WOOD.get()))
+                .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.FISH_BARREL.get().asItem()));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.SLUG_BAIT.get(), 1)
+                .pattern("WSW")
+                .pattern("WSW")
+                .pattern("WSW")
+                .define('W', Registration.DAMP_WOOD.get())
+                .define('S', Items.STONE)
+                .group("Beyond the Veil")
+                .unlockedBy("has_slug_bait", has(Registration.SLUG_BAIT.get()))
+                .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.SLUG_BAIT.get().asItem()));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.SLUG_CATCHER.get(), 1)
+                .pattern(" WI")
+                .pattern(" IW")
+                .pattern("I  ")
+                .define('W', Registration.DAMP_WOOD.get())
+                .define('I', Items.IRON_INGOT)
+                .group("Beyond the Veil")
+                .unlockedBy("has_slug_catcher", has(Registration.SLUG_CATCHER.get()))
+                .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.SLUG_CATCHER.get().asItem()));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.WORN_BRICK_STAIRS.get(), 4)
+                .pattern("W  ")
+                .pattern("WW ")
+                .pattern("WWW")
+                .define('W', Registration.WORN_BRICKS.get())
+                .group("Beyond the Veil")
+                .unlockedBy("has_worn_bricks", has(Registration.WORN_BRICKS.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.BLOOD_BRICK_STAIRS.get(), 4)
+                .pattern("W  ")
+                .pattern("WW ")
+                .pattern("WWW")
+                .define('W', Registration.BLOOD_BRICK.get())
+                .group("Beyond the Veil")
+                .unlockedBy("has_blood_brick", has(Registration.BLOOD_BRICK.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.BLOOD_BRICK_SLAB.get(), 6)
+                .pattern("   ")
+                .pattern("   ")
+                .pattern("WWW")
+                .define('W', Registration.BLOOD_BRICK.get())
+                .group("Beyond the Veil")
+                .unlockedBy("has_blood_brick", has(Registration.BLOOD_BRICK.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.BLOOD_SMOOTH_STONE_SLAB.get(), 6)
+                .pattern("   ")
+                .pattern("   ")
+                .pattern("WWW")
+                .define('W', Registration.BLOOD_SMOOTH_STONE.get())
+                .group("Beyond the Veil")
+                .unlockedBy("has_blood_smooth_stone", has(Registration.BLOOD_SMOOTH_STONE.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.NECRONOMICON.get(), 1)
+                .pattern(" E ")
+                .pattern("EBE")
+                .pattern(" E ")
+                .define('E', Items.ENDER_EYE)
+                .define('B', Items.BOOK)
+                .group("Beyond the Veil")
+                .unlockedBy("has_necronomicon", has(Registration.NECRONOMICON.get()))
+                .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.NECRONOMICON.get().asItem()));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.ANTIDOTE_CAPSULE.get(), 1)
                 .pattern(" G ")
                 .pattern("GHG")

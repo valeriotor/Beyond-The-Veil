@@ -18,92 +18,6 @@ public class BTVLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        add("itemGroup." + References.TAB_NAME, "Beyond The Veil");
-        add(BLUE_BRICKS.get(), "Blue Bricks");
-        add(DAMP_CANOPY.get(), "Damp Canopy");
-        add(DAMP_FILLED_CANOPY.get(), "Damp Filled Canopy");
-        add(DAMP_LOG.get(), "Damp Log");
-        add(DAMP_WOOD.get(), "Damp Wood");
-        add(DAMP_WOOD_FENCE.get(), "Damp Wood Fence");
-        add(DAMP_WOOD_STAIRS.get(), "Damp Wooden Stairs");
-        add(DARK_SAND.get(), "Dark Sand");
-        add(FISH_BARREL.get(), "Fish Barrel");
-        add(FUME_SPREADER.get(), "Fume Spreader");
-        add(GEAR_BENCH.get(), "Gear Bench");
-        add(IDOL.get(), "Idol");
-        add(LAMP.get(), "Lamp");
-        add(MEMORY_SIEVE.get(), "Memory Sieve");
-        add(SLEEP_CHAMBER.get(), "Sleep Chamber");
-        add(SLUG_BAIT.get(), "Slug Bait");
-        add(WORN_BRICK_STAIRS.get(), "Worn Brick Stairs");
-        add(WORN_BRICKS.get(), "Worn Bricks");
-
-        add(ONIRIC_INCENSE.get(), "Oniric Incense");
-        add(SLUG_CATCHER.get(), "Slug Catcher");
-        add(SLUG.get(), "Slug");
-        add(Registration.CANOE.get(), "Canoe");
-        add(RUM.get(), "Cup of Rum");
-        add(WINE.get(), "Cup of Wine");
-        add(ALE.get(), "Cup of Ale");
-        add(VODKA.get(), "Cup of Vodka");
-        add(MEAD.get(), "Cup of Mead");
-        add(CUP.get(), "Empty Cup");
-        add(FLUTE.get(), "Flute of the Outer Gods");
-        add(WOLF_MEDALLION.get(), "Wolf Medallion");
-        add(TABLET.get(), "Tablet");
-        add(BRONZE_SPHERE.get(), "Bronze Sphere");
-        add(REDSTONE_WEED_SEEDS.get(), "Redstone Weed Seeds");
-        add(GHOST_WEED_SEEDS.get(), "Ghost Weed Seeds");
-        add(GRASS_WEED_SEEDS.get(), "Grass Weed Seeds");
-        add(BLACKJACK.get(), "Blackjack");
-        add(SPINE.get(), "Spine");
-        add(HELD_VILLAGER.get(), "Villager");
-        add(HELD_WEEPER.get(), "Weeper");
-        add(HELD_FLETUM.get(), "Fletum");
-        add(HELD_SHOGGOTH.get(), "Shoggoth");
-        add(SURGERY_TOOLS.get(), "Surgery Tools");
-        add(BONE_TIARA.get(), "Bone Tiara");
-        add(BLEEDING_BELT.get(), "Bleeding Belt");
-        add(DREAM_BOTTLE.get(), "Dream Bottle");
-        add(BLOOD_GEM.get(), "Blood Gem");
-        add(BLOOD_THESIS.get(), "Sanguis: inter vitam et mortem");
-        add(SHOGGOTH_MAP.get(), "Shoggoth Map");
-        add(BLOOD_COVENANT.get(), "Blood Covenant");
-        add(REVELATION_RING.get(), "Ring of Revelation");
-        add(AZACNO_CHARM.get(), "Charm of Azacno");
-        add(BLOOD_CROWN.get(), "Crown of Thorns");
-        add(CORAL_STAFF.get(), "Coral Staff");
-        add(SIGIL_ZOMBIE.get(), "Blood Sigil: Zombie");
-        add(SIGIL_SKELLIE.get(), "Blood Sigil: Skeleton");
-        add(SIGIL_PLAYER.get(), "Blood Sigil: Player");
-        add(SIGIL_PATHWAY.get(), "Blood Sigil: Pathway");
-        add(SACRIFICIAL_KNIFE.get(), "Sacrificial Knife");
-        add(MEMORY_PHIAL.get(), "Memory Phial");
-        add(NECRONOMICON.get(), "Al Azif");
-        add(JOURNAL.get(), "Surgeon's Journal");
-        add(GEAR.get(), "Gear");
-        add(SURGEON_SUMMONS.get(), "Surgeon Summons");
-        add(CRUCIBLE.get(), "Crucible");
-        add(BLACK_MIRROR.get(), "Black Mirror");
-        add(FLESH_CARBON_TOKEN.get(), "Token of Flesh and Carbon");
-        add(PLUCKED_EYE.get(), "Plucked Eye");
-        add(SHELL.get(), "Shell");
-        add(TINY_SKULL.get(), "Tiny Skull");
-        add(ACID_GLAND.get(), "Acid Gland");
-        add(FERTILIZER_GLAND.get(), "Fertilizer Gland");
-        add(MARROW_GLAND.get(), "Marrow Gland");
-        add(SILK_GLAND.get(), "Silk Gland");
-        add(GUNPOWDER_BLADDER.get(), "Gunpowder Bladder");
-        add(LIVING_IRON.get(), "Living Iron");
-        add(EMPTY_BLADDER.get(), "Empty Bladder");
-        add(EMERALD_GEM.get(), "Emerald Gem");
-        add(SWOLLEN_GROWTH.get(), "Swollen Growth");
-        add(PERIOSTEUM_GROWTH.get(), "Periosteum Growth");
-        add(CHROMATOPHORE_GLAND.get(), "Chromatophore Gland");
-        add(OSTEOCLAST_GLAND.get(), "Osteoclast Gland");
-        add(SLIME_HEART.get(), "Slime Heart");
-        add(SCALES.get(), "Scales");
-
         add("fluid_type.beyondtheveil.sedative_fluid", "Sedative");
         add("fluid_type.beyondtheveil.coagulant_fluid", "Coagulant");
         add("fluid_type.beyondtheveil.softener_fluid", "Softener");
@@ -350,6 +264,208 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("message.vessel_stone.in_water", "The vessel stone may not be used while in water.");
         add("message.dream_bottle.player_not_found", "Target not found.");
         add("message.dream_bottle.other_dimension", "The target area is in another dimension.");
+
+        add("itemGroup." + References.TAB_NAME, "Beyond The Veil");
+        add("creative_tab.beyondtheveil", "Beyond The Veil");
+        add(BLUE_BRICKS.get(), "Blue Bricks");
+        add(DAMP_CANOPY.get(), "Damp Canopy");
+        add(DAMP_FILLED_CANOPY.get(), "Damp Filled Canopy");
+        add(DAMP_LOG.get(), "Damp Log");
+        add(DAMP_WOOD.get(), "Damp Wood");
+        add(DAMP_WOOD_FENCE.get(), "Damp Wood Fence");
+        add(DAMP_WOOD_STAIRS.get(), "Damp Wooden Stairs");
+        add(DARK_SAND.get(), "Dark Sand");
+        add(FISH_BARREL.get(), "Fish Barrel");
+        add(FUME_SPREADER.get(), "Fume Spreader");
+        add(GEAR_BENCH.get(), "Gear Bench");
+        add(IDOL.get(), "Idol");
+        add(LAMP.get(), "Lamp");
+        add(MEMORY_SIEVE.get(), "Memory Sieve");
+        add(SLEEP_CHAMBER.get(), "Sleep Chamber");
+        add(SLUG_BAIT.get(), "Slug Bait");
+        add(WORN_BRICK_STAIRS.get(), "Worn Brick Stairs");
+        add(WORN_BRICKS.get(), "Worn Bricks");
+        add(LETTER_BOX.get(), "Letter Box");
+        add(DEMAND_PILLAR.get(), "Pillar of Demand");
+        add(OFFER_PILLAR.get(), "Pillar of Offer");
+        add(DREAM_FOCUS.get(), "Dream Focus");
+        add(DREAM_FOCUS_FLUIDS.get(), "Dream Focus: Fluids");
+        add(CURTAIN.get(), "Curtain");
+        add(ARBOREAL_GENERATOR.get(), "Arboreal Generator");
+        add(MEGYDREA.get(), "Megydrea");
+        add(VIJHISS.get(), "Vijhiss");
+        add(SAPLING_SHRUB.get(), "Sapling Shrub");
+        add(FLASK_LARGE.get(), "Flask (Large)");
+        add(FLASK_MEDIUM.get(), "Flask (Medium)");
+        add(FLASK_SMALL.get(), "Flask (Small)");
+        add(JAR_LARGE.get(), "Jar (Large)");
+        add(JAR_MEDIUM.get(), "Jar (Medium)");
+        add(JAR_SMALL.get(), "Jar (Small)");
+        add(FLASK_ITEM.get(), "Flask (Items)");
+        add(DAMP_STONE.get(), "Damp Stone");
+        add(DAMP_MOSSY_STONE.get(), "Damp Mossy Stone");
+        add(ALGAE_BLOCK.get(), "Algae");
+        add(WATERY_CRADLE.get(), "Watery Cradle");
+        add(PATIENT_POD.get(), "Patient Pod");
+        add(FLASK_SHELF.get(), "Flask Shelf");
+        add(FLEBO.get(), "IV Stand");
+        add(SURGERY_BED.get(), "Surgery Bed");
+        add(ALEMBICS.get(), "Alembics");
+        add(LACRYMATORY.get(), "Lacrymatory");
+        add(ELDER_STONE_BRICK.get(), "Elder Stone Bricks");
+        add(ELDER_STONE_BRICK_CHISELED.get(), "Chiseled Elder Stone Bricks");
+        add(ELDER_STONE_BRICK_SLAB.get(), "Elder Stone Brick Slab");
+        add(ELDER_STONE_BRICK_STAIRS.get(), "Elder Stone Brick Stairs");
+        add(ELDER_BRICK.get(), "Elder Bricks");
+        add(ELDER_BRICK_SLAB.get(), "Elder Brick Slab");
+        add(ELDER_BRICK_STAIRS.get(), "Elder Brick Stairs");
+        add(ELDER_SMOOTH_STONE.get(), "Elder Smooth Stone");
+        add(ELDER_SMOOTH_STONE_SLAB.get(), "Elder Smooth Stone Slab");
+        add(BLOOD_BRICK.get(), "Blood Bricks");
+        add(DEBRIS_NETHERITE.get(), "Netherite Debris");
+        add(DEBRIS_DIAMOND.get(), "Diamond Debris");
+        add(DEBRIS_GOLD.get(), "Gold Debris");
+        add(VEIN_STONE.get(), "Vein Stone");
+        add(VEIN_STONE_VESSEL.get(), "Vein Stone");
+        add(SACRIFICE_ALTAR.get(), "Sacrifice Altar");
+        add(BLOOD_BASIN.get(), "Blood Basin");
+        add(BLOOD_BRICK_SLAB.get(), "Blood Brick Slab");
+        add(BLOOD_BRICK_STAIRS.get(), "Blood Brick Stairs");
+        add(BLOOD_SMOOTH_STONE.get(), "Blood Smooth Stone");
+        add(BLOOD_SMOOTH_STONE_SLAB.get(), "Blood Smooth Stone Slab");
+        add(HEART.get(), "Heart");
+        add(BLACK_KELP.get(), "Black Kelp");
+        add(BLACK_SEAGRASS.get(), "Black Seagrass");
+        add(DARK_GLASS.get(), "Dark Glass");
+        add(ARENA.get(), "Arena");
+        add(DEEP_CHEST.get(), "Deep Chest");
+        add(REDSTONE_GRASS.get(), "Redstone Grass");
+        add(GHOST_GRASS.get(), "Ghost Grass");
+
+        add(ONIRIC_INCENSE.get(), "Oniric Incense");
+        add(SLUG_CATCHER.get(), "Slug Catcher");
+        add(SLUG.get(), "Slug");
+        add(Registration.CANOE.get(), "Canoe");
+        add(RUM.get(), "Cup of Rum");
+        add(WINE.get(), "Cup of Wine");
+        add(ALE.get(), "Cup of Ale");
+        add(VODKA.get(), "Cup of Vodka");
+        add(MEAD.get(), "Cup of Mead");
+        add(CUP.get(), "Empty Cup");
+        add(FLUTE.get(), "Flute of the Outer Gods");
+        add(WOLF_MEDALLION.get(), "Wolf Medallion");
+        add(TABLET.get(), "Tablet");
+        add(BRONZE_SPHERE.get(), "Bronze Sphere");
+        add(REDSTONE_WEED_SEEDS.get(), "Redstone Weed Seeds");
+        add(GHOST_WEED_SEEDS.get(), "Ghost Weed Seeds");
+        add(GRASS_WEED_SEEDS.get(), "Grass Weed Seeds");
+        add(BLACKJACK.get(), "Blackjack");
+        add(SPINE.get(), "Spine");
+        add(HELD_VILLAGER.get(), "Villager");
+        add(HELD_WEEPER.get(), "Weeper");
+        add(HELD_FLETUM.get(), "Fletum");
+        add(HELD_SHOGGOTH.get(), "Shoggoth");
+        add(SURGERY_TOOLS.get(), "Surgery Tools");
+        add(BONE_TIARA.get(), "Bone Tiara");
+        add(BLEEDING_BELT.get(), "Bleeding Belt");
+        add(DREAM_BOTTLE.get(), "Dream Bottle");
+        add(BLOOD_GEM.get(), "Blood Gem");
+        add(BLOOD_THESIS.get(), "Sanguis: inter vitam et mortem");
+        add(SHOGGOTH_MAP.get(), "Shoggoth Map");
+        add(BLOOD_COVENANT.get(), "Blood Covenant");
+        add(REVELATION_RING.get(), "Ring of Revelation");
+        add(AZACNO_CHARM.get(), "Charm of Azacno");
+        add(BLOOD_CROWN.get(), "Crown of Thorns");
+        add(CORAL_STAFF.get(), "Coral Staff");
+        add(SIGIL_ZOMBIE.get(), "Blood Sigil: Zombie");
+        add(SIGIL_SKELLIE.get(), "Blood Sigil: Skeleton");
+        add(SIGIL_PLAYER.get(), "Blood Sigil: Player");
+        add(SIGIL_PATHWAY.get(), "Blood Sigil: Pathway");
+        add(SACRIFICIAL_KNIFE.get(), "Sacrificial Knife");
+        add(MEMORY_PHIAL.get(), "Memory Phial");
+        add(NECRONOMICON.get(), "Al Azif");
+        add(JOURNAL.get(), "Surgeon's Journal");
+        add(GEAR.get(), "Gear");
+        add(SURGEON_SUMMONS.get(), "Surgeon Summons");
+        add(CRUCIBLE.get(), "Crucible");
+        add(BLACK_MIRROR.get(), "Black Mirror");
+        add(FLESH_CARBON_TOKEN.get(), "Token of Flesh and Carbon");
+        add(PLUCKED_EYE.get(), "Plucked Eye");
+        add(SHELL.get(), "Shell");
+        add(TINY_SKULL.get(), "Tiny Skull");
+        add(ACID_GLAND.get(), "Acid Gland");
+        add(FERTILIZER_GLAND.get(), "Fertilizer Gland");
+        add(MARROW_GLAND.get(), "Marrow Gland");
+        add(SILK_GLAND.get(), "Silk Gland");
+        add(GUNPOWDER_BLADDER.get(), "Gunpowder Bladder");
+        add(LIVING_IRON.get(), "Living Iron");
+        add(EMPTY_BLADDER.get(), "Empty Bladder");
+        add(EMERALD_GEM.get(), "Emerald Gem");
+        add(SWOLLEN_GROWTH.get(), "Swollen Growth");
+        add(PERIOSTEUM_GROWTH.get(), "Periosteum Growth");
+        add(CHROMATOPHORE_GLAND.get(), "Chromatophore Gland");
+        add(OSTEOCLAST_GLAND.get(), "Osteoclast Gland");
+        add(SLIME_HEART.get(), "Slime Heart");
+        add(SCALES.get(), "Scales");
+        add(SEAWEED_STEW.get(), "Seaweed Stew");
+        add(KELP_COD_BUNDLE.get(), "Kelp & Cod Bundle");
+        add(TROPICAL_DELIGHT.get(), "Tropical Delight");
+        add(BLOOD_SHARD.get(), "Blood Shard");
+        add(SAMPLE_TUBE.get(), "Sample Tube");
+        add(BLOOD_ORB.get(), "Blood Orb");
+        add(GREAT_HEART.get(), "Great Heart");
+        add(SYRINGE.get(), "Syringe");
+        add(SCALPEL.get(), "Scalpel");
+        add(FORCEPS.get(), "Forceps");
+        add(TONGS.get(), "Tongs");
+        add(SEWING_NEEDLE.get(), "Sewing Needle");
+        add(ANTIDOTE_CAPSULE.get(), "Antidote Capsule");
+        add(VEIN_MINER.get(), "Vein Miner");
+        add(REPAIR_HAMMER.get(), "Repair Hammer");
+        add(NAUTILUS.get(), "Nautilus");
+        add(ARCHE_DIAL.get(), "Arche Dial");
+        add(VESSEL_STONE.get(), "Vessel Stone");
+        add(SURGERY_REPORT.get(), "Surgery Report");
+        add(SURGEON_BELL.get(), "Surgeon Bell");
+        add(SURGEON_LARVA.get(), "Surgeon Larva");
+        add(BLOOD_FIST.get(), "Blood Fist");
+        add(SEDATIVE_BUCKET.get(), "Sedative Bucket");
+        add(SOFTENER_BUCKET.get(), "Softener Bucket");
+        add(COAGULANT_BUCKET.get(), "Coagulant Bucket");
+        add(MOVEMENT_SPEED_SERUM_BUCKET.get(), "Speed Serum Bucket");
+        add(MOVEMENT_SLOWDOWN_SERUM_FLUID_SERUM_BUCKET.get(), "Slowness Serum Bucket");
+        add(DIG_SPEED_SERUM_FLUID_SERUM_BUCKET.get(), "Haste Serum Bucket");
+        add(DIG_SLOWDOWN_SERUM_FLUID_SERUM_BUCKET.get(), "Mining Fatigue Serum Bucket");
+        add(DAMAGE_BOOST_SERUM_FLUID_SERUM_BUCKET.get(), "Strength Serum Bucket");
+        add(HEAL_SERUM_FLUID_SERUM_BUCKET.get(), "Healing Serum Bucket");
+        add(HARM_SERUM_FLUID_SERUM_BUCKET.get(), "Harming Serum Bucket");
+        add(JUMP_SERUM_FLUID_SERUM_BUCKET.get(), "Jump Boost Serum Bucket");
+        add(CONFUSION_SERUM_FLUID_SERUM_BUCKET.get(), "Nausea Serum Bucket");
+        add(REGENERATION_SERUM_FLUID_SERUM_BUCKET.get(), "Regeneration Serum Bucket");
+        add(DAMAGE_RESISTANCE_SERUM_FLUID_SERUM_BUCKET.get(), "Resistance Serum Bucket");
+        add(FIRE_RESISTANCE_SERUM_FLUID_SERUM_BUCKET.get(), "Fire Resistance Serum Bucket");
+        add(WATER_BREATHING_SERUM_FLUID_SERUM_BUCKET.get(), "Water Breathing Serum Bucket");
+        add(INVISIBILITY_SERUM_FLUID_SERUM_BUCKET.get(), "Invisibility Serum Bucket");
+        add(BLINDNESS_SERUM_FLUID_SERUM_BUCKET.get(), "Blindness Serum Bucket");
+        add(NIGHT_VISION_SERUM_FLUID_SERUM_BUCKET.get(), "Night Vision Serum Bucket");
+        add(HUNGER_SERUM_FLUID_SERUM_BUCKET.get(), "Hunger Serum Bucket");
+        add(WEAKNESS_SERUM_FLUID_SERUM_BUCKET.get(), "Weakness Serum Bucket");
+        add(POISON_SERUM_FLUID_SERUM_BUCKET.get(), "Poison Serum Bucket");
+        add(WITHER_SERUM_FLUID_SERUM_BUCKET.get(), "Wither Serum Bucket");
+        add(MEMORY_HORMONES_FLUID_BUCKET.get(), "Memory Hormones Bucket");
+        add(OBEDIENCE_HORMONES_FLUID_BUCKET.get(), "Obedience Hormones Bucket");
+        add(PARENTAL_HORMONES_FLUID_BUCKET.get(), "Parental Hormones Bucket");
+        add(GROWTH_STIMULANT_FLUID_BUCKET.get(), "Growth Stimulant Bucket");
+        add(TEARS_FLUID_BUCKET.get(), "Tears Bucket");
+        add(DIAMOND_POWDER_FLUID_BUCKET.get(), "Diamond Powder Bucket");
+        add(GS121_SERUM_FLUID_BUCKET.get(), "GS121 Serum (Triggering) Bucket");
+        add(LIQUID_GLOWSTONE_FLUID_BUCKET.get(), "Liquid Glowstone Bucket");
+        add(LIQUID_GOLD_FLUID_BUCKET.get(), "Liquid Gold Bucket");
+        add(ORGANOCHLORIDE_FLUID_BUCKET.get(), "Organochloride Bucket");
+        add(PHEROMONES_FLUID_BUCKET.get(), "Pheromones Bucket");
+        add(SA245_SERUM_FLUID_BUCKET.get(), "SA245 Serum (Targeting) Bucket");
+        add(VASOCONSTRICTOR_FLUID_BUCKET.get(), "Vasoconstrictor Bucket");
+        add(WART_SERUM_FLUID_BUCKET.get(), "Wart Serum Bucket");
     }
 
     private void addContact() {
@@ -539,6 +655,7 @@ public class BTVLanguageProvider extends LanguageProvider {
     }
 
     private void addCommonCaptions() {
+        add("caption.left_click", "Left Click");
         add("caption.right_click", "Right Click");
         add("caption.right_click_bare_hands", "Right Click with bare hands");
         add("caption.right_click_block", "Right Click on a block");
@@ -1955,7 +2072,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Blood is both life and death, as well as the chain betwixt. To deprive a being of its heart is to kill it, and yet no life is lost.\\n" +
                 "The extraction of a heart requires an incised chest on the patient, and is very painful. Injecting a sufficient amount of softener before the extraction is crucial, or the pain will be too intense for the organ to be successfully extracted. Either way, the patient will not survive.");
         add("research.HEARTS.stage.1", "The heart still beats. When placed on the ground, the sound will attract nearby undead (is it some sort of nostalgia that drives them towards life?)\\n" +
-                "The organ itself, however, may also be used for other purposes. The practice of blood rituals has been celebrated my many peoples throughout history, and has been extensively documented by academia. There is much more to be done here.");
+                "The organ itself, however, may also be used for other purposes. Intravenous supply of blood may ease a patient's pain – more details in my journal. Additionally, and most importantly, the practice of blood rituals has been celebrated my many peoples throughout history, and has been extensively documented by academia. There is much more to be done here.");
 
         add("research.SPINES.title", "Willpower resides in the spine");
         add("research.extracted_spine.text", "Extract a spine, then release the patient.");
@@ -2067,7 +2184,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "To reach Arche, from where everything is born. \\n" +
                 "The first principle of our world. ");
 
-        add("research.BLOOD_CULT.title", "Blood Rituals");
+        add("research.BLOOD_CULT.title", "The Blood Cult");
         add("research.use_pillars.text", "Use the pillars... or don't.");
         add("research.BLOOD_CULT.stage.0", "In talking to the cult, I felt light nausea – not due to the deplorability of their philosophy or their trade proposal, but rather due to the abrupt shift in perspective, the violent turning upside down of my role. I am the researcher, so why do I, all of a sudden, feel like the experiment? A brief dialogue, and yet an irksome sensation settles in already – am I being studied?\\n" +
                 "Regardless, their offer is tempting. I must build two pillars: offer and demand. After placing one of them down, I can bind the other to it, and place it elsewhere. Breaking either pillar breaks the link, and the two objects must be bound again as before.\\n" +
@@ -2086,6 +2203,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.BLOOD_RITUALS.stage.1", "Georg was kind – I should treasure such connections.\\n" +
                 "The thesis itself provides a wealth of knowledge. Though the rituals described are not meant for replication, it would be a disservice to science not to investigate them further. A few lives for the sake of all of humankind is a small price to pay, especially when those lives were so short-lived anyway.");
         add("research.BLOOD_RITUALS.stage.2", "It works! All the theatrics behind the decorated altar and solemn tone of the sacrifice may be nothing more than buffoonery at this point, but then again I do not know where the line between scientific phenomenon and traditional custom lies – I should thus adhere to the instructions as closely as possible.");
+
+        add("research.BLOOD_SIGILS.title", "Blood Sigils");
+        add("research.BLOOD_SIGILS.stage.0", "These objects are used to target specific locations or individuals.\\n" +
+                "A Pathway Sigil can be bound to a place, by using it while standing at the coordinates I want to bind it to.\\n" +
+                "An Immortal Sigil can be bound to beings such as myself, who resurrect after death. When I hold it in my hands I will see blood spewing in the places where an immortal being last died or came back to life, for example near my own bed. Using it near such bloodspill will bind it to that individual.\\n" +
+                "Both kinds of sigils can be used with some blood rituals to determine a target position or entity. Additionally, drinking from a dream bottle in my main hand while wielding a bound sigil in my other hand may direct the dream towards that place or person; some memories may thus apply their effects to someone other than myself, and others may even have different effects entirely.");
 
         add("research.BLOOD_WELL.title", "The Blood Well");
         add("research.built_well.text", "Build a Blood Well.");
@@ -2322,6 +2445,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(DREAM_BOTTLE.get().getDescriptionId() + ".crafting2", "A Shoreman device; in the past, they filled it with tears. When {§nopened§r}[caption:shift_right_click], up to four memory phials can be inserted. {§nDrinking§r}[caption:right_click] from it will then consume all the contained phials to dream of up to four memories at once.\\1" +
                 "Normally, it can only be used once per day. However, filling it with tears overcomes this flaw, allowing me to use it as many times as I want as long as there is sufficient liquid.");
         add(EMERALD_GEM.get().getDescriptionId() + ".crafting", "A small jewel. Used in surgical insertion procedures.");
+        add("flasks.crafting", "Flasks");
         add(FLASK_LARGE.get().getDescriptionId() + ".crafting", "Used for storing liquids or items for the purpose of surgical procedures. More information is in the surgeon’s journal.");
         add(JOURNAL.get().getDescriptionId() + ".crafting", "The repository of all my knowledge pertaining to surgical operations. This includes an overview of the procedures, required infrastructure and ingredients, as well as handwritten notes of my own experiments");
         add(LETTER_BOX.get().getDescriptionId() + ".crafting", "Used to send and receive correspondence – but I never manage to catch the mailman!");
@@ -2344,7 +2468,37 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(DREAM_FOCUS.get().getDescriptionId() + ".crafting", "Used to move objects by channeling the dreams of fleti.");
         add(DREAM_FOCUS_FLUIDS.get().getDescriptionId() + ".crafting", "Used to move fluids by channeling the dreams of fleti.");
         add(CURTAIN.get().getDescriptionId() + ".crafting", "Must be placed under an item container such as a chest. Any items transported by a Dream Focus that touch the curtain will stop moving and drop down if the same type of item is inside the container above the curtain.");
-
+        add(FISH_BARREL.get().getDescriptionId() + ".crafting", "A barrel that holds fish. Quite thrilling.");
+        add(DAMP_CANOPY.get().getDescriptionId() + ".crafting", "A thin structure of wood. The Shoremen are a poor people, and this is the best they can afford to ward off the elements.");
+        add(SLUG_BAIT.get().getDescriptionId() + ".crafting", "A shoreman mechanism used to fish for slugs. It must be placed in water, ideally at the center of a 7x7 pool. It can then be supplied with a piece of stone, after which it will be active for some time. During this period, it will attract slugs, as indicated by the small water splashes converging towards the bait; using a slug catcher will gather them.\\n" +
+                "How quaint that those amorphous slugs, in their shapeless chaotic nature, could be so attracted by the perfect, sturdy structure of solid stone!");
+        add(PATIENT_POD.get().getDescriptionId() + ".crafting", "An intricate construct meant to host patients: both those awaiting surgery and the convalescents who have received it.");
+        add(FLEBO.get().getDescriptionId() + ".crafting", "A wooden stand used to deliver intravenous transfusions to patients. It can be placed next to a surgery bed or watery cradle to decrease the pain of any patient undergoing operation on it.\\n" +
+                "It is known that blood is used to create bindings; there may be more that IV stands can do.");
+        add(LACRYMATORY.get().getDescriptionId() + ".crafting", "A vase used to hold tears. Tears of joy, tears of sorrow, and most of all tears of fear.\\n" +
+                "What do weepers see that we do not, and that leads them to fill the lacrymatory to its brim?");
+        add(SACRIFICE_ALTAR.get().getDescriptionId() + ".crafting", "An altar built to resemble as closely as possible the ones used by ancient cultures known for performing blood rituals. It is a prismarine work of masonry upon which lives are taken, celebrating the bond between water and blood. On its top rests the image of the Eye of Knowledge, this time with its pupil centered and looking straight up… to the cosmos! Of course! Perhaps those ancients believed that blood would bind us to creatures all across the universe – and perhaps one day, in the far future, we shall prove them right.\\n" +
+                "But, for now, the altar’s use is reserved to the much more earthly endeavour of ritual sacrifices. Villagers may be placed upon it, and via the use of a sacrificial knife and nearby blood basins the ritual may start, in accordance with Mauer’s notes.\n");
+        add(BLOOD_BASIN.get().getDescriptionId() + ".crafting", "A small pedestal upon which I can place items. Carved from prismarine, it is reminiscent of a memory sieve, but filled in blood rather than water.\\n" +
+                "It is used to hold the offerings for blood rituals.");
+        add(SLUG_CATCHER.get().getDescriptionId() + ".crafting", "Used in tandem with a slug bait to fish for slugs. Should be pointed at the water droplets indicating a slug’s presence and then fired to catch it.");
+        add(BLACKJACK.get().getDescriptionId() + ".crafting", "A hard club capable of knocking out villagers. It may also be used to briefly stun other creatures.");
+        add(SIGIL_PLAYER.get().getDescriptionId() + ".crafting", "Can be bound to beings such as myself, who resurrect after death. Wielding lets me see blood spilling from where an immortal last died or came back to life. Using the sigil there will bind it to that individual.\\n" +
+                "The sigil can then be used in some rituals or in conjunction with the dream bottle.");
+        add(SIGIL_PATHWAY.get().getDescriptionId() + ".crafting", "Can be bound to a given place in a given dimension. Used in some rituals or in conjunction with the dream bottle.");
+        add(SACRIFICIAL_KNIFE.get().getDescriptionId() + ".crafting", "A blade meant to cut the skin and spill blood; yet, unlike a scalpel, no thread can sew this wound. \\n" +
+                "The knife is used in blood rituals: it severs the vessels of the sacrificial victim, and then must route the binding through each of the blood basins, in the prescribed order for the desired ritual. Finally, it’s used once more on the victim to begin the ritual proper.\\n" +
+                "The knife may also be used to slay creatures: in so doing, it will gradually become bound to a specific kind of entity and, eventually, produce a blood shard. However, slaying another type of creature will reset the counter.");
+        add(NECRONOMICON.get().getDescriptionId() + ".crafting", "This book will serve as my research diary: my notes and findings, my experiments and their results both supporting and disproving my theories, my personal perspective on the discoveries, and perhaps even my emotion at their uncovering.\\n" +
+                "I hope for Al Azif to one day be suited for academic publication; yet, so burning is my curiosity about the world, and so ardent is my desire to fully devote my life to this field and let it conquer me wholly, that I’m afraid its final form will ride the line between research work and autobiography.");
+        add(SURGEON_BELL.get().getDescriptionId() + ".crafting", "A small trinket whose sound controls surgeons. To the best of my understanding, the only purpose of these creatures’ existence seems to be precisely doing the surgical operations they are told to do: that is their entire life. This raises the question: could such a race have been born on its own, or was it created with intent, as a servant species?\\n" +
+                "And if so, what could that imply about us?");
+        add("pillars.crafting", "Pillars");
+        add(DEMAND_PILLAR.get().getDescriptionId() + ".crafting", "A stone carving design used by the Blood Cult; it is not known whether it originated with them, but its revelation recontextualised the academic interpretation of archaeological relics of similar shape found across the world. \\n" +
+                "The offer and demand pillar are to be used in pairs: placing one, binding the other to it, and then placing that as well will result in a bond between the two. Any newly born baby creature next to the offer pillar will be snatched, and a cultist will bring payment next to the demand one. Some rituals may affect this behaviour. \\n" +
+                "It is astonishing how the cultists can become aware of the presence of such pillars from anywhere across the world, no matter who crafted them, no matter who placed them, simply by virtue of their distinct design. For all their talk of binding living beings, their most impressive feat has to be binding their entire order to the eternal, immutable Platonic Form encapsulating the essence of a weirdly shaped piece of stone! What knowledge do these mad ones possess?!");
+        add(FLASK_SHELF.get().getDescriptionId() + ".crafting", "Used to hold flasks.");
+        add(SCALES.get().getDescriptionId() + ".crafting", "");
     }
 
     private void addReminiscence() {
@@ -2856,6 +3010,10 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("gui.journal.tools.surgery_bed.title", "Surgery Bed");
         add("gui.journal.tools.surgery_bed.text", "This is where surgical operations on the chest and back are performed.");
+
+        add("gui.journal.tools.flebo.title", "IV Stand");
+        add("gui.journal.tools.flebo.text", "A wooden stand used to deliver intravenous transfusions to patients. It can be placed next to a surgery bed or watery cradle to decrease the pain of any patient undergoing operation on it.\\n" +
+                "It is known that blood is used to create bindings; there may be more that IV stands can do.");
 
         add("gui.journal.tools.watery_cradle.title", "Watery Cradle");
         add("gui.journal.tools.watery_cradle.text", "A masterwork of engineering, capable of setting the enclosed patient in a trance and allowing for operations on the brain.\\nOnly injections may be performed in the watery cradle.");
