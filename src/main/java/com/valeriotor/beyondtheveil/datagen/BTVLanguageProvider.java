@@ -1897,6 +1897,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.arche_damage_chosen", "Heal");
         add("research.arche_damage_not_chosen", "Default");
         add("research.arche_damage_double", "2x Damage");
+        add("research.copy_thesis", "Make a copy of Sanguis?");
+        add("research.copy_thesis_button", "Copy");
+        add("research.copy_thesis_paper", "(requires paper)");
 
 
         add("research.FIRSTDREAMS.title", "The Language of Dreams");

@@ -573,11 +573,13 @@
           {
             "text": "research.BLOOD_RITUALS.stage.1",
             "required_research": ["performed_ritual"],
-            "recipes": ["beyondtheveil:sacrifice_altar", "beyondtheveil:blood_basin","beyondtheveil:sacrificial_knife"]
+            "recipes": ["beyondtheveil:sacrifice_altar", "beyondtheveil:blood_basin","beyondtheveil:sacrificial_knife"],
+            "copy_thesis": true
           },
           {
             "text": "research.BLOOD_RITUALS.stage.2",
-            "recipes": ["beyondtheveil:sacrifice_altar", "beyondtheveil:blood_basin","beyondtheveil:sacrificial_knife"]
+            "recipes": ["beyondtheveil:sacrifice_altar", "beyondtheveil:blood_basin","beyondtheveil:sacrificial_knife"],
+            "copy_thesis": true
           }
         ]
       },

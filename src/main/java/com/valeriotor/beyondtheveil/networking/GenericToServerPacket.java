@@ -154,6 +154,10 @@ public class GenericToServerPacket {
 
     }
 
+    public static GenericToServerPacket copyThesis() {
+        return new GenericToServerPacket(MessageType.COPY_THESIS, new CompoundTag());
+    }
+
     private final MessageType type;
     private final CompoundTag tag;
 
@@ -306,6 +310,14 @@ public class GenericToServerPacket {
                             }
                         }
                     }
+                    case COPY_THESIS -> {
+                        int slotMatchingItem = player.getInventory().findSlotMatchingItem(new ItemStack(Items.PAPER));
+                        if (slotMatchingItem >= 0) {
+                            player.getInventory().getItem(slotMatchingItem).shrink(1);
+                            ItemStack report = new ItemStack(Registration.BLOOD_THESIS.get());
+                            ItemHandlerHelper.giveItemToPlayer(player, report);
+                        }
+                    }
                 }
 
             }
@@ -338,6 +350,7 @@ public class GenericToServerPacket {
         ARCHE_CULTIST,
         TOGGLE_BINDING_POWER,
         SET_ARCHE_DAMAGE_TYPE,
+        COPY_THESIS
     }
 
 }

@@ -161,6 +161,7 @@ public class Research {
         String[] memories;
         String[] multiblocks;
         boolean pamphlet;
+        boolean copy_thesis;
 
         public boolean meetsRequirements(Player p) {
             return this.meetsRequirements(p.getCapability(PlayerDataProvider.PLAYER_DATA).orElse(PlayerData.DUMMY));
@@ -211,6 +212,10 @@ public class Research {
 
         public boolean isPamphlet() {
             return pamphlet;
+        }
+
+        public boolean isCopyThesis() {
+            return copy_thesis;
         }
 
         @Override

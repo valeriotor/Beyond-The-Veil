@@ -39,6 +39,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
@@ -132,6 +133,8 @@ public class ResearchPageGui extends Screen {
     private ShortcutHint exitPageHint;
     private ShortcutHint backGridHint;
     private ShortcutHint exitGridHint;
+    private Button copyThesisButton;
+    private boolean hasPaper;
 
 
     public ResearchPageGui(ResearchStatus status) {
@@ -266,6 +269,9 @@ public class ResearchPageGui extends Screen {
         recipeTypes.clear();
         if (status.res.getStages()[status.getStage()].isPamphlet()) {
             recipeTypes.add(RecipeType.PAMPHLET);
+        }
+        if (status.res.getStages()[status.getStage()].isCopyThesis()) {
+            recipeTypes.add(RecipeType.COPY_THESIS);
         }
         if (BINDING_RESEARCHES.contains(status.res.getKey())) {
             recipeTypes.add(RecipeType.BINDING_POWERS);
@@ -464,6 +470,14 @@ public class ResearchPageGui extends Screen {
                 int y = b.getY() + 5;
                 guiGraphics.drawString(font, bindingButton.getB(), x, y, 0xFFFFFFFF);
             }
+        } else if (selectedRecipeType == RecipeType.COPY_THESIS) {
+            int x = copyThesisButton.getX() + copyThesisButton.getWidth() / 2;
+            int y = copyThesisButton.getY() - 20;
+            guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("research.copy_thesis"), x, y, 0xFFFFFFFF);
+            if (!hasPaper) {
+                guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("research.copy_thesis_paper"), x, copyThesisButton.getY() + 30, 0xFFFF7777);
+
+            }
         }
 
         //if (selectedRecipeGroup != null) {
@@ -599,8 +613,7 @@ public class ResearchPageGui extends Screen {
             case GEAR_BENCH -> gearBenchRecipes.size();
             case MEMORY -> memories.size();
             case MULTIBLOCK -> multiblocks.size();
-            case PAMPHLET -> 1;
-            case BINDING_POWERS -> 1;
+            case PAMPHLET, COPY_THESIS, BINDING_POWERS -> 1;
         };
     }
 
@@ -610,7 +623,7 @@ public class ResearchPageGui extends Screen {
             case GEAR_BENCH -> gearBench;
             case MEMORY -> memorySieve;
             case MULTIBLOCK -> bricks;
-            case PAMPHLET -> thesis;
+            case PAMPHLET, COPY_THESIS -> thesis;
             case BINDING_POWERS -> fist;
         };
     }
@@ -899,6 +912,15 @@ public class ResearchPageGui extends Screen {
                 }
             }
         }
+        if (status.res.getStages()[status.getStage()].isCopyThesis()) {
+            copyThesisButton = Button.builder(Component.translatable("research.copy_thesis_button"), b -> {
+                //Messages.sendToServer(GenericToServerPacket.setArcheDamageType(toSet));
+                //clearWidgets();
+                //init();
+                Messages.sendToServer(GenericToServerPacket.copyThesis());
+            }).bounds(width / 2 - 90, height / 2, 180, 20).build();
+            addRenderableWidget(copyThesisButton);
+        }
         toggleBindingButtons();
     }
 
@@ -956,10 +978,29 @@ public class ResearchPageGui extends Screen {
             bindingButton.getA().active = selectedRecipeType == RecipeType.BINDING_POWERS;
             bindingButton.getA().visible = selectedRecipeType == RecipeType.BINDING_POWERS;
         }
+        if (copyThesisButton != null) {
+            copyThesisButton.active = selectedRecipeType == RecipeType.COPY_THESIS && hasPaperInInventory();
+            copyThesisButton.visible = selectedRecipeType == RecipeType.COPY_THESIS;
+        }
+        hasPaper = hasPaperInInventory();
+    }
+
+    private boolean hasPaperInInventory() {
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (p != null) {
+            int slotMatchingItem = p.getInventory().findSlotMatchingItem(new ItemStack(Items.PAPER));
+            return slotMatchingItem >= 0;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
     }
 
     private enum RecipeType {
-        CRAFTING_TABLE(true), GEAR_BENCH(true), MEMORY(false), MULTIBLOCK(false), PAMPHLET(false), BINDING_POWERS(false);
+        CRAFTING_TABLE(true), GEAR_BENCH(true), MEMORY(false), MULTIBLOCK(false), PAMPHLET(false), BINDING_POWERS(false), COPY_THESIS(false);
 
         private final boolean grid;
 
