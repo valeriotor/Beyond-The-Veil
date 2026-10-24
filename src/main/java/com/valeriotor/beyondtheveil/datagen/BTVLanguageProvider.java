@@ -466,6 +466,26 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(SA245_SERUM_FLUID_BUCKET.get(), "SA245 Serum (Targeting) Bucket");
         add(VASOCONSTRICTOR_FLUID_BUCKET.get(), "Vasoconstrictor Bucket");
         add(WART_SERUM_FLUID_BUCKET.get(), "Wart Serum Bucket");
+        add(DEEP_ONE_EGG.get(), "Deep One Spawn Egg");
+        add(BLOOD_SKELETON_EGG.get(), "Blood Skeleton Spawn Egg");
+        add(BLOOD_ZOMBIE_EGG.get(), "Blood Zombie Spawn Egg");
+        //add(BLOOD_WRAITH_EGG.get(), "Blood_wraith Spawn Egg");
+        add(BLOOD_CULTIST_EGG.get(), "Blood Cultist Spawn Egg");
+        add(SURGEON_EGG.get(), "Surgeon Spawn Egg");
+        add(WEEPER_EGG.get(), "Weeper Spawn Egg");
+        add(FLETUM_EGG.get(), "Fletum Spawn Egg");
+        add(SHOREMAN_EGG.get(), "Shoreman Spawn Egg");
+        add(CEPHALOPODIAN_EGG.get(), "Cephalopodian Spawn Egg");
+        add(ANGLER_EGG.get(), "Angler Spawn Egg");
+        add(SEA_SNAKE_EGG.get(), "Sea Snake Spawn Egg");
+        add(SEPIID_EGG.get(), "Sepiid Spawn Egg");
+        add(ADELINE_EGG.get(), "Adeline Spawn Egg");
+        add(BONECAGE_EGG.get(), "Bonecage Spawn Egg");
+        add(MAN_O_WAR_EGG.get(), "Man o' War Spawn Egg");
+        add(OCTID_EGG.get(), "Octid Spawn Egg");
+        add(UMANCALA_EGG.get(), "Umancala Spawn Egg");
+        add(SANDFLATTER_EGG.get(), "Sandflatter Spawn Egg");
+
     }
 
     private void addContact() {
