@@ -46,6 +46,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -613,6 +614,23 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
         public boolean isLeavesPost() {
             return leavesPost;
         }
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return BTVSounds.SHOREMAN_IDLE.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return BTVSounds.SHOREMAN_HURT.get();
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return random.nextInt(480, 960);
     }
 
     private static class LighthouseKeeperStandGoal extends Goal {

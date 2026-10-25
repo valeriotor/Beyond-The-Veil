@@ -159,7 +159,12 @@
     "sounds": [ "beyondtheveil:deep_one_transform" ]
   },
   "wood_creak": {
-    "sounds": [ "beyondtheveil:wood_creak_0", "beyondtheveil:wood_creak_1", "beyondtheveil:wood_creak_2", "beyondtheveil:wood_creak_3", "beyondtheveil:wood_creak_4", "beyondtheveil:wood_creak_5", "beyondtheveil:wood_creak_6", "beyondtheveil:wood_creak_7"
-    ]
+    "sounds": [ "beyondtheveil:wood_creak_0", "beyondtheveil:wood_creak_1", "beyondtheveil:wood_creak_2", "beyondtheveil:wood_creak_3", "beyondtheveil:wood_creak_4", "beyondtheveil:wood_creak_5", "beyondtheveil:wood_creak_6", "beyondtheveil:wood_creak_7"]
+  },
+  "shoreman_hurt": {
+    "sounds": [ "beyondtheveil:shoreman_hurt" ]
+  },
+  "shoreman_idle": {
+    "sounds": [ "beyondtheveil:shoreman_idle_0", "beyondtheveil:shoreman_idle_1" ]
   }
 }

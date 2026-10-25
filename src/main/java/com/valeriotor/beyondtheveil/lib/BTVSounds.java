@@ -50,6 +50,8 @@ public class BTVSounds {
     public static final RegistryObject<SoundEvent> DEEP_ONE_SNARL = registerSound("deep_one_snarl");
     public static final RegistryObject<SoundEvent> DEEP_ONE_TRANSFORM = registerSound("deep_one_transform");
     public static final RegistryObject<SoundEvent> WOOD_CREAK = registerSound("wood_creak");
+    public static final RegistryObject<SoundEvent> SHOREMAN_HURT = registerSound("shoreman_hurt");
+    public static final RegistryObject<SoundEvent> SHOREMAN_IDLE = registerSound("shoreman_idle");
     public static final List<RegistryObject<SoundEvent>> CURRENTS_LIST = registerCurrents();
 
     public static void init(IEventBus bus) {
