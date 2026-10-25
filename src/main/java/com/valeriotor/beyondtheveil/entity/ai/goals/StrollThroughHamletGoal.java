@@ -33,7 +33,7 @@ public class StrollThroughHamletGoal extends Goal {
 
     @Override
     public void tick() {
-        if (destination != null && (shoreman.tickCount & 127) == 0) {
+        if (destination != null && (shoreman.tickCount & 127) <= 1) {
             shoreman.getNavigation().stop();
             shoreman.getNavigation().moveTo(destination.getX(), destination.getY(), destination.getZ(), speed);
         }
@@ -48,11 +48,9 @@ public class StrollThroughHamletGoal extends Goal {
                 double x = Math.sin(angle) * radius;
                 double z = Math.cos(angle) * radius;
                 destination = villageCenter.offset((int) x, 0, (int) z);
+                destination = shoreman.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, destination);
             } else if (returnHome() && !returned) {
                 destination = spawnPoint;
-            }
-            if (destination != null) {
-                destination = shoreman.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, destination);
             }
         }
         if (destination != null && (shoreman.position().distanceToSqr(destination.getX(), shoreman.getY(), destination.getZ()) < 9 || (!conveneInCenter() && !returnHome()))) { // it currently can't be true that neither conveneInCenter or returnHome are true
