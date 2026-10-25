@@ -2553,6 +2553,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.surgery_bed.title", "Surgery Bed");
         add("gui.dagon.title", "Communion");
         add("gui.metamorphosis.title", "Metamorphosis");
+        add("gui.journal.title", "Journal");
+        add("gui.single_report.title", "Report");
+        add("gui.single_report.saved", "Saved report as %1$s");
         add("gui.research_page.complete", "Progress");
         add("gui.research_page.back_to_azif", "Back to Al Azif");
         add("gui.research_page.back_to_necro", "Back to Necronomicon");

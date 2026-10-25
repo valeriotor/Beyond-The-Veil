@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.event.PlayerEvents;
 import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SyncPlayerDataPacket;
@@ -19,6 +20,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.util.LazyOptional;
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -343,6 +345,15 @@ public class DataUtil {
     public static void syncBindingData(ServerPlayer p) {
         BindingData bindingData = getBindingData(p);
         Messages.sendToPlayer(GenericToClientPacket.syncBindingData(bindingData), (ServerPlayer) p);
+    }
+
+    public static void discoverFluid(Player p, Fluid fluid, boolean sync) {
+        String apply = PlayerDataLib.DISCOVERED_FLUID.apply(fluid);
+        if (sync) {
+            DataUtil.setBooleanOnServerAndSync(p, apply, true);
+        } else {
+            DataUtil.setBoolean(p, apply, true, false);
+        }
     }
 
 }

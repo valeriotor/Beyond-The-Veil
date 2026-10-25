@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.client.gui.pool.BloodPoolGui;
 import com.valeriotor.beyondtheveil.client.gui.research.BloodThesisGui;
 import com.valeriotor.beyondtheveil.client.gui.research.JournalGui;
 import com.valeriotor.beyondtheveil.client.gui.research.NecronomiconGui;
+import com.valeriotor.beyondtheveil.client.gui.research.SingleReportGui;
 import com.valeriotor.beyondtheveil.util.GuiType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -28,6 +29,7 @@ public class GuiHelper {
         Screen screen = switch (type) {
             case NECRONOMICON -> new NecronomiconGui();
             case JOURNAL -> new JournalGui();
+            case REPORT_SHEET -> new SingleReportGui();
             case BLOOD_POOL -> new BloodPoolGui();
             case KILLED_BY_CULTIST -> new KilledByCultistGui();
             case BLOOD_THESIS -> new BloodThesisGui();

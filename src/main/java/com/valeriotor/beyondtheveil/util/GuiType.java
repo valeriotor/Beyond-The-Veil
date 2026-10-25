@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 public enum GuiType {
     NECRONOMICON,
     JOURNAL,
+    REPORT_SHEET,
     BLOOD_POOL,
     KILLED_BY_CULTIST,
     BLOOD_THESIS,

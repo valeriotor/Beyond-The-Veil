@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client.gui.research;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.Registration;
@@ -276,6 +277,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             //updateWidgetVisibility();
             DataUtil.addReport(Minecraft.getInstance().player, chosenReport);
             updateReports();
+            reportName.setFocused(false);
         }));
         deleteButton = buttonHolder.addElement(70, 175, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.delete"), pButton -> {
             if (chosenReport != null) {
@@ -286,6 +288,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             chosenReport = null;
             reportLineList = null;
             updateReports();
+            reportName.setFocused(false);
             //updateWidgetVisibility();
         }));
         cancelButton = buttonHolder.addElement(70, 175, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.cancel"), pButton -> {
@@ -296,6 +299,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                 reportLineList = null;
             }
             //updateWidgetVisibility();
+            reportName.setFocused(false);
         }));
         printButton = buttonHolder.addElement(300, 150, new TexturedButton(50, 20, BUTTON, 0x07FFFFFF, Component.translatable("gui.journal.journal.print"), pButton -> {
             GenericToServerPacket packet = GenericToServerPacket.printReport(chosenReport.getName());
@@ -647,7 +651,15 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (reportLineList != null && reportLineList.keyPressed(pKeyCode, pScanCode, pModifiers)) {
             return true;
         }
-        return super.keyPressed(pKeyCode, pScanCode, pModifiers);
+        if (super.keyPressed(pKeyCode, pScanCode, pModifiers)) {
+            return true;
+        }
+        InputConstants.Key key = InputConstants.getKey(pKeyCode, pScanCode);
+        if ((!editingReport || selectedCategory != JournalCategory.JOURNAL) && !reportName.isFocused() && Minecraft.getInstance().options.keyInventory.isActiveAndMatches(key)) {
+            this.onClose();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -1566,7 +1578,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         }
     }
 
-    private record Successfulness(@NotNull Report.Successfulness successfulness) implements EditableDropdownBox.Option {
+    record Successfulness(@NotNull Report.Successfulness successfulness) implements EditableDropdownBox.Option {
 
         @Override
         public Component getText() {
@@ -1579,7 +1591,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         }
     }
 
-    private record PatientType(@NotNull ReportPatientType patientType) implements EditableDropdownBox.Option {
+    record PatientType(@NotNull ReportPatientType patientType) implements EditableDropdownBox.Option {
 
         @Override
         public Component getText() {
