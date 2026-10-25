@@ -89,7 +89,7 @@ public class Registration {
 
     public static final RegistryObject<Block> DAMP_STONE = BLOCKS.register("damp_stone", () -> new Block(BlockBehaviour.Properties.of().strength(5f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> DAMP_MOSSY_STONE = BLOCKS.register("damp_mossy_stone", () -> new Block(BlockBehaviour.Properties.of().strength(5f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> DAMP_WOOD = BLOCKS.register("damp_wood", () -> new Block(DAMP_WOOD_PROPERTIES));
+    public static final RegistryObject<Block> DAMP_WOOD = BLOCKS.register("damp_wood", () -> new DampWoodBlock(DAMP_WOOD_PROPERTIES.randomTicks()));
     public static final RegistryObject<Block> DARK_SAND = BLOCKS.register("dark_sand", () -> new Block(DARK_SAND_PROPERTIES));
     public static final RegistryObject<Block> ALGAE_BLOCK = BLOCKS.register("algae_block", () -> new Block(BlockBehaviour.Properties.of().strength(3f).sound(SoundType.MOSS)));
     public static final RegistryObject<RotatedPillarBlock> DAMP_LOG = BLOCKS.register("damp_log", () -> new RotatedPillarBlock(DAMP_WOOD_PROPERTIES));

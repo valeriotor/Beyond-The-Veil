@@ -7,10 +7,12 @@ import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.tile.FishBarrelBE;
 import com.valeriotor.beyondtheveil.world.processor.HamletBuildingsProcessor;
+import com.valeriotor.beyondtheveil.world.saved.HamletSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
@@ -18,10 +20,7 @@ import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.StructureManager;
-import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
@@ -191,12 +190,21 @@ public class HamletPieces {
             return (new StructurePlaceSettings()).setIgnoreEntities(false).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK).addProcessor(new HamletBuildingsProcessor()).setRotation(pRotation); // TODO add dark sand to wood planks processor
         }
 
+        private Set<ChunkPos> addedChunkPoses = new HashSet<>();
+
         @Override
         public void postProcess(WorldGenLevel pLevel, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource pRandom, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
             super.postProcess(pLevel, pStructureManager, pGenerator, pRandom, pBox, pChunkPos, pPos);
             for (int i = -1; i < pBox.maxX() - pBox.minX() + 1; i++) {
                 for (int j = -1; j < pBox.maxZ() - pBox.minZ() + 1; j++) {
                     fillColumnDown(pLevel, Registration.DARK_SAND.get().defaultBlockState(), i, -1, j, pBox);
+                    ChunkPos chunkPos = new ChunkPos(getWorldPos(i, -1, j));
+                    if (addedChunkPoses.add(chunkPos)) {
+                        ServerLevel sl = pLevel.getLevel();
+                        if (sl != null && sl.dimension() == Level.OVERWORLD && villageCenter != null) {
+                            HamletSavedData.getInstance(sl).addHamletChunk(chunkPos, villageCenter);
+                        }
+                    }
                 }
             }
         }

@@ -5,11 +5,13 @@ import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
+import com.valeriotor.beyondtheveil.world.saved.HamletSavedData;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -37,11 +39,16 @@ public class ServerTickEvents {
     @SubscribeEvent
     public static void levelTickEvent(TickEvent.LevelTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
-            if (event.level.dimension() == BTVDimensions.ARCHE_LEVEL && event.level instanceof ServerLevel sl) {
-                ArcheCycleData arche = sl.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
-                arche.tick(true);
-                if ((arche.getCycle() & 4095) == 0) {
-                    Messages.sendToDimension(GenericToClientPacket.syncArcheData(arche), BTVDimensions.ARCHE_LEVEL);
+            if (event.level instanceof ServerLevel sl) {
+                if (event.level.dimension() == BTVDimensions.ARCHE_LEVEL) {
+                    ArcheCycleData arche = sl.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
+                    arche.tick(true);
+                    if ((arche.getCycle() & 4095) == 0) {
+                        Messages.sendToDimension(GenericToClientPacket.syncArcheData(arche), BTVDimensions.ARCHE_LEVEL);
+                    }
+                }
+                if (event.level.dimension() == Level.OVERWORLD) {
+                    HamletSavedData.getInstance(sl).tick();
                 }
             }
         }
@@ -65,5 +72,4 @@ public class ServerTickEvents {
         mobsBredByAVillagerWithParentalHormonesInChestOrBack.remove(parentA.getUUID());
         mobsBredByAVillagerWithParentalHormonesInChestOrBack.remove(parentB.getUUID());
     }
-
 }
