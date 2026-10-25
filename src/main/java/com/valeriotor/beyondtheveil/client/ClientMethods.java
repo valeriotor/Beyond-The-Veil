@@ -120,11 +120,8 @@ public class ClientMethods {
         }
     }
 
-    public static void blackScreen(CompoundTag tag) {
-        int duration = tag.getInt("duration");
-        String soundEvent = tag.getString("event");
+    public static void blackScreen(int duration, SoundEvent sound) {
         RenderEvents.setBlackScreenDuration(duration);
-        SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(soundEvent));
         if (sound != null && Minecraft.getInstance().player != null) {
             Minecraft.getInstance().player.playSound(sound, 1, 1);
         }

@@ -134,7 +134,7 @@ public class RenderEvents {
     }
 
     public static void setBlackScreenDuration(int duration) {
-        blackScreenDuration = duration;
+        blackScreenDuration = Math.max(blackScreenDuration, duration);
     }
 
     public static void startCameraRotation(CameraRotator newRotator) {

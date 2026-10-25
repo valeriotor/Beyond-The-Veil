@@ -8,6 +8,7 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
+import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.effect.ImmunityEffect;
@@ -17,6 +18,7 @@ import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.entity.Weeping;
 import com.valeriotor.beyondtheveil.item.AntidoteCapsuleItem;
 import com.valeriotor.beyondtheveil.lib.BTVEffects;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
@@ -67,8 +69,15 @@ public class PlayerEvents {
         Player p1 = event.getEntity();
         if (p1 instanceof ServerPlayer p && !p.level().isClientSide() && !event.wakeImmediately() && p.level().getDayTime() > 23900) {
             DreamHandler.dream(p);
-            if (ResearchUtil.getResearchStage(p, "FIRSTDREAMS") == 0)
+            if (ResearchUtil.getResearchStage(p, "FIRSTDREAMS") == 0 && !DataUtil.getBoolean(p, PlayerDataLib.didDream.name())) {
+                Messages.sendToPlayer(GenericToClientPacket.blackScreen(180, BTVSounds.WATER_DREAM_SHORT.get()), p);
                 DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.didDream.name(), true, false);
+            }
+        }
+        if (p1.level().isClientSide && !event.wakeImmediately()) {
+            if (ResearchUtil.getResearchStage(p1, "FIRSTDREAMS") == 0 && !DataUtil.getBoolean(p1, PlayerDataLib.didDream.name())) {
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientMethods.blackScreen(10, null));
+            }
         }
     }
 

@@ -21,12 +21,14 @@ import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -275,7 +277,7 @@ public class GenericToClientPacket {
                     case CROSS_SYNC -> CrossSyncHolder.setCrossSync(tag);
                     case STOP_CROSS_SYNC -> CrossSyncHolder.stopCrossSync(tag);
                     case SYNC_ARCHE_DATA -> ClientData.getInstance().syncArcheData(tag);
-                    case BLACK_SCREEN -> ClientMethods.blackScreen(tag);
+                    case BLACK_SCREEN -> ClientMethods.blackScreen(tag.getInt("duration"), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(tag.getString("event"))));
                     case SYNC_LETTER_DATA -> ClientMethods.loadLetterData(tag);
                     case HIDE_OVERLAY_MESSAGE -> ClientMethods.hideOverlayMessage();
                     case OPEN_GUI -> GuiHelper.openClientSideGui(tag);
