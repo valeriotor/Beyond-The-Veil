@@ -174,6 +174,11 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
         return BTVSounds.SURGEON_IDLE.get();
     }
 
+    @Override
+    public int getAmbientSoundInterval() {
+        return 320;
+    }
+
     public Report getReport() {
         return report;
     }
