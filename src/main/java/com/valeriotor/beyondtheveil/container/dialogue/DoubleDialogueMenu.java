@@ -85,6 +85,8 @@ public class DoubleDialogueMenu extends AbstractContainerMenu {
             cultist.level().playSound(null, cultist.blockPosition(), BTVSounds.KILL_KEEPER.get(), SoundSource.NEUTRAL, 1, 1);
             if (npc.getTalkingPlayer() != null) {
                 DataUtil.setBooleanOnServerAndSync(npc.getTalkingPlayer(), PlayerDataLib.slew_keeper.name(), true, false);
+                PlayerTimer timer = new PlayerTimer.Builder("slew_keeper2", 100).addFinalActions((player, playerTimer) -> DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.slew_keeper2.name(), true)).toTimer();
+                PlayerTimerData.for_(npc.getTalkingPlayer()).addTimer(timer);
             }
         }
     }

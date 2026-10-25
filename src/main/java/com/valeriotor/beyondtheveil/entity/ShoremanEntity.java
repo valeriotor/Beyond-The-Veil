@@ -10,6 +10,7 @@ import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.animation.Animation;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.client.animation.AnimationClient;
 import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
@@ -28,6 +29,7 @@ import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.Util;
@@ -240,6 +242,10 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
             if (transformation != null && monstrousTransformations.contains(transformation)) { // null check cause set.of doesn't admit nulls...
                 return;
             }
+        }
+        if (getProfession() == ShoremanProfession.LIGHTHOUSE_KEEPER && DataUtil.noMoreKeeper(player)) {
+            player.sendSystemMessage(Component.translatable("interact.keeper.dead"));
+            return;
         }
         DialogueType dialogueType = getProfession().toType();
         DialogueTemplate template = DialogueData.for_(player).getDialogue(dialogueType);
@@ -489,6 +495,8 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
                 if (aboutToDieByPlayerCountdown == 0) {
                     if (getTalkingPlayer() != null) {
                         DataUtil.setBooleanOnServerAndSync(getTalkingPlayer(), PlayerDataLib.slew_keeper.name(), true);
+                        PlayerTimer timer = new PlayerTimer.Builder("slew_keeper2", 40).addFinalActions((player, playerTimer) -> DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.slew_keeper2.name(), true)).toTimer();
+                        PlayerTimerData.for_(getTalkingPlayer()).addTimer(timer);
                     }
                     kill();
                 } else if (aboutToDieByPlayerCountdown == 120) {

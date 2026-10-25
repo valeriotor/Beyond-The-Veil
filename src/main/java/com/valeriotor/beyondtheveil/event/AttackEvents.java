@@ -183,6 +183,10 @@ public class AttackEvents {
 
     @SubscribeEvent
     public static void livingAttackEvent(LivingAttackEvent event) {
+        if (event.getEntity() instanceof ShoremanEntity shoreman && shoreman.getProfession() == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && event.getSource().getEntity() instanceof Player p && DataUtil.noMoreKeeper(p)) {
+            event.setCanceled(true);
+            return;
+        }
         if (event.getEntity().level() instanceof ServerLevel sl) {
             event.getEntity().getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
                 Item item = c.swollenGrowthItem(event.getEntity());

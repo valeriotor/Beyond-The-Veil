@@ -3,7 +3,12 @@ package com.valeriotor.beyondtheveil.client.render.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.client.model.entity.ShoremanModel;
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.util.DataUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -18,6 +23,7 @@ public class ShoremanRenderer extends LivingEntityRenderer<ShoremanEntity, Shore
 
     public static final Map<ShoremanEntity.ShoremanProfession, ResourceLocation> TEXTURES = new EnumMap<ShoremanEntity.ShoremanProfession, ResourceLocation>(ShoremanEntity.ShoremanProfession.class);
     private static final ResourceLocation KEEPER_ARCHE_ENDING_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/shoreman/lighthouse_keeper_arche.png");
+    private static final ResourceLocation KEEPER_DEAD_TEXTURE = new ResourceLocation(References.MODID, "textures/entity/shoreman/lighthouse_keeper_memory.png");
 
     static {
         TEXTURES.put(ShoremanEntity.ShoremanProfession.BARTENDER, new ResourceLocation(References.MODID, "textures/entity/shoreman/bartender.png"));
@@ -55,6 +61,11 @@ public class ShoremanRenderer extends LivingEntityRenderer<ShoremanEntity, Shore
         if (pEntity.isShowFins()) {
             return KEEPER_ARCHE_ENDING_TEXTURE;
         }
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (pEntity.getProfession() == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && p != null)
+            if (DataUtil.noMoreKeeper(p)) {
+                return KEEPER_DEAD_TEXTURE;
+            }
         return TEXTURES.get(pEntity.getProfession());
     }
 

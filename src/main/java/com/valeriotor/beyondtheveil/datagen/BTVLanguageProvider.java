@@ -146,6 +146,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("hover.surgeon.stalled_injection", "The surgeon can't progress the injection due to a lack of %1$s.");
         add("interact.minion.follow", "The creature will now follow me.");
         add("interact.minion.stop_follow", "The creature will no longer follow me.");
+        add("interact.keeper.dead", "Only his memory remains.");
     }
 
     private void addMemories() {

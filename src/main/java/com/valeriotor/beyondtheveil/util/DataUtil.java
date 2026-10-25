@@ -356,4 +356,8 @@ public class DataUtil {
         }
     }
 
+    public static boolean noMoreKeeper(Player p) {
+        return DataUtil.getBoolean(p, PlayerDataLib.slew_keeper2.name()) || DataUtil.getBoolean(p, PlayerDataLib.saved_keeper.name()) || ResearchUtil.getResearchStage(p, "SNIPPET_OF_TRUTH") >= 1;
+    }
+
 }

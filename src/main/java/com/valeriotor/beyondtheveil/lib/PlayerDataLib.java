@@ -58,6 +58,7 @@ public enum PlayerDataLib {
     slept_in_chamber,
     spoke_keeper,
     slew_keeper,
+    slew_keeper2,
     unlocked_hamlet,
     must_commune,
     communed,
