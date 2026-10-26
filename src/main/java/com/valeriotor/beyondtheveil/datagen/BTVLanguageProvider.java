@@ -2392,6 +2392,18 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "But then, how do we go forward from here? We don't have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
                 "...wait...\\n" +
                 "...who's \"we\"?");
+        add("research.SNIPPET_OF_TRUTH.stage.1.cultist", "The shoremen bleed tears – and so, even our bond had been forged in blood. Theirs.\\n" +
+                "What point was there to all this? Was this the truth Dagon meant to teach us? A futile exercise in pointlessness? A trick in perspective?! Nothing we did not already know.\\n" +
+                "§oBut if the entire damn Ocean commands something, you cannot simply ignore it. There was nothing else we could do.§r\\n" +
+                "But then, how do we go forward from here? We don't have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
+                "...wait...\\n" +
+                "...who's \"we\"?");
+        add("research.SNIPPET_OF_TRUTH.stage.1.arche", "The shoremen bleed tears – and so, even our bond had been forged in blood. Theirs.\\n" +
+                "What point was there to all this? Was this the truth Dagon meant to teach us? A futile exercise in pointlessness? A trick in perspective?! Nothing we did not already know.\\n" +
+                "§oBut if the entire damn Ocean commands something, you cannot simply ignore it. There was nothing else we could do.§r\\n" +
+                "But then, how do we go forward from here? We don't have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
+                "...wait...\\n" +
+                "...who's \"we\"?");
         add("research.SNIPPET_OF_TRUTH.stage.2", "Alright.\\n" +
                 "...\\n" +
                 "How do we do this?\\n" +

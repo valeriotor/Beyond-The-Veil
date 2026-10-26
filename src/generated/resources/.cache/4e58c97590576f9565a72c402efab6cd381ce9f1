@@ -1,5 +1,9 @@
-// 1.20.1	2026-07-29T00:59:28.1971385	BTV Tags
-2ff29a596c53a5aee4a09a45de968cc1405ec87d data/minecraft/tags/blocks/mineable/axe.json
-8419959692e2b5e8f4ed423663fc9021ef49a7fc data/minecraft/tags/blocks/mineable/pickaxe.json
-76ae0daadfe44a01f4884ed4a4069a9c6696088f data/minecraft/tags/blocks/mineable/shovel.json
+// 1.20.1	2026-10-26T23:46:32.582727	BTV Tags
+67c20bb49357560d46fd1cb04f90ee0997baa348 data/minecraft/tags/blocks/logs.json
+74d45403a7a5ac16e79c2ff6bff51bff544c1402 data/minecraft/tags/blocks/mineable/axe.json
+117a00ea8f6efd5fae76d57e2f4e9d9049f57d8b data/minecraft/tags/blocks/mineable/pickaxe.json
+bbcc6371cc2770e2b146fc2f30b1e87f47549c5b data/minecraft/tags/blocks/mineable/shovel.json
+88e5a1f9f7564d8af45db3066715660df6f595a3 data/minecraft/tags/blocks/planks.json
+3830dddfe95e77c705729f85565f593499b4f4bb data/minecraft/tags/blocks/slabs.json
+b2bd812b10017e9885b1d7164ea5607581433160 data/minecraft/tags/blocks/stairs.json
 9c32eac3a718a975758103390969dfa619d9db29 data/minecraft/tags/blocks/wooden_fences.json

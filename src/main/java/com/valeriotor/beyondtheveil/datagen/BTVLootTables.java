@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.datagen;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.DebrisBlock;
+import com.valeriotor.beyondtheveil.block.SleepChamberBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.FullMultiBlock;
 import com.valeriotor.beyondtheveil.lib.BTVBlockEntities;
 import com.valeriotor.beyondtheveil.lib.References;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -106,7 +108,6 @@ public class BTVLootTables extends BlockLootSubProvider {
         add(Registration.BLACK_SEAGRASS.get(), BlockLootSubProvider::createShearsOnlyDrop);
         add(Registration.BLACK_TALL_SEAGRASS.get(), createDoublePlantShearsDrop(Registration.BLACK_SEAGRASS.get()));
 
-        dropSelf(Registration.IDOL.get());
         dropSelf(Registration.FISH_BARREL.get());
         add(Registration.FLASK_LARGE.get(), LootTable.lootTable().withPool(this.applyExplosionCondition(Registration.FLASK_LARGE.get(), LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Registration.FLASK_LARGE.get()).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY)).apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("FluidName", "BlockEntityTag.FluidName").copy("Amount", "BlockEntityTag.Amount").copy("Tag", "BlockEntityTag.Tag"))))));
         add(Registration.FLASK_MEDIUM.get(), LootTable.lootTable().withPool(this.applyExplosionCondition(Registration.FLASK_MEDIUM.get(), LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Registration.FLASK_MEDIUM.get()).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY)).apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("FluidName", "BlockEntityTag.FluidName").copy("Amount", "BlockEntityTag.Amount").copy("Tag", "BlockEntityTag.Tag"))))));
@@ -156,6 +157,11 @@ public class BTVLootTables extends BlockLootSubProvider {
             if (fmb.getDepthProperty() != null) {
                 propertiesBuilder = propertiesBuilder.hasProperty(fmb.getDepthProperty(), 0);
             }
+            LootItemBlockStatePropertyCondition.Builder condition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(pBlock).setProperties(propertiesBuilder);
+            LootTable.Builder lootTableBuilder = LootTable.lootTable().withPool(this.applyExplosionCondition(pBlock, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(pBlock).when(condition))));
+            add(pBlock, lootTableBuilder);
+        } else if (pBlock instanceof SleepChamberBlock scb) {
+            StatePropertiesPredicate.Builder propertiesBuilder = StatePropertiesPredicate.Builder.properties().hasProperty(SleepChamberBlock.HALF, DoubleBlockHalf.LOWER);
             LootItemBlockStatePropertyCondition.Builder condition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(pBlock).setProperties(propertiesBuilder);
             LootTable.Builder lootTableBuilder = LootTable.lootTable().withPool(this.applyExplosionCondition(pBlock, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(pBlock).when(condition))));
             add(pBlock, lootTableBuilder);

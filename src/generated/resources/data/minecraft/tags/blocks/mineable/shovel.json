@@ -1,5 +1,10 @@
 {
   "values": [
-    "beyondtheveil:dark_sand"
+    "beyondtheveil:debris_diamond",
+    "beyondtheveil:debris_gold",
+    "beyondtheveil:debris_netherite",
+    "beyondtheveil:dark_sand",
+    "beyondtheveil:redstone_grass",
+    "beyondtheveil:ghost_grass"
   ]
 }

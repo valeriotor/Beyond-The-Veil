@@ -4,7 +4,6 @@
     "beyondtheveil:worn_brick_stairs",
     "beyondtheveil:blue_bricks",
     "beyondtheveil:lamp",
-    "beyondtheveil:slug_bait",
     "beyondtheveil:elder_brick",
     "beyondtheveil:elder_brick_slab",
     "beyondtheveil:elder_brick_stairs",
@@ -20,6 +19,7 @@
     "beyondtheveil:blood_smooth_stone",
     "beyondtheveil:blood_smooth_stone_slab",
     "beyondtheveil:sacrifice_altar",
+    "beyondtheveil:blood_basin",
     "beyondtheveil:gear_bench",
     "beyondtheveil:dream_focus",
     "beyondtheveil:dream_focus_fluids",
@@ -31,6 +31,19 @@
     "beyondtheveil:jar_large",
     "beyondtheveil:jar_medium",
     "beyondtheveil:jar_small",
-    "beyondtheveil:flask_item"
+    "beyondtheveil:flask_item",
+    "beyondtheveil:fume_spreader",
+    "beyondtheveil:memory_sieve",
+    "beyondtheveil:letter_box",
+    "beyondtheveil:damp_stone",
+    "beyondtheveil:damp_mossy_stone",
+    "beyondtheveil:watery_cradle",
+    "beyondtheveil:patient_pod",
+    "beyondtheveil:alembics",
+    "beyondtheveil:lacrymatory",
+    "beyondtheveil:vein_stone",
+    "beyondtheveil:vein_stone_vessel",
+    "beyondtheveil:dark_glass",
+    "beyondtheveil:deep_chest"
   ]
 }

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by3;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
@@ -40,11 +41,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public class FlaskShelfBlock extends Block implements EntityBlock {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+public class FlaskShelfBlock extends ThinMultiBlock3by3 implements EntityBlock {
+    //public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-    public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 2);
-    public static final IntegerProperty SIDE = IntegerProperty.create("side", 0, 2); // 0 left, 1 center, 2 right (from perspective of player who placed it)
+    //public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 2);
+    //public static final IntegerProperty SIDE = IntegerProperty.create("side", 0, 2); // 0 left, 1 center, 2 right (from perspective of player who placed it)
     private static final VoxelShape BASE_SHAPE = Shapes.box(0, 0, 0, 1, 0.125D, 1);
     private static final double a = 0.0625;
     private static final VoxelShape L0_EAST = Shapes.box(a, a*2, 0, 1, a*3, 1);
@@ -205,47 +206,16 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING).add(SIDE).add(LEVEL);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockPos blockpos = context.getClickedPos();
-        Level level = context.getLevel();
-        Direction opposite = context.getHorizontalDirection().getOpposite();
-        for (int i = -1; i <= 1; i++) {
-            for (int y = 0; y < 3; y++) {
-                int x = opposite.getAxis() == Direction.Axis.X ? 0 : i;
-                int z = opposite.getAxis() == Direction.Axis.Z ? 0 : i;
-                if (!level.getBlockState(blockpos.offset(x, y, z)).canBeReplaced(context)) {
-                    return null;
-                }
-            }
-        }
-        return defaultBlockState().setValue(FACING, opposite).setValue(SIDE, 1).setValue(LEVEL, 0);
-    }
-
-    @Override
-    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
-        for (int i = -1; i <= 1; i++) {
-            for (int y = 0; y < 3; y++) {
-                if(i == 0 && y == 0) continue;
-                Direction facing = pState.getValue(FACING);
-                int x = facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.NORTH ? -i : i);
-                int z = facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.EAST ? -i : i);
-                pLevel.setBlock(pPos.offset(x, y, z), pState.setValue(SIDE, i+1).setValue(LEVEL, y), 3);
-            }
-        }
-    }
-
-    @Override
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
         return super.canSurvive(pState, pLevel, pPos);
     }
 
     @Override
     public void playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
+        if (true) {
+            super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
+            return;
+        }
         BlockPos center = findCenter(pPos, pState);
         for (int i = -1; i <= 1; i++) {
             for (int y = -1; y <= 1; y++) {
@@ -260,27 +230,6 @@ public class FlaskShelfBlock extends Block implements EntityBlock {
             }
         }
         super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
-    }
-
-    public BlockPos findCenter(BlockPos pPos, BlockState pState) {
-        Direction facing = pState.getValue(FACING);
-        int i = -pState.getValue(SIDE)+1;
-        int x = facing.getAxis() == Direction.Axis.X ? 0 : (facing == Direction.NORTH ? -i : i);
-        int z = facing.getAxis() == Direction.Axis.Z ? 0 : (facing == Direction.EAST ? -i : i);
-        return pPos.offset(x, 1 - pState.getValue(LEVEL), z);
-        //if (pState.getValue(CENTER)) {
-        //    return pPos;
-        //}
-        //for (int i = -1; i <= 1; i++) {
-        //    int y = 2 - pState.getValue(LEVEL);
-        //    int x = pState.getValue(FACING).getAxis() == Direction.Axis.X ? 0 : i;
-        //    int z = pState.getValue(FACING).getAxis() == Direction.Axis.Z ? 0 : i;
-        //    BlockState neighbour = pLevel.getBlockState(pPos.offset(x, y, z));
-        //    if (neighbour.getBlock() == this && neighbour.getValue(FACING) == pState.getValue(FACING) && neighbour.getValue(CENTER)) {
-        //        return pPos.offset(x, y, z);
-        //    }
-        //}
-        //return null;
     }
 
     @Override
