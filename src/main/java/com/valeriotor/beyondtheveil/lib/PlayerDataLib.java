@@ -121,7 +121,8 @@ public enum PlayerDataLib {
     keeper_tears,
     found_bladder,
     has_exploded,
-    has_detransformed
+    has_detransformed,
+    moved_waypoint,
     ;
 
     // Longs
@@ -160,6 +161,7 @@ public enum PlayerDataLib {
         allowedKeys.add(made_bookmark.name());
         allowedKeys.add(exited_research_page.name());
         allowedKeys.add(exited_crafting_grid.name());
+        allowedKeys.add(moved_waypoint.name());
         allowedKeys.add("eldritchDream");
         allowedKeys.add("LHKeeper");
         allowedKeys.add("carpenter");
