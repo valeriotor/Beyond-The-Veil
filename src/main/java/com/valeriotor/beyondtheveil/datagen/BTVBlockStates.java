@@ -7,6 +7,9 @@ import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
 import com.valeriotor.beyondtheveil.lib.References;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.data.models.blockstates.Variant;
+import net.minecraft.data.models.blockstates.VariantProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
@@ -40,7 +43,7 @@ public class BTVBlockStates extends BlockStateProvider {
         simpleBlock(DAMP_STONE.get());
         simpleBlock(DAMP_MOSSY_STONE.get());
         simpleBlock(DAMP_WOOD.get());
-        simpleBlock(DARK_SAND.get());
+        simpleBlock(DARK_SAND.get(), ConfiguredModel.builder().modelFile(cubeAll(DARK_SAND.get())).nextModel().modelFile(cubeAll(DARK_SAND.get())).rotationY(90).nextModel().modelFile(cubeAll(DARK_SAND.get())).rotationY(180).nextModel().modelFile(cubeAll(DARK_SAND.get())).rotationY(-90).build());
         simpleBlock(ALGAE_BLOCK.get());
         stairsBlock(DAMP_WOOD_STAIRS.get(), modLoc("block/" + DAMP_WOOD.getId().getPath()));
         fenceBlock(DAMP_WOOD_FENCE.get(), modLoc("block/" + DAMP_WOOD.getId().getPath()));
