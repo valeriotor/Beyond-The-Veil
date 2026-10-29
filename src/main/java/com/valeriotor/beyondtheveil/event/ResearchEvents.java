@@ -83,6 +83,8 @@ public class ResearchEvents {
                 addDialogue(d, DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death");
             } else if ("SNIPPET_OF_TRUTH".equals(key) && stage == 1) {
                 addDialogue(d, DialogueType.BLACK_MIRROR, "revelation");
+            } else if ("NEW_DEPTHS".equals(key) && stage == 1 && DataUtil.getBoolean(p, PlayerDataLib.took_gift.name())) {
+                addDialogue(d, DialogueType.BLOOD_CULTIST, "shoremen");
             }
         });
         if ("BONE_TIARA".equals(key) && stage == 0) {

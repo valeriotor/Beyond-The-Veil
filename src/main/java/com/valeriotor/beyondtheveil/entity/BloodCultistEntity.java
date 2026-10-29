@@ -33,6 +33,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
@@ -104,7 +105,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
     public void startTalking(ServerPlayer player) {
         DialogueType dialogueType = DialogueType.BLOOD_CULTIST;
         DialogueTemplate template = DialogueData.for_(player).getDialogue(dialogueType);
-        if (template != null && bowing == 0 && leaving == 0) {
+        if (template != null && bowing == 0 && getHeldVillager() == null) {
             setTalkingPlayer(player);
             NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, this, template, getId()), Component.translatable("gui.dialogue.blood_cultist.display_name")), b -> {
                 b.writeUtf(dialogueType.name());
@@ -205,7 +206,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
                     discard();
                 }
             }
-            if (leaving > 0) {
+            if (leaving > 0 && getTalkingPlayer() == null) {
                 leaving--;
                 if (leaving == 0) {
                     doParticles();
@@ -392,6 +393,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
         if (podPos != null) {
             pCompound.putLong("podPos", podPos.asLong());
         }
+        pCompound.putInt("leaving", leaving);
     }
 
     @Override
@@ -401,6 +403,7 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
         if (pCompound.contains("podPos")) {
             podPos = BlockPos.of(pCompound.getLong("podPos"));
         }
+        leaving = pCompound.getInt("leaving");
     }
 
     public void setKillingEntity(LivingEntity killingEntity) {
@@ -462,5 +465,37 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
 
     public void killCutscene(boolean includeKeeperDeath) {
         killCutsceneTicks = includeKeeperDeath ? 0 : 111;
+    }
+
+    public static BlockPos nearAwokenPlayer(Level level, BlockPos pos, RandomSource randomSource) {
+
+        for(int i = 0; i < 30; ++i) {
+            int j = randomIntInclusive(-3, 3, randomSource);
+            int k = randomIntInclusive(-1, 1, randomSource);
+            int l = randomIntInclusive(-3, 3, randomSource);
+            BlockPos blockPos = trySpawn(level, pos.offset(j, k, l));
+            if (blockPos != null) {
+                return blockPos;
+            }
+        }
+        return null;
+    }
+
+    private static int randomIntInclusive(int pMin, int pMax, RandomSource randomSource) {
+        return randomSource.nextInt(pMax - pMin + 1) + pMin;
+    }
+
+    private static BlockPos trySpawn(Level level, BlockPos pos) {
+
+        for (int i = 0; i < 5; i++) {
+            if (level.getBlockState(pos).isSolid()) {
+                pos = pos.above();
+            } else if (!level.getBlockState(pos.below()).isSolid()) {
+                pos = pos.below();
+            } else if (!level.getBlockState(pos.above()).isSolid()) {
+                return pos;
+            }
+        }
+        return null;
     }
 }

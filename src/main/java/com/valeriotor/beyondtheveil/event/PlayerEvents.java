@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.SurgeryBedBlock;
+import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
@@ -10,17 +11,12 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
+import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.effect.ImmunityEffect;
-import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
-import com.valeriotor.beyondtheveil.entity.PlayerMinion;
-import com.valeriotor.beyondtheveil.entity.WeeperEntity;
-import com.valeriotor.beyondtheveil.entity.Weeping;
+import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.item.AntidoteCapsuleItem;
-import com.valeriotor.beyondtheveil.lib.BTVEffects;
-import com.valeriotor.beyondtheveil.lib.BTVSounds;
-import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
-import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.lib.*;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.research.ResearchUtil;
@@ -59,6 +55,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -72,6 +69,18 @@ public class PlayerEvents {
             if (ResearchUtil.getResearchStage(p, "FIRSTDREAMS") == 0 && !DataUtil.getBoolean(p, PlayerDataLib.didDream.name())) {
                 Messages.sendToPlayer(GenericToClientPacket.blackScreen(180, BTVSounds.WATER_DREAM_SHORT.get()), p);
                 DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.didDream.name(), true, false);
+            }
+            if (Objects.equals(DialogueData.for_(p1).getDialogue(DialogueType.BLOOD_CULTIST).getID(), "shoremen")) {
+                BloodCultistEntity bloodCultist = BTVEntities.BLOOD_CULTIST.get().create(p1.level());
+                if (bloodCultist != null) {
+                    BlockPos blockPos = BloodCultistEntity.nearAwokenPlayer(p1.level(), p1.blockPosition(), p1.getRandom());
+                    if (blockPos != null) {
+                        bloodCultist.setPos(blockPos.getCenter());
+                        p1.level().addFreshEntity(bloodCultist);
+                        bloodCultist.setLeaving(20 * 60);
+                        bloodCultist.doParticles();
+                    }
+                }
             }
         }
         if (p1.level().isClientSide && !event.wakeImmediately()) {

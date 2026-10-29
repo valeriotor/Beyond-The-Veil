@@ -13,6 +13,7 @@ import com.valeriotor.beyondtheveil.entity.CrawlerEntity;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -78,6 +79,9 @@ public class Dialogue {
         }
         if (Objects.equals(s, PlayerDataLib.rationalized.name())) {
             DialogueData.for_(player).setDialogue(DialogueType.BLACK_MIRROR, DialogueRegistry.getTemplate(DialogueType.BLACK_MIRROR, "rationalize3"));
+        }
+        if (PlayerDataLib.took_gift.name().equals(s) && ResearchUtil.getResearchStage(player, "NEW_DEPTHS") >= 0) {
+            DialogueData.for_(player).setDialogue(DialogueType.BLOOD_CULTIST, DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "shoremen"));
         }
     }
 

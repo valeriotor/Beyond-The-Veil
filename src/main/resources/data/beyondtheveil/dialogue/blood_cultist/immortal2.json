@@ -328,6 +328,6 @@
     }
   },
   "type": "blood_cultist",
-  "dialogueUnlocks": [],
+    "dialogueUnlocks": ["blood_cultist:basic"],
   "dataUnlocks": ["met_cult"]
 }

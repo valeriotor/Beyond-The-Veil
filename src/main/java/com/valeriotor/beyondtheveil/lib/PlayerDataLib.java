@@ -123,6 +123,7 @@ public enum PlayerDataLib {
     has_exploded,
     has_detransformed,
     moved_waypoint,
+    took_gift,
     ;
 
     // Longs

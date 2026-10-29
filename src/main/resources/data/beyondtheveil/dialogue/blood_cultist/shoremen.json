@@ -1,0 +1,118 @@
+{
+  "id": "shoremen",
+  "startingBranch": {
+    "id": "first",
+    "branchLength": 1,
+    "endingNodeID": "start",
+    "unlockedData": [],
+    "mustHaveData": [],
+    "mustNotHaveData": [],
+    "stopsDialogueUnlock": false,
+    "endsDialogue": false
+  },
+  "dialogueNodes": {
+    "start": {
+      "id": "start",
+      "dialogueOptions": [
+        {
+          "id": "yes_",
+          "branchLength": 1,
+          "endingNodeID": "nasty",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "no_",
+          "branchLength": 1,
+          "endingNodeID": "nasty",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "none",
+          "branchLength": 1,
+          "endingNodeID": "nasty",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "bethere": {
+      "id": "bethere",
+      "dialogueOptions": [
+        {
+          "id": "___",
+          "branchLength": 0,
+          "endingNodeID": "end",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": true
+        }
+      ]
+    },
+    "nasty": {
+      "id": "nasty",
+      "dialogueOptions": [
+        {
+          "id": "what\u0027s",
+          "branchLength": 1,
+          "endingNodeID": "pale",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "you",
+          "branchLength": 1,
+          "endingNodeID": "pale",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "pale": {
+      "id": "pale",
+      "dialogueOptions": [
+        {
+          "id": "covenant?",
+          "branchLength": 1,
+          "endingNodeID": "bethere",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "lies?",
+          "branchLength": 1,
+          "endingNodeID": "bethere",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    }
+  },
+  "type": "blood_cultist",
+  "dialogueUnlocks": ["blood_cultist:basic"],
+  "dataUnlocks": ["cultist_silence"]
+}

@@ -163,6 +163,6 @@
     }
   },
   "type": "blood_cultist",
-  "dialogueUnlocks": [],
-  "dataUnlocks": []
+  "dialogueUnlocks": ["basic"],
+  "dataUnlocks": ["took_gift"]
 }

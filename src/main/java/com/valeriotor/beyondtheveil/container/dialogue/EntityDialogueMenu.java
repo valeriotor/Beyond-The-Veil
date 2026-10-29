@@ -90,7 +90,10 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
     }
 
     private void additionalEndEffects() {
-        if (this.npc instanceof BloodCultistEntity bc && (template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal") || template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal2") || template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "gift"))) {
+        if (this.npc instanceof BloodCultistEntity bc && (template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal") ||
+                template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal2") ||
+                template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "shoremen") ||
+                template == DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "gift"))) {
             if (Objects.equals(dialogue.getCurrentBranch().getBranchID(), "§omadman_§r")) {
                 DialogueData.for_(bc.getTalkingPlayer()).setDialogue(DialogueType.BLOOD_CULTIST, DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "immortal2"));
                 bc.sendAnimation(AnimationRegistry.blood_cultist_killed_by_player, 0);
@@ -108,6 +111,7 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
                 MiscUtils.doParticles(e.level(), e, BTVParticles.TEARSPILL.get());
                 e.discard();
             } else if (true || profession == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER && template == DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "death")) {
+                DialogueData.for_(player).setDialogue(DialogueType.BLOOD_CULTIST, DialogueRegistry.getTemplate(DialogueType.BLOOD_CULTIST, "basic"));
                 if (DataUtil.getBoolean(e.getTalkingPlayer(), PlayerDataLib.use_pillars.name())) {
                     for (int x = -1; x <= 1; x++) {
                         for (int y = 0; y < 2; y++) {

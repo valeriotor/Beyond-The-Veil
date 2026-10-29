@@ -76,6 +76,8 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.BLOOD_CULTIST, "immortal");
         registerDialogue(DialogueType.BLOOD_CULTIST, "immortal2");
         registerDialogue(DialogueType.BLOOD_CULTIST, "gift");
+        registerDialogue(DialogueType.BLOOD_CULTIST, "basic");
+        registerDialogue(DialogueType.BLOOD_CULTIST, "shoremen");
 
         registerDialogue(DialogueType.DROWNED, "gnawing");
         registerDialogue(DialogueType.DROWNED, "ocean");

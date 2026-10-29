@@ -101,6 +101,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("message.transformation.sleep", "I can't sleep while non-human.");
         add("key.reminisce", "Reminisce");
         add("key.transform", "Transform/Explode");
+        add("commands.btvdata.player_not_found", "Player not found");
+        add("commands.btvdata.dialogue_type_not_found", "Dialogue type unknown");
+        add("commands.btvdata.dialogue_template_not_found", "Dialogue template unknown");
     }
 
     private void addEntities() {
@@ -981,6 +984,22 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.blood_cultist.gift.on.option", "On the floor.");
         add("dialogue.blood_cultist.gift.heavens,.option", "Heavens, take him away!");
 
+        add("dialogue.blood_cultist.shoremen.start.0", "Dear partner – are you going to see the shoremen?");
+        add("dialogue.blood_cultist.shoremen.nasty.0", "A nasty folk, are they not? Hiding all sorts of secrets – for they worship the very idea!\nThey venerate §olies§r – how can you believe them?! Praying at the idol of this Deus Deceptor of theirs – ]§oI can ascribe nothing but evil to such a demon!");
+        add("dialogue.blood_cultist.shoremen.bethere.0", "We'll be there, when you most need us.");
+        add("dialogue.blood_cultist.shoremen.pale.0", "Through you, we are bound to them as well – and our blood covenant §oshall not be marred§r by a pale link – let us uncover lies together!");
+        add("dialogue.blood_cultist.shoremen.___.option", "...");
+        add("dialogue.blood_cultist.shoremen.covenant?.option", "Covenant? Pale link? Enough of this nonsense! Let us be business partners and nothing more!");
+        add("dialogue.blood_cultist.shoremen.what's.option", "What's it to you?!");
+        add("dialogue.blood_cultist.shoremen.lies?.option", "Lies? I've been surrounded by lies up until this point! The shoremen... at least they acknowledge this!");
+        add("dialogue.blood_cultist.shoremen.yes_.option", "Yes.");
+        add("dialogue.blood_cultist.shoremen.no_.option", "No.");
+        add("dialogue.blood_cultist.shoremen.none.option", "None of your business.");
+        add("dialogue.blood_cultist.shoremen.you.option", "You misjudge them! Hold no enmity toward your fellow human!");
+
+        add("dialogue.blood_cultist.basic.start.0", "All living beings are linked – yet some bonds may be strengthened – others should be severed – others yet should never have been – no organism must be forced to accept a blood too alien!");
+        add("dialogue.blood_cultist.basic.goodness,.option", "Goodness, speak normally for once!");
+        add("dialogue.blood_cultist.basic.not.option", "Not all living beings hold blood. Your very premise is flawed.");
     }
 
     private void addMirrorDialogue() {
