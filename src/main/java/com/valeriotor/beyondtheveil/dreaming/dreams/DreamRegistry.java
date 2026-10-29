@@ -10,9 +10,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.Structures;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.StructureTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -32,7 +34,7 @@ public class DreamRegistry {
     public static final Dream ELDRITCH = new DreamSound(Memory.WATER, BTVSounds.WATER_DREAM.get(), true);
     public static final Dream SENTIENCE = new DreamWaypoint(Memory.SENTIENCE, (sl, pos, p) -> sl.findNearestMapStructure(StructureTags.VILLAGE, pos, 100, false), 0x7F006E); // Todo: make player sigil version locate player
     public static final Dream SENTIENCE_VOID = new DreamWaypoint(Memory.SENTIENCE, true, (sl, pos, p) -> sl.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, pos, 100, false), 0x7F006E);
-    public static final Dream DARKNESS = new DreamWaypoint(Memory.DARKNESS, (sl, pos, p) -> sl.findNearestMapStructure(BTVTags.HAMLET, pos, 500, false), 0xFFFFFF);
+    public static final Dream DARKNESS = new DreamWaypoint(Memory.DARKNESS, (sl, pos, p) -> raiseToHeightMap(sl, sl.findNearestMapStructure(BTVTags.HAMLET, pos, 500, false)), 0xFFFFFF);
     //public static final Dream WATER_TEST = new DreamWaypoint(Memory.WATER, true, (sl, pos) -> sl.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, pos, 100, false), 0x7F16FF);
     public static final Dream METAL = new DreamUnderground(Memory.METAL, 5, Set.of(Blocks.IRON_ORE, Blocks.GOLD_ORE, Blocks.COPPER_ORE, Blocks.DEEPSLATE_IRON_ORE, Blocks.DEEPSLATE_GOLD_ORE, Blocks.DEEPSLATE_COPPER_ORE));
     public static final Dream CRYSTAL = new DreamUnderground(Memory.CRYSTAL, 5, MemoryUnlockEvents.CRYSTAL_BLOCKS);
@@ -77,5 +79,13 @@ public class DreamRegistry {
             return supplier.get();
         }
         return null;
+    }
+
+    private static BlockPos raiseToHeightMap(ServerLevel sl, BlockPos pos) {
+        if (pos == null) {
+            return null;
+        }
+        int height = sl.getHeight(Heightmap.Types.MOTION_BLOCKING, pos.getX(), pos.getZ());
+        return pos.atY(height);
     }
 }
