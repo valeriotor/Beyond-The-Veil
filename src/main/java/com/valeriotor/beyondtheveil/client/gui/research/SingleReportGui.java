@@ -374,6 +374,9 @@ public class SingleReportGui extends Screen implements ClientAdvancements.Listen
         if (buttonHolder.mouseClicked(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton)) {
             return true;
         }
+        if (reportLineList != null && reportLineList.mouseClicked(reportMouseX(pMouseX), reportMouseY(pMouseY), pButton)) {
+            return true;
+        }
 
         return super.mouseClicked(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton);
     }
@@ -389,5 +392,29 @@ public class SingleReportGui extends Screen implements ClientAdvancements.Listen
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
+        if (reportLineList != null && reportLineList.mouseScrolled(reportMouseX(pMouseX), reportMouseY(pMouseY), pDelta)) {
+            return true;
+        }
+        return super.mouseScrolled(pMouseX, pMouseY, pDelta);
+    }
+
+    @Override
+    public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
+        if (reportLineList != null && reportLineList.mouseDragged(reportMouseX(pMouseX), reportMouseY(pMouseY), pButton, pDragX, pDragY)) {
+            return true;
+        }
+        return super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
+    }
+
+    @Override
+    public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
+        if (reportLineList != null && reportLineList.mouseReleased(reportMouseX(pMouseX), reportMouseY(pMouseY), pButton)) {
+            return true;
+        }
+        return super.mouseReleased(pMouseX, pMouseY, pButton);
     }
 }
