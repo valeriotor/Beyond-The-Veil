@@ -95,6 +95,11 @@ public class BloodCultistModel extends AnimatedModel<BloodCultistEntity> {
         float MAX = 0.5F;
         this.right_leg.xRot = Mth.clamp(Mth.cos(limbSwing * 0.6662F) * 1F * limbSwingAmount / 0.9F, -MAX, MAX);
         this.left_leg.xRot = Mth.clamp(Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1F * limbSwingAmount / 0.9F, -MAX, MAX);
+        body.y = 12 + Mth.cos(ageInTicks * 2 * Mth.PI / 4.5F / 20) * 0.04F;
+        if (entity.getHeldVillager() == null) {
+            left_arm.xRot = -1.1345F + Mth.cos(ageInTicks * 2 * Mth.PI / 4.5F / 20) * 0.03F;
+            right_arm.xRot = -1.1345F + Mth.cos(ageInTicks * 2 * Mth.PI / 4.5F / 20) * 0.03F;
+        }
     }
 
     @Override
