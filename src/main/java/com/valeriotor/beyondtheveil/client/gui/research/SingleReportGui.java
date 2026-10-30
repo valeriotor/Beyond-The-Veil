@@ -378,7 +378,11 @@ public class SingleReportGui extends Screen implements ClientAdvancements.Listen
             return true;
         }
 
-        return super.mouseClicked(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton);
+        boolean b = super.mouseClicked(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton);
+        if (!b) {
+            reportName.setFocused(false);
+        }
+        return b;
     }
 
     @Override

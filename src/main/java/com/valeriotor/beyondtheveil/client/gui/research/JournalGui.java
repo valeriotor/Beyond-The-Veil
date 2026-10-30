@@ -607,7 +607,13 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             return true;
         }
 
-        return super.mouseClicked(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton);
+        boolean b = super.mouseClicked(scaledMouseX(pMouseX), scaledMouseY(pMouseY), pButton);
+        if (!b) {
+            if (reportName != null) {
+                reportName.setFocused(false);
+            }
+        }
+        return b;
     }
 
     @Override
