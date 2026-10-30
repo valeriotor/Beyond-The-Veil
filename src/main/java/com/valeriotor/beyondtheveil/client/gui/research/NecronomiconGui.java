@@ -24,6 +24,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -80,7 +81,7 @@ public class NecronomiconGui extends Screen {
     private static final ResourceLocation TENDRIL_EYE = new ResourceLocation(References.MODID, "textures/gui/tendril_eye.png");
     private static final ResourceLocation TENDRIL_SEGMENT = new ResourceLocation(References.MODID, "textures/gui/tendril_segment.png");
     private static final ResourceLocation TENDRIL_SEGMENT2 = new ResourceLocation(References.MODID, "textures/gui/tendril_segment2.png");
-    private static final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/bookmark_grayed.png");
+    private static final ResourceLocation BOOKMARK = new ResourceLocation(References.MODID, "textures/gui/bookmark_grayed2.png");
     private static final ResourceLocation MOUSE_RIGHT_CLICK = new ResourceLocation(References.MODID, "textures/gui/mouse_right_click.png");
     private int firstBookmarkMadeCounter = 0;
     private static final int JSON_TO_REAL_COORD_FACTOR = 32;
@@ -271,14 +272,18 @@ public class NecronomiconGui extends Screen {
         RenderSystem.enableBlend();
         //RenderSystem.setShaderTexture(0, BOOKMARK);
         int y = 50;
-        for (Research res : bookmarks) {
-            int x = res == hovered ? 0 : -65;
-            guiGraphics.blit(BOOKMARK, x, y, 0, 0, 80, 20, 80, 20);
-            if (x == 0) {
-                guiGraphics.drawString(minecraft.font, Component.translatable(res.getName()), x + 2, y + 6, 0xFFAAE2E2);
-                RenderSystem.enableBlend();
+        if (minecraft != null) {
+            for (Research res : bookmarks) {
+                MutableComponent translatable = Component.translatable(res.getName());
+                int x = res == hovered ? Math.min(0, minecraft.font.width(translatable) + 20 - 145) : -145;
+                guiGraphics.blit(BOOKMARK, x, y, 0, 0, 160, 20, 160, 20);
+                if (res == hovered) {
+                    guiGraphics.drawString(minecraft.font, translatable, 2, y + 6, 0xFFAAE2E2);
+                    RenderSystem.enableBlend();
+                }
+                y += 24;
             }
-            y += 24;
+
         }
         RenderSystem.disableBlend();
         poseStack.popPose();
