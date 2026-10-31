@@ -85,7 +85,7 @@ public class FlaskShelfBlock extends ThinMultiBlock3by3 implements EntityBlock {
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext p_60558_) {
         VoxelShape baseShape = getBaseShape(pState);
-        BlockPos centerPos = findCenter(pPos, pState);
+        BlockPos centerPos = findBEPos(pPos, pState);
         if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
             //baseShape = Shapes.or(baseShape, flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)]);
             baseShape = flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)];
@@ -96,7 +96,7 @@ public class FlaskShelfBlock extends ThinMultiBlock3by3 implements EntityBlock {
     @Override
     public VoxelShape getVisualShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         VoxelShape baseShape = getBaseShape(pState);
-        BlockPos centerPos = findCenter(pPos, pState);
+        BlockPos centerPos = findBEPos(pPos, pState);
         if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
             baseShape = Shapes.or(baseShape, flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)]);
             //baseShape = flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)];
@@ -107,7 +107,7 @@ public class FlaskShelfBlock extends ThinMultiBlock3by3 implements EntityBlock {
     @Override
     public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         VoxelShape baseShape = getBaseShape(pState);
-        BlockPos centerPos = findCenter(pPos, pState);
+        BlockPos centerPos = findBEPos(pPos, pState);
         if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
             //baseShape = Shapes.or(baseShape, flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)]);
             baseShape = flaskShelfBE.shapes[pState.getValue(LEVEL)][pState.getValue(SIDE)];
@@ -162,7 +162,7 @@ public class FlaskShelfBlock extends ThinMultiBlock3by3 implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        BlockPos centerPos = findCenter(pPos, pState);
+        BlockPos centerPos = findBEPos(pPos, pState);
         if (pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
             ItemStack itemStack = pPlayer.getItemInHand(pHand);
             Item held = itemStack.getItem();
@@ -181,7 +181,7 @@ public class FlaskShelfBlock extends ThinMultiBlock3by3 implements EntityBlock {
     @Override
     public void attack(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
         super.attack(pState, pLevel, pPos, pPlayer);
-        BlockPos centerPos = findCenter(pPos, pState);
+        BlockPos centerPos = findBEPos(pPos, pState);
         if (pLevel.isClientSide && pLevel.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
             HitResult hr = ClientData.getInstance().getClientHitResult();
             if (hr instanceof BlockHitResult blockHitResult) {
@@ -243,6 +243,10 @@ public class FlaskShelfBlock extends ThinMultiBlock3by3 implements EntityBlock {
         return pState.getValue(SIDE) == 1 && pState.getValue(LEVEL) == 1 ? new FlaskShelfBE(pPos, pState) : null; // TODO change second one to set it as simple
     }
 
+    public BlockPos findBEPos(BlockPos pPos, BlockState pState) {
+        return findCenter(pPos, pState).above();
+    }
+
     public static class BreakFlaskMessage {
         private final double x, y, z;
 
@@ -272,7 +276,7 @@ public class FlaskShelfBlock extends ThinMultiBlock3by3 implements EntityBlock {
                 Level l = sender.level();
                 BlockState blockState = l.getBlockState(hitPos);
                 if (blockState.getBlock() == Registration.FLASK_SHELF.get()) {
-                    BlockPos centerPos = ((FlaskShelfBlock) Registration.FLASK_SHELF.get()).findCenter(hitPos, blockState);
+                    BlockPos centerPos = ((FlaskShelfBlock) Registration.FLASK_SHELF.get()).findBEPos(hitPos, blockState);
                     if (l.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
                         be.tryBreakFlask(hitPos, sender, new Vec3(x, y, z));
                     }

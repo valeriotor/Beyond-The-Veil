@@ -55,7 +55,7 @@ public class SyringeItem extends SurgeryItem {
             });
         }
         if (lookedAtState.getBlock() == Registration.FLASK_SHELF.get()) {
-            BlockPos centerPos = Registration.FLASK_SHELF.get().findCenter(pos, lookedAtState);
+            BlockPos centerPos = Registration.FLASK_SHELF.get().findBEPos(pos, lookedAtState);
             if (level.getBlockEntity(centerPos) instanceof FlaskShelfBE be) {
                 Item held = itemStack.getItem();
                 be.interact(level, pos, p, InteractionHand.MAIN_HAND, bhr);

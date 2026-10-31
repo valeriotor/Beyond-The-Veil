@@ -1031,7 +1031,7 @@ public class RenderEvents {
                         gg.drawString(Minecraft.getInstance().font, fluid.getAmount() + " mB/" + flaskBE.getTank().getTankCapacity(0) + " mB", X_OFFSET, gg.guiHeight() / 2 + 15, 0xFF000000 | Color.YELLOW.getRGB());
                     }
                 } else if (blockState.getBlock() == Registration.FLASK_SHELF.get()) {
-                    BlockPos centerPos = Registration.FLASK_SHELF.get().findCenter(lookedAtPos, blockState);
+                    BlockPos centerPos = Registration.FLASK_SHELF.get().findBEPos(lookedAtPos, blockState);
                     if (player.level().getBlockEntity(centerPos) instanceof FlaskShelfBE flaskShelfBE) {
                         FlaskShelfBE.Flask lookedAtFlask = flaskShelfBE.getLookedAtFlask(player.level(), lookedAtPos, bhr.getLocation());
                         if (lookedAtFlask != null) {
