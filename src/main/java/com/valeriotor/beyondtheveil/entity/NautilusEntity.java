@@ -196,7 +196,7 @@ public class NautilusEntity extends Entity {
             if (flag || this.getDamage() > TOTAL_HEALTH) {
                 if (!flag && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                     if (level() instanceof ServerLevel sl) {
-                        sl.playSound(null, this.getOnPos(), BTVSounds.SUBMARINE_CRASH.get(), SoundSource.NEUTRAL);
+                        sl.playSound(null, this.getOnPos(), BTVSounds.SUBMARINE_CRASH.get(), SoundSource.NEUTRAL, 0.36F, 1);
                         if (pSource == damageSources().fellOutOfWorld()) {
                             Vec3 pos = position().add(getLookAngle().multiply(3, 3, 3));
                             sl.sendParticles(ParticleTypes.EXPLOSION, pos.x, pos.y, pos.z, 50, 3, 3, 3, 0);
