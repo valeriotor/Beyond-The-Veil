@@ -1,10 +1,12 @@
 package com.valeriotor.beyondtheveil.item;
 
 import com.mojang.authlib.GameProfile;
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -48,6 +50,19 @@ public class BloodSigilPlayer extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level pLevel, LivingEntity pLivingEntity) {
         if (pLivingEntity instanceof ServerPlayer sp && sp.getServer() != null) {
+            ItemStack itemInOffHand = sp.getItemInHand(InteractionHand.OFF_HAND);
+            ItemStack itemInMainHand = sp.getItemInHand(InteractionHand.MAIN_HAND);
+            if (itemInMainHand.getItem() == this && itemInOffHand.getItem() == Registration.DECREPIT_HEART.get()) {
+                CompoundTag offHandTag = itemInOffHand.getOrCreateTag();
+                if (offHandTag.contains("player")) {
+                    CompoundTag tag = stack.getOrCreateTag();
+                    tag.putUUID("player", offHandTag.getUUID("player"));
+                    tag.putString("username", offHandTag.getString("username"));
+                    pLevel.playSound(null, sp.blockPosition(), BTVSounds.HEART_RIP.get(), SoundSource.PLAYERS, 1, 1);
+                    itemInOffHand.shrink(1);
+                    return stack;
+                }
+            }
             PlayerSavedData data = PlayerSavedData.getInstance(sp.getServer().overworld());
             Triple<UUID, BlockPos, Boolean> tuple = data.closestBloodPointExcluding(sp);
             if (tuple != null && tuple.getMiddle().distSqr(sp.blockPosition()) < 9) {
@@ -74,6 +89,13 @@ public class BloodSigilPlayer extends Item {
         ItemStack stack = player.getItemInHand(pUsedHand);
         CompoundTag tag = stack.getTag();
         if (player instanceof ServerPlayer sp && sp.getServer() != null && (tag == null || !tag.contains("player"))) {
+            ItemStack itemInOffHand = player.getItemInHand(InteractionHand.OFF_HAND);
+            if (pUsedHand == InteractionHand.MAIN_HAND && itemInOffHand.getItem() == Registration.DECREPIT_HEART.get()) {
+                if (itemInOffHand.getOrCreateTag().contains("player")) {
+                    player.startUsingItem(pUsedHand);
+                    return InteractionResultHolder.consume(stack);
+                }
+            }
             PlayerSavedData data = PlayerSavedData.getInstance(sp.getServer().overworld());
             Triple<UUID, BlockPos, Boolean> tuple = data.closestBloodPointExcluding(sp);
             if (tuple != null && tuple.getMiddle().distSqr(sp.blockPosition()) < 9) {

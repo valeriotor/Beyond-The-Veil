@@ -74,6 +74,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("tooltip.vessel_stone.2", "§ein the Blood Well to be transported back to the bound position.");
         add("tooltip.vessel_stone.3", "Used to return from Arche.");
         add("tooltip.vessel_stone.4", "It may then be used to re-enter Arche from the position where it was last used.");
+        add("tooltip.decrepit_heart.1", "Heart of an immortal, decayed as its owner resurrected.");
+        add("tooltip.decrepit_heart.2", "Wield in off-hand while using an immortal sigil in the main hand to bind it.");
+        add("tooltip.decrepit_heart.3", "Bound to: %1$s");
 
         add("sleep.transformed", "I cannot sleep while transformed.");
         add("sleep.parasite", "I don't feel all too well.. I can't sleep.");
@@ -419,6 +422,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(SAMPLE_TUBE.get(), "Sample Tube");
         add(BLOOD_ORB.get(), "Blood Orb");
         add(GREAT_HEART.get(), "Great Heart");
+        add(DECREPIT_HEART.get(), "Decrepit Heart");
         add(SYRINGE.get(), "Syringe");
         add(SCALPEL.get(), "Scalpel");
         add(FORCEPS.get(), "Forceps");

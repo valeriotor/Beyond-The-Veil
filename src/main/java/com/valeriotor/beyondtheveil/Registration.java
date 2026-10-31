@@ -317,6 +317,7 @@ public class Registration {
     public static final RegistryObject<Item> JOURNAL = ITEMS.register("journal", JournalItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> BLOOD_ORB = ITEMS.register("blood_orb", BloodOrbItem::new); // new ItemNecronomicon("necronomicon");
     public static final RegistryObject<Item> GREAT_HEART = ITEMS.register("great_heart", GreatHeartItem::new); // new BlockHeart(Material.SPONGE, BlockNames.HEART);
+    public static final RegistryObject<Item> DECREPIT_HEART = ITEMS.register("decrepit_heart", DecrepitHeartItem::new); // new BlockHeart(Material.SPONGE, BlockNames.HEART);
     public static final RegistryObject<Item> GEAR = ITEMS.register("gear", () -> new Item(ITEM_PROPERTIES)); // new ModItem("gear");
     //public static final RegistryObject<Item> SURGEON_SUMMONS = ITEMS.register("surgeon_summons", () -> new Item(ITEM_PROPERTIES)); // new ItemSurgeonSummoner("surgeon_summons");
     //public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible", () -> new Item(ITEM_PROPERTIES)); // new ItemCrucible("crucible");
@@ -585,6 +586,7 @@ public class Registration {
                 output.accept(JOURNAL.get());
                 output.accept(BLOOD_ORB.get());
                 output.accept(GREAT_HEART.get());
+                output.accept(DECREPIT_HEART.get());
                 output.accept(GEAR.get());
                 //output.accept(SURGEON_SUMMONS.get());
                 //output.accept(CRUCIBLE.get());

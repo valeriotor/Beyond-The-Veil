@@ -103,6 +103,9 @@ public class OperationRegistry {
                 if (status.getPatientType() == PatientType.WEEPER) {
                     return new ItemStack(Items.COAL);
                 }
+                if (status.getPatientType() == PatientType.PLAYER) {
+                    return new ItemStack(Registration.DECREPIT_HEART.get()); // tag writing is done upstream in surgicalbe
+                }
                 if (status.getFlags().containsKey("insert_marrow_gland_chest") && status.getFlags().containsKey("insert_silk_gland_chest") && status.getFlags().containsKey("insert_gunpowder_bladder_chest")) {
                     return new ItemStack(Registration.BLOOD_FIST.get());
                 }

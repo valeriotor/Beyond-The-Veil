@@ -31,6 +31,7 @@ public class SurgeonCompletableStep extends SurgeonStep.SurgeonReportStep {
                 if (reportStep.getType() == ReportStepType.EXTRACTION) {
                     surgeon.setPerformingSurgery();
                     if (!patientStatus.extract(null, be, currentDuration++, stack -> {
+                        be.tryWriteDecrepitHeart(stack);
                         surgeon.giveItem(stack);
                         finishedExtraction = true;
                     })) {

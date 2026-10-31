@@ -339,7 +339,9 @@ public class PatientStatus {
                         boolean wasAlreadyDead = condition == PatientCondition.DEAD;
                         boolean success = elaborateOperation(p, operation, be, false);
                         if (success && !wasAlreadyDead) {
-                            itemGiver.accept(extractionOperation.stack().apply(this));
+                            ItemStack stack = extractionOperation.stack().apply(this);
+                            be.tryWriteDecrepitHeart(stack); // likely useless code, since we repeat it in surgicalbe and surgeoncompletablestep, but I really can't be bothered at this point
+                            itemGiver.accept(stack);
                         } else if (wasAlreadyDead) {
                             flags.put(operation.getName(), flags.getOrDefault(operation.getName(), 0) + 1);
                             if (operation.isPersistent()) {

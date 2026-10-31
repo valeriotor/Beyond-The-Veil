@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.tile;
 
+import com.mojang.authlib.GameProfile;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
@@ -34,6 +35,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
@@ -55,10 +57,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class SurgicalBE extends BlockEntity {
 
@@ -263,11 +262,26 @@ public abstract class SurgicalBE extends BlockEntity {
                 usingItem = patientStatus.insert(p, ItemStack.of(forcepTag.getCompound("contained")), DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.FORCEPS.name(), 0, true), () -> forcepTag.remove("contained"), this);
             }
         } else if (i == Registration.TONGS.get()) {
-            usingItem = patientStatus.extract(p, this, DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.TONGS.name(), 0, true), stack -> ItemHandlerHelper.giveItemToPlayer(p, stack));
+            usingItem = patientStatus.extract(p, this, DataUtil.getOrSetInteger(p, SurgeryItem.SurgeryItemType.TONGS.name(), 0, true), stack -> {
+                tryWriteDecrepitHeart(stack);
+                ItemHandlerHelper.giveItemToPlayer(p, stack);
+            });
         } else if (i == Registration.SEWING_NEEDLE.get()) {
             usingItem = patientStatus.sewIncision();
         }
         return usingItem;
+    }
+
+    public void tryWriteDecrepitHeart(ItemStack stack) {
+        if (stack.is(Registration.DECREPIT_HEART.get()) && lyingPlayer != null && level instanceof ServerLevel sl) {
+            CompoundTag tag = stack.getOrCreateTag();
+            tag.putUUID("player", lyingPlayer);
+            GameProfileCache cache = sl.getServer().getProfileCache();
+            if (cache != null) {
+                Optional<GameProfile> gameProfile = cache.get(lyingPlayer);
+                gameProfile.ifPresent(profile -> tag.putString("username", profile.getName()));
+            }
+        }
     }
 
     @Override
@@ -509,7 +523,7 @@ public abstract class SurgicalBE extends BlockEntity {
                     level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
                 } else if (level instanceof ServerLevel sl) {
                     ServerPlayer player = sl.getServer().getPlayerList().getPlayer(lyingPlayer);
-                    if (player == null) {
+                    if (player == null || player.isDeadOrDying()) {
                         patientStatus = null;
                         lyingPlayer = null;
                         setChanged();

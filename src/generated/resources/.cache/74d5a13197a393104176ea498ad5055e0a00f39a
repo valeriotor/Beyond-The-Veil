@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-31T21:48:24.0190208	Item Models: beyondtheveil
+// 1.20.1	2026-10-31T21:57:10.6332423	Item Models: beyondtheveil
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/adeline.json
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
@@ -60,6 +60,7 @@ ce03b66c65988dad3ce2de96d5130c07aef1be20 assets/beyondtheveil/models/item/dark_s
 53a0c8067138224366e2ca2c51342cc3a8ef0ba8 assets/beyondtheveil/models/item/debris_diamond.json
 138c6525bedb89681bddd6d842efe48d22b1d9c5 assets/beyondtheveil/models/item/debris_gold.json
 7b11b02534b9a982316d1858317bbd2348c7c974 assets/beyondtheveil/models/item/debris_netherite.json
+90c398e49415c3fc3be76ed45d5bdb04c3c65924 assets/beyondtheveil/models/item/decrepit_heart.json
 c9a5a0db11dc2de4c054144a352510d7981c4e76 assets/beyondtheveil/models/item/deep_chest.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/deep_one.json
 f28908195af75136fb87b0d04364ba11484cadd9 assets/beyondtheveil/models/item/demand_pillar.json
