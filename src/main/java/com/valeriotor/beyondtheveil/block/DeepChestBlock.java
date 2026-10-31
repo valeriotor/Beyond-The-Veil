@@ -36,7 +36,7 @@ import java.util.function.Supplier;
 public class DeepChestBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
 
     private static final double a = 0.0625;
-    private static final VoxelShape SHAPE = Shapes.box(a * 1, 0, a * 1, a * 13, a * 15, a * 15);
+    private static final VoxelShape SHAPE = Shapes.box(a * 1, 0, a * 1, a * 15, a * 13, a * 15);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public DeepChestBlock(Properties pProperties) {
