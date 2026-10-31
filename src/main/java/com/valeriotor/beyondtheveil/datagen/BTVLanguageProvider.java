@@ -2024,7 +2024,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.WATER_DREAMS.title", "Dreams of Water");
         add("research.reminisced_void_water.text", "Dream of Void, then Water.");
         add("research.WATER_DREAMS.epigraph", "§oThe deep sea\\0" +
-                "Lies beneath all worlds,\\0" +
+                "Lies beneath all worlds\\0" +
                 "An ocean\\0" +
                 "Strewn across the stars§r\\1");
         add("research.WATER_DREAMS.epigraph.source", "Old Shoreman saying\\n");
@@ -2056,6 +2056,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.COMMUNION.title", "Communion");
         add("research.must_commune.text", "Talk to the lighthouse keeper once more.");
         add("research.communed.text", "Commune with the Idol in the town square.");
+        add("research.COMMUNION.epigraph", "\"I saw one, I tell ya! Scaly and slimy, both fish and man at once! The daemons of the deep... they came from the sea!\"\\1");
+        add("research.COMMUNION.epigraph.source", "From §oSailor Tall Tales and other stories§r\\n");
         add("research.COMMUNION.stage.0", "The old falsehoods plague my mind, parasites blinding me inside out.\\nI know that I do not know. Is this what the shoremen profess?");
         add("research.COMMUNION.stage.1", "I humbly pledge my life to You, Great Dreamer.\\n" +
                 "I disavow all my previous beliefs, any gods I may have previously had faith in.\\n" +
@@ -2157,8 +2159,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.CUSTOMS.epigraph.source", "Tales of the Desert Folk.\\n");
         add("research.CUSTOMS.stage.0", "Be it man's nature to loathe or cherish, the fear of the unknown \"Other\" can hide all sorts of wonders – and so it is that those renouncing such hate may experience the exquisite weirdness of a new, exotic culture. Starting from food, of course.\\n" +
                 "I wish to learn of and embrace the many customs of the shoremen, and those white, slimy slugs, which seem to play such a major role in their way of life, would be a great starting point. I can talk or send a letter to the lighthouse keeper if I need a sample.");
-        add("research.CUSTOMS.stage.1", "§o...bleah.§r\\n" +
-                "Some veils are better left closed.");
+        add("research.CUSTOMS.stage.1", "§o...bleah.§r Some veils are better left closed.\\n" +
+                "If I ever find myself in need of more slugs, I can create a slug bait and a catcher. For now, however, my goal is to learn more of the Shore culture.");
 
         add("research.FARMING_TECHNIQUES.title", "Farming Techniques");
         add("research.used_farming_technique.text", "Test the technique.");

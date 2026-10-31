@@ -142,6 +142,7 @@
         "parents": ["EMPTY_DREAMS"],
         "stages": [
           {
+            "epigraph": "research.WATER_DREAMS.epigraph",
             "text": "research.WATER_DREAMS.stage.0",
             "required_research": ["reminisced_void_water"],
             "memories": ["water"]
@@ -184,6 +185,7 @@
         "parents": ["BLACK_MIRROR"],
         "stages": [
           {
+            "epigraph": "research.COMMUNION.epigraph",
             "text": "research.COMMUNION.stage.0",
             "required_research": ["must_commune", "communed"]
           },
