@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.block;
 import com.valeriotor.beyondtheveil.tile.MemorySieveBE;
 import com.valeriotor.beyondtheveil.tile.SlugBaitBE;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +16,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -28,10 +33,12 @@ public class MemorySieveBlock extends Block implements EntityBlock {
     private static final VoxelShape BBOX = Shapes.box(a * 7, 0, a * 7, a * 9, a * 12, a * 9);;
     private static final VoxelShape BBOX2 = Shapes.box(a * 2, a * 13, a * 2, a * 14, a * 14, a * 14);;
     private static final VoxelShape BBOX3 = Shapes.box(a * 2, 0, a * 2, a * 14, a * 14, a * 14);
+    public static final BooleanProperty TEARS = BooleanProperty.create("tears");
 
 
     public MemorySieveBlock(Properties p_49795_) {
         super(p_49795_);
+        registerDefaultState(this.stateDefinition.any().setValue(TEARS, false));
     }
 
     @Override
@@ -39,7 +46,7 @@ public class MemorySieveBlock extends Block implements EntityBlock {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         BlockEntity entity = pLevel.getBlockEntity(pPos);
         if (entity instanceof MemorySieveBE sieve) {
-            boolean success = sieve.getOrAddItem(pPlayer, stack);
+            boolean success = sieve.getOrAddItem(pPlayer, stack, pHand);
             return success ? InteractionResult.SUCCESS : InteractionResult.PASS;
         }
         return InteractionResult.PASS;
@@ -78,4 +85,8 @@ public class MemorySieveBlock extends Block implements EntityBlock {
         return false;
     }
 
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(TEARS);
+    }
 }

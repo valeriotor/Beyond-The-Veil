@@ -125,6 +125,7 @@ public enum PlayerDataLib {
     moved_waypoint,
     changed_reminiscence,
     took_gift,
+    sieve_tears,
     ;
 
     // Longs

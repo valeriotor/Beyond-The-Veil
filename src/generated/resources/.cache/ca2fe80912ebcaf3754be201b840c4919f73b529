@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-28T23:49:17.9221573	Block States: beyondtheveil
+// 1.20.1	2026-10-31T23:01:28.2423223	Block States: beyondtheveil
 a7b07515384d6495a401aeb9bb0ea24bb97f33d4 assets/beyondtheveil/blockstates/alembics.json
 e7ea9ccdb7e2573dcbc4046f269a918f4022acf7 assets/beyondtheveil/blockstates/algae_block.json
 8873909c619253397c1a10876038ee70191bb230 assets/beyondtheveil/blockstates/arboreal_generator.json
@@ -64,7 +64,7 @@ e3c785406c8156e70ecaac6d82b409ea0d5a886e assets/beyondtheveil/blockstates/lacrym
 56e0d4fe8c85b85ff87151e0d3a2ccb1d96c4384 assets/beyondtheveil/blockstates/lamp.json
 dc51e198f1dd6cb9586babbae8eda45c34890e12 assets/beyondtheveil/blockstates/letter_box.json
 e61c924d5dab434d0fced3dd14dfa785b1529ea5 assets/beyondtheveil/blockstates/megydrea.json
-575aecbf7a96123b2eeba0bfd98ad3dbd4e87e14 assets/beyondtheveil/blockstates/memory_sieve.json
+4a16a594546f388957899c4500ac2acb64015eb8 assets/beyondtheveil/blockstates/memory_sieve.json
 cdf0645ae4f66a90a0c7c3517da11e99c6e077c4 assets/beyondtheveil/blockstates/offer_pillar.json
 fd65b65b23b95545e5498d689099388359576053 assets/beyondtheveil/blockstates/patient_pod.json
 88a310fedcef6ed98b119d1498ca221db5240ae8 assets/beyondtheveil/blockstates/redstone_grass.json
@@ -162,6 +162,7 @@ c1e99108338ad9a19e63a7a4dd8ca14303311887 assets/beyondtheveil/models/block/item_
 4fa0055f42fdfe67e11898171da4b56ded01da4a assets/beyondtheveil/models/block/megydrea_lower.json
 4ea96c5471ff50229a6975277d53618ae63267f1 assets/beyondtheveil/models/block/megydrea_upper.json
 2d3fd84a7c2c7faf528189babb6824bc98d0ba98 assets/beyondtheveil/models/block/memory_sieve.json
+49079a60e2b2f573dfa4c5507f9b5e4dfa86f30f assets/beyondtheveil/models/block/memory_sieve_tears.json
 171111ceef94b3c0e500c4504a1322e1cac47c39 assets/beyondtheveil/models/block/patient_pod_upper.json
 9ab386caf0ed93cc977e9047a6b4d219ff88e9f8 assets/beyondtheveil/models/block/redstone_weed_stage0.json
 b6b53c051291093988459cf98639b0dbcda27018 assets/beyondtheveil/models/block/redstone_weed_stage1.json

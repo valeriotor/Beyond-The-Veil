@@ -105,7 +105,7 @@ public class BTVBlockStates extends BlockStateProvider {
         register2by1WithTranslucentTop(PATIENT_POD.get(), "patient_pod");
         register2by1WithTranslucentTop(FLEBO.get(), "flebo");
         registerLetterBox();
-        registerSolidAndTranslucentBlock("memory_sieve", mcLoc("block/stone"), MEMORY_SIEVE.get());
+        registerMemorySieve("memory_sieve", mcLoc("block/stone"), MEMORY_SIEVE.get());
         registerSolidAndTranslucentBlock("dream_focus", mcLoc("block/quartz_block_side"), DREAM_FOCUS.get());
         registerSolidAndTranslucentBlock("dream_focus_fluids", mcLoc("block/quartz_block_side"), DREAM_FOCUS_FLUIDS.get());
         registerFlaskShelf();
@@ -341,6 +341,44 @@ public class BTVBlockStates extends BlockStateProvider {
                     if (state.hasProperty(HorizontalDirectionalBlock.FACING)) {
                         builder1.rotationY(((int) (state.getValue(HorizontalDirectionalBlock.FACING).toYRot()) % 360)); // Rotates 'modelFile' on the Y axis depending on the property
                     }
+                    return builder1.build();
+                });
+    }
+
+    private void registerMemorySieve(String name, ResourceLocation particleTexture, Block block) {
+        ExistingModelFile solid = new ExistingModelFile(modLoc("block/" + name + "_solid"), models().existingFileHelper);
+        ExistingModelFile translucent = new ExistingModelFile(modLoc("block/" + name + "_translucent"), models().existingFileHelper);
+        ExistingModelFile translucentTears = new ExistingModelFile(modLoc("block/" + name + "_translucent_tears"), models().existingFileHelper);
+
+        BlockModelBuilder parent = new BlockModelBuilder(modLoc("block/" + name + "_solid1"), models().existingFileHelper);
+        parent.parent(solid);
+        parent.renderType("solid");
+        BlockModelBuilder translucent_parent = new BlockModelBuilder(modLoc("block/" + name + "_translucent1"), models().existingFileHelper);
+        translucent_parent.parent(translucent);
+        translucent_parent.renderType("translucent");
+        BlockModelBuilder translucent_parent_tears = new BlockModelBuilder(modLoc("block/" + name + "_translucent_tears1"), models().existingFileHelper);
+        translucent_parent_tears.parent(translucentTears);
+        translucent_parent_tears.renderType("translucent");
+
+        BlockModelBuilder builder = models().getBuilder("beyondtheveil:block/" + name)
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", particleTexture)
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("block/" + name + "_solid1", parent))
+                .child("block/" + name + "_translucent1", translucent_parent)
+                .end();
+
+        BlockModelBuilder builderTears = models().getBuilder("beyondtheveil:block/" + name + "_tears")
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .texture("particle", particleTexture)
+                .customLoader((blockModelBuilder, helper) -> CompositeModelBuilder.begin(blockModelBuilder, models().existingFileHelper)
+                        .child("block/" + name + "_solid1", parent))
+                .child("block/" + name + "_translucent1", translucent_parent_tears)
+                .end();
+
+        getVariantBuilder(block)
+                .forAllStates(state -> {
+                    ConfiguredModel.Builder<?> builder1 = ConfiguredModel.builder().modelFile(state.getValue(MemorySieveBlock.TEARS) ? builderTears : builder);
                     return builder1.build();
                 });
     }

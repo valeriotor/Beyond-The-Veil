@@ -17,6 +17,7 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -480,14 +481,20 @@ public class CraftingRegistryGui extends Screen {
             selectedTitle = Component.translatable("flasks.crafting");
         }
         String pTranslateKey = item.getDescriptionId() + ".crafting";
-        if (item == Registration.DREAM_BOTTLE.get() && DataUtil.getBoolean(Minecraft.getInstance().player, PlayerDataLib.filled_bottle.name())) {
-            pTranslateKey += "2";
-        } else if (item == Registration.MEMORY_PHIAL.get() && DataUtil.getBoolean(Minecraft.getInstance().player, PlayerDataLib.REMINISCED.apply(Memory.METAL.getDataName()))) {
-            pTranslateKey += "2";
-        } else if (item == Registration.BLACK_MIRROR.get() && DataUtil.getBoolean(Minecraft.getInstance().player, PlayerDataLib.met_mirror.name())) {
-            pTranslateKey += "3";
-        } else if (item == Registration.BLACK_MIRROR.get() && ResearchUtil.getResearchStage(Minecraft.getInstance().player, "SNIPPET_OF_TRUTH") == 1) {
-            pTranslateKey += "2";
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (p != null) {
+            if (item == Registration.DREAM_BOTTLE.get() && DataUtil.getBoolean(p, PlayerDataLib.filled_bottle.name())) {
+                pTranslateKey += "2";
+            } else if (item == Registration.MEMORY_PHIAL.get() && DataUtil.getBoolean(p, PlayerDataLib.REMINISCED.apply(Memory.METAL.getDataName()))) {
+                pTranslateKey += "2";
+            } else if (item == Registration.BLACK_MIRROR.get() && DataUtil.getBoolean(p, PlayerDataLib.met_mirror.name())) {
+                pTranslateKey += "3";
+            } else if (item == Registration.BLACK_MIRROR.get() && ResearchUtil.getResearchStage(p, "SNIPPET_OF_TRUTH") == 1) {
+                pTranslateKey += "2";
+            } else if (item == Registration.MEMORY_SIEVE_ITEM.get() && DataUtil.getBoolean(p, PlayerDataLib.sieve_tears.name())) {
+                pTranslateKey += "2";
+            }
+
         }
         String localizedText = I18n.get(pTranslateKey);
         localizedText += "\\n";

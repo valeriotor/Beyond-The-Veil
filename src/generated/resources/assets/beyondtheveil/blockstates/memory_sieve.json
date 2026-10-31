@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "tears=false": {
       "model": "beyondtheveil:block/memory_sieve"
+    },
+    "tears=true": {
+      "model": "beyondtheveil:block/memory_sieve_tears"
     }
   }
 }
