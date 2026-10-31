@@ -42,7 +42,7 @@ public class ServerTickEvents {
             if (event.level instanceof ServerLevel sl) {
                 if (event.level.dimension() == BTVDimensions.ARCHE_LEVEL) {
                     ArcheCycleData arche = sl.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
-                    arche.tick(true);
+                    arche.tick(true, event.level);
                     if ((arche.getCycle() & 4095) == 0) {
                         Messages.sendToDimension(GenericToClientPacket.syncArcheData(arche), BTVDimensions.ARCHE_LEVEL);
                     }

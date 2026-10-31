@@ -114,7 +114,7 @@ public class ClientData {
 
     public void tickArcheCycleData() {
         if (archeCycleData != null) {
-            archeCycleData.tick(false);
+            archeCycleData.tick(false, null);
             long ticksInCycle = archeCycleData.ticksInCycle();
             /*if (ticksInCycle % 200 <= 0) {
                 int soundIndex = (int) archeCycleTicksToSoundIndex(ticksInCycle);

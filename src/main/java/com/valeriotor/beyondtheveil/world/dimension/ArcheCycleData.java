@@ -3,10 +3,11 @@ package com.valeriotor.beyondtheveil.world.dimension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.saveddata.SavedData;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ArcheCycleData extends SavedData {
 
@@ -15,6 +16,7 @@ public class ArcheCycleData extends SavedData {
     public static final long CURRENT_START = TICKS_PER_CYCLE - CURRENT_DURATION;
     public static final int CURRENT_PEAK = 110 * 20;
     private long cycle = 0;
+    private List<BlockPos> blocksToWaterify = new ArrayList<>();
 
     public static ArcheCycleData getInstance(ServerLevel serverLevel) {
         return serverLevel.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
@@ -34,12 +36,20 @@ public class ArcheCycleData extends SavedData {
         return tag;
     }
 
-    public void tick(boolean dirty) {
+    public void tick(boolean dirty, Level level) {
         //cycle = CURRENT_START - 200;
         cycle++;
         if (dirty) {
             setDirty();
         }
+        if (level != null && !level.isClientSide) {
+            for (Iterator<BlockPos> iterator = blocksToWaterify.iterator(); iterator.hasNext(); ) {
+                BlockPos blockPos = iterator.next();
+                level.setBlock(blockPos, Blocks.WATER.defaultBlockState(), 3);
+                iterator.remove();
+            }
+        }
+
     }
 
     public long getCycle() {
@@ -66,5 +76,9 @@ public class ArcheCycleData extends SavedData {
             return 0;
         }
         return ticks <= CURRENT_PEAK - 1 ? (ticks % (CURRENT_PEAK)) / (float) (CURRENT_PEAK) : (CURRENT_DURATION - ticks) / (float) (CURRENT_DURATION - CURRENT_PEAK);
+    }
+
+    public void addBlockToWaterify(BlockPos pos) {
+        blocksToWaterify.add(pos);
     }
 }

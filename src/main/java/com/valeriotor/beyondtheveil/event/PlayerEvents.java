@@ -13,6 +13,7 @@ import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.effect.ImmunityEffect;
 import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.item.AntidoteCapsuleItem;
@@ -27,23 +28,31 @@ import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.util.AttributeSets;
 import com.valeriotor.beyondtheveil.util.DataUtil;
+import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -292,4 +301,44 @@ public class PlayerEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void breakBlockEvent(BlockEvent.BreakEvent event) {
+        if (event.getPlayer() instanceof ServerPlayer sp) {
+            if (sp.level().dimension() == BTVDimensions.ARCHE_LEVEL) {
+                BlockPos pos = event.getPos();
+                if (checkArcheWaterAdjacency(pos, sp.level())) {
+                    ArcheCycleData arche = sp.serverLevel().getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
+                    arche.addBlockToWaterify(pos);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void fillBucketEvent(FillBucketEvent event) {
+        if (event.getLevel() instanceof ServerLevel sl && sl.dimension() == BTVDimensions.ARCHE_LEVEL) {
+            if (event.getTarget() != null && event.getTarget().getType() == HitResult.Type.BLOCK && event.getTarget() instanceof BlockHitResult bhr) {
+                BlockPos pos = bhr.getBlockPos();
+                if (sl.getBlockState(pos).is(Blocks.WATER)) {
+                    if (checkArcheWaterAdjacency(pos, sl)) {
+                        ArcheCycleData arche = sl.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
+                        arche.addBlockToWaterify(pos);
+                    }
+                }
+            }
+        }
+    }
+
+    private static boolean checkArcheWaterAdjacency(BlockPos pos, Level level) {
+        int water = 0, air = 0;
+        for (Direction direction : Direction.values()) {
+            BlockState adjacent = level.getBlockState(pos.relative(direction));
+            if (adjacent.is(Blocks.WATER) && adjacent.getFluidState().getType().isSame(Fluids.WATER)) {
+                water++;
+            } else if (adjacent.is(Blocks.AIR)) {
+                air++;
+            }
+        }
+        return water > air;
+    }
 }
