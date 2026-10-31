@@ -140,4 +140,8 @@ public class FishBarrelBE extends BlockEntity {
                 .with(STACK_PROPERTY, stackHandler.getStackInSlot(0).copy())
                 .build();
     }
+
+    public ItemStack getStack() {
+        return stackHandler.getStackInSlot(0).copy();
+    }
 }

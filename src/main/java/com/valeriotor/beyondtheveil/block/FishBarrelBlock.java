@@ -1,10 +1,16 @@
 package com.valeriotor.beyondtheveil.block;
 
+import com.valeriotor.beyondtheveil.tile.DeepChestBE;
 import com.valeriotor.beyondtheveil.tile.FishBarrelBE;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -52,5 +58,33 @@ public class FishBarrelBlock extends Block implements EntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new FishBarrelBE(pPos, pState);
+    }
+
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+        if (!pState.is(pNewState.getBlock())) {
+            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+            if (blockentity instanceof FishBarrelBE be) {
+                if (pLevel instanceof ServerLevel) {
+                    double pX = pPos.getX() + 0.5;
+                    double pY = pPos.getY() + 0.5;
+                    double pZ = pPos.getZ() + 0.5;
+                    double d0 = (double) EntityType.ITEM.getWidth();
+                    double d1 = 1.0D - d0;
+                    double d2 = d0 / 2.0D;
+                    double d3 = Math.floor(pX) + pLevel.random.nextDouble() * d1 + d2;
+                    double d4 = Math.floor(pY) + pLevel.random.nextDouble() * d1;
+                    double d5 = Math.floor(pZ) + pLevel.random.nextDouble() * d1 + d2;
+                    ItemEntity itementity = new ItemEntity(pLevel, d3, d4, d5, be.getStack());
+                    float f = 0.05F;
+                    itementity.setDeltaMovement(pLevel.random.triangle(0.0D, 0.11485000171139836D), pLevel.random.triangle(0.2D, 0.11485000171139836D), pLevel.random.triangle(0.0D, 0.11485000171139836D));
+                    pLevel.addFreshEntity(itementity);
+                }
+
+                pLevel.updateNeighbourForOutputSignal(pPos, this);
+            }
+
+            super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
+        }
     }
 }
