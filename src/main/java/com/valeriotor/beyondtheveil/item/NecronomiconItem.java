@@ -33,11 +33,17 @@ public class NecronomiconItem extends Item {
     }
 
     @Override
-    public Component getName(ItemStack pStack) {
+    public String getDescriptionId(ItemStack pStack) {
         if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER) {
-            return super.getName(pStack);
+            return super.getDescriptionId(pStack);
         }
-        String s = DistExecutor.safeCallWhenOn(Dist.CLIENT, () -> ClientMethods::necronomiconDescriptionId);
-        return Component.translatable(s);
+        try {
+            String s = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> ClientMethods::necronomiconDescriptionId);
+            if (s != null) {
+                return s;
+            }
+        } catch (Exception ignored) {
+        }
+        return super.getDescriptionId(pStack);
     }
 }

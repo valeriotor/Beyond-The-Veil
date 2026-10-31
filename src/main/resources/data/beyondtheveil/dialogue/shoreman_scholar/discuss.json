@@ -70,7 +70,7 @@
       "id": "reach",
       "dialogueOptions": [
         {
-          "id": "i__________________________",
+          "id": "i___________________________",
           "branchLength": 1,
           "endingNodeID": "life",
           "unlockedData": [],
@@ -95,7 +95,7 @@
       "id": "yelling",
       "dialogueOptions": [
         {
-          "id": "i_______________________________________",
+          "id": "i________________________________________",
           "branchLength": 1,
           "endingNodeID": "understand",
           "unlockedData": [],
@@ -175,7 +175,7 @@
       "id": "pray",
       "dialogueOptions": [
         {
-          "id": "i_________________________",
+          "id": "i__________________________",
           "branchLength": 1,
           "endingNodeID": "whatelse",
           "unlockedData": [],
@@ -250,7 +250,7 @@
           "endsDialogue": false
         },
         {
-          "id": "i_________________________________",
+          "id": "i__________________________________",
           "branchLength": 1,
           "endingNodeID": "noremember",
           "unlockedData": [],
@@ -375,7 +375,7 @@
       "id": "you",
       "dialogueOptions": [
         {
-          "id": "i________________________________________",
+          "id": "i_________________________________________",
           "branchLength": 1,
           "endingNodeID": "understand",
           "unlockedData": [],
@@ -535,7 +535,7 @@
           "endsDialogue": false
         },
         {
-          "id": "i__________________________________",
+          "id": "i___________________________________",
           "branchLength": 1,
           "endingNodeID": "frightened",
           "unlockedData": [],
@@ -615,7 +615,7 @@
           "endsDialogue": false
         },
         {
-          "id": "i___________________________",
+          "id": "i____________________________",
           "branchLength": 1,
           "endingNodeID": "sorry",
           "unlockedData": [],
@@ -780,7 +780,7 @@
       "id": "never",
       "dialogueOptions": [
         {
-          "id": "i_____________________",
+          "id": "i______________________",
           "branchLength": 1,
           "endingNodeID": "understand",
           "unlockedData": [],
@@ -795,7 +795,7 @@
       "id": "whatelse",
       "dialogueOptions": [
         {
-          "id": "i___________________________________",
+          "id": "i____________________________________",
           "branchLength": 1,
           "endingNodeID": "gods",
           "unlockedData": [],
@@ -805,7 +805,7 @@
           "endsDialogue": false
         },
         {
-          "id": "i____________________________________",
+          "id": "i_____________________________________",
           "branchLength": 1,
           "endingNodeID": "symbols",
           "unlockedData": [],
@@ -815,7 +815,7 @@
           "endsDialogue": false
         },
         {
-          "id": "i_____________________________________",
+          "id": "i______________________________________",
           "branchLength": 1,
           "endingNodeID": "shoremen",
           "unlockedData": [],
@@ -1068,7 +1068,7 @@
           "id": "i____",
           "branchLength": 1,
           "endingNodeID": "necronomicon",
-          "unlockedData": [],
+          "unlockedData": ["renamed_necronomicon"],
           "mustHaveData": [],
           "mustNotHaveData": [],
           "stopsDialogueUnlock": false,
@@ -1333,6 +1333,16 @@
           "mustNotHaveData": [],
           "stopsDialogueUnlock": false,
           "endsDialogue": false
+        },
+        {
+          "id": "i_____________________",
+          "branchLength": 1,
+          "endingNodeID": "godel",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
         }
       ]
     },
@@ -1355,7 +1365,7 @@
       "id": "shoremen",
       "dialogueOptions": [
         {
-          "id": "i____________________________",
+          "id": "i_____________________________",
           "branchLength": 2,
           "endingNodeID": "plight",
           "unlockedData": [],
@@ -1380,7 +1390,7 @@
           "endingNodeID": "keeper",
           "unlockedData": [],
           "mustHaveData": [],
-          "mustNotHaveData": ["killed_keeper"],
+          "mustNotHaveData": ["slew_keeper2"],
           "stopsDialogueUnlock": false,
           "endsDialogue": false
         },
@@ -1389,7 +1399,7 @@
           "branchLength": 1,
           "endingNodeID": "deadkeeper",
           "unlockedData": [],
-          "mustHaveData": ["killed_keeper"],
+          "mustHaveData": ["slew_keeper2"],
           "mustNotHaveData": [],
           "stopsDialogueUnlock": false,
           "endsDialogue": false
@@ -1435,7 +1445,7 @@
       "id": "ourselves",
       "dialogueOptions": [
         {
-          "id": "i________________________",
+          "id": "i_________________________",
           "branchLength": 1,
           "endingNodeID": "whatelse",
           "unlockedData": [],
@@ -1535,7 +1545,7 @@
           "endsDialogue": false
         },
         {
-          "id": "i_______________________",
+          "id": "i________________________",
           "branchLength": 1,
           "endingNodeID": "death",
           "unlockedData": [],
@@ -1565,7 +1575,7 @@
       "id": "sorry",
       "dialogueOptions": [
         {
-          "id": "i_____________________________",
+          "id": "i______________________________",
           "branchLength": 2,
           "endingNodeID": "plight",
           "unlockedData": [],
@@ -1590,7 +1600,7 @@
           "endingNodeID": "keeper",
           "unlockedData": [],
           "mustHaveData": [],
-          "mustNotHaveData": ["killed_keeper"],
+          "mustNotHaveData": ["slew_keeper2"],
           "stopsDialogueUnlock": false,
           "endsDialogue": false
         },
@@ -1599,7 +1609,7 @@
           "branchLength": 1,
           "endingNodeID": "deadkeeper",
           "unlockedData": [],
-          "mustHaveData": ["killed_keeper"],
+          "mustHaveData": ["slew_keeper2"],
           "mustNotHaveData": [],
           "stopsDialogueUnlock": false,
           "endsDialogue": false
@@ -1635,7 +1645,7 @@
           "endsDialogue": false
         },
         {
-          "id": "i______________________",
+          "id": "i_______________________",
           "branchLength": 1,
           "endingNodeID": "frightened",
           "unlockedData": [],
@@ -1650,7 +1660,7 @@
       "id": "whom",
       "dialogueOptions": [
         {
-          "id": "i______________________________________",
+          "id": "i_______________________________________",
           "branchLength": 1,
           "endingNodeID": "thankyou",
           "unlockedData": [],
@@ -1765,7 +1775,7 @@
       "id": "start",
       "dialogueOptions": [
         {
-          "id": "i______________________________",
+          "id": "i_______________________________",
           "branchLength": 1,
           "endingNodeID": "gods",
           "unlockedData": [],
@@ -1775,7 +1785,7 @@
           "endsDialogue": false
         },
         {
-          "id": "i_______________________________",
+          "id": "i________________________________",
           "branchLength": 1,
           "endingNodeID": "symbols",
           "unlockedData": [],
@@ -1785,7 +1795,7 @@
           "endsDialogue": false
         },
         {
-          "id": "i________________________________",
+          "id": "i_________________________________",
           "branchLength": 1,
           "endingNodeID": "shoremen",
           "unlockedData": [],
@@ -1893,6 +1903,41 @@
           "id": "does",
           "branchLength": 1,
           "endingNodeID": "listen",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        }
+      ]
+    },
+    "godel": {
+      "id": "godel",
+      "dialogueOptions": [
+        {
+          "id": "ignoramus",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "wir",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
+          "unlockedData": [],
+          "mustHaveData": [],
+          "mustNotHaveData": [],
+          "stopsDialogueUnlock": false,
+          "endsDialogue": false
+        },
+        {
+          "id": "hardly",
+          "branchLength": 1,
+          "endingNodeID": "whatelse",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
