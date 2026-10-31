@@ -7,6 +7,7 @@ import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.client.gui.elements.DialogueOptions;
+import com.valeriotor.beyondtheveil.client.gui.research.NecronomiconGui;
 import com.valeriotor.beyondtheveil.client.util.CrossSyncHolder;
 import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueBranch;
@@ -39,6 +40,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
     private static final ResourceLocation SHOREMAN_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/shoreman.png");
     public static final ResourceLocation BLOOD_CULTIST_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/blood_cultist.png");
     public static final ResourceLocation WEEPER_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/dialogue/weeper.png");
+    public static final ResourceLocation TENDRIL_TEXTURE = new ResourceLocation(References.MODID, "textures/gui/tendril.png");
     private static final float TEXT_WIDTH_RATIO = 0.9F;
     private static final float TEXT_HEIGHT_RATIO = 0.85F;
     private final float startYRot;
@@ -198,8 +200,24 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
         if (options != null && shouldShowOptions()) {
             pose.pushPose();
             pose.translate(-imageWidth * TEXT_WIDTH_RATIO / 2F, -60, 0);
-            options.render(pose, guiGraphics, 0xFFDD0000, (int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 60 * scaleFactor) / scaleFactor), pPartialTick);
+            options.render(pose, guiGraphics, 0xFFDD0000, (int) optionsMouseX(pMouseX), (int) optionsMouseY(pMouseY), pPartialTick);
             pose.popPose();
+            DialogueTemplate t = menu.getTemplate();
+            if (t.getType() == DialogueType.SHOREMAN_SCHOLAR && "discuss".equals(t.getID())) {
+                if (Objects.equals(menu.getBranchTemplate().getEndingNodeID(), "symbols") && menu.getIndexInBranch() == 0) {
+                    int hoveredOption = options.getHoveredOption(optionsMouseX(pMouseX), optionsMouseY(pMouseY));
+                    pose.pushPose();
+                    pose.translate(-imageWidth * TEXT_WIDTH_RATIO / 2F + 380, -50, 0);
+                    pose.scale(0.5F, 0.5F, 1);
+                    if (hoveredOption == 0) {
+                        guiGraphics.blit(NecronomiconGui.EYE, -64, -64, 0, 0, 128, 128, 128, 128);
+                        guiGraphics.blit(NecronomiconGui.EYE_PUPIL, -60, -64, 0, 0, 128, 128, 128, 128);
+                    } else if (hoveredOption == 1) {
+                        guiGraphics.blit(TENDRIL_TEXTURE, -64, -64, 0, 0, 128, 128, 128, 128);
+                    }
+                    pose.popPose();
+                }
+            }
         }
 
         pose.popPose();
@@ -221,15 +239,23 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
         if (options != null && shouldShowOptions()) {
-            return options.mouseClicked((int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 60 * scaleFactor) / scaleFactor), pButton);
+            return options.mouseClicked((int) optionsMouseX(pMouseX), (int) optionsMouseY(pMouseY), pButton);
         }
         return false;
+    }
+
+    private double optionsMouseX(double pMouseX) {
+        return (pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor;
+    }
+
+    private double optionsMouseY(double pMouseY) {
+        return (pMouseY - height + 60 * scaleFactor) / scaleFactor;
     }
 
     @Override
     public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
         if (options != null) {
-            return options.mouseDragged((int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 60 * scaleFactor) / scaleFactor), pButton, pDragX, pDragY);
+            return options.mouseDragged((int) optionsMouseX(pMouseX), (int) optionsMouseY(pMouseY), pButton, pDragX, pDragY);
         }
         return false;
     }
@@ -237,12 +263,12 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
     @Override
     public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
         if (dialogueBox != null) {
-            if (dialogueBox.mouseScrolled((int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 135 * scaleFactor) / scaleFactor), pDelta)) {
+            if (dialogueBox.mouseScrolled((int) optionsMouseX(pMouseX), (int) ((pMouseY - height + 135 * scaleFactor) / scaleFactor), pDelta)) {
                 return true;
             }
         }
         if (options != null) {
-            return options.mouseScrolled((int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 60 * scaleFactor) / scaleFactor), pDelta);
+            return options.mouseScrolled((int) optionsMouseX(pMouseX), (int) optionsMouseY(pMouseY), pDelta);
         }
         return false;
     }
@@ -250,7 +276,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
     @Override
     public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
         if (options != null) {
-            return options.mouseReleased((int) ((pMouseX - width / 2 + imageWidth * TEXT_WIDTH_RATIO * scaleFactor / 2) / scaleFactor), (int) ((pMouseY - height + 60 * scaleFactor) / scaleFactor), pButton);
+            return options.mouseReleased((int) optionsMouseX(pMouseX), (int) optionsMouseY(pMouseY), pButton);
         }
         return false;
     }

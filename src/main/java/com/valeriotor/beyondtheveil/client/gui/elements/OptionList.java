@@ -60,7 +60,7 @@ public abstract class OptionList<T extends OptionList> extends ScrollableList<Te
 
     protected abstract void acceptListener(int element);
 
-    private int getHoveredOption(double relativeMouseX, double relativeMouseY) {
+    public int getHoveredOption(double relativeMouseX, double relativeMouseY) {
         int hoveredElement = getHoveredElement(relativeMouseX, relativeMouseY);
         if (hoveredElement == -1) {
             return -1;
