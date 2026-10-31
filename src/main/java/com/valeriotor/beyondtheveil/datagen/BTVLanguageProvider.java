@@ -2600,6 +2600,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.research_page.back_to_necro", "Back to Necronomicon");
         add("gui.research_page.back_to_page", "Back to Page");
         add("gui.research_page.back_to_mc", "Exit");
+        add("gui.reminiscence.next", "Next Reminiscence");
 
         addJournal();
         addLetterBox();

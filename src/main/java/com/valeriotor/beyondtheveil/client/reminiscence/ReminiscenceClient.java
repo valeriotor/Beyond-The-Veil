@@ -4,11 +4,13 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.client.KeyBindings;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
+import com.valeriotor.beyondtheveil.client.gui.elements.ShortcutHint;
 import com.valeriotor.beyondtheveil.client.util.DataUtilClient;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceAnimal;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceUnderground;
 import com.valeriotor.beyondtheveil.dreaming.dreams.ReminiscenceWaypoint;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToServerPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
@@ -19,6 +21,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.FormattedCharSequence;
@@ -38,6 +41,7 @@ public abstract class ReminiscenceClient {
     private static boolean preventScreenOpen = false;
     private static int selectedReminiscence = -1;
     private static final List<ReminiscenceClient> reminiscences = new ArrayList<>();
+    private static ShortcutHint nextHint;
 
     protected abstract void render(RenderGuiOverlayEvent event);
 
@@ -61,7 +65,8 @@ public abstract class ReminiscenceClient {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
             if (reminisceTimePressed > 0) {
-                PoseStack poseStack = event.getGuiGraphics().pose();
+                GuiGraphics guiGraphics = event.getGuiGraphics();
+                PoseStack poseStack = guiGraphics.pose();
                 poseStack.pushPose();
                 poseStack.translate(0, 0, 10);
                 Matrix4f matrix4f = poseStack.last().pose();
@@ -72,6 +77,20 @@ public abstract class ReminiscenceClient {
 
                 if (!reminiscences.isEmpty() && reminisceTimePressed >= 20) {
                     reminiscences.get(selectedReminiscence).render(event);
+                    if (reminiscences.size() > 1 && !DataUtil.getBoolean(player, PlayerDataLib.changed_reminiscence.name())) {
+                        if (nextHint == null) {
+                            MutableComponent next = Component.translatable("gui.reminiscence.next");
+                            int hintsTextWidth = Minecraft.getInstance().font.width(next) + 20;
+                            nextHint = new ShortcutHint(20, next, KeyBindings.reminisce, hintsTextWidth, 70);
+                        }
+                        int height = window.getGuiScaledHeight();
+                        guiGraphics.fill(0, height - 60, nextHint.getWidth() + 40, height - 5, 0x77000000);
+                        poseStack.pushPose();
+                        poseStack.translate(20, height - 55, 0);
+                        nextHint.render(poseStack, guiGraphics, 0xFFFFFFFF, 0, 0, event.getPartialTick());
+                        poseStack.popPose();
+
+                    }
                 }
 
                 poseStack.popPose();
@@ -120,13 +139,17 @@ public abstract class ReminiscenceClient {
                     reminiscences.get(selectedReminiscence).nextReminiscence();
                     selectedReminiscence++;
                     selectedReminiscence %= reminiscences.size();
+                    LocalPlayer p = Minecraft.getInstance().player;
+                    if (p != null && !DataUtil.getBoolean(p, PlayerDataLib.changed_reminiscence.name())) {
+                        DataUtilClient.setBooleanAndSync(PlayerDataLib.changed_reminiscence.name(), true, false);
+                    }
                 }
             }
         }
     }
 
     public static void mouseScrollEvent(InputEvent.MouseScrollingEvent event) {
-        if (reminiscences.size() > 0) {
+        if (reminiscences.size() > 0 && reminisceTimePressed >= 20) {
             reminiscences.get(selectedReminiscence).mouseScroll(event);
         }
     }
@@ -152,7 +175,7 @@ public abstract class ReminiscenceClient {
                 r = new ReminiscenceClientWaypoint(rw);
             } else if (e.getValue() instanceof ReminiscenceAnimal ra) {
                 r = new ReminiscenceClientAnimal(ra);
-            }else if (e.getValue() instanceof Reminiscence.EmptyReminiscence rw) {
+            } else if (e.getValue() instanceof Reminiscence.EmptyReminiscence rw) {
                 r = new TextReminiscenceClient(Component.translatable("reminiscence.EMPTY"));
             } else if (e.getValue() instanceof Reminiscence.TextReminiscence rw) {
                 r = new TextReminiscenceClient(rw);

@@ -123,6 +123,7 @@ public enum PlayerDataLib {
     has_exploded,
     has_detransformed,
     moved_waypoint,
+    changed_reminiscence,
     took_gift,
     ;
 
@@ -163,6 +164,7 @@ public enum PlayerDataLib {
         allowedKeys.add(exited_research_page.name());
         allowedKeys.add(exited_crafting_grid.name());
         allowedKeys.add(moved_waypoint.name());
+        allowedKeys.add(changed_reminiscence.name());
         allowedKeys.add("eldritchDream");
         allowedKeys.add("LHKeeper");
         allowedKeys.add("carpenter");
