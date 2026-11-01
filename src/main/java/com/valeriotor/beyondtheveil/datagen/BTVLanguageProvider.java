@@ -79,7 +79,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("tooltip.decrepit_heart.3", "Bound to: %1$s");
 
         add("sleep.transformed", "I cannot sleep while transformed.");
-        add("sleep.parasite", "I don't feel all too well.. I can't sleep.");
+        add("sleep.parasite", "I don’t feel all too well.. I can’t sleep.");
 
         addDialogue();
         addMobInteracts();
@@ -101,7 +101,7 @@ public class BTVLanguageProvider extends LanguageProvider {
     private void addMiscellaneous() {
         add("message.transformation.cooldown", "The transformation requires %1$s seconds of cooldown.");
         add("message.transformation.holding", "I cannot transform while carrying a patient.");
-        add("message.transformation.sleep", "I can't sleep while non-human.");
+        add("message.transformation.sleep", "I can’t sleep while non-human.");
         add("key.reminisce", "Reminisce");
         add("key.transform", "Transform/Explode");
         add("commands.btvdata.player_not_found", "Player not found");
@@ -131,7 +131,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(BTVEntities.SEPIID.get(), "Sepiid");
         add(BTVEntities.ADELINE.get(), "Adeline");
         add(BTVEntities.BONECAGE.get(), "Bonecage");
-        add(BTVEntities.MAN_O_WAR.get(), "Man o' war");
+        add(BTVEntities.MAN_O_WAR.get(), "Man o’ war");
         add(BTVEntities.OCTID.get(), "Octid");
         add(BTVEntities.UMANCALA.get(), "Umancala");
         add(BTVEntities.SANDFLATTER.get(), "Sandflatter");
@@ -148,8 +148,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("interact.surgeon.bad_report_location_bed", "Note: this report uses positions that are not allowed on the currently bound surgical bed");
         add("interact.surgeon.bad_be_location_cradle", "Note: this cradle does not allow the positions assigned to the surgeon in the report.");
         add("interact.surgeon.bad_be_location_bed", "Note: this bed does not allow the positions assigned to the surgeon in the report.");
-        add("hover.surgeon.stalled_insertion", "The surgeon can't start the insertion due to a lack of %1$s.");
-        add("hover.surgeon.stalled_injection", "The surgeon can't progress the injection due to a lack of %1$s.");
+        add("hover.surgeon.stalled_insertion", "The surgeon can’t start the insertion due to a lack of %1$s.");
+        add("hover.surgeon.stalled_injection", "The surgeon can’t progress the injection due to a lack of %1$s.");
         add("interact.minion.follow", "The creature will now follow me.");
         add("interact.minion.stop_follow", "The creature will no longer follow me.");
         add("interact.keeper.dead", "Only his memory remains.");
@@ -196,7 +196,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("memory.death.0.1", "By reminiscing, I am shown the point where I last died.");
         add("memory.death.1.1", "↳ §lVoid§r: Instead, I am shown the point where I last respawned. Life and death, intrinsically tied.");
         add("memory.death.2.1", "§oPath Sigil§r: No effect, as far as I can tell.");
-        add("memory.death.4.1", "§oImmortal Sigil§r: I am shown the target's last death instead of my own.");
+        add("memory.death.4.1", "§oImmortal Sigil§r: I am shown the target’s last death instead of my own.");
         add("memory.death.5.1", "↳ §lVoid§r: Instead, I am shown the point where the target last respawned.");
 
         add("memory.heartbreak.name", "Heartbreak");
@@ -229,10 +229,10 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("memory.repair.name", "Mending");
         add("memory.repair.brief", "The satisfaction of a job well done. Even inanimate things deserve some love.");
-        add("memory.repair.0.1", "Repairs the armor I'm wearing and the items I'm wielding in my hands.");
+        add("memory.repair.0.1", "Repairs the armor I’m wearing and the items I’m wielding in my hands.");
         add("memory.repair.1.1", "↳ §lVoid§r: Further repairs them.");
         add("memory.repair.4.1", "§oImmortal Sigil§r: Affects the target human instead.");
-        add("memory.repair.5.1", "↳ §lVoid§r: The target's worn and wielded items are §ldamaged§o instead.");
+        add("memory.repair.5.1", "↳ §lVoid§r: The target’s worn and wielded items are §ldamaged§o instead.");
 
         add("memory.sentience.name", "Sentience");
         add("memory.sentience.brief", "With action comes reaction, but of a thoughtful sort – non-deterministic. Is it a worthy definition, or just wishful thinking?");
@@ -254,13 +254,13 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("memory.void.name", "Void");
         add("memory.void.brief", "A memory of a memory. All I remember is... forgetting.");
-        add("memory.void.0.1", "The next time I dream, the new memory's effects may be changed – often strengthened. This may not work on all dreams.");
+        add("memory.void.0.1", "The next time I dream, the new memory’s effects may be changed – often strengthened. This may not work on all dreams.");
         add("memory.void.4.1", "§oImmortal Sigil§r: Affects the target human instead.");
 
         add("memory.water.name", "Water");
         add("memory.water.brief", "We are all born from water – so why, all of a sudden, does it feel so alien?");
         add("memory.water.0.1", "Locates an ocean monument.");
-        add("memory.water.1.1", "↳ §lVoid§r: Hear the Ocean's voice.");
+        add("memory.water.1.1", "↳ §lVoid§r: Hear the Ocean’s voice.");
         add("memory.water.2.1", "§oPath Sigil§r: Starts the search from the target area instead.");
         add("memory.water.4.1", "§oImmortal Sigil§r: Encases the target in ice.");
 
@@ -392,7 +392,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(MEMORY_PHIAL.get(), "Memory Phial");
         add(NECRONOMICON.get(), "Al Azif");
         add("item.beyondtheveil.necronomicon2", "Necronomicon");
-        add(JOURNAL.get(), "Surgeon's Journal");
+        add(JOURNAL.get(), "Surgeon’s Journal");
         add(GEAR.get(), "Gear");
         //add(SURGEON_SUMMONS.get(), "Surgeon Summons");
         //add(CRUCIBLE.get(), "Crucible");
@@ -490,7 +490,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(SEPIID_EGG.get(), "Sepiid Spawn Egg");
         add(ADELINE_EGG.get(), "Adeline Spawn Egg");
         add(BONECAGE_EGG.get(), "Bonecage Spawn Egg");
-        add(MAN_O_WAR_EGG.get(), "Man o' War Spawn Egg");
+        add(MAN_O_WAR_EGG.get(), "Man o’ War Spawn Egg");
         add(OCTID_EGG.get(), "Octid Spawn Egg");
         add(UMANCALA_EGG.get(), "Umancala Spawn Egg");
         add(SANDFLATTER_EGG.get(), "Sandflatter Spawn Egg");
@@ -591,9 +591,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.mauer_ask_thesis.0.5.dr_name",        "Dr. %s");
         add("exchange.mauer_ask_thesis.0.5.seeker",         "The Seeker of Truth");
         add("exchange.mauer_ask_thesis.1.0.dear",           "Dear %s\\n");
-        add("exchange.mauer_ask_thesis.1.1.thank",          "Thank you for your letter. Henry and I are glad to see such continued interest in our work. It is especially gratifying to see it coming from you—word has already travelled of your immortality (if these are only unfounded rumors, we sincerely apologize), and the topics discussed therein may be of particular consequence to you, just as they were to Adelina (we hope that you may one day meet her, if she returns from wherever she's gone).\\n");
-        add("exchange.mauer_ask_thesis.1.2.most",           "Most unfortunately, however, we are unable to send you the treatise. Even the famously lax ethics department of the Miskatonic was forced to cede to public opinion, riled up by Jerome's §oRebuke§r five years ago, and no version of the treatise is available for external researchers.\\n");
-        add("exchange.mauer_ask_thesis.1.3.what",           "What we §oare§r allowed to do, however, is grant you a copy of my Master's Thesis from twelve years ago (my, how time flies!), that served as the foundation for the subsequent treatise of the same name. It is a much abridged version of the full thing, yet still serves as a catalogue of several known rituals. You will find it attached to this letter.\\n");
+        add("exchange.mauer_ask_thesis.1.1.thank",          "Thank you for your letter. Henry and I are glad to see such continued interest in our work. It is especially gratifying to see it coming from you—word has already travelled of your immortality (if these are only unfounded rumors, we sincerely apologize), and the topics discussed therein may be of particular consequence to you, just as they were to Adelina (we hope that you may one day meet her, if she returns from wherever she’s gone).\\n");
+        add("exchange.mauer_ask_thesis.1.2.most",           "Most unfortunately, however, we are unable to send you the treatise. Even the famously lax ethics department of the Miskatonic was forced to cede to public opinion, riled up by Jerome’s §oRebuke§r five years ago, and no version of the treatise is available for external researchers.\\n");
+        add("exchange.mauer_ask_thesis.1.3.what",           "What we §oare§r allowed to do, however, is grant you a copy of my Master’s Thesis from twelve years ago (my, how time flies!), that served as the foundation for the subsequent treatise of the same name. It is a much abridged version of the full thing, yet still serves as a catalogue of several known rituals. You will find it attached to this letter.\\n");
         add("exchange.mauer_ask_thesis.1.4.if",             "If you ever become associated with our institution, you may be able to access the full treatise, which may contain several more notions of particular relevance to immortals, such as blood covenants.\\n");
         add("exchange.mauer_ask_thesis.1.5.all",            "All the best in your research.\\n");
         add("exchange.mauer_ask_thesis.1.6.dr",             "Warmly,\\1Dr. Georg Ferdinand Mauer");
@@ -628,7 +628,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.another_surgeon.0.0.dr",              "Dear Dr. West,\\n");
         add("exchange.another_surgeon.0.0.nurse",           "Dear Nurse Palmer,\\n");
         add("exchange.another_surgeon.0.1.remarkable",      "Your previous surgeon has proved itself a remarkable assistant.\\n");
-        add("exchange.another_surgeon.0.1.acceptable",      "Your previous surgeon's performance was acceptable.\\n");
+        add("exchange.another_surgeon.0.1.acceptable",      "Your previous surgeon’s performance was acceptable.\\n");
         add("exchange.another_surgeon.0.1.longer",          "Your previous surgeon is no longer with us.\\n");
         add("exchange.another_surgeon.0.2.additional",      "I would like to hire an additional one. You will find enclosed the usual fee of five diamonds.\\n");
         add("exchange.another_surgeon.0.3.best",            "Best Regards,\\1");
@@ -671,7 +671,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.ask_weeper.0.4.seeker",               "The Seeker of Truth");
         add("exchange.ask_weeper.1.0.dear",                 "Dear Dr. %s,\\n");
         add("exchange.ask_weeper.1.1.certainly",            "Certainly. As you clearly know, here at the Arkham Sanitarium we not only provide medical services, but are also involved in research efforts, and we are always glad to see interest in our niche field.\\n");
-        add("exchange.ask_weeper.1.2.pupils",               "Some of my younger pupils have indeed made observations on the interaction between water and the human mind—we do not yet know why water displays such properties, but it appears capable of expanding a human's viewpoint beyond what the eyes can see. We thus began performing experiments, filling our patients' skulls with water until we deemed possible. This was a painful operation, requiring much sedative. To be clear, these were healthy patients, not lacking any internal organs—their spines and thus their bodies were their only bond with the physical world, while their mind would have been brought beyond it by water.\\n");
+        add("exchange.ask_weeper.1.2.pupils",               "Some of my younger pupils have indeed made observations on the interaction between water and the human mind—we do not yet know why water displays such properties, but it appears capable of expanding a human’s viewpoint beyond what the eyes can see. We thus began performing experiments, filling our patients’ skulls with water until we deemed possible. This was a painful operation, requiring much sedative. To be clear, these were healthy patients, not lacking any internal organs—their spines and thus their bodies were their only bond with the physical world, while their mind would have been brought beyond it by water.\\n");
         add("exchange.ask_weeper.1.3.sadly",                "Sadly, our initial attempts were none too successful; a swollen head, and that was all. We believe we stopped too early, but unfortunately we do not currently have the manpower nor the test-subjects/volunteers needed to pursue further experiments.\\n");
         add("exchange.ask_weeper.1.4.cycles",               "If you have the cycles, we would be glad to see any successful experiments on your end, setting up for a collaboration. Please note that most of our findings are not suited for publication in traditional medical journals, and I would dissuade you from divulging this information.\\n");
         add("exchange.ask_weeper.1.5.best",                 "Best,\\1Dr. H. West");
@@ -722,7 +722,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.fletum.happy.i.option", "I envy you.");
 
         add("dialogue.fletum.rubies.start.0", "Big red rubies at the top of the bottom of the ocean. Red like coral like fire like blood.");
-        add("dialogue.fletum.rubies.i've.option", "I've been there.");
+        add("dialogue.fletum.rubies.i've.option", "I’ve been there.");
         add("dialogue.fletum.rubies.good.option", "Good to know.");
 
         add("dialogue.fletum.splish.start.0", "Splish splash.");
@@ -733,7 +733,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.fletum.cry.do.option", "Do you see more or less than we do?");
         add("dialogue.fletum.cry.the_.option", "The beauty of knowledge.");
 
-        add("dialogue.fletum.chaos.start.0", "I heard Chaos Crawling into my ear.\nHe said I'm his favourite! Tee-hee.");
+        add("dialogue.fletum.chaos.start.0", "I heard Chaos Crawling into my ear.\nHe said I’m his favourite! Tee-hee.");
         add("dialogue.fletum.chaos.___.option", "...");
 
     }
@@ -742,7 +742,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("dialogue.weeper.initial.start.0", "It swirls and churns and rumbles and flows. A stream, all inside of me.");
         add("dialogue.weeper.initial.areyouthere.0", "My... my maker. Are you there?\nI can see you. I can hear you. But I am still not sure.");
-        add("dialogue.weeper.initial.senses.0", "It just doesn't make sense. None of it. Was it always like this? Like... pieces of cardboard. All of you.\nAll written, all predetermined... to deceive me.\nBut I can still see you! Still hear you! And it hurts... so, so very much.");
+        add("dialogue.weeper.initial.senses.0", "It just doesn’t make sense. None of it. Was it always like this? Like... pieces of cardboard. All of you.\nAll written, all predetermined... to deceive me.\nBut I can still see you! Still hear you! And it hurts... so, so very much.");
         add("dialogue.weeper.initial.do.option", "Do you no longer trust your senses?");
         add("dialogue.weeper.initial.i_.option", "I am sorry.");
         add("dialogue.weeper.initial.how.option", "How do you see without eyes?");
@@ -754,8 +754,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.weeper.initial.do_.option", "Do you remember who you were?");
 
         add("dialogue.weeper.riddle.start.0", "I have no eyes but I can weep,\nI have a body but I cannot feel,\nMy blood is pale, my heart pumps tears.\nWhat am I?");
-        add("dialogue.weeper.riddle.riddle.0", "Yes. But I don't know the answer.");
-        add("dialogue.weeper.riddle.i'll.option", "I'll think about it.");
+        add("dialogue.weeper.riddle.riddle.0", "Yes. But I don’t know the answer.");
+        add("dialogue.weeper.riddle.i'll.option", "I’ll think about it.");
         add("dialogue.weeper.riddle.i.option", "I might have a hunch...");
         add("dialogue.weeper.riddle.you_.option", "You are an abomination");
         add("dialogue.weeper.riddle.you.option", "You are a miracle.");
@@ -771,7 +771,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.weeper.arche_binding.shoremen.0", "No, not them! Me, of course!");
         add("dialogue.weeper.arche_binding.tell.0", "Your binding was forged in the red, earthly blood – the one that once coursed through me.\nBut there is a fourth binding, fashioned in the oldest and palest of bloods: tears.");
         add("dialogue.weeper.arche_binding.tell.1", "Bind yourself to the Overworld, but, this time, sacrifice someone who bleeds white!");
-        add("dialogue.weeper.arche_binding.there.option", "There won't be a next time. Please, tell me your secret.");
+        add("dialogue.weeper.arche_binding.there.option", "There won’t be a next time. Please, tell me your secret.");
         add("dialogue.weeper.arche_binding.i_.option", "I understand. Thank you.");
         add("dialogue.weeper.arche_binding.i.option", "I understand. Thank you.");
         add("dialogue.weeper.arche_binding.where.option", "Where would I find someone like that?");
@@ -779,14 +779,14 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.weeper.arche_binding.a.option", "A friend has passed on.");
         add("dialogue.weeper.arche_binding.tell.option", "Tell me the secret.");
         add("dialogue.weeper.arche_binding.no_.option", "No. The Shoremen shall no longer suffer at my hands.");
-        add("dialogue.weeper.arche_binding.wait,.option", "Wait, you don't mean...");
+        add("dialogue.weeper.arche_binding.wait,.option", "Wait, you don’t mean...");
         add("dialogue.weeper.arche_binding.to.option", "To willingly relinquish your life... I am sorry for creating you.");
 
         add("dialogue.weeper.plant_dream.start.0", "Maker, maker! Have you ever dreamt of plants?|\nThen hold a diamond in your hands!");
         add("dialogue.weeper.plant_dream.what?.option", "What?");
         add("dialogue.weeper.plant_dream.diamonds.option", "Diamonds are precious. I hope this is not a trick.");
 
-        add("dialogue.weeper.master.know.0", "Oh, no, you have lost your master too! Then let us weep together, to await master's return!");
+        add("dialogue.weeper.master.know.0", "Oh, no, you have lost your master too! Then let us weep together, to await master’s return!");
         add("dialogue.weeper.master.free.0", "No. No one is free. We all have a master, at the bottom of the sea.");
         add("dialogue.weeper.master.me.0", "No... no! My master lies deep down below, at the bottom of the sea!");
         add("dialogue.weeper.master.start.0", "Where is my master?");
@@ -799,7 +799,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.weeper.master.you.option", "You lost your wits.");
         add("dialogue.weeper.master.your.option", "Your master is never coming back.");
         add("dialogue.weeper.master.i_.option", "I am your master.");
-        add("dialogue.weeper.master.i__.option", "I don't know.");
+        add("dialogue.weeper.master.i__.option", "I don’t know.");
 
     }
 
@@ -826,8 +826,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dialogue.drowned.display_name", "Convergence");
 
         add("dialogue.drowned.gnawing.start.0", "For the first time, I notice it: something crawling at the back of my head.");
-        add("dialogue.drowned.gnawing.start.1", "It is like a pain grown over several weeks or months, until you realize it's not normal and should not be there.");
-        add("dialogue.drowned.gnawing.start.2", "Except... this one has been with me my whole life, in my mind and everyone else's. It is the chaos that crawls within all living beings.");
+        add("dialogue.drowned.gnawing.start.1", "It is like a pain grown over several weeks or months, until you realize it’s not normal and should not be there.");
+        add("dialogue.drowned.gnawing.start.2", "Except... this one has been with me my whole life, in my mind and everyone else’s. It is the chaos that crawls within all living beings.");
         add("dialogue.drowned.gnawing.i.option", "I shall not speak to it today.");
 
         add("dialogue.drowned.you.start.0", "There is complete silence.");
@@ -844,7 +844,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.drowned.ocean.depths.0", "Travel far from land, sailing on a canoe of the shoremen, holding a gift.\nMy oldest children will recognize you, and whisper secrets in your mind.");
         add("dialogue.drowned.ocean.last.0", "There was a convergence of thoughts.\nYou too are multifaceted, though you do not yet know, and your mind is fractured, irreparably.");
         add("dialogue.drowned.ocean.last.1", "And, of course, that Chaos that Crawls within all living beings, that Messenger who is the Message itself, spoke aloud, for the first time in your life.");
-        add("dialogue.drowned.ocean.father.0", "The shoremen's dreams travelled through me, before leaving the world.\nAnd they dreamt grateful visions of you, of your compassion.");
+        add("dialogue.drowned.ocean.father.0", "The shoremen’s dreams travelled through me, before leaving the world.\nAnd they dreamt grateful visions of you, of your compassion.");
         add("dialogue.drowned.ocean.dreamer.0", "No. I am His child.\nAnd through the Great Dreamer – the Veil itself – infinity is filtered into water, and from water all is born.");
         add("dialogue.drowned.ocean.are___.option", "Are you the Veil?");
         add("dialogue.drowned.ocean.how_.option", "How do I reach your depths?.");
@@ -887,9 +887,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.blood_cultist.initial.farewell,.option", "Farewell, then.");
         add("dialogue.blood_cultist.initial.farewell,__.option", "Farewell, then.");
 
-        add("dialogue.blood_cultist.immortal.undying.0", "All the more compelling! You have been at both sides of the threshold, and oh if you could only remember what's on the other end of it!");
+        add("dialogue.blood_cultist.immortal.undying.0", "All the more compelling! You have been at both sides of the threshold, and oh if you could only remember what’s on the other end of it!");
         add("dialogue.blood_cultist.immortal.forgetful.0", "We – nonetheless – see you as an important stepping stone in the long path of humankind – a fulcrum, perhaps – and a long, eventful life.");
-        add("dialogue.blood_cultist.immortal.exception.0", "Saint Adelina, of course – Jerome's virtuous consort, who is said to have lived a thousand lives – she is immortal, just like you.");
+        add("dialogue.blood_cultist.immortal.exception.0", "Saint Adelina, of course – Jerome’s virtuous consort, who is said to have lived a thousand lives – she is immortal, just like you.");
         add("dialogue.blood_cultist.immortal.start.0", "Extraordinary – you are immortal.");
         add("dialogue.blood_cultist.immortal.hypocrisy.0", "Oh, drop the hypocrisy! You rip hearts and spines, experiment on hapless fools – you are in no place to make such noble statements, white knight – preach not what you do not follow.");
         add("dialogue.blood_cultist.immortal.tell.0", "Our proposed partnership is a business one – we trade in unorthodox goods, that may be of great help to your research.\nWhat we offer is §ohuman lives§r, folks plucked from their villages and left in your hands – to do with them what you desire.");
@@ -899,7 +899,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.blood_cultist.immortal.study.0", "You have struck us, yes – undying as you are – like no one has ever done before – bar, perhaps, a single exception.");
         add("dialogue.blood_cultist.immortal.offer.0", "We are an aggregation of scholars – and merchants – bound by a common fascination of the links chaining us all – brother and sister – man and beast – life and death.");
         add("dialogue.blood_cultist.immortal.offer.1", "We wish to understand these relations – they are born and manifested in blood – and have devoted ourselves to studying – just as you have – so that we may understand that insurmountable threshold that is death.");
-        add("dialogue.blood_cultist.immortal.offer.2", "§o* The cultist's voice changes slightly at every pause *");
+        add("dialogue.blood_cultist.immortal.offer.2", "§o* The cultist’s voice changes slightly at every pause *");
         add("dialogue.blood_cultist.immortal.deceiver.0", "A worthy sacrifice – that did not come to pass – and in so daring, we proved your true nature – the blood coursing through your veins.");
         add("dialogue.blood_cultist.immortal.demand.0", "We are fascinated by the relation between life and death, between birth and passing – and what we ask in return is a §onewborn§r.\nIt does not have to be a human – any animal, from cat to horse, will do fine. Build two pillars: any baby born near to the first will signal us to bring a human near to the second.");
         add("dialogue.blood_cultist.immortal.demand.1", "That, then, is our trade. A newly born life in exchange for one soon to expire – at your hands, if you choose to.");
@@ -910,20 +910,20 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.blood_cultist.immortal.§odeceiver!§r.option", "§oDeceiver!§r Your experiment could have costed a life!");
         add("dialogue.blood_cultist.immortal.tell.option", "Tell me why you have come here.");
         add("dialogue.blood_cultist.immortal.this.option", "This is all so horrible.");
-        add("dialogue.blood_cultist.immortal.who's_.option", "Who's the exception?");
+        add("dialogue.blood_cultist.immortal.who's_.option", "Who’s the exception?");
         add("dialogue.blood_cultist.immortal.§oyou.option", "§oYou just killed me!§r");
         add("dialogue.blood_cultist.immortal.and__.option", "And what do you demand in return?");
         add("dialogue.blood_cultist.immortal.§omadman_§r.option", "§oMadman.§r It will be your blood staining the ground.");
-        add("dialogue.blood_cultist.immortal.i'm.option", "I'm not \"undying\". I just come back after death.");
+        add("dialogue.blood_cultist.immortal.i'm.option", "I’m not \"undying\". I just come back after death.");
         add("dialogue.blood_cultist.immortal.hm-hm____.option", "Hm-hm. Alright, tell me what you want.");
-        add("dialogue.blood_cultist.immortal.i.option", "I hope it's worth the blood you just spilled.");
-        add("dialogue.blood_cultist.immortal.who's.option", "Who's the exception?");
+        add("dialogue.blood_cultist.immortal.i.option", "I hope it’s worth the blood you just spilled.");
+        add("dialogue.blood_cultist.immortal.who's.option", "Who’s the exception?");
         add("dialogue.blood_cultist.immortal.and.option", "And you wish to study §ome§r?");
-        add("dialogue.blood_cultist.immortal.§othat's§r.option", "§oThat's§r your trade? It is horrifying.");
+        add("dialogue.blood_cultist.immortal.§othat's§r.option", "§oThat’s§r your trade? It is horrifying.");
         add("dialogue.blood_cultist.immortal.no.option", "No way.");
-        add("dialogue.blood_cultist.immortal.alas,.option", "Alas, I'm forgetful. But you are right, I also wish I could.");
+        add("dialogue.blood_cultist.immortal.alas,.option", "Alas, I’m forgetful. But you are right, I also wish I could.");
         add("dialogue.blood_cultist.immortal.you.option", "You have not answered my question.");
-        add("dialogue.blood_cultist.immortal.i'll.option", "I'll think about it.");
+        add("dialogue.blood_cultist.immortal.i'll.option", "I’ll think about it.");
         add("dialogue.blood_cultist.immortal.hm-hm_.option", "Hm-hm. Alright, tell me.");
         add("dialogue.blood_cultist.immortal.hm-hm___.option", "Hm-hm. Alright, tell me what you want.");
 
@@ -932,47 +932,47 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.blood_cultist.immortal2.demand.1", "That, then, is our trade. A newly born life in exchange for one soon to expire – at your hands, if you choose to.");
         add("dialogue.blood_cultist.immortal2.offer.0", "We are an aggregation of scholars – and merchants – bound by a common fascination of the links chaining us all – brother and sister – man and beast – life and death.");
         add("dialogue.blood_cultist.immortal2.offer.1", "We wish to understand these relations – they are born and manifested in blood – and have devoted ourselves to studying – just as you have – so that we may understand that insurmountable threshold that is death.");
-        add("dialogue.blood_cultist.immortal2.offer.2", "§o* The cultist's voice changes slightly at every pause. *");
+        add("dialogue.blood_cultist.immortal2.offer.2", "§o* The cultist’s voice changes slightly at every pause. *");
         add("dialogue.blood_cultist.immortal2.embrace.0", "I am – my sibling is not. Pierced by their own knife.");
         add("dialogue.blood_cultist.immortal2.tell.0", "Our proposed partnership is a business one – we trade in unorthodox goods that may be of great help to your research.\nWhat we offer is §ohuman lives§r, folks plucked from their villages and left in your hands – to do with them what you desire.");
         add("dialogue.blood_cultist.immortal2.forgetful.0", "We – nonetheless – see you as an important stepping stone in the long path of humankind – a fulcrum, perhaps – and a long, eventful life.");
         add("dialogue.blood_cultist.immortal2.start.0", "No knife to the throat this time – I come here meaning no harm.");
         add("dialogue.blood_cultist.immortal2.deceiver.0", "Do not grieve – we celebrate the crossing of the threshold, and are ever ready for it.");
         add("dialogue.blood_cultist.immortal2.hypocrisy.0", "Oh, drop the hypocrisy! You rip hearts and spines, experiment on hapless fools – you are in no place to make such noble statements, white knight – preach not what you do not follow.");
-        add("dialogue.blood_cultist.immortal2.undying.0", "All the more compelling! You have been at both sides of the threshold, and oh if you could only remember what's on the other end of it!");
+        add("dialogue.blood_cultist.immortal2.undying.0", "All the more compelling! You have been at both sides of the threshold, and oh if you could only remember what’s on the other end of it!");
         add("dialogue.blood_cultist.immortal2.horrible.0", "You are now playing in the economy of lives, dear – just like we are – and for the betterment of all humanity, it must continue.\nIf you wish to proceed, simply build the two pillars. We will be there to celebrate the beginning of our partnership.");
         add("dialogue.blood_cultist.immortal2.answer.0", "In our letter we spoke of a partnership – we share a mutual interest – and though we seldom make offers to those outside our aggregation – for safety, of course – you have caught our attention like no one before – bar, perhaps, a single exception.");
         add("dialogue.blood_cultist.immortal2.study.0", "You have struck us, yes – undying as you are – like no one has ever done before – bar, perhaps, a single exception.");
-        add("dialogue.blood_cultist.immortal2.exception.0", "Saint Adelina, of course – Jerome's virtuous consort, who is said to have lived a thousand lives – she is immortal, just like you.");
+        add("dialogue.blood_cultist.immortal2.exception.0", "Saint Adelina, of course – Jerome’s virtuous consort, who is said to have lived a thousand lives – she is immortal, just like you.");
         add("dialogue.blood_cultist.immortal2.witnesses.0", "We are bound – our hearts beat in tune.");
-        add("dialogue.blood_cultist.immortal2.who's.option", "Who's the exception?");
+        add("dialogue.blood_cultist.immortal2.who's.option", "Who’s the exception?");
         add("dialogue.blood_cultist.immortal2.i.option", "I am sorry – it was self-defence.");
         add("dialogue.blood_cultist.immortal2.hm-hm_.option", "Hm-hm. Alright, tell me.");
         add("dialogue.blood_cultist.immortal2.and_.option", "And what do you demand in return?");
-        add("dialogue.blood_cultist.immortal2.alas,.option", "Alas, I'm forgetful. But you are right, I also wish I could.");
-        add("dialogue.blood_cultist.immortal2.i'll.option", "I'll think about it.");
+        add("dialogue.blood_cultist.immortal2.alas,.option", "Alas, I’m forgetful. But you are right, I also wish I could.");
+        add("dialogue.blood_cultist.immortal2.i'll.option", "I’ll think about it.");
         add("dialogue.blood_cultist.immortal2.tell.option", "Tell me why you have contacted me.");
         add("dialogue.blood_cultist.immortal2.their?.option", "\"Their\"? Do you speak of a man or a woman?");
         add("dialogue.blood_cultist.immortal2.thanks,.option", "Thanks, I guess, but please tell me what you want.");
         add("dialogue.blood_cultist.immortal2.hm-hm___.option", "Hm-hm. Alright, tell me what you want.");
         add("dialogue.blood_cultist.immortal2.you.option", "You have not answered my question.");
         add("dialogue.blood_cultist.immortal2.tell_.option", "Tell me why you have contacted me.");
-        add("dialogue.blood_cultist.immortal2.who's_.option", "Who's the exception?");
+        add("dialogue.blood_cultist.immortal2.who's_.option", "Who’s the exception?");
         add("dialogue.blood_cultist.immortal2.you___.option", "You... are alive?");
         add("dialogue.blood_cultist.immortal2.this.option", "This is all so horrible.");
         add("dialogue.blood_cultist.immortal2.hm-hm__.option", "Hm-hm. Alright, tell me what you want.");
         add("dialogue.blood_cultist.immortal2.how.option", "How do you know?! I left no witnesses.");
         add("dialogue.blood_cultist.immortal2.hm-hm____.option", "Hm-hm. Alright, tell me what you want.");
-        add("dialogue.blood_cultist.immortal2.§othat's§r.option", "§oThat's§r your trade? It is horrifying.");
+        add("dialogue.blood_cultist.immortal2.§othat's§r.option", "§oThat’s§r your trade? It is horrifying.");
         add("dialogue.blood_cultist.immortal2.tell__.option", "Tell me why you have contacted me.");
         add("dialogue.blood_cultist.immortal2.no.option", "No way.");
         add("dialogue.blood_cultist.immortal2.then.option", "Then tell me, what do you demand in return?");
         add("dialogue.blood_cultist.immortal2.and.option", "And you wish to study §ome§r?");
-        add("dialogue.blood_cultist.immortal2.i'm.option", "I'm not \"undying\". I just come back after death.");
+        add("dialogue.blood_cultist.immortal2.i'm.option", "I’m not \"undying\". I just come back after death.");
 
         add("dialogue.blood_cultist.gift.course.0", "Now our bond is sealed – let it triumph over bonds forged in lesser blood!");
-        add("dialogue.blood_cultist.gift.away.0", "I'll just put it on the floor...");
-        add("dialogue.blood_cultist.gift.partnership.0", "First one is on the house – in honour of our burgeoning partnership!\nOf course, the next ones won't be free.");
+        add("dialogue.blood_cultist.gift.away.0", "I’ll just put it on the floor...");
+        add("dialogue.blood_cultist.gift.partnership.0", "First one is on the house – in honour of our burgeoning partnership!\nOf course, the next ones won’t be free.");
         add("dialogue.blood_cultist.gift.shoulder.0", "No space – let me put it on the floor instead.");
         add("dialogue.blood_cultist.gift.start.0", "Here – a gift!");
         add("dialogue.blood_cultist.gift.thanks.0", "Where should I put it?");
@@ -983,7 +983,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.blood_cultist.gift.of.option", "Of course.");
         add("dialogue.blood_cultist.gift.what.option", "What the §kheck§r?");
         add("dialogue.blood_cultist.gift.on__.option", "On my shoulder.");
-        add("dialogue.blood_cultist.gift.you.option", "You won't dictate whom I may bond with.");
+        add("dialogue.blood_cultist.gift.you.option", "You won’t dictate whom I may bond with.");
         add("dialogue.blood_cultist.gift.thanks!.option", "Thanks!");
         add("dialogue.blood_cultist.gift.thanks___.option", "Thanks...");
         add("dialogue.blood_cultist.gift.on.option", "On the floor.");
@@ -991,12 +991,12 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("dialogue.blood_cultist.shoremen.start.0", "Dear partner – are you going to see the shoremen?");
         add("dialogue.blood_cultist.shoremen.nasty.0", "A nasty folk, are they not? Hiding all sorts of secrets – for they worship the very idea!\nThey venerate §olies§r – how can you believe them?! Praying at the idol of this Deus Deceptor of theirs – ]§oI can ascribe nothing but evil to such a demon!");
-        add("dialogue.blood_cultist.shoremen.bethere.0", "We'll be there, when you most need us.");
+        add("dialogue.blood_cultist.shoremen.bethere.0", "We’ll be there, when you most need us.");
         add("dialogue.blood_cultist.shoremen.pale.0", "Through you, we are bound to them as well – and our blood covenant §oshall not be marred§r by a pale link – let us uncover lies together!");
         add("dialogue.blood_cultist.shoremen.___.option", "...");
         add("dialogue.blood_cultist.shoremen.covenant?.option", "Covenant? Pale link? Enough of this nonsense! Let us be business partners and nothing more!");
-        add("dialogue.blood_cultist.shoremen.what's.option", "What's it to you?!");
-        add("dialogue.blood_cultist.shoremen.lies?.option", "Lies? I've been surrounded by lies up until this point! The shoremen... at least they acknowledge this!");
+        add("dialogue.blood_cultist.shoremen.what's.option", "What’s it to you?!");
+        add("dialogue.blood_cultist.shoremen.lies?.option", "Lies? I’ve been surrounded by lies up until this point! The shoremen... at least they acknowledge this!");
         add("dialogue.blood_cultist.shoremen.yes_.option", "Yes.");
         add("dialogue.blood_cultist.shoremen.no_.option", "No.");
         add("dialogue.blood_cultist.shoremen.none.option", "None of your business.");
@@ -1067,21 +1067,21 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.rationalize.adelina.0", "Adelina does not hide her belief in sacrifice for the greater good. Interestingly, she is said to have lived multiple lives, and that in the last few years she has been tormented by with regret.");
         add("dialogue.black_mirror.rationalize.no_hesitation.0", "Of course. Human lives are fleeting in the face of eternity, yet their sacrifice, in the noble pursuit of human knowledge, will be §oimmortal§r.");
         add("dialogue.black_mirror.rationalize.madman.0", "The mad desertman wrote much on the futility of life, even his own. He passed away by willingly imbibing poison.");
-        add("dialogue.black_mirror.rationalize.start.0", "Let's begin.");
+        add("dialogue.black_mirror.rationalize.start.0", "Let’s begin.");
         add("dialogue.black_mirror.rationalize.humans.0", "Really? In the face of all that we have witnessed? Humans are not special. You think yourselves kings of the world and a step above your fellow animals, yet it is only the second step of a stairway that has no end.");
         add("dialogue.black_mirror.rationalize.humans.option", "Humans are more important.");
         add("dialogue.black_mirror.rationalize.in____.option", "In truth, I do not have a choice. But I will treat my patients with dignity, as their names enter the annals of history. (End)");
         add("dialogue.black_mirror.rationalize.out.option", "Out of need.");
         add("dialogue.black_mirror.rationalize.in__.option", "In truth, I do not have a choice. But I will treat my patients with dignity, as their names enter the annals of history. (End)");
-        add("dialogue.black_mirror.rationalize.but.option", "But how would other humans see me, then? I would do this for the good of mankind, but they'd take me for a psychopath!");
+        add("dialogue.black_mirror.rationalize.but.option", "But how would other humans see me, then? I would do this for the good of mankind, but they’d take me for a psychopath!");
         add("dialogue.black_mirror.rationalize.(the.option", "(The Madman of the Sands) \"I am a soft grain among dunes. Wind will sweep me away, as if I had never been.\"");
         add("dialogue.black_mirror.rationalize.i__.option", "I must still think about this. (End)");
         add("dialogue.black_mirror.rationalize.these.option", "These are morons.");
         add("dialogue.black_mirror.rationalize.i_____.option", "I must still think about this. (End)");
-        add("dialogue.black_mirror.rationalize.(saint.option", "(Saint Adelina) \"A single life is inconsequential – unless its cessation changed the multitude it lied within. Then it becomes sacred, in its finality.\"");
-        add("dialogue.black_mirror.rationalize.life's.option", "Life's sanctity is exalted and overstated by man's search for meaning, but the two are fundamentally incompatible. One must be ready for sacrifice.");
+        add("dialogue.black_mirror.rationalize.(saint.option", "(Saint Adelina) \"A single life is inconsequential – unless its cessation changed the multitude it lay within. Then it becomes sacred, in its finality.\"");
+        add("dialogue.black_mirror.rationalize.life's.option", "Life’s sanctity is exalted and overstated by man’s search for meaning, but the two are fundamentally incompatible. One must be ready for sacrifice.");
         add("dialogue.black_mirror.rationalize.i____.option", "I would be remembered not as a scientist, but as a murderer.");
-        add("dialogue.black_mirror.rationalize.no.option", "No amount of rationalization, explanation and subsequent exculpation could ever justify life's desecration in the way that has been brewing in my cruel, wicked mind.");
+        add("dialogue.black_mirror.rationalize.no.option", "No amount of rationalization, explanation and subsequent exculpation could ever justify life’s desecration in the way that has been brewing in my cruel, wicked mind.");
         add("dialogue.black_mirror.rationalize.(dr_.option", "(Dr. Randolph Carter, of the Miskatonic) \"... and I opened the silvered gate, witnessing the unimaginable. We are nothing to infinity.\"");
         add("dialogue.black_mirror.rationalize.i_.option", "I must still think about this. (End)");
         add("dialogue.black_mirror.rationalize.(saint_.option", "(Saint Jerome) \"My sword weighs terribly, yet wield it I must. In choosing the lesser evil, I will do good – but I shall never claim heroism.\"");
@@ -1089,7 +1089,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.rationalize.i___.option", "I must still think about this. (End)");
         add("dialogue.black_mirror.rationalize.in.option", "In truth, I do not have a choice. But I will treat my patients with dignity, as their names enter the annals of history. (End)");
         add("dialogue.black_mirror.rationalize.in___.option", "In truth, I do not have a choice. But I will treat my patients with dignity, as their names enter the annals of history. (End)");
-        add("dialogue.black_mirror.rationalize.life's_.option", "Life's sanctity is exalted and overstated by man's search for meaning, but the two are fundamentally incompatible. One must be ready for sacrifice.");
+        add("dialogue.black_mirror.rationalize.life's_.option", "Life’s sanctity is exalted and overstated by man’s search for meaning, but the two are fundamentally incompatible. One must be ready for sacrifice.");
         add("dialogue.black_mirror.rationalize.in_.option", "In truth, I do not have a choice. But I will treat my patients with dignity, as their names enter the annals of history. (End)");
         add("dialogue.black_mirror.rationalize.i.option", "I must still think about this. (End)");
         add("dialogue.black_mirror.rationalize.but_.option", "But how can one live with hands stained in blood?");
@@ -1099,7 +1099,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.rationalize2.in.option", "In truth, I do not have a choice. But I will treat my patients with dignity, as their names enter the annals of history.");
 
         add("dialogue.black_mirror.rationalize3.start.0", "The decision is made.");
-        add("dialogue.black_mirror.rationalize3.and.option", "And there's no coming back.");
+        add("dialogue.black_mirror.rationalize3.and.option", "And there’s no coming back.");
 
         add("dialogue.black_mirror.after_weep.waste.0", "Why so? When quiet introspection can teach so much, what need is there to talk to others?");
         add("dialogue.black_mirror.after_weep.start.0", "There is just me here. The small fortress that is my mind.");
@@ -1113,13 +1113,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.after_weep.nothing.option", "Nothing to do here");
         add("dialogue.black_mirror.after_weep.no_.option", "No. Nobody should claim to have all the answers: only by learning from others can we understand the full breadth of humanity.");
         add("dialogue.black_mirror.after_weep.as.option", "As is common, truth lies in the middle. A balance is needed.");
-        add("dialogue.black_mirror.after_weep.absolutely_.option", "Absolutely. The peace and quiet of one's own thoughts is the truest bliss.");
+        add("dialogue.black_mirror.after_weep.absolutely_.option", "Absolutely. The peace and quiet of one’s own thoughts is the truest bliss.");
         add("dialogue.black_mirror.after_weep.no__.option", "No. Civilization is built on unity – we cannot retreat into our own thoughts forever.");
         add("dialogue.black_mirror.after_weep.but.option", "But not too often, lest I really start talking to myself.");
-        add("dialogue.black_mirror.after_weep.it.option", "It won't matter. Deep down, we cannot change who we are.");
+        add("dialogue.black_mirror.after_weep.it.option", "It won’t matter. Deep down, we cannot change who we are.");
         add("dialogue.black_mirror.after_weep.no___.option", "No. Nobody should claim to have all the answers: only by learning from others can we understand the full breadth of humanity.");
-        add("dialogue.black_mirror.after_weep.indeed!.option", "Indeed! Only by reflecting on one's own self can one begin to understand what makes us who we are.");
-        add("dialogue.black_mirror.after_weep.indeed!_.option", "Indeed! Only by reflecting on one's own self can one begin to understand what makes us who we are.");
+        add("dialogue.black_mirror.after_weep.indeed!.option", "Indeed! Only by reflecting on one’s own self can one begin to understand what makes us who we are.");
+        add("dialogue.black_mirror.after_weep.indeed!_.option", "Indeed! Only by reflecting on one’s own self can one begin to understand what makes us who we are.");
 
         add("dialogue.black_mirror.idle.start.0", "There is just me here. The small fortress that is my mind.");
         add("dialogue.black_mirror.idle.my.option", "My cozy stronghold.");
@@ -1130,12 +1130,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.revelation.dual.2", "Or we could go on. Together. Until you drop the mask you have borne since birth.");
         add("dialogue.black_mirror.revelation.wtf.0", "Yet only now did I find the strength to talk to you. To even become aware of my own existence.");
         add("dialogue.black_mirror.revelation.wtf.1", "You are the largest shard – that is certain. You command our body, our muscles. But I also remember it, your actions, your thoughts – vaguely, as if I was dreaming, lacking agency until now.");
-        add("dialogue.black_mirror.revelation.shatter.0", "I do not know – yet it was that trigger, I imagine, that truly came from an extraneous agent... at least initially. Perhaps indeed a foreign entity, tossing a stone at our psyche. But I can't imagine who, or what.");
+        add("dialogue.black_mirror.revelation.shatter.0", "I do not know – yet it was that trigger, I imagine, that truly came from an extraneous agent... at least initially. Perhaps indeed a foreign entity, tossing a stone at our psyche. But I can’t imagine who, or what.");
         add("dialogue.black_mirror.revelation.start.0", "My mind is besieged. I am not alone.");
         add("dialogue.black_mirror.revelation.myself.0", "Exactly.");
         add("dialogue.black_mirror.revelation.fix.0", "The path you have undertaken is of no return. Deep down you understand that you can no longer live knowing that there is more to life than meets the eye, but not knowing §owhat§r. §eWe can only go forward.");
         add("dialogue.black_mirror.revelation.fix.1", "But is this not part of the truth we seek? To breach that very first veil that is the human mind?");
-        add("dialogue.black_mirror.revelation.dagon.0", "Yes. This must be our next goal. Witness how the scales of the Deep Ones – Dagon's firstborn – expand the possibilities of humans and their bodies.");
+        add("dialogue.black_mirror.revelation.dagon.0", "Yes. This must be our next goal. Witness how the scales of the Deep Ones – Dagon’s firstborn – expand the possibilities of humans and their bodies.");
         add("dialogue.black_mirror.revelation.dreams.0", "Yet so were dreams.");
         add("dialogue.black_mirror.revelation.who.0", "...");
         add("dialogue.black_mirror.revelation.who.1", "...I");
@@ -1152,7 +1152,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.revelation.hid.0", "Yes. I am. But, more importantly, §oyou§r §eare afraid of §ome.");
         add("dialogue.black_mirror.revelation.hid.1", "Do I not embody your fear of the unknown, coming so close as to violate the sanctity of your very own mind? You tremble, because you realize that you have gone too far. That you can no longer escape.");
         add("dialogue.black_mirror.revelation.hid.2", "And now you so desperately cling to the hope that I am not real, that I am just the product of your folly. Well, truth is, I cannot prove my existence, nor my fictitiousness... for I do not know myself either. We are both shards of the shattered mirror that is our psyche.");
-        add("dialogue.black_mirror.revelation.trust.0", "You don't have to.");
+        add("dialogue.black_mirror.revelation.trust.0", "You don’t have to.");
         add("dialogue.black_mirror.revelation.shapeless.0", "Then his Archpriest.");
         add("dialogue.black_mirror.revelation.mirror.0", "It got us here. We learned so much about Arche, about the human body, about blood and dreams.");
         add("dialogue.black_mirror.revelation.mirror.1", "We must proceed, together. I have guided your hands – without even realising it – up until now. Gave you clues on how to build contraptions that no human had seen before. On how to proceed with our journey. On what to write in Al Azif. We are stronger together.");
@@ -1174,18 +1174,18 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.revelation.___.option", "...");
         add("dialogue.black_mirror.revelation.no,.option", "No, I §oneed§r you to prove me that I am not making you up. Otherwise I cannot trust anything you say.");
         add("dialogue.black_mirror.revelation.dagon?.option", "Dagon? In the shape of the Deep Ones?");
-        add("dialogue.black_mirror.revelation.prove.option", "Prove to me that you're real.");
+        add("dialogue.black_mirror.revelation.prove.option", "Prove to me that you’re real.");
         add("dialogue.black_mirror.revelation.why_.option", "Why should I trust you?");
         add("dialogue.black_mirror.revelation.why.option", "Why should I trust you?");
         add("dialogue.black_mirror.revelation.truth?.option", "Truth? Dédoublement is the realm of psychiatry, a documented illness! Not the realm of scholars, of seekers of truths like us... like §ome§r.");
-        add("dialogue.black_mirror.revelation.i.option", "I still cannot trust you – but there is no choice, is there? You are here, living in my head, and I still don't really know if you are who you say you are.");
+        add("dialogue.black_mirror.revelation.i.option", "I still cannot trust you – but there is no choice, is there? You are here, living in my head, and I still don’t really know if you are who you say you are.");
         add("dialogue.black_mirror.revelation.how____.option", "How... how do I fix my mind? Make us whole again?");
         add("dialogue.black_mirror.revelation.dagon?_.option", "Dagon? In the shape of the Deep Ones?");
         add("dialogue.black_mirror.revelation.you.option", "You §olie§r. No part of me would hide from itself. You are extraneous, a foreign... §oentity§r.");
         add("dialogue.black_mirror.revelation.and.option", "And their minds.");
-        add("dialogue.black_mirror.revelation.how.option", "How can you know things I don't if we are two shards of the same mind?!");
-        add("dialogue.black_mirror.revelation.how_.option", "How can you know things I don't if we are two shards of the same mind?!");
-        add("dialogue.black_mirror.revelation.it's.option", "It's true that it was through this very mirror that I even came this far.");
+        add("dialogue.black_mirror.revelation.how.option", "How can you know things I don’t if we are two shards of the same mind?!");
+        add("dialogue.black_mirror.revelation.how_.option", "How can you know things I don’t if we are two shards of the same mind?!");
+        add("dialogue.black_mirror.revelation.it's.option", "It’s true that it was through this very mirror that I even came this far.");
         add("dialogue.black_mirror.revelation.why__.option", "Why should I trust you?");
         add("dialogue.black_mirror.revelation.this.option", "This body is mine! My mind is one, not dual!");
         add("dialogue.black_mirror.revelation.who_.option", "Who are you, assailing my mind?");
@@ -1200,7 +1200,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.revelation.my_.option", "My mind is one, not dual. My will cannot... §oshall§r not be split.");
         add("dialogue.black_mirror.revelation.together?.option", "Together? Why? You do not belong in my mind. I have gone through this journey alone, and will keep doing so.");
         add("dialogue.black_mirror.revelation.____.option", "...");
-        add("dialogue.black_mirror.revelation.it's_.option", "It's true that it was through this very mirror that I even came this far.");
+        add("dialogue.black_mirror.revelation.it's_.option", "It’s true that it was through this very mirror that I even came this far.");
 
     }
 
@@ -1223,16 +1223,16 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_fisherman.initial.for_the_best.option", "And perhaps for the best.");
         add("dialogue.shoreman_fisherman.initial.hospitality.option", "So much for hospitality!");
 
-        add("dialogue.shoreman_fisherman.no_closer.start.0", "No, no, no! Don't get close, we suffered too much already!");
+        add("dialogue.shoreman_fisherman.no_closer.start.0", "No, no, no! Don’t get close, we suffered too much already!");
         add("dialogue.shoreman_fisherman.no_closer.no_harm.option", "I swear not to harm you.");
         add("dialogue.shoreman_fisherman.no_closer.who_hurt.option", "Who made you suffer?");
-        add("dialogue.shoreman_fisherman.no_closer.no_believe.0", "]]I don't believe you! I don't believe you!\nAway! Away!");
+        add("dialogue.shoreman_fisherman.no_closer.no_believe.0", "]]I don’t believe you! I don’t believe you!\nAway! Away!");
         add("dialogue.shoreman_fisherman.no_closer.forget.option", "Oh, forget it.");
         add("dialogue.shoreman_fisherman.no_closer.farewell.option", "Farewell.");
         add("dialogue.shoreman_fisherman.no_closer.you_did.0", "You did. Do you not remember?");
         add("dialogue.shoreman_fisherman.no_closer.never.option", "I never did. I never §owould§r have.");
         add("dialogue.shoreman_fisherman.no_closer.trick.option", "Is this a trick?");
-        add("dialogue.shoreman_fisherman.no_closer.me_or_us.option", "'You' as in §ome§r? Or §ous§r?");
+        add("dialogue.shoreman_fisherman.no_closer.me_or_us.option", "‘You’ as in §ome§r? Or §ous§r?");
         add("dialogue.shoreman_fisherman.no_closer.rubbish.option", "You talk rubbish.");
         add("dialogue.shoreman_fisherman.no_closer.upon_deaths.0", "Deaths upon deaths upon deaths. \nAnd now you have forgotten.");
         add("dialogue.shoreman_fisherman.no_closer.idiot.option", "I get it. You are the village idiot.");
@@ -1261,11 +1261,11 @@ public class BTVLanguageProvider extends LanguageProvider {
         //add("dialogue.shoreman_scholar.initial.suspicion.option", "Someone who does not view me with the stern eyes of suspicion.");
         //add("dialogue.shoreman_scholar.initial.start.0", "Oh? Good day, dear pilgrim. Are you in search of something, here in our humble dwelling?");
 
-        add("dialogue.shoreman_clerk.initial.talk.0", "What's there to talk about? You and I are too different, only seemingly speaking the same language, yet in truth our words are incomprehensible to one another.");
+        add("dialogue.shoreman_clerk.initial.talk.0", "What’s there to talk about? You and I are too different, only seemingly speaking the same language, yet in truth our words are incomprehensible to one another.");
         add("dialogue.shoreman_clerk.initial.start.0", "Huh? Are you here to buy or to steal?");
         add("dialogue.shoreman_clerk.initial.obvious.0", "No.");
         add("dialogue.shoreman_clerk.initial.steal.0", "Of course, just arrived and yet you already plunder our resources, stealing from our chests and barrels our hard earned goods.\nBecause you just §odo not care§r about ones such as us.");
-        add("dialogue.shoreman_clerk.initial.steal.1", "That's the truth of it. To you, we are irrelevant. Insignificant. And, given the opportunity, you would wipe us all out| — not out of need, but just because you §ocould§r.");
+        add("dialogue.shoreman_clerk.initial.steal.1", "That’s the truth of it. To you, we are irrelevant. Insignificant. And, given the opportunity, you would wipe us all out| — not out of need, but just because you §ocould§r.");
         add("dialogue.shoreman_clerk.initial.buy.0", "Hmph. Special prices, just for you.");
         add("dialogue.shoreman_clerk.initial.refrain.0", "I know.\n§oI know.§r");
         add("dialogue.shoreman_clerk.initial.anyone.0", "Hmm.|\nTry the lighthouse keeper. He sees the clearest, up there in his tower.");
@@ -1275,7 +1275,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_clerk.initial.ehm___.option", "Ehm.. still up to trade?");
         add("dialogue.shoreman_clerk.initial.thanks_.option", "Thanks. Farewell.");
         add("dialogue.shoreman_clerk.initial.alright_.option", "Alright. Farewell.");
-        add("dialogue.shoreman_clerk.initial.let's.option", "Let's see.");
+        add("dialogue.shoreman_clerk.initial.let's.option", "Let’s see.");
         add("dialogue.shoreman_clerk.initial.farewell_.option", "Farewell.");
         add("dialogue.shoreman_clerk.initial.(nod).option", "(Nod)");
         add("dialogue.shoreman_clerk.initial.ehm__.option", "Ehm.. still up to trade?");
@@ -1288,7 +1288,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("dialogue.shoreman_clerk.initial1.start.0", "Hmph. Special prices, just for you.");
         add("dialogue.shoreman_clerk.initial1.not.option", "Not now.");
-        add("dialogue.shoreman_clerk.initial1.let's.option", "Let's see.");
+        add("dialogue.shoreman_clerk.initial1.let's.option", "Let’s see.");
 
         add("dialogue.shoreman_clerk.communed1.start.0", "Hmph. Perhaps I was wrong about you.\nThen again, perhaps not. Perhaps you will betray us, and the good keeper who now so trusts you.");
         add("dialogue.shoreman_clerk.communed1.whatever.0", "Whatever you say.");
@@ -1296,21 +1296,21 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_clerk.communed1.what.0", "...\nNothing. Just... memories.");
         add("dialogue.shoreman_clerk.communed1.outside.0", "Yes, of course. Just do what the book tells you to do, and if we are in the way, so be it. We are irrelevant to you – just like you, perhaps, are irrelevant to someone else.");
         add("dialogue.shoreman_clerk.communed1.whatever2.0", "Whatever you say.");
-        add("dialogue.shoreman_clerk.communed1.let's_.option", "Let's just trade.");
+        add("dialogue.shoreman_clerk.communed1.let's_.option", "Let’s just trade.");
         add("dialogue.shoreman_clerk.communed1.yes_.option", "Yes. What *I* say.");
         add("dialogue.shoreman_clerk.communed1.farewell_.option", "Farewell.");
         add("dialogue.shoreman_clerk.communed1.what?.option", "What?");
         add("dialogue.shoreman_clerk.communed1.i_.option", "I would not dare breach your trust, nor lay a hand on any of you.");
         add("dialogue.shoreman_clerk.communed1.i.option", "I am not irrelevant. I am immortal.");
         add("dialogue.shoreman_clerk.communed1.___.option", "...");
-        add("dialogue.shoreman_clerk.communed1.the.option", "The book doesn't tell me what to do. I tell *it* what I do.");
-        add("dialogue.shoreman_clerk.communed1.let's.option", "Let's just trade.");
-        add("dialogue.shoreman_clerk.communed1.let's__.option", "Let's just trade.");
+        add("dialogue.shoreman_clerk.communed1.the.option", "The book doesn’t tell me what to do. I tell *it* what I do.");
+        add("dialogue.shoreman_clerk.communed1.let's.option", "Let’s just trade.");
+        add("dialogue.shoreman_clerk.communed1.let's__.option", "Let’s just trade.");
         add("dialogue.shoreman_clerk.communed1.i__.option", "I can make no promises – it is outside of my control.");
 
         add("dialogue.shoreman_clerk.communed2.start.0", "Hello, traveller.");
         add("dialogue.shoreman_clerk.communed2.farewell_.option", "Farewell.");
-        add("dialogue.shoreman_clerk.communed2.let's.option", "Let's trade.");
+        add("dialogue.shoreman_clerk.communed2.let's.option", "Let’s trade.");
 
 
         add("dialogue.shoreman_carpenter.initial.oldest.0", "Father Ocean spawned Daughter Earth, and not the other way around.\nYour beliefs are apocryphal.");
@@ -1331,7 +1331,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_carpenter.initial.whatever.option", "Whatever you say.");
 
         add("dialogue.shoreman_carpenter.initial1.start.0", "I am a woodworker, build canoes for the fishermen. But my craft is not for you outsiders.");
-        add("dialogue.shoreman_carpenter.initial1.your.option", "Your woodwork is out and about, what's stopping me from taking it?");
+        add("dialogue.shoreman_carpenter.initial1.your.option", "Your woodwork is out and about, what’s stopping me from taking it?");
         add("dialogue.shoreman_carpenter.initial1.i.option", "I have not interest in your damp, creaking lumber.");
         add("dialogue.shoreman_carpenter.initial1.it.option", "It is a shame. Your art would be highly valued among my people.");
 
@@ -1339,46 +1339,46 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_carpenter.communed1.thank.option", "Thank you. I would be happy to see it.");
         add("dialogue.shoreman_carpenter.communed1.thank_.option", "Thank you. I may need it soon.");
 
-        add("dialogue.shoreman_carpenter.communed2.start.0", "Carpentry's a hard job. Not like fishing – the Ocean brings me no gifts.");
+        add("dialogue.shoreman_carpenter.communed2.start.0", "Carpentry’s a hard job. Not like fishing – the Ocean brings me no gifts.");
         add("dialogue.shoreman_carpenter.communed2.farewell_.option", "Farewell.");
-        add("dialogue.shoreman_carpenter.communed2.let's.option", "Let's trade.");
+        add("dialogue.shoreman_carpenter.communed2.let's.option", "Let’s trade.");
 
         add("dialogue.shoreman_carpenter.communed3.start.0", "Greetings.");
         add("dialogue.shoreman_carpenter.communed3.farewell_.option", "Farewell.");
-        add("dialogue.shoreman_carpenter.communed3.let's.option", "Let's trade.");
+        add("dialogue.shoreman_carpenter.communed3.let's.option", "Let’s trade.");
 
 
-        add("dialogue.shoreman_bartender.initial.start.0", "Hmph. We do not take kindly to outsiders, but I won't deny you a night's rest.\nThere are beds up above.");
+        add("dialogue.shoreman_bartender.initial.start.0", "Hmph. We do not take kindly to outsiders, but I won’t deny you a night’s rest.\nThere are beds up above.");
         add("dialogue.shoreman_bartender.initial.anything.option", "Anything for sale?");
         add("dialogue.shoreman_bartender.initial.thank.option", "Thank you.");
 
         add("dialogue.shoreman_bartender.communed1.dreamer.0", "I... cannot pretend that I know for sure. It is a belief we are taught from youth, but what is a belief standing only on faith?");
         add("dialogue.shoreman_bartender.communed1.dreamer.1", "Many of my brethren now disagree that the Dreamer is aware of us at all – it is a matter of opinion – but we §oknow§r he exists, as sure as the nightly fog, the ignorance of man, and the starry sky dividing us from infinity!");
-        add("dialogue.shoreman_bartender.communed1.start.0", "Aha! You heard it too, they say! Father Ocean's rumble and grumble and, through Him, the Great Dreamer's gaze! Only one outsider before has ever had such honour, so you're making history!");
+        add("dialogue.shoreman_bartender.communed1.start.0", "Aha! You heard it too, they say! Father Ocean’s rumble and grumble and, through Him, the Great Dreamer’s gaze! Only one outsider before has ever had such honour, so you’re making history!");
         add("dialogue.shoreman_bartender.communed1.outsider.0", "A desert man, but he... he was not kind.\nI hope for our friendship to be stronger.");
         add("dialogue.shoreman_bartender.communed1.it.option", "It shall be.");
         add("dialogue.shoreman_bartender.communed1.it_.option", "It is an honour indeed. Cheers to that!");
         add("dialogue.shoreman_bartender.communed1.so.option", "So the Dreamer was really aware of me?");
         add("dialogue.shoreman_bartender.communed1.even.option", "Even within such a small community, you still have and accept a divide of thought. Surprising, yet beautiful.");
         add("dialogue.shoreman_bartender.communed1.i_.option", "I hope so too.");
-        add("dialogue.shoreman_bartender.communed1.yes,.option", "Yes, he does listen. If he didn't, would that not make us irrelevant?");
+        add("dialogue.shoreman_bartender.communed1.yes,.option", "Yes, he does listen. If he didn’t, would that not make us irrelevant?");
         add("dialogue.shoreman_bartender.communed1.who.option", "Who was this outsider?");
         add("dialogue.shoreman_bartender.communed1.i.option", "I see. At least the Ocean listens.");
-        add("dialogue.shoreman_bartender.communed1.of.option", "Of course, and let's drink to that!");
+        add("dialogue.shoreman_bartender.communed1.of.option", "Of course, and let’s drink to that!");
 
         add("dialogue.shoreman_bartender.communed2.start.0", "Welcome back, traveller.");
         add("dialogue.shoreman_bartender.communed2.farewell_.option", "Farewell.");
         add("dialogue.shoreman_bartender.communed2.show.option", "Show me your drinks.");
 
 
-        add("dialogue.shoreman_drunk.initial.mean.0", "It's just.. I dunnae like life here no more. Ne'er did, actually.\nBroodin', borin' fishermen. Misbegotten children of earth and water, I tell ya! That's what we be!");
-        add("dialogue.shoreman_drunk.initial.start.0", "A newcomer, eh? We dun't see many outsiders no'adays.\nGood for ya. Being an outsider an' all.");
-        add("dialogue.shoreman_drunk.initial.brethren.0", "You'd talk ill too, had ya seen what I seen.");
+        add("dialogue.shoreman_drunk.initial.mean.0", "It’s just.. I dunnae like life here no more. Ne’er did, actually.\nBroodin’, borin’ fishermen. Misbegotten children of earth and water, I tell ya! That’s what we be!");
+        add("dialogue.shoreman_drunk.initial.start.0", "A newcomer, eh? We dun’t see many outsiders no’adays.\nGood for ya. Being an outsider an’ all.");
+        add("dialogue.shoreman_drunk.initial.brethren.0", "You’d talk ill too, had ya seen what I seen.");
         add("dialogue.shoreman_drunk.initial.elaborate.0", "]]Hmmm.[[\nNah. Cannae talk on a parched throat.");
-        add("dialogue.shoreman_drunk.initial.sober.0", "Huh? Sauber? Wut's that?");
+        add("dialogue.shoreman_drunk.initial.sober.0", "Huh? Sauber? Wut’s that?");
         add("dialogue.shoreman_drunk.initial.what.option", "What do you mean?");
         add("dialogue.shoreman_drunk.initial.thanks_.option", "Thanks. You look very far from sober, by the way.");
-        add("dialogue.shoreman_drunk.initial.nothing_.option", "Nothing. I wonder why you'd count me lucky as an outsider?");
+        add("dialogue.shoreman_drunk.initial.nothing_.option", "Nothing. I wonder why you’d count me lucky as an outsider?");
         add("dialogue.shoreman_drunk.initial.please,.option", "Please, do elaborate.");
         add("dialogue.shoreman_drunk.initial.i.option", "I see. Good day, then.");
         add("dialogue.shoreman_drunk.initial.drunkard__.option", "Drunkard..");
@@ -1386,38 +1386,38 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_drunk.initial.go.option", "Go on..");
         add("dialogue.shoreman_drunk.initial.how.option", "How can you talk so ill of your brethren?");
 
-        add("dialogue.shoreman_drunk.initial1.start.0", "Ach, cannae drink sea water. Ne'er again...");
-        add("dialogue.shoreman_drunk.initial1.can't.option", "Can't get anything out of a thirsty man.");
-        add("dialogue.shoreman_drunk.initial1.might.option", "Might be good if you don't drink for a while..");
+        add("dialogue.shoreman_drunk.initial1.start.0", "Ach, cannae drink sea water. Ne’er again...");
+        add("dialogue.shoreman_drunk.initial1.can't.option", "Can’t get anything out of a thirsty man.");
+        add("dialogue.shoreman_drunk.initial1.might.option", "Might be good if you don’t drink for a while..");
 
-        add("dialogue.shoreman_drunk.drunk.secluded.0", "Nono, we ain't secluded. We samply hate y'all, thar's all.\nCause y'all hate us, I guess. Dunno.");
-        add("dialogue.shoreman_drunk.drunk.where.0", "Ain't seen 'im in a while. Swimmin' somewhere. Deep down below.");
-        add("dialogue.shoreman_drunk.drunk.kin.0", "Yah but then why ye gotta kill me ma, an' then ye try an' kill me pa, but then me pa kill yer pa, an' wait where was I goin' with this...");
-        add("dialogue.shoreman_drunk.drunk.enough.0", "Ooof, why can't ya stooop. Ye go on an' on an' on. Yah thar's why we hate ye. Not cause ye killed me ma. Ye just ask too much.");
-        add("dialogue.shoreman_drunk.drunk.saying.0", "Oh yah. What was I sayin'?||\nAh, may'aps somethin' bout us fisherfolk. Yah we a nasty bunch. Pale all over.| Except me nose.");
+        add("dialogue.shoreman_drunk.drunk.secluded.0", "Nono, we ain’t secluded. We samply hate y’all, thar’s all.\nCause y’all hate us, I guess. Dunno.");
+        add("dialogue.shoreman_drunk.drunk.where.0", "Ain’t seen ’im in a while. Swimmin’ somewhere. Deep down below.");
+        add("dialogue.shoreman_drunk.drunk.kin.0", "Yah but then why ye gotta kill me ma, an’ then ye try an’ kill me pa, but then me pa kill yer pa, an’ wait where was I goin’ with this...");
+        add("dialogue.shoreman_drunk.drunk.enough.0", "Ooof, why can’t ya stooop. Ye go on an’ on an’ on. Yah thar’s why we hate ye. Not cause ye killed me ma. Ye just ask too much.");
+        add("dialogue.shoreman_drunk.drunk.saying.0", "Oh yah. What was I sayin’?||\nAh, may’aps somethin’ bout us fisherfolk. Yah we a nasty bunch. Pale all over.| Except me nose.");
         add("dialogue.shoreman_drunk.drunk.pa.0", "Oh betcha he was a good looking fella. Not like mine. Slimy and all.");
-        add("dialogue.shoreman_drunk.drunk.unlike.0", "Oi! It's ye who look weird an' all. Thar's why we hate y'all. Ye just cannae stop hatin' §ous§r.");
-        add("dialogue.shoreman_drunk.drunk.start.0", "Ain't thar the good stuf-|| §o*hic*§r beg pardon.");
-        add("dialogue.shoreman_drunk.drunk.i_.option", "I don't hate you, and I'm sure my kin wouldn't either.");
+        add("dialogue.shoreman_drunk.drunk.unlike.0", "Oi! It’s ye who look weird an’ all. Thar’s why we hate y’all. Ye just cannae stop hatin’ §ous§r.");
+        add("dialogue.shoreman_drunk.drunk.start.0", "Ain’t thar the good stuf-|| §o*hic*§r beg pardon.");
+        add("dialogue.shoreman_drunk.drunk.i_.option", "I don’t hate you, and I’m sure my kin wouldn’t either.");
         add("dialogue.shoreman_drunk.drunk.i__.option", "I only hate you because you hate §ome§r.");
         add("dialogue.shoreman_drunk.drunk.i____.option", "I only hate you because you hate §ome§r.");
         add("dialogue.shoreman_drunk.drunk.why.option", "Why are you folks so secluded?");
-        add("dialogue.shoreman_drunk.drunk.i___.option", "I don't hate you, and I'm sure my kin wouldn't either.");
-        add("dialogue.shoreman_drunk.drunk.i.option", "I don't even know \"me pa\"..");
+        add("dialogue.shoreman_drunk.drunk.i___.option", "I don’t hate you, and I’m sure my kin wouldn’t either.");
+        add("dialogue.shoreman_drunk.drunk.i.option", "I don’t even know \"me pa\"..");
         add("dialogue.shoreman_drunk.drunk.not.option", "Not to sound rude, but why do you all look so unlike the.. other humans of the world?");
-        add("dialogue.shoreman_drunk.drunk.you're.option", "You're calling your dad... slimy?");
+        add("dialogue.shoreman_drunk.drunk.you're.option", "You’re calling your dad... slimy?");
         add("dialogue.shoreman_drunk.drunk.deep.option", "Deep down below where??");
         add("dialogue.shoreman_drunk.drunk.serves.option", "Serves you being a drunkard.");
-        add("dialogue.shoreman_drunk.drunk.where's.option", "Where's your \"pa\" right now?");
+        add("dialogue.shoreman_drunk.drunk.where's.option", "Where’s your \"pa\" right now?");
         add("dialogue.shoreman_drunk.drunk.you.option", "You were saying..");
-        add("dialogue.shoreman_drunk.drunk.sorry__.option", "Sorry.. I see you're getting tired.");
+        add("dialogue.shoreman_drunk.drunk.sorry__.option", "Sorry.. I see you’re getting tired.");
 
-        add("dialogue.shoreman_drunk.drunk1.start.0", "]]Ye just go on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' on an' §o*hic*§r on an' on an' on an' on an' on an' on!!");
+        add("dialogue.shoreman_drunk.drunk1.start.0", "]]Ye just go on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ on an’ §o*hic*§r on an’ on an’ on an’ on an’ on an’ on!!");
         add("dialogue.shoreman_drunk.drunk1.ok__.option", "Ok..");
 
         add("dialogue.shoreman_drunk.communed1.loq.0", "Less what-cious?");
-        add("dialogue.shoreman_drunk.communed1.ocean.0", "Ach, sea water, thar's ye problem! Away!");
-        add("dialogue.shoreman_drunk.communed1.start.0", "Hmm. Smell diffe'ent.");
+        add("dialogue.shoreman_drunk.communed1.ocean.0", "Ach, sea water, thar’s ye problem! Away!");
+        add("dialogue.shoreman_drunk.communed1.start.0", "Hmm. Smell diffe’ent.");
         add("dialogue.shoreman_drunk.communed1.some.option", "Some water would do you well.");
         add("dialogue.shoreman_drunk.communed1.was.option", "Was touched by the Ocean, it seems.");
         add("dialogue.shoreman_drunk.communed1.you.option", "You are less loquacious than last time.");
@@ -1464,19 +1464,19 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.immortal.0", "We saw it in our dreams. We knew that, had you not come in peace, we would have had no escape – even if we killed you.\nAnd we remember, for we had faced one such as you before.");
         add("dialogue.shoreman_scholar.discuss.necronomicon.0", "That is... a morbid title, yet strangely alluring.");
         add("dialogue.shoreman_scholar.discuss.change.0", "Nothing. Just that... people change, over the course of long lives.");
-        add("dialogue.shoreman_scholar.discuss.alright.0", "Yes, yes... it's just that...\n...\nWell, know this: your ancestors travelled to those depths, to §ofight§r.");
+        add("dialogue.shoreman_scholar.discuss.alright.0", "Yes, yes... it’s just that...\n...\nWell, know this: your ancestors travelled to those depths, to §ofight§r.");
         add("dialogue.shoreman_scholar.discuss.plight.0", "Deleted from the annals, oh the shame on those who wrote them!\nYes, our people were slain by yours, and some of us are old enough to remember it. Crusades, inquisitions, persecutions, witch hunts – whatever you want to call them, we were the monsters they hunted. We... normal men.");
         add("dialogue.shoreman_scholar.discuss.plight.1", "So how can one blame us when we mistrust outsiders? Were a whole people to come and take your family, how could you not be suspicious of anyone from that same population!");
         add("dialogue.shoreman_scholar.discuss.reach.0", "You must descend the vessels of the world, the very veins bringing detritus down below – for the chain tying life and water is that red fluid you call blood.");
         add("dialogue.shoreman_scholar.discuss.anyone.0", "We are no longer that optimistic.");
         add("dialogue.shoreman_scholar.discuss.badthing.0", "Perhaps not indeed, and as you come to terms with the impossibility of it all, you may find yourself comforted in the knowledge that it does not truly matter, and that what is most important is your own perspective.");
         add("dialogue.shoreman_scholar.discuss.greater.0", "But then, even discounting the infeasibility of it all, and the intractable effort of amassing all such knowledge, and then absorbing it, even so, would it not still be marred by that final, inescapable bias that is your own, as you read and learn through your own lens, link it to your own events, and react to it as your temperament dictates? Even now as I speak.\nObjectivity is unattainable, and all knowledge is inherently subjective.");
-        add("dialogue.shoreman_scholar.discuss.repliedalone.0", "Then you too heard His voice, soothing, consoling, the crashing of waves upon your mind, as you drowned... and then breathed.\nI thus welcome thee among us once more, dear traveller; and let the Ocean's blessing be upon thee.");
+        add("dialogue.shoreman_scholar.discuss.repliedalone.0", "Then you too heard His voice, soothing, consoling, the crashing of waves upon your mind, as you drowned... and then breathed.\nI thus welcome thee among us once more, dear traveller; and let the Ocean’s blessing be upon thee.");
         add("dialogue.shoreman_scholar.discuss.you.0", "Yes, that too is astonishing... oh, what have you gotten yourself into...");
         add("dialogue.shoreman_scholar.discuss.preconceived.0", "Yes. Perhaps one day we shall find a race from another world, and we shall compare our sciences, and we shall learn whether there is one true, objective science, or if even that is unreachable.");
-        add("dialogue.shoreman_scholar.discuss.repliednotalone.0", "Hah, that's wonderf-...\n...what?");
+        add("dialogue.shoreman_scholar.discuss.repliednotalone.0", "Hah, that’s wonderf-...\n...what?");
         add("dialogue.shoreman_scholar.discuss.trust.0", "What do you mean \"is true\"?! How would I know if it is true or not!");
-        add("dialogue.shoreman_scholar.discuss.symbols.0", "Symbols and emblems are widespread among researchers of the occult, often identifying one's affiliation and school of thought. Are there any you are interested in discussing?");
+        add("dialogue.shoreman_scholar.discuss.symbols.0", "Symbols and emblems are widespread among researchers of the occult, often identifying one’s affiliation and school of thought. Are there any you are interested in discussing?");
         add("dialogue.shoreman_scholar.discuss.true.0", "This is the only true answer: one cannot judge how they would have acted when in a different state of mind, and like the sleepy man should not cancel plans for the coming day, so too should the safe man not guess his actions in a perilous situation.");
         add("dialogue.shoreman_scholar.discuss.against.0", "Yet, what if you had been different back then?");
         add("dialogue.shoreman_scholar.discuss.groundtruth.0", "Does there have to be? How can you seek a single truth when every living thing has its own perspective of the universe? There are as many truths as there are beating hearts, else the world would not be so divided.");
@@ -1496,7 +1496,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.onnecronomicon.0", "Ah, right. You mentioned it.");
         add("dialogue.shoreman_scholar.discuss.never.0", "Then it was really... really Him... oh, what have you gotten yourself into...");
         add("dialogue.shoreman_scholar.discuss.whatelse.0", "Is there anything else you wish to speak about?");
-        add("dialogue.shoreman_scholar.discuss.nowhere.0", "You keep surprising me – all these things, coming to your mind, as if from nowhere.\nThis symbol, however, is a terrible one: whereas the Eye of Knowledge symbolises mankind's freedom to seek their path to knowledge, this, the §oTendril of Knowledge§r, reflects a much bleaker philosophy.");
+        add("dialogue.shoreman_scholar.discuss.nowhere.0", "You keep surprising me – all these things, coming to your mind, as if from nowhere.\nThis symbol, however, is a terrible one: whereas the Eye of Knowledge symbolises mankind’s freedom to seek their path to knowledge, this, the §oTendril of Knowledge§r, reflects a much bleaker philosophy.");
         add("dialogue.shoreman_scholar.discuss.nowhere.1", "It was adopted by a fringe movement among occult researchers – a sect within a sect – who dispute the notion of free will as applied to us Seekers of Truth, proclaiming instead that our journey towards knowledge is guided by some external force, as if snatched by a tendril against our consent.");
         add("dialogue.shoreman_scholar.discuss.nowhere.2", "I advise you not to draw that symbol. The movement was deemed heretic long ago, and even now the debate over its legitimacy remains heated. Blood was shed, and I would not want to lose you.");
         add("dialogue.shoreman_scholar.discuss.conceit.0", "It is a matter of opinion, but, yes, I think it is. Indeed, I find it our greatest conceit that we insist on giving ones such as Him shape and form. On what grounds can we reduce Him to our stature?");
@@ -1511,11 +1511,11 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.frightened.0", "That is the nature of dealing with all things involving the Veil, and as we uncover more truths, so too do we understand how little we know.");
         add("dialogue.shoreman_scholar.discuss.speak.0", "Yes, and, perhaps, He may even answer. However, be forewarned: the Ocean is multifaceted, and though He may appear calm and placid on one occasion, He may well be raging and thunderous on the next – do not seek to understand Him; He is beyond us.");
         add("dialogue.shoreman_scholar.discuss.throughdreams.0", "Then perhaps our dreams embraced each other, dancing unseen in their own little world.");
-        add("dialogue.shoreman_scholar.discuss.acquainted.0", "But... but I §oam§r acquainted with Al Azif! Though virtually unknown outside of occult academia, it is widely celebrated within our inner circles as the Madman of the Desert's magnum opus, a treasure trove of his arcane findings.");
+        add("dialogue.shoreman_scholar.discuss.acquainted.0", "But... but I §oam§r acquainted with Al Azif! Though virtually unknown outside of occult academia, it is widely celebrated within our inner circles as the Madman of the Desert’s magnum opus, a treasure trove of his arcane findings.");
         add("dialogue.shoreman_scholar.discuss.baptism.0", "Each dialogue with the Ocean is a sacred act for us of the Shore, and for the first such occurrence we undergo a secret ritual: a baptism, biting into a slug while in water... until we drown.\nIt is not something we readily share with outsiders, yet, perhaps, as you embrace more and more of our customs, we will reveal it.");
         add("dialogue.shoreman_scholar.discuss.thankyou.0", "Thank you.");
         add("dialogue.shoreman_scholar.discuss.late.0", "I am afraid so. I am afraid §oto§r.\nBut, with you at my side, I can yet share my knowledge, and that comforts me enough.");
-        add("dialogue.shoreman_scholar.discuss.yelling.0", "I'm sorry! I'm sorry, sorry, sorry! It's that... oh, what have you gotten yourself into...");
+        add("dialogue.shoreman_scholar.discuss.yelling.0", "I’m sorry! I’m sorry, sorry, sorry! It’s that... oh, what have you gotten yourself into...");
         add("dialogue.shoreman_scholar.discuss.scholar.0", "I did my time in academia, long ago. My research lay at the intersection between cultural studies and theology: I investigated the interactions between radically different communities, particularly my own with all others, and put a special focus in the role of faith in such contrasts.");
         add("dialogue.shoreman_scholar.discuss.scholar.1", "I even held a professorship at the Miskatonic for a time, though I was denied tenure. Eventually I no longer felt welcome, and the ethics department started branding my research as \"unethical\". Before I reached my thirty-fifth year of age, the inquisitions began, and all was lost.");
         add("dialogue.shoreman_scholar.discuss.deadkeeper.0", "Do not speak of him.");
@@ -1525,13 +1525,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.apples.0", "Ah, the good ones! And where were these good apples when the others came for us?!");
         add("dialogue.shoreman_scholar.discuss.eye.0", "The Eye of Knowledge. It succinctly encapsulates the birth of life: from the outermost unknown, to the void, to water, to blood, to you, the pupil in the middle, usually depicted askew to symbolise the degree of freedom that you have, however small, to study what surrounds you.");
         add("dialogue.shoreman_scholar.discuss.eye.1", "That is, of course, only my interpretation, from one pupil to another.\nI wonder, if I may ask, where did you first encounter this symbol?");
-        add("dialogue.shoreman_scholar.discuss.veil2.0", "The Veil is all things that conceal a truth, of any sort.\nThe Veil is the curtain of a theatre, divorcing stage from audience.\nThe Veil is prejudice, and mankind's unwillingness to peek beyond it.");
+        add("dialogue.shoreman_scholar.discuss.veil2.0", "The Veil is all things that conceal a truth, of any sort.\nThe Veil is the curtain of a theatre, divorcing stage from audience.\nThe Veil is prejudice, and mankind’s unwillingness to peek beyond it.");
         add("dialogue.shoreman_scholar.discuss.veil2.1", "The Veil is language, and the words we speak, unable to capture the true essence of things.\nThe Veil is your skin, your face, your persona, and everything concealing your true self.\nThe Veil is death, that final threshold through which we cannot see.");
         add("dialogue.shoreman_scholar.discuss.veil2.2", "The Veil is a great many things, and it resides deep down below, at the bottom of the sea. It is the great bulwark concealing infinity, the truth to all answers.\nWe call Him the Great Dreamer, for only dreams may pass through Him.");
-        add("dialogue.shoreman_scholar.discuss.ourselves.0", "Hah, good question, as proven by the fact that I do not know the answer. But that is a question for someone wiser than me, for knowing one's self is within the scope of wisdom, and not erudition.");
+        add("dialogue.shoreman_scholar.discuss.ourselves.0", "Hah, good question, as proven by the fact that I do not know the answer. But that is a question for someone wiser than me, for knowing one’s self is within the scope of wisdom, and not erudition.");
         add("dialogue.shoreman_scholar.discuss.old.0", "However long Father Ocean lets him.");
         add("dialogue.shoreman_scholar.discuss.discomfit.0", "I can see that too, and how it could prove... frightening. This is the Veil after all, and to know that there is something out there, but that we cannot know what... it is what drives people mad.");
-        add("dialogue.shoreman_scholar.discuss.godel.0", "Oh, I know, I know about that dusty ol' theorem! Maths defeating itself, in a recursive metacommentary of its own properties. Well then, that man must worship the Veil himself if he is so ardent about proving the unknowable!");
+        add("dialogue.shoreman_scholar.discuss.godel.0", "Oh, I know, I know about that dusty ol’ theorem! Maths defeating itself, in a recursive metacommentary of its own properties. Well then, that man must worship the Veil himself if he is so ardent about proving the unknowable!");
         add("dialogue.shoreman_scholar.discuss.hadyoubeenthere.0", "I see. And do you know what you would have done, had you been there?");
         add("dialogue.shoreman_scholar.discuss.gods.0", "Ah, but already we diverge: we believe in a god, not in gods.\nAnd, even then, I would hold qualms with referring to the Great Dreamer as a \"god\" – correlating Him to the mythical deities pervading your culture fails to capture the intricacies of our faith: we worship the ideal the Veil encapsulates, and the personification in our central square serves only to give the fishermen a feeling of tangibility, for something that is inherently intangible.");
         add("dialogue.shoreman_scholar.discuss.blame.0", "Thank you. You, alone, have shown compassion. We cannot be grateful enough.");
@@ -1541,15 +1541,15 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.listen.0", "Whether He listens or not, I cannot say – nor do I know what \"listening\" would even entail for something such as Him – but as for responding... no. He does not.\nAfter all, why would he? To Him we are naught but dust. He is... indifferent.");
         add("dialogue.shoreman_scholar.discuss.snippet.0", "A snippet of truth, and so the Veil tears a little.");
         add("dialogue.shoreman_scholar.discuss.inhabited.0", "And how! All manners of creatures, thinking and not, some of which even rose to the surface and... er...");
-        add("dialogue.shoreman_scholar.discuss.noreply.0", "I see, but do not worry! You do indeed seem changed, and if you survived the ritual, then, certainly, it must have worked.\nI thus welcome thee among us once more, dear traveller; and let the Ocean's blessing be upon thee.");
+        add("dialogue.shoreman_scholar.discuss.noreply.0", "I see, but do not worry! You do indeed seem changed, and if you survived the ritual, then, certainly, it must have worked.\nI thus welcome thee among us once more, dear traveller; and let the Ocean’s blessing be upon thee.");
         add("dialogue.shoreman_scholar.discuss.stubborn.0", "Haha! Then perhaps stubbornness has become a virtue!");
         add("dialogue.shoreman_scholar.discuss.sentience.0", "\"We\" is all living creatures, so confident in our role as kings of the universe that we believe to have exclusive claim on sentience. The Great Dreamer is sentient, that is certain – but he does not §olive§r. He is more than that.");
         add("dialogue.shoreman_scholar.discuss.ocean.0", "The Ocean is our medium: a Veil before the Veil, this immense bulwark concealing the void. It is through water that our dreams travel down, and so the Ocean forwards our prayers to the Dreamer.\nHe is, thus, our Archpriest, whom we also call Dagon, and who rules the depths for He §ois§r the depths.");
-        add("dialogue.shoreman_scholar.discuss.ocean.1", "He is also our Father, senior to the stars and eldest in the universe, who spawned all life from water. Academia refers to Him as Arche, that is, the §oFirst Principle§r, whose turmoils originated the world.\nAnd so he has been an object of study in all of mankind's history: first, by philosophers; then, by warlocks; now, even by scientists.");
+        add("dialogue.shoreman_scholar.discuss.ocean.1", "He is also our Father, senior to the stars and eldest in the universe, who spawned all life from water. Academia refers to Him as Arche, that is, the §oFirst Principle§r, whose turmoils originated the world.\nAnd so he has been an object of study in all of mankind’s history: first, by philosophers; then, by warlocks; now, even by scientists.");
         add("dialogue.shoreman_scholar.discuss.neverfear.0", "Thank you.");
         add("dialogue.shoreman_scholar.discuss.noremember.0", "Like a dream. I understand.\nI shall enquire into any similar occurrences, among the shoremen and the world at large, and shall let you know of any findings. You did well to tell me.");
         add("dialogue.shoreman_scholar.discuss.whom.0", "Our friends.");
-        add("dialogue.shoreman_scholar.discuss.accept.0", "I am not surprised. He still holds a lot of love in his heart, despite all he's gone through.");
+        add("dialogue.shoreman_scholar.discuss.accept.0", "I am not surprised. He still holds a lot of love in his heart, despite all he’s gone through.");
         add("dialogue.shoreman_scholar.discuss.disappeared.0", "Yes, and from there comes my warning: be afraid of death. You never know when it might be your last.");
         add("dialogue.shoreman_scholar.discuss.history.0", "Ohh, I wish it were that straightforward, and that one could simply prove things false or true, yet the real world teems with discrepancies and truths untold, and everything you can learn will brim chock-full with details that are not known, and that shall never be known, to be left inconsistent, incoherent, contradictory, for the history of the world is written not in prose,|| but in poetry.");
         add("dialogue.shoreman_scholar.discuss.tendril.0", "Huh? Where did you see this?");
@@ -1569,14 +1569,14 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.it_.option", "It is what anyone should have done.");
         add("dialogue.shoreman_scholar.discuss.i_______________________________________.option", "I understand.");
         add("dialogue.shoreman_scholar.discuss.i__________.option", "I... never thought it possible. I shall heed your warning. Thank you.");
-        add("dialogue.shoreman_scholar.discuss.you____.option", "You couldn't be acquainted with it: it is the diary and journal upon which I note down my findings.");
+        add("dialogue.shoreman_scholar.discuss.you____.option", "You couldn’t be acquainted with it: it is the diary and journal upon which I note down my findings.");
         add("dialogue.shoreman_scholar.discuss.but.option", "But even then, there is a veil. Do we truly know ourselves?");
         add("dialogue.shoreman_scholar.discuss.i______________________________.option", "I understand you have suffered much, but your plight is never mentioned in our history books. What can you tell me about it?");
         add("dialogue.shoreman_scholar.discuss.immortal___.option", "Immortal... and still she disappeared.");
         add("dialogue.shoreman_scholar.discuss.thanks_.option", "Thanks.");
         add("dialogue.shoreman_scholar.discuss.i______________________________________.option", "I wish to talk about you shoremen.");
         add("dialogue.shoreman_scholar.discuss.who?.option", "Who?");
-        add("dialogue.shoreman_scholar.discuss.i____.option", "I think I'll rename it... §oNecronomicon§r.");
+        add("dialogue.shoreman_scholar.discuss.i____.option", "I think I’ll rename it... §oNecronomicon§r.");
         add("dialogue.shoreman_scholar.discuss.hardly.option", "Hardly up to me to judge the work of mathematicians.");
         add("dialogue.shoreman_scholar.discuss.is.option", "Is it too late to go back?");
         add("dialogue.shoreman_scholar.discuss.arche.option", "Arche is inhabited?");
@@ -1592,7 +1592,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.perhaps_.option", "Perhaps that day shall come sooner rather than later.");
         add("dialogue.shoreman_scholar.discuss.but_.option", "But we may yet breach it.");
         add("dialogue.shoreman_scholar.discuss.there.option", "There is a Veil within each and every one of us, as you said, and if I were to dig deep into our own bodies...");
-        add("dialogue.shoreman_scholar.discuss.i________________________________________.option", "I don't understand.");
+        add("dialogue.shoreman_scholar.discuss.i________________________________________.option", "I don’t understand.");
         add("dialogue.shoreman_scholar.discuss.i_______________________.option", "I... am frightened.");
         add("dialogue.shoreman_scholar.discuss.can_.option", "Can I reach the Veil, in person? Has anyone ever done it?");
         add("dialogue.shoreman_scholar.discuss.hah!_.option", "Hah! Of course.");
@@ -1607,7 +1607,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.then_.option", "Then each such truth is part of one greater truth, and were each being to describe its own view, its own history, the course of its life, then we would finally see it all as a whole, unmarred by bias: all sides of a war, all angles of an event, all joy and all pain.");
         add("dialogue.shoreman_scholar.discuss.i_________________________________.option", "I wish to talk about you shoremen.");
         add("dialogue.shoreman_scholar.discuss.one.option", "One claimed to be the Gnawing Sensation at the back of my mind. The other claimed to be... me?");
-        add("dialogue.shoreman_scholar.discuss.i____________.option", "I drew it myself on the pages of the Necronomicon. I don't recall seeing it previously.");
+        add("dialogue.shoreman_scholar.discuss.i____________.option", "I drew it myself on the pages of the Necronomicon. I don’t recall seeing it previously.");
         add("dialogue.shoreman_scholar.discuss.yes_.option", "Yes.");
         add("dialogue.shoreman_scholar.discuss.but__.option", "But there has to be a \"ground truth\" at the bottom of it all! Something we can deconstruct, to map all facts and events as they happened.");
         add("dialogue.shoreman_scholar.discuss.but___.option", "But how? Where can I find these chains?");
@@ -1619,7 +1619,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.no__.option", "No. Never.");
         add("dialogue.shoreman_scholar.discuss.thank______.option", "Thank you.");
         add("dialogue.shoreman_scholar.discuss.i_______.option", "I shall try nonetheless.");
-        add("dialogue.shoreman_scholar.discuss.i__.option", "I think I'll keep it for the time being.");
+        add("dialogue.shoreman_scholar.discuss.i__.option", "I think I’ll keep it for the time being.");
         add("dialogue.shoreman_scholar.discuss.i__________________.option", "I... do not know.");
         add("dialogue.shoreman_scholar.discuss.thank_____.option", "Thank you.");
         add("dialogue.shoreman_scholar.discuss.indeed__.option", "Indeed.");
@@ -1627,7 +1627,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.i________________________________.option", "I wish to talk about symbols.");
         add("dialogue.shoreman_scholar.discuss.i_____.option", "I find it discomfiting, frankly.");
         add("dialogue.shoreman_scholar.discuss.what?.option", "What? Are you alright?");
-        add("dialogue.shoreman_scholar.discuss.i_____________________.option", "I have bad news about maths' completeness.");
+        add("dialogue.shoreman_scholar.discuss.i_____________________.option", "I have bad news about maths’ completeness.");
         add("dialogue.shoreman_scholar.discuss.you__________.option", "You are right. The real truth is impenetrable.");
         add("dialogue.shoreman_scholar.discuss.he.option", "He is old. How long can he still live?");
         add("dialogue.shoreman_scholar.discuss.you_________.option", "You paint a lovely picture.");
@@ -1639,7 +1639,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.blissfully.option", "Blissfully unaware, is what I have been! Only recently did I see through the old dogmas.");
         add("dialogue.shoreman_scholar.discuss.i____________________.option", "I hope so too.");
         add("dialogue.shoreman_scholar.discuss.no:.option", "No: I am the one who should be grateful to you, for opening my mind beyond the dogmas I used to believe in.");
-        add("dialogue.shoreman_scholar.discuss.forgive.option", "Forgive me, but I'd rather not say.");
+        add("dialogue.shoreman_scholar.discuss.forgive.option", "Forgive me, but I’d rather not say.");
         add("dialogue.shoreman_scholar.discuss.i.option", "I shall not commit the same mistakes.");
         add("dialogue.shoreman_scholar.discuss.just.option", "Just standing by. I understand.");
         add("dialogue.shoreman_scholar.discuss.i_____________________________________.option", "I wish to talk about symbols.");
@@ -1673,10 +1673,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.i_.option", "I am sorry.");
         add("dialogue.shoreman_scholar.discuss.i___________________.option", "I shall try nonetheless.");
         add("dialogue.shoreman_scholar.discuss.i_________________________.option", "I see.");
-        add("dialogue.shoreman_scholar.discuss.who's.option", "Who's \"we\"?");
-        add("dialogue.shoreman_scholar.discuss.yes,.option", "Yes, but He wasn't alone.");
-        add("dialogue.shoreman_scholar.discuss.let's.option", "Let's talk of something else.");
-        add("dialogue.shoreman_scholar.discuss.i___________.option", "I drew it myself on the pages of Al Azif. I don't recall seeing it previously.");
+        add("dialogue.shoreman_scholar.discuss.who's.option", "Who’s \"we\"?");
+        add("dialogue.shoreman_scholar.discuss.yes,.option", "Yes, but He wasn’t alone.");
+        add("dialogue.shoreman_scholar.discuss.let's.option", "Let’s talk of something else.");
+        add("dialogue.shoreman_scholar.discuss.i___________.option", "I drew it myself on the pages of Al Azif. I don’t recall seeing it previously.");
         add("dialogue.shoreman_scholar.discuss.does.option", "Does this mean He responds to your prayers? That He listens to us?");
         add("dialogue.shoreman_scholar.discuss.then____.option", "Then it adequately mirrors its content.");
         add("dialogue.shoreman_scholar.discuss.what__.option", "What is the Ocean to you?");
@@ -1684,7 +1684,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.then___.option", "Then why pray at all?");
         add("dialogue.shoreman_scholar.discuss.let_.option", "Let us change subject.");
         add("dialogue.shoreman_scholar.discuss.can.option", "Can I speak to Him?");
-        add("dialogue.shoreman_scholar.discuss.i______________________.option", "I don't understand.");
+        add("dialogue.shoreman_scholar.discuss.i______________________.option", "I don’t understand.");
         add("dialogue.shoreman_scholar.discuss.that.option", "That too.");
         add("dialogue.shoreman_scholar.discuss.thank__.option", "Thank you.");
         add("dialogue.shoreman_scholar.discuss.you.option", "You are right. I cannot say.");
@@ -1693,18 +1693,18 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.discuss.i________________.option", "I would have fought against them.");
         add("dialogue.shoreman_scholar.discuss.wait___.option", "Wait... what??");
         add("dialogue.shoreman_scholar.discuss.these.option", "These §odeep ones§r you refer to... did they fight for you?");
-        add("dialogue.shoreman_scholar.discuss.dagon's_.option", "Dagon's blessing upon you as well.");
+        add("dialogue.shoreman_scholar.discuss.dagon's_.option", "Dagon’s blessing upon you as well.");
         add("dialogue.shoreman_scholar.discuss.and.option", "And I wish to ask about you in particular. How do you know so much?");
         add("dialogue.shoreman_scholar.discuss.what________.option", "What do these concentric circles represent?");
         add("dialogue.shoreman_scholar.discuss.i__________________________________.option", "I do not remember.");
         add("dialogue.shoreman_scholar.discuss.so.option", "So it has.");
-        add("dialogue.shoreman_scholar.discuss.i_________________________________________.option", "I don't understand.");
+        add("dialogue.shoreman_scholar.discuss.i_________________________________________.option", "I don’t understand.");
         add("dialogue.shoreman_scholar.discuss.how__.option", "How do I reach His depths?");
         add("dialogue.shoreman_scholar.discuss.why.option", "Why are you yelling?!");
         add("dialogue.shoreman_scholar.discuss.wir.option", "Wir müssen wissen, wir werden wissen!");
         add("dialogue.shoreman_scholar.discuss.you_____.option", "You are right. I cannot blame you.");
         add("dialogue.shoreman_scholar.discuss.let.option", "Let us change subject.");
-        add("dialogue.shoreman_scholar.discuss.dagon's.option", "Dagon's blessing upon you as well.");
+        add("dialogue.shoreman_scholar.discuss.dagon's.option", "Dagon’s blessing upon you as well.");
         add("dialogue.shoreman_scholar.discuss.i________.option", "I find this \"Gnawing Sensation\" to be not as relevant as a literal voice telling me it was... §omyself§r.");
         add("dialogue.shoreman_scholar.discuss.this_.option", "This was enlightening. Thank you.");
         add("dialogue.shoreman_scholar.discuss.thank___.option", "Thank you.");
@@ -1718,18 +1718,18 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.initial.hard_to_believe.option", "As hard as it is to believe, I was guided here by a dream.");
         add("dialogue.shoreman_lighthouse_keeper.initial.dream.0", "A... dream? A dream of what?");
         add("dialogue.shoreman_lighthouse_keeper.initial.darkness.option", "Darkness.");
-        add("dialogue.shoreman_lighthouse_keeper.initial.guess_chance.option", "I didn't know it would lead me here, so I guess it was chance.");
+        add("dialogue.shoreman_lighthouse_keeper.initial.guess_chance.option", "I didn’t know it would lead me here, so I guess it was chance.");
         add("dialogue.shoreman_lighthouse_keeper.initial.precursor.0", "The precursor of light. Rising up from the ocean to blind the eyes of man.\nBut no, do not worry. Here, atop the lighthouse, you can see §oeverything§r.");
         add("dialogue.shoreman_lighthouse_keeper.initial.precursor.1", "Tell me then, traveller. What revelations do you hope to uncover?");
         add("dialogue.shoreman_lighthouse_keeper.initial.still_exploring.option", "I do not know. I am still exploring, the world and myself.");
         add("dialogue.shoreman_lighthouse_keeper.initial.so_much.0", "I see. There has to be so much you must have seen in your endless journeys. I can only envy you, stuck as I am, tending this lighthouse.");
         add("dialogue.shoreman_lighthouse_keeper.initial.so_much.1", "Yet, I am left to wonder, what does an explorer like you think of our humble hamlet? Out of all the beauties you must have admired, what is it that strikes you most?");
-        add("dialogue.shoreman_lighthouse_keeper.initial.unique_architecture.option", "The unique architecture, how everything fits upon the water on which it's built.");
+        add("dialogue.shoreman_lighthouse_keeper.initial.unique_architecture.option", "The unique architecture, how everything fits upon the water on which it’s built.");
         add("dialogue.shoreman_lighthouse_keeper.initial.idol.option", "That idol in the town square.");
         add("dialogue.shoreman_lighthouse_keeper.initial.asunder.0", "Ahh, I see. Truly, we are so very proud of what we have built. \nAnd rebuilt. \nAnd rebuilt over and over again, just for it to be set ablaze, and rent asunder.");
-        add("dialogue.shoreman_lighthouse_keeper.initial.asunder.1", "Know you not of what and whom I speak? Of the misdeeds of ages past? Crimes and atrocities, committed against us by self proclaimed 'saints' and 'hunters', blinded by their fear and prejudice.\nThey were your ancestors, traveller. And just like them, you are not welcome here.");
+        add("dialogue.shoreman_lighthouse_keeper.initial.asunder.1", "Know you not of what and whom I speak? Of the misdeeds of ages past? Crimes and atrocities, committed against us by self proclaimed ‘saints’ and ‘hunters’, blinded by their fear and prejudice.\nThey were your ancestors, traveller. And just like them, you are not welcome here.");
         add("dialogue.shoreman_lighthouse_keeper.initial.him.0", "Him? Yes, we chose to portray him in a most striking visage. Amorphous, almost shapeless. Inscrutable.\nAnd, indeed, striking he was, inviting the most violent and ruinous attention.");
-        add("dialogue.shoreman_lighthouse_keeper.initial.him.1", "Know you not of what and whom I speak? Of the misdeeds of ages past? Crimes and atrocities, committed against us by self proclaimed 'saints' and 'hunters', blinded by their fear and prejudice.\nThey were your ancestors, traveller. And just like them, you are not welcome here.");
+        add("dialogue.shoreman_lighthouse_keeper.initial.him.1", "Know you not of what and whom I speak? Of the misdeeds of ages past? Crimes and atrocities, committed against us by self proclaimed ‘saints’ and ‘hunters’, blinded by their fear and prejudice.\nThey were your ancestors, traveller. And just like them, you are not welcome here.");
         add("dialogue.shoreman_lighthouse_keeper.initial.not_aware.option", "I... was not aware. Our church speaks of \"sinners\", and of \"inhuman heretics\". I did not imagine..");
         add("dialogue.shoreman_lighthouse_keeper.initial.just_humans.0", "We are just §ohumans§r!  But §o§lyou§r were fearful of us venerating a different god, and all that he represents.\nBecause §owe§r worship the Veil, that great final threshold all dreams go through. The clouding of thoughts, the fog in the night, the blindness of man and the prejudice driving you towards unspeakable acts.");
         add("dialogue.shoreman_lighthouse_keeper.initial.just_humans.1", "And it lives deep down below, at the bottom of the sea. Hiding all sorts of truths, that filter of infinity in the emptiness of the §ovoid§r.\nYour ancestors could not tolerate its existence, because it would have shattered all your beliefs.");
@@ -1749,11 +1749,11 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.did_dream.start.0", "I saw you tonight, traveller. Or rather, in my dream I saw yours. Speeding down below, towards the bottom of the sea.\nIt was a brave, angry dream, seeking an unveiling of truth as if dissatisfied with what you already knew.");
         add("dialogue.shoreman_lighthouse_keeper.did_dream.start.1", "When we first met, I spoke of fear,| and of prejudice,| yet chastised you for your heritage. I ask you now to forgive my hypocrisy.");
         add("dialogue.shoreman_lighthouse_keeper.did_dream.why.option", "Why did you fear me so?");
-        add("dialogue.shoreman_lighthouse_keeper.did_dream.i.option", "I will, because it's right.");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.i.option", "I will, because it’s right.");
         add("dialogue.shoreman_lighthouse_keeper.did_dream.i__.option", "I forgive you.");
         add("dialogue.shoreman_lighthouse_keeper.did_dream.a.option", "A bond to reconcile ancient enmities. I shall.");
         add("dialogue.shoreman_lighthouse_keeper.did_dream.i_.option", "I will, because I seek Truth.");
-        add("dialogue.shoreman_lighthouse_keeper.did_dream.to.option", "Embracing all of your grief... I don't know if I can.");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.to.option", "Embracing all of your grief... I don’t know if I can.");
 
         add("dialogue.shoreman_lighthouse_keeper.did_dream2.start.0", "Will you shed a tear for our sake?");
         add("dialogue.shoreman_lighthouse_keeper.did_dream2.end.option", "(End)");
@@ -1857,25 +1857,25 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.death.you_know.0", "Dreams travel not only in space, but in time. I witnessed my own demise, a nightmare that lived through my awakening.");
         add("dialogue.shoreman_lighthouse_keeper.death.they.0", "Easy, easy. I understand. I only wish to offer... perspective.\nBecause you §oterrify§r us. We know §owe§r are just pawns in §oyour§r game. To us, you are the most unknowable of horrors. Uncaring, unpredictable.");
         add("dialogue.shoreman_lighthouse_keeper.death.they.1", "Here, then, comes the snippet of Truth that Dagon wishes you to learn.\nJust as I am nothing to you, so are you too insignificant to someone else.");
-        add("dialogue.shoreman_lighthouse_keeper.death.who.0", "Perhaps it is the Great Dreamer. Or perhaps Dagon.\nMaybe it's just humanity itself: this multitude of several billion cells, uncaring of who you are.");
+        add("dialogue.shoreman_lighthouse_keeper.death.who.0", "Perhaps it is the Great Dreamer. Or perhaps Dagon.\nMaybe it’s just humanity itself: this multitude of several billion cells, uncaring of who you are.");
         add("dialogue.shoreman_lighthouse_keeper.death.who.1", "Perhaps it is the infinity of space,|| and you a dot,| dimensionless;| or it is the eternity of time, and you again a point on an axis,||| ephemeral,||| already gone.");
         add("dialogue.shoreman_lighthouse_keeper.death.too.0", "Enough! You came here for something.");
         add("dialogue.shoreman_lighthouse_keeper.death.hate.0", "We cannot choose what we feel.\nI may be old, but there was yet life ahead of me. Oh, how pathetic that I grieve for myself!");
         add("dialogue.shoreman_lighthouse_keeper.death.friend.0", "Yes.|| Friend.||\nYour eyes leave no doubt.||| Go ahead. I have made peace with it.");
         add("dialogue.shoreman_lighthouse_keeper.death.hands.0", "Only tears.");
-        add("dialogue.shoreman_lighthouse_keeper.death.sorry.0", "Don't be. I have made peace with it, and so must you.");
-        add("dialogue.shoreman_lighthouse_keeper.death.why.0", "How could I understand his motives, when I hardly understand yours? Perhaps it's sadism, or indifference, or just curiosity, or most likely some other impulse wholly inapplicable to us fleeting creatures, leaving us in the guise of pawns in a game.");
+        add("dialogue.shoreman_lighthouse_keeper.death.sorry.0", "Don’t be. I have made peace with it, and so must you.");
+        add("dialogue.shoreman_lighthouse_keeper.death.why.0", "How could I understand his motives, when I hardly understand yours? Perhaps it’s sadism, or indifference, or just curiosity, or most likely some other impulse wholly inapplicable to us fleeting creatures, leaving us in the guise of pawns in a game.");
         add("dialogue.shoreman_lighthouse_keeper.death.agree.0", "On one condition, in honour of our friendship.\nIn whichever way you kill me, please, I beg of you... §odo not spill my blood§r.");
         add("dialogue.shoreman_lighthouse_keeper.death.know.0", "And yet you strive to make a difference? §oYou cannot§r. None of us can. Not in the face of things so much greater than us that even our language refuses to describe them. Things that will outlive us,| forget us,| as if we were never there.");
         add("dialogue.shoreman_lighthouse_keeper.death.start.0", "Hello, friend.");
         add("dialogue.shoreman_lighthouse_keeper.death.want.0", "Yet you must.");
         add("dialogue.shoreman_lighthouse_keeper.death.horrors.0", "Do you §otruly§r not see your hypocrisy?! You showed such kindness and magnanimity to us of the Shore, yet you replace it with vicious indifference when handling the lives of your patients and victims.");
         add("dialogue.shoreman_lighthouse_keeper.death.immortal.0", "So was Adelina, yet she died all the same.");
-        add("dialogue.shoreman_lighthouse_keeper.death.still.0", "But that won't matter. Nobody will.");
+        add("dialogue.shoreman_lighthouse_keeper.death.still.0", "But that won’t matter. Nobody will.");
         add("dialogue.shoreman_lighthouse_keeper.death.understand.0", "Then why bring such suffering along with it? You showed such kindness and magnanimity to us of the Shore, yet you replace it with vicious indifference when handling the lives of your patients and victims.");
         add("dialogue.shoreman_lighthouse_keeper.death.now.0", "No. Do not leave me waiting. It is agony.");
         add("dialogue.shoreman_lighthouse_keeper.death.respawned.0", "§oShe is dead.§r I saw her demise in a dream, just as I saw mine.");
-        add("dialogue.shoreman_lighthouse_keeper.death.so_sorry.0", "You fear that you are making the wrong choice. You fear that you are losing a friend for nothing. You fear that you are being lied to by beings you don't understand.\nIs this fear the reason you are weeping? Please, let us spill no more tears.");
+        add("dialogue.shoreman_lighthouse_keeper.death.so_sorry.0", "You fear that you are making the wrong choice. You fear that you are losing a friend for nothing. You fear that you are being lied to by beings you don’t understand.\nIs this fear the reason you are weeping? Please, let us spill no more tears.");
         add("dialogue.shoreman_lighthouse_keeper.death.but_.option", "But why, §owhy§r would Dagon ask that of me?");
         add("dialogue.shoreman_lighthouse_keeper.death.not.option", "Not now.");
         add("dialogue.shoreman_lighthouse_keeper.death.farewell,.option", "Farewell, keeper.");
@@ -1893,7 +1893,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.death.do___.option", "Do you agree to it?");
         add("dialogue.shoreman_lighthouse_keeper.death.do.option", "Do you hate me?");
         add("dialogue.shoreman_lighthouse_keeper.death.do__.option", "Do you hate me?");
-        add("dialogue.shoreman_lighthouse_keeper.death.but_______.option", "But I don't want to.");
+        add("dialogue.shoreman_lighthouse_keeper.death.but_______.option", "But I don’t want to.");
         add("dialogue.shoreman_lighthouse_keeper.death.do____.option", "Do you agree to it?");
         add("dialogue.shoreman_lighthouse_keeper.death.then.option", "Then you already know.");
         add("dialogue.shoreman_lighthouse_keeper.death.i__.option", "I cannot be outlived. I am immortal, you know that!");
@@ -1905,14 +1905,14 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.death.farewell,_.option", "Farewell, friend.");
         add("dialogue.shoreman_lighthouse_keeper.death.but______.option", "But why, §owhy§r would Dagon ask that of me?");
         add("dialogue.shoreman_lighthouse_keeper.death.what.option", "What kind of game would send its participants through such horrors?!");
-        add("dialogue.shoreman_lighthouse_keeper.death.i.option", "I won't forget you.");
+        add("dialogue.shoreman_lighthouse_keeper.death.i.option", "I won’t forget you.");
         add("dialogue.shoreman_lighthouse_keeper.death.but.option", "But why, §owhy§r would Dagon ask that of me?");
         add("dialogue.shoreman_lighthouse_keeper.death.but_________.option", "But why, §owhy§r would Dagon ask that of me?");
 
         add("dialogue.shoreman_lighthouse_keeper.arche_ending.start.0", "Oh, gracious Father Dagon, hallowed be thy name! A blessing, that I shall caress the Veil not in dream but in flesh! I arrive!");
         add("dialogue.shoreman_lighthouse_keeper.arche_ending.start.1", "And you friend, have shattered my beliefs once more. Though you may never change the fates of the stars, you may yet change those of people.\nThank you,| and farewell,| Seeker of Truth.");
         add("dialogue.shoreman_lighthouse_keeper.arche_ending.farewell,.option", "Farewell, friend.");
-        add("dialogue.shoreman_lighthouse_keeper.arche_ending.i'll.option", "I'll come visit.");
+        add("dialogue.shoreman_lighthouse_keeper.arche_ending.i'll.option", "I’ll come visit.");
         add("dialogue.shoreman_lighthouse_keeper.arche_ending.no___.option", "No... §oplease§r, do not leave me.");
 
     }
@@ -1928,7 +1928,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.binding_power.nether_heal", "Dying creatures heal me.");
         add("research.binding_power.nether_feed", "Fire damage feeds me.");
         add("research.binding_power.nether_create_fire", "Using fist on blocks creates fire.");
-        add("research.binding_power.nether_target", "Striking foes attracts other creatures' attacks.");
+        add("research.binding_power.nether_target", "Striking foes attracts other creatures’ attacks.");
         add("research.binding_power.end_fly", "Using the fist while flying with the elytra shoots me upwards.");
         add("research.binding_power.end_attack", "Striking foes teleports me around them.");
         add("research.binding_power.end_vertical_tp", "Jumping or sneaking teleports me up or down.");
@@ -1964,7 +1964,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.FIRSTDREAMS.stage.2", "Replicating the steps of my predecessors was no issue. It is now my responsibility to tie it to the study of dreams.\\n" +
                 "The goal is to have my own memory affect my mind while I sleep, and to do so I must experiment. A few different possibilities come to mind:\\n" +
                 "[%s] Hold the phial in my hand while I sleep.\\1" +
-                "[%s] Drink the phial's contents right before sleeping.\\1" +
+                "[%s] Drink the phial’s contents right before sleeping.\\1" +
                 "[%s] (More complex) Build a fume spreader, place it next to my bed, fill it with oniric incense and then with the phial.\\n" +
                 "Once I wake up, I {§nmust close my eyes and concentrate§r}[caption:reminisce], to try and reminisce what the dream saw.");
         add("research.FIRSTDREAMS.stage.3", "It worked. \\nAn outlandish hypothesis, a wild shot in the dark and yet it §ostruck§r something, because there §owas§r something to strike in that gloom escaping our senses.\\nToday I pioneer the Art of Dreaming, so that humankind may see the world in a new light, and elude the limits of our worldly bodies. And I §ovow§r to continue exploring and expanding this field as far as I can, here on the pages of Al Azif.");
@@ -1975,7 +1975,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.SLEEP_CHAMBER.title", "Sleep Chamber");
         add("research.slept_in_chamber.text", "Experiment until you can answer at least the first question.");
         add("research.SLEEP_CHAMBER.stage.0", "I had always been proud of my ability to stay awake and work and walk as long as I needed, leaving sleep to times of absolute necessity. Now, however, it is sleep I need, and I cannot get enough of it. My research studies are limited by the frequency at which I can dream. A most frustrating bound.\\n" +
-                "Thankfully, there is a great body of work aimed at replicating the effects of dreaming through various techniques and devices; one must only look at Carter's \"The Gate and the Key\" to find all sorts of examples.\\n" +
+                "Thankfully, there is a great body of work aimed at replicating the effects of dreaming through various techniques and devices; one must only look at Carter’s \"The Gate and the Key\" to find all sorts of examples.\\n" +
                 "The method most easily within reach is through the use of a Sleep Chamber, i.e. a small room relying on water vapours to lull its tenant in a dreamlike state. One must simply open it, step inside and close the door. It is a somewhat complex contraption, and creating it will require a Gear Bench. \\n" +
                 "Once the testbed is built, I may proceed with the evaluation. Building atop of past literature, in this study I aim to answer the following questions:\\n" +
                 "1. Will the dreamlike state induced by the sleep chamber also undergo the effects of a nearby fume spreader?\\1" +
@@ -2015,7 +2015,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Her betrothed, Jerome, would be only mildly less vicious, deeming them \"misbegotten sons of earth and water\".\\n" +
                 "Were they wrong? The people of the fishing village were certainly unwelcoming. Blatant in their scorn for me and for acts I did not commit.\\n" +
                 "Yet, I could hear fear ailing their voice, see it diverting their eyes. \\n" +
-                "In concealing — or eradicating — their existence, the church of my forefathers would have been rid of a people worshipping nothing less than the human mind's inability to grasp the truths of the world — ours and others. Heretical, by any means.\\n" +
+                "In concealing — or eradicating — their existence, the church of my forefathers would have been rid of a people worshipping nothing less than the human mind’s inability to grasp the truths of the world — ours and others. Heretical, by any means.\\n" +
                 "But dreams can go through Him, he said.");
 
         add("research.EMPTY_DREAMS.title", "Empty Dreams");
@@ -2040,7 +2040,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "But first I must bolster it with Void, to still its descent, and give myself time to... listen.\\n" +
                 "...\\n" +
                 "Merciful Gods, please,\\1" +
-                "§odon't let me drown.");
+                "§odon’t let me drown.");
         add("research.WATER_DREAMS.stage.1", "Gracious Gods, do not let my mind crumble as I write this.\\n" +
                 "My dream dived in, my body forgotten atop the shore. The mind knew no longer our material world. \\n" +
                 "I sped down, relentless, unremitting, as I became engulfed in the rumble of water, sweetly scented in the color of nothing. It was the fusion of the senses, a synesthesia of the soul.\\n" +
@@ -2113,7 +2113,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Who and what are we? Where do we come from?\\n" +
                 "And what will we become?");
         add("research.SURGERY.stage.1", "Then it is decided. I will begin a journal, to keep track of my experiments. There I shall record all my knowledge, and all the operations I have performed.\\n" +
-                "It'll take time, but I must build the required infrastructure and craft the necessary tools for surgery. I will then perform a simple operation, for practice.");
+                "It’ll take time, but I must build the required infrastructure and craft the necessary tools for surgery. I will then perform a simple operation, for practice.");
         add("research.SURGERY.stage.2", "The incision was successful. The human body is now open to me.");
 
         add("research.HEARTS.title", "To gain life, I must grant death");
@@ -2121,12 +2121,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.HEARTS.epigraph", "§oDo not be deceived,\\0" +
                 "All blood spill forges a chain,\\0" +
                 "And what worth is a king in shackles?§r\\1");
-        add("research.HEARTS.epigraph.source", "Saint Jerome's celebrated §oRebuke§r\\n");
+        add("research.HEARTS.epigraph.source", "Saint Jerome’s celebrated §oRebuke§r\\n");
         add("research.HEARTS.stage.0", "Connections are sewn in blood – that thread linking all beings, living and dead. It is the bond holding lives together, within and between, and its vessels run deep through bone and earth until they reach its ancient progenitor: water.\\n" +
                 "Blood is both life and death, as well as the chain betwixt. To deprive a being of its heart is to kill it, and yet no life is lost.\\n" +
                 "The extraction of a heart requires an incised chest on the patient, and is very painful. Injecting a sufficient amount of softener before the extraction is crucial, or the pain will be too intense for the organ to be successfully extracted. Either way, the patient will not survive.");
         add("research.HEARTS.stage.1", "The heart still beats. When placed on the ground, the sound will attract nearby undead (is it some sort of nostalgia that drives them towards life?)\\n" +
-                "The organ itself, however, may also be used for other purposes. Intravenous supply of blood may ease a patient's pain – more details in my journal. Additionally, and most importantly, the practice of blood rituals has been celebrated my many peoples throughout history, and has been extensively documented by academia. There is much more to be done here.");
+                "The organ itself, however, may also be used for other purposes. Intravenous supply of blood may ease a patient’s pain – more details in my journal. Additionally, and most importantly, the practice of blood rituals has been celebrated my many peoples throughout history, and has been extensively documented by academia. There is much more to be done here.");
 
         add("research.SPINES.title", "Willpower resides in the spine");
         add("research.extracted_spine.text", "Extract a spine, then release the patient.");
@@ -2149,8 +2149,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.WATERY_CRADLE.stage.0", "The mind lies deepest among the veils obscuring humanity from itself: that impenetrable mystery that, despite all miracles of modern science, has not yet been breached. My exploration of human anatomy should not stop at the worldly body, and must instead seek to explain the processes behind our very thoughts.\\n" +
                 "The surgery bed is not appropriate for such operations: the patient must be lulled into a dreamlike state, unable to conceive or realise what is happening – and, once again, water is the key. I shall build a specialised chamber for this purpose, a \"watery cradle\" of sorts, to enable injections in the skull.");
         add("research.WATERY_CRADLE.stage.1", "The cradle is built, but requires testing. This is perhaps an opportunity to prove the lack of willpower in those without a spine.\\n" +
-                "I will inject hormones in the patients' skulls. Of course, such substances are already known to alter the personality of an individual – perhaps busting that myth of free will, and so forth – yet the question remains on how intense their effects can become.\\n" +
-                "I shall begin either with: (i) order hormones, making the patient obsessively aware of its surroundings and any items lying out and about; or (ii) parental hormones, intensifying the patient's motherly instincts and pushing it into breeding nearby animals. I will add further information in my journal.");
+                "I will inject hormones in the patients’ skulls. Of course, such substances are already known to alter the personality of an individual – perhaps busting that myth of free will, and so forth – yet the question remains on how intense their effects can become.\\n" +
+                "I shall begin either with: (i) order hormones, making the patient obsessively aware of its surroundings and any items lying out and about; or (ii) parental hormones, intensifying the patient’s motherly instincts and pushing it into breeding nearby animals. I will add further information in my journal.");
         add("research.WATERY_CRADLE.stage.2", "The successful operation proves – again – the fragility of the human mind. The watery cradle will become yet another tool in my research.");
 
 
@@ -2161,7 +2161,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Solidarity, compassion, these are the truest of human emotions.\\0" +
                 "There is no veil here.§r\\1");
         add("research.CUSTOMS.epigraph.source", "Tales of the Desert Folk.\\n");
-        add("research.CUSTOMS.stage.0", "Be it man's nature to loathe or cherish, the fear of the unknown \"Other\" can hide all sorts of wonders – and so it is that those renouncing such hate may experience the exquisite weirdness of a new, exotic culture. Starting from food, of course.\\n" +
+        add("research.CUSTOMS.stage.0", "Be it man’s nature to loathe or cherish, the fear of the unknown \"Other\" can hide all sorts of wonders – and so it is that those renouncing such hate may experience the exquisite weirdness of a new, exotic culture. Starting from food, of course.\\n" +
                 "I wish to learn of and embrace the many customs of the shoremen, and those white, slimy slugs, which seem to play such a major role in their way of life, would be a great starting point. I can talk or send a letter to the lighthouse keeper if I need a sample.");
         add("research.CUSTOMS.stage.1", "§o...bleah.§r Some veils are better left closed.\\n" +
                 "If I ever find myself in need of more slugs, I can create a slug bait and a catcher. For now, however, my goal is to learn more of the Shore culture.");
@@ -2179,8 +2179,8 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("research.CARPENTRY.title", "Carpentry");
         add("research.received_fish.text", "Sail for a while in a canoe.");
-        add("research.CARPENTRY.stage.0", "The creaking wood and the damp textures of the Shoremen's dwellings belie the artistry involved in their construction. This is a folk who mastered the craft of building on water, and did so wholly for the sake of their religious beliefs.\\n" +
-                "Though I don't expect to replicate their results, I may still be willing to imitate their style. Most of their building materials can be easily obtained.\\n" +
+        add("research.CARPENTRY.stage.0", "The creaking wood and the damp textures of the Shoremen’s dwellings belie the artistry involved in their construction. This is a folk who mastered the craft of building on water, and did so wholly for the sake of their religious beliefs.\\n" +
+                "Though I don’t expect to replicate their results, I may still be willing to imitate their style. Most of their building materials can be easily obtained.\\n" +
                 "Perhaps more importantly, I wish to sail in one of their canoes, which they claim to be \"closer to the Ocean\".");
         add("research.CARPENTRY.stage.1", "Fish just started... jumping inside. They do not see the canoe or its rider as a threat, but rather a friend, an ally. \\n" +
                 "It is as if Father Ocean himself was making me a gift.");
@@ -2224,8 +2224,8 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("research.FIRST_CONTACT.title", "First Contact");
         add("research.had_contact.text", "Contact the Deep Ones, and throw them a human heart.");
-        add("research.FIRST_CONTACT.stage.0", "Theory begets practice, and when the journey of the mind meets its limits, and dreams' feeble memories turn too hazy, so comes the time for the quest to become physical, diving in with flesh and bone.\\n" +
-                "Dagon's command is rightful. I must commit my whole body to reach the Veil; yet, the Great Dreamer lies too far down below, occulted by Father Ocean's boundless presence. Instead, my first step shall be on the surface, atop of starlit water, mirror to the cosmos.\\n" +
+        add("research.FIRST_CONTACT.stage.0", "Theory begets practice, and when the journey of the mind meets its limits, and dreams’ feeble memories turn too hazy, so comes the time for the quest to become physical, diving in with flesh and bone.\\n" +
+                "Dagon’s command is rightful. I must commit my whole body to reach the Veil; yet, the Great Dreamer lies too far down below, occulted by Father Ocean’s boundless presence. Instead, my first step shall be on the surface, atop of starlit water, mirror to the cosmos.\\n" +
                 "His firstborn children are not the Shoremen, who, humans like any of us, are far down the lineage. Rather, he may have referred to the daemons described by the prospectors of Arche, foes to the old hunters such as Jerome and Adelina. These denizens of the depths – it is said – would sporadically rise to the surface, frightening to death some unfortunate sailors.\\n" +
                 "Even Adelina spoke of them in hushed tones, but what could have frightened an immortal such as her? Unless...\\n" +
                 "No. I must hold steadfast, and do as he commanded. With my canoe, I shall sail far into the deep ocean, until no land is in sight; there, in the dark of night, I will consume a slug. If his words are true, the ones from the deep shall arise, and contact will commence.  When it is asked of me, and only then, I shall offer a gift: the heart of a human, to seal our bond. \\n" +
@@ -2239,11 +2239,11 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "The first principle of our world. ");
 
         add("research.BLOOD_CULT.title", "The Blood Cult");
-        add("research.use_pillars.text", "Use the pillars... or don't.");
+        add("research.use_pillars.text", "Use the pillars... or don’t.");
         add("research.BLOOD_CULT.stage.0", "In talking to the cult, I felt light nausea – not due to the deplorability of their philosophy or their trade proposal, but rather due to the abrupt shift in perspective, the violent turning upside down of my role. I am the researcher, so why do I, all of a sudden, feel like the experiment? A brief dialogue, and yet an irksome sensation settles in already – am I being studied?\\n" +
                 "Regardless, their offer is tempting. I must build two pillars: offer and demand. After placing one of them down, I can bind the other to it, and place it elsewhere. Breaking either pillar breaks the link, and the two objects must be bound again as before.\\n" +
                 "Whenever a baby creature – including livestock such as pigs or cows – is born next to the offer pillar, it will be taken by the cult. Then, a trader should appear next to the demand pillar carrying a prospective patient, and place it in the nearest empty patient pod (if available).\\n" +
-                "I should try it. If they're observing me, then I want to observe them too; maybe it is by making deals with them that I can assert my power.\\n" +
+                "I should try it. If they’re observing me, then I want to observe them too; maybe it is by making deals with them that I can assert my power.\\n" +
                 "Yet, this might have consequences. To seal the deal is to bind us.");
         add("research.BLOOD_CULT.stage.1", "The pillars work, and the trade has started. I hope that I will not regret it – I may not be in danger, but what of those dear to me? I may claim infinite lives, but most others cannot.");
 
@@ -2251,7 +2251,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.asked_thesis.text", "Send a letter to the Miskatonic.");
         add("research.received_thesis.text", "Wait for a response from the Miskatonic.");
         add("research.performed_ritual.text", "Perform one of the rituals.");
-        add("research.BLOOD_RITUALS.stage.0", "I see the struggle in my patients' eyes, and it pains me to no end. How would §oI§r feel in their stead? Proudly knowing themselves to be §othe§r building block in the pathway of science, yet aware that they shall not live to see the outcome; it is the tragic destiny of all those who strive to a goal greater than themselves, unachievable in their lifetime. It comes as no surprise, then, that their enthusiasm wanes in those last, fateful moments, before they gift me their heart.\\n" +
+        add("research.BLOOD_RITUALS.stage.0", "I see the struggle in my patients’ eyes, and it pains me to no end. How would §oI§r feel in their stead? Proudly knowing themselves to be §othe§r building block in the pathway of science, yet aware that they shall not live to see the outcome; it is the tragic destiny of all those who strive to a goal greater than themselves, unachievable in their lifetime. It comes as no surprise, then, that their enthusiasm wanes in those last, fateful moments, before they gift me their heart.\\n" +
                 "It is only fair that I immortalise their sacrifice, so they may live beyond death. I must embrace their relinquished blood and put it to good use: indeed, rituals exist that exploit the red fluid to forge bindings. Could one then breach the Veil by linking the lie to the truth? The stage to the audience? Life to death?\\n" +
                 "I must send a letter to the Institute of Anthropological Studies at the Miskatonic University in Arkham. They authored the seminal work §oSanguis: Inter Vitam et Mortem§r, that recounts the practice of blood rituals throughout the world; I know the work to be no longer in print, but I hope they may make an exception.");
         add("research.BLOOD_RITUALS.stage.1", "Georg was kind – I should treasure such connections.\\n" +
@@ -2268,15 +2268,15 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.built_well.text", "Build a Blood Well.");
         add("research.spawned_undead.text", "Spawn a blood undead.");
         add("research.BLOOD_WELL.stage.0", "When the great final threshold is irreversibly reached, once-living things sink in the ground, and their remains traverse the veins of the world until they arrive at their ancient progenitor: the waters of Arche.\\n" +
-                "Blood Wells were built to access these veins directly, letting undead creatures enter them. The Well would attract such monsters – like a heart, but even stronger – and send them to a blood pool far down below, in the deepest ocean. Most importantly, such creatures would then be bound to the Well's maker, and may be summoned at their behest.\\n" +
+                "Blood Wells were built to access these veins directly, letting undead creatures enter them. The Well would attract such monsters – like a heart, but even stronger – and send them to a blood pool far down below, in the deepest ocean. Most importantly, such creatures would then be bound to the Well’s maker, and may be summoned at their behest.\\n" +
                 "I must construct one, in hopes of thinning the distance between me and Arche. I have recorded the required schematic; the heart must be placed §llast§r.");
         add("research.BLOOD_WELL.stage.1", "The Blood Well is born, and by the Dreamer, it §oreeks§r; a stench reminiscent of a rotting corpse – or a thousand.\\n" +
                 "Nonetheless, I am certain the undead will not mind. In its current form, the Well should be able to embrace any zombies or skeletons, and send them far down below – though I expect most of them not to make it there intact.\\n" +
                 "I should now create a Blood Orb. This will allow me to view and summon the creatures residing in my personal blood pool, and that arrived there safely.");
         add("research.BLOOD_WELL.stage.2", "The creature was covered in blood. It was... unrecognisable. \\n" +
-                "The Well appears to be a powerful tool, adjacent to the necromantic arts, capable of building my own undead army. More work can be done in this area: a Blood Gem, also described in Mauer's thesis, can be used to summon multiple creatures at once.\\n" +
+                "The Well appears to be a powerful tool, adjacent to the necromantic arts, capable of building my own undead army. More work can be done in this area: a Blood Gem, also described in Mauer’s thesis, can be used to summon multiple creatures at once.\\n" +
                 "Additionally, creatures in my blood pool may be assigned to categories, for simpler management. Categories are defined by a triad of colours: I can throw dyes in the Well (one at a time), to add a colour to the right of the triad. For example, throwing blue dye, clay (symbolising colourless), and lime dye will make the assigned triad §lblue§r, §lnone§r, §llime§r. Throwing red afterwards will make the new triad §lnone§r, §llime§r, §lred§r. The default is §lnone§r, §lnone§r, §lnone§r.\\n" +
-                "As useful as all of this is in terms of gaining power, the Well's true role in my quest is to get me closer to Arche. I should not forget that.");
+                "As useful as all of this is in terms of gaining power, the Well’s true role in my quest is to get me closer to Arche. I should not forget that.");
 
         add("research.BOUND_IV_STAND.title", "Bound IV stands");
         add("research.upgraded_pool.text", "");
@@ -2292,9 +2292,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.received_surgeon.text", "Hire a surgeon from the Sanitarium.");
         add("research.placed_surgeon.text", "Place the surgeon larva in the appropriate place.");
         add("research.grew_surgeon.text", "Grow the surgeon into an adult.");
-        add("research.SURGEONS.stage.0", "Dr. West's letter comes at a good time. It might be appropriate to start thinking of delegating my work.");
+        add("research.SURGEONS.stage.0", "Dr. West’s letter comes at a good time. It might be appropriate to start thinking of delegating my work.");
         add("research.SURGEONS.stage.1", "Having reached adulthood, the surgeon is ready to operate. There are two important components involved in controlling the creature: (1) a surgeon bell, through which I can dictate the infrastructure that the surgeon is allowed to operate with, and (2) my own surgery notes, which will define the operations performed by it.\\n" +
-                "§lSurgeon's bell§r\\n" +
+                "§lSurgeon’s bell§r\\n" +
                 "The bell can be {§nbound to a surgeon§r}[caption:right_click] in order to check and edit the list of blocks it can interact with. While a surgeon is bound, I can {§nuse the bell§r}[caption:right_click] to tell it which surgical structure (e.g. a surgery bed) it can perform operations in. \\n" +
                 "I can also {§nuse§r}[caption:right_click] the bell to declare inputs:\\n" +
                 "- Use on a flask or flask shelf to add or remove it from the set of blocks it can draw liquids or solid ingredients from.\\n" +
@@ -2305,13 +2305,13 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "- Use on a patient pod to add or remove it from the set of blocks it can put convalescent patients in.\\n" +
                 "- Use on the top side of a block to add or remove it from the set of areas it can place convalescent patients in (though the surgeon will refrain from doing so if there are already too many convalescents in the area).\\n" +
                 "§lSurgery Notes§r\\n" +
-                "I can print down the notes from my journal on pieces of paper in my inventory. The surgeon will follow them exactly, only stopping if lacking ingredients or patients, or space to place the outcomes. It will, however, ignore any purely \"informational\" notes that do not describe an operation, such as lines indicating the occurrence of a complication, or additional data such as the operation's success. \\n" +
+                "I can print down the notes from my journal on pieces of paper in my inventory. The surgeon will follow them exactly, only stopping if lacking ingredients or patients, or space to place the outcomes. It will, however, ignore any purely \"informational\" notes that do not describe an operation, such as lines indicating the occurrence of a complication, or additional data such as the operation’s success. \\n" +
                 "The surgeon will also ignore operations marked as incomplete, i.e. incomplete incisions, insertions, or extractions. It is thus good practice to avoid giving the surgeon any surgery notes containing incomplete operations, as otherwise the result may become unpredictable.\\n" +
                 "The surgeon requires no tools.");
 
         add("research.WEEPERS.title", "Weepers");
         add("research.crafted_lacrymatory.text", "Craft a lacrymatory.");
-        add("research.WEEPERS.stage.0", "The injection had cataclysmic effects, not just on the head but on the entire body. It is vestigial now, acting as the creature's only anchor to our world – other than that, the patient is no longer among us.\\n" +
+        add("research.WEEPERS.stage.0", "The injection had cataclysmic effects, not just on the head but on the entire body. It is vestigial now, acting as the creature’s only anchor to our world – other than that, the patient is no longer among us.\\n" +
                 "Does he see more or less than we do? Did he cross the veil, or have I simply placed another veil between us? Oh, he is certainly fearful, lost to derealisation as he is – and he weeps, more than I ever could. Indeed, he can do nothing but weep.\\n" +
                 "...\\n" +
                 "Should... should I make the most out of this situation, and at least put his tears to good use? I know now that tears hold power, and the poor thing would not want its fate to have been in vain.\\n" +
@@ -2321,8 +2321,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.REVELATION_RING.title", "Weepers");
         add("research.extracted_revelation_ring.text", "Create a ring of revelation.");
         add("research.REVELATION_RING.stage.0", "Tears clear our eyes and let us see things as they truly are.\\n" +
-                "I picture a ring, resting on my fingers after being torn from a patient's chest. It is made via the insertion of an eye, and the injection of tears as well as the two targeting serums: GS121 and SA245. Finally, the heart must be extracted.");
-        add("research.REVELATION_RING.stage.1", "The ring allows me to see invisible creatures. It is the first step in widening our vision through the use of tears – as long as they are someone else's.");
+                "I picture a ring, resting on my fingers after being torn from a patient’s chest. It is made via the insertion of an eye, and the injection of tears as well as the two targeting serums: GS121 and SA245. Finally, the heart must be extracted.");
+        add("research.REVELATION_RING.stage.1", "The ring allows me to see invisible creatures. It is the first step in widening our vision through the use of tears – as long as they are someone else’s.");
 
         add("research.FLETUM.title", "The Fletum");
         add("research.FLETUM.stage.0", "A weeper without its spine is nothing but its head. It is content, this way.\\n" +
@@ -2333,11 +2333,11 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.crafted_dream_focus.text", "Craft a Dream Focus.");
         add("research.DREAM_FOCUS.stage.0", "I must construct a device to channel dreams, deviating them from their natural downward path and instead directing them as I wish.\\n" +
                 "Not my dreams, of course, nor those of weepers, who yet hold on to our world. It is fleti who, dissociated into their own little universe, spend their existence dreaming, reminiscing.\\n" +
-                "A Dream Focus shall thus harness their dreams... to do what? With all I've seen them do, can I perhaps make them move objects?");
+                "A Dream Focus shall thus harness their dreams... to do what? With all I’ve seen them do, can I perhaps make them move objects?");
         add("research.DREAM_FOCUS.stage.1", "A Dream Focus should be placed on the side of a container (such as a chest), with the small end of its pipe facing it. Its purpose is to extract its contents and move them towards a destination.\\n" +
-                "I will be the one dictating what path they will take: by interacting with the focus, I'll be transported to the end of its large pipe as a small \"wisp\" of sorts, and will automatically start moving in the direction I'm looking in (including in the air). This status lasts 15 seconds or until I {§ninterrupt§r}[caption:sneak] it, and the path I take during it will determine the path the extracted items take. It will also be visible to the eye; I can colour it with dyes or toggle its visibility with a clay ball.\\n" +
+                "I will be the one dictating what path they will take: by interacting with the focus, I’ll be transported to the end of its large pipe as a small \"wisp\" of sorts, and will automatically start moving in the direction I’m looking in (including in the air). This status lasts 15 seconds or until I {§ninterrupt§r}[caption:sneak] it, and the path I take during it will determine the path the extracted items take. It will also be visible to the eye; I can colour it with dyes or toggle its visibility with a clay ball.\\n" +
                 "Once the path is defined, I can place a fletum atop the Focus, and every few seconds an item will begin its journey. It can still be picked up while floating, by me or by hoppers, and items such as blackjacks or swords are still capable of striking foes.\\n" +
-                "I'll concede, the imagery of items moving around on their own does remain somewhat unsettling, reminiscent of ghost stories of old. Hah! Perhaps poltergeists came from our dreams all along!");
+                "I’ll concede, the imagery of items moving around on their own does remain somewhat unsettling, reminiscent of ghost stories of old. Hah! Perhaps poltergeists came from our dreams all along!");
 
         add("research.DREAM_FOCUS_FLUIDS.title", "Dream Focus: Fluids");
         add("research.DREAM_FOCUS_FLUIDS.stage.0", "Dreams may also be able to transport fluids. I can build specialised Foci that will extract any fluids from the liquid container above them or above the block above them, and eject them from below. Just like regular Dream Foci, I can dictate the paths taken by the fluids. These Foci may be powered by up to 4 fleti, one on each side, and the more there are the more liquid is extracted each time. A transported fluid coming into contact with a liquid container will be inserted into it, as long as there is space.\\n" +
@@ -2363,7 +2363,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.BINDING_NETHER.stage.0", "The Nether is associated with fire, death, and several other aspects of our lives that we so dread; it is no wonder then that, according to the myths of several cultures, the Nether is seen as the final destination of our none-too-beloved dead ones.\\n" +
                 "Interestingly, the binding of the Nether is also linked to §ocontrol§r, as made clear by the infernal infusion used by witches in ages past. Any of the creatures I command – such as blood undead or abominations – will be made more powerful thanks to this binding. Additionally, striking a foe has a chance of making nearby creatures also target it.\\n" +
                 "{§nUsing§r}[caption:right_click] the blood fist on the ground can start a fire. Also, any fire damage I incur will feed me and saturate my hunger – though I will still take damage.\\n" +
-                "The binding's association with death may let me inflict it upon enemies more easily: attacking a creature while wielding the blood fist in my off-hand can – assuming the creature is not too strong – instantaneously kill it, at a large cost of my own health and vitality.\\n" +
+                "The binding’s association with death may let me inflict it upon enemies more easily: attacking a creature while wielding the blood fist in my off-hand can – assuming the creature is not too strong – instantaneously kill it, at a large cost of my own health and vitality.\\n" +
                 "Finally, the death of any creatures around me (besides ones killed in the above manner) will heal me slightly.");
 
         add("research.BINDING_END.title", "Binding of the End");
@@ -2374,10 +2374,10 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Last but not least (yet far from most), the binding has given me a better understanding of End artifacts, and in particular the Elytra: {§nusing§r}[caption:right_click] the blood fist while soaring it will shoot me upwards in the air, effectively resulting in true flight.");
 
         add("research.BINDING_ARCHE.title", "Binding of Arche");
-        add("research.BINDING_ARCHE.stage.0", "The binding of Arche escaped Georg's investigations. It makes sense, after all, for a thesis on the properties of blood to forgo bindings forged in tears.\\n" +
+        add("research.BINDING_ARCHE.stage.0", "The binding of Arche escaped Georg’s investigations. It makes sense, after all, for a thesis on the properties of blood to forgo bindings forged in tears.\\n" +
                 "Arche is associated with chaos and change, and the energies of its ever churning currents are captured by this binding. {§nUsing§r}[caption:right_click_air] the blood fist allows me to move the creatures surrounding me: towards me or, if sneaking, away from me. Wielding the fist in my off-hand changes this slightly: the creatures will be moved in the direction I am facing or, if sneaking, around me in a clockwise fashion.\\n" +
                 "I can also {§nuse§r}[caption:right_click_block] the fist on the ground: in so doing, I will create a \"current node\": this will attract nearby creatures (or, if made while sneaking, push them away) and will last for roughly a minute.\\n" +
-                "If lucky, I am also able to move my enemies' wielded items: striking enemies has a certain chance of forcing them to drop whatever they are holding.\\n" +
+                "If lucky, I am also able to move my enemies’ wielded items: striking enemies has a certain chance of forcing them to drop whatever they are holding.\\n" +
                 "The binding is also associated to adaptability: if I want, I can choose a damage type out of a certain selection, and whenever I would be damaged by it I get healed instead; however, every other unselected damage type will instead hurt me twofold.\\n" +
                 "Finally, the binding strengthens my connection to my blood pool: whenever creatures would be added to it (whether via a Blood Well or a bound IV Stand), twice as many creatures are instead added to it.");
 
@@ -2388,25 +2388,25 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "The ocean predates the world, and so too will it outlive it.\\0" +
                 "Even I am nought to eternity.§r\\1");
         add("research.NEW_DEPTHS.epigraph.source", "From §oReflections of an Immortal§r, published last year. In it, Adelina looks back to her journeys in Arche, three decades prior.\\n");
-        add("research.NEW_DEPTHS.stage.0", "Thirty-seven years have gone by since the first expeditions to Arche began, and thirty-one since the last ones ended. Incited by both secular and religious bodies, they were justified as necessary, holy purges against \"abominable monsters\" threatening our peace  – the Deep Ones, clearly – yet I now see the truth of their origin: they were merely perpetuating the violence that had begun in the black shores, against this new enemy that had risen to the shoremen's protection. \\n" +
+        add("research.NEW_DEPTHS.stage.0", "Thirty-seven years have gone by since the first expeditions to Arche began, and thirty-one since the last ones ended. Incited by both secular and religious bodies, they were justified as necessary, holy purges against \"abominable monsters\" threatening our peace  – the Deep Ones, clearly – yet I now see the truth of their origin: they were merely perpetuating the violence that had begun in the black shores, against this new enemy that had risen to the shoremen’s protection. \\n" +
                 "We shall continue their journey, but not their legacy: our mission will be one of peace, to mend bonds between humanity and Dagon.\\n" +
-                "The old hunters' knowledge will come useful, however: fliers were affixed across towns, acting as instruction manuals for prospective explorers. We include here a copy of such a pamphlet, together with the schematics for building the recommended equipment.\\n" +
-                "Importantly, some things shall differ from the old missions: first, owing to Mauer's kindness, we know how to create Vessel Stones via Blood Rituals, and thus won't have to procure any from official sources.\\n" +
-                "Second, whereas a normal human would immediately collapse under the immense pressures of Arche's waters, I believe that, having undergone baptism, our body may withstand them for a short duration. Leaving the Nautilus may be possible (and sometimes necessary), though we should be careful not to do so for an extended period, and certainly not during a current.\\n" +
-                "So: our goal is to speak to Dagon, but for now let's just enter His realm and gauge its dangers. It may be accessed via a blood well: just as life is pushed upwards through the arteries of the world, so too do deceased things descend through its veins. One must thus enter the well §owith rotten flesh in one hand and coal in the other§r, and so be transported down below. Just like the dead. Ahh, what an omen.");
-        add("research.NEW_DEPTHS.stage.1", "The old hunters' quest converged on the cities inhabited by the Deep Ones, and so too shall ours. Unlike them, our search shall be guided by dreams of water: just as they bring us to an ocean monument when performed on the surface world, so will they show us the way to a deep city when performed in Arche. I... §oknow§r they will.\\n" +
-                "If no hostilities arise with the city's denizens, we shall then head towards the colossal altar dominating the city, and there, §oat the very top§r, consume a slug to enter communion with Father Ocean once more. He will guide us to Truth.");
+                "The old hunters’ knowledge will come useful, however: fliers were affixed across towns, acting as instruction manuals for prospective explorers. We include here a copy of such a pamphlet, together with the schematics for building the recommended equipment.\\n" +
+                "Importantly, some things shall differ from the old missions: first, owing to Mauer’s kindness, we know how to create Vessel Stones via Blood Rituals, and thus won’t have to procure any from official sources.\\n" +
+                "Second, whereas a normal human would immediately collapse under the immense pressures of Arche’s waters, I believe that, having undergone baptism, our body may withstand them for a short duration. Leaving the Nautilus may be possible (and sometimes necessary), though we should be careful not to do so for an extended period, and certainly not during a current.\\n" +
+                "So: our goal is to speak to Dagon, but for now let’s just enter His realm and gauge its dangers. It may be accessed via a blood well: just as life is pushed upwards through the arteries of the world, so too do deceased things descend through its veins. One must thus enter the well §owith rotten flesh in one hand and coal in the other§r, and so be transported down below. Just like the dead. Ahh, what an omen.");
+        add("research.NEW_DEPTHS.stage.1", "The old hunters’ quest converged on the cities inhabited by the Deep Ones, and so too shall ours. Unlike them, our search shall be guided by dreams of water: just as they bring us to an ocean monument when performed on the surface world, so will they show us the way to a deep city when performed in Arche. I... §oknow§r they will.\\n" +
+                "If no hostilities arise with the city’s denizens, we shall then head towards the colossal altar dominating the city, and there, §oat the very top§r, consume a slug to enter communion with Father Ocean once more. He will guide us to Truth.");
         add("research.NEW_DEPTHS.stage.2", "I do not understand. Such kindness and magnanimity when he first spoke to me in my baptism, replaced with vicious indifference in the maelstrom of the deepest Ocean.\\n" +
                 "He spoke yet did not listen; to hear Dagon from within his own body... did it reveal its true nature, or just another facet of something entirely unpredictable, inscrutable by our scientific means, indescribable by our human criteria, unconstrained by our axioms?");
 
         add("research.SNIPPET_OF_TRUTH.title", "A Snippet of Truth");
-        add("research.slew_keeper.text", "The lighthouse keeper must die. You don't have a choice.");
+        add("research.slew_keeper.text", "The lighthouse keeper must die. You don’t have a choice.");
         add("research.met_mirror.text", "Do NOT speak to the Black Mirror.");
-        add("research.SNIPPET_OF_TRUTH.epigraph", "§oLet love be man's bluntest tool\\0" +
+        add("research.SNIPPET_OF_TRUTH.epigraph", "§oLet love be man’s bluntest tool\\0" +
                 "Tilling the heart with dark seed\\0" +
                 "Let treachery see it bleed\\0" +
                 "A scythe to reap the red pool§r\\1");
-        add("research.SNIPPET_OF_TRUTH.epigraph.source", "Third stanza from Jerome's §oFalse Tears§r\\n");
+        add("research.SNIPPET_OF_TRUTH.epigraph.source", "Third stanza from Jerome’s §oFalse Tears§r\\n");
         add("research.SNIPPET_OF_TRUTH.stage.0", "Why?\\n" +
                 "Is there a purpose?\\n" +
                 "(Does the Ocean even §oknow§r \"purpose\", or is it a purely human fabrication?)\\n" +
@@ -2419,32 +2419,32 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.SNIPPET_OF_TRUTH.stage.1", "The fracture would have been fatal on its own, but it was suffocation that took his life. He could not breathe. He drowned in my grasp, blood unspilled, no final bond remaining.\\n" +
                 "What point was there to all this? Was this the truth Dagon meant to teach us? A futile exercise in pointlessness? A trick in perspective?! Nothing we did not already know.\\n" +
                 "§oBut if the entire damn Ocean commands something, you cannot simply ignore it. There was nothing else we could do.§r\\n" +
-                "But then, how do we go forward from here? We don't have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
+                "But then, how do we go forward from here? We don’t have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
                 "...wait...\\n" +
-                "...who's \"we\"?");
+                "...who’s \"we\"?");
         add("research.SNIPPET_OF_TRUTH.stage.1.cultist", "The shoremen bleed white tears – and so, even our bond had been forged in blood. Theirs.\\n" +
                 "What point was there to all this? Was this the truth Dagon meant to teach us? A futile exercise in pointlessness? A trick in perspective?! Nothing we did not already know.\\n" +
                 "§oBut if the entire damn Ocean commands something, you cannot simply ignore it. There was nothing else we could do.§r\\n" +
-                "But then, how do we go forward from here? We don't have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
+                "But then, how do we go forward from here? We don’t have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
                 "...wait...\\n" +
-                "...who's \"we\"?");
-        add("research.SNIPPET_OF_TRUTH.stage.1.arche", "Deep down below at the bottom of the sea, swims a wise old half-man blessed by his Father's embrace. I suspect we will not meet again.\\n" +
+                "...who’s \"we\"?");
+        add("research.SNIPPET_OF_TRUTH.stage.1.arche", "Deep down below at the bottom of the sea, swims a wise old half-man blessed by his Father’s embrace. I suspect we will not meet again.\\n" +
                 "Could this have been the point, then? That, for how hard it may be, we still §ocan§r make a difference, and leave our mark on the world?\\n" +
-                "Perhaps, yes. But now, let us plan our next steps. How do we go forward from here? We don't have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
+                "Perhaps, yes. But now, let us plan our next steps. How do we go forward from here? We don’t have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
                 "...wait...\\n" +
-                "...who's \"we\"?");
+                "...who’s \"we\"?");
         add("research.SNIPPET_OF_TRUTH.stage.2", "Alright.\\n" +
                 "...\\n" +
                 "How do we do this?\\n" +
-                "I'll just keep writing in the pages as I always have, and you keep telling me what to do to progress as you always have.\\n" +
-                "Sure. But who's \"I\" and who's \"You\"?\\n" +
+                "I’ll just keep writing in the pages as I always have, and you keep telling me what to do to progress as you always have.\\n" +
+                "Sure. But who’s \"I\" and who’s \"You\"?\\n" +
                 "Does it matter?");
 
         add("research.METAMORPHOSIS.title", "Metamorphosis");
         add("research.scaled_crawler.text", "Insert scales into the chest of a human patient, and witness the outcome.");
         add("research.scaled_crawler_death.text", "Witness the outcome of the procedure.");
         add("research.scaled_player.text", "Make a surgeon perform the operation on us, and survive the outcome.");
-        add("research.scaled_player_death.text", "It's killing us! We can't stop it!");
+        add("research.scaled_player_death.text", "It’s killing us! We can’t stop it!");
         add("research.metamorphosis.text", "I... I am sorry. Please, let us pray to Dagon for forgiveness. Make pilgrimage to His altar in Arche, and consume a slug.");
         add("research.METAMORPHOSIS.epigraph", "§oAt the brink of evolution\\0" +
                 "Mankind stands at a crossroads\\0" +
@@ -2473,7 +2473,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "A blessing. An exquisite horror.\\n" +
                 "This is our new form. Reborn in the shape of the sea; and yet, not ready to wholly relinquish our humanity – we are able to {§ntransform back and forth§r}[caption:transform]. For now.\\n" +
                 "Though there are downsides to this form (such as its reluctance to hold most non-marine objects) its strength is impressive, especially when in water. It can even withstand the pressures of Arche (though currents still pose a threat).\\n" +
-                "And so, it becomes both a tool for our future research in Arche, and the most glorious human achievement in and of itself: mankind's victory upon its physical limitations, and the frailty of our bodies. I must spread this news in the research community, so that the results may be reproduced and bring a wave of progress like never before.\\n" +
+                "And so, it becomes both a tool for our future research in Arche, and the most glorious human achievement in and of itself: mankind’s victory upon its physical limitations, and the frailty of our bodies. I must spread this news in the research community, so that the results may be reproduced and bring a wave of progress like never before.\\n" +
                 "But all of that can wait. We must first adjust, and recover from all that our mind and body went through. Bliss and sorrow. Fortune and tragedy. Peace and pain.\\n" +
                 "Let us rest for a while. We earned it, friend.");
     }
@@ -2575,13 +2575,13 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("reminiscence.ice", "The target was encased in ice.");
         add("reminiscence.waypoint_other_dimension", "The destination lies in another dimension.");
         add("reminiscence.power.0", "%1$s of my effects became stronger.");
-        add("reminiscence.power.1", "%1$s of the target's effects became stronger.");
+        add("reminiscence.power.1", "%1$s of the target’s effects became stronger.");
         add("reminiscence.power.2", "Of the creatures near the target area, %1$s had their effects become stronger.");
         add("reminiscence.stillness.0", "%1$s of my effects became longer.");
-        add("reminiscence.stillness.1", "%1$s of the target's effects became longer.");
+        add("reminiscence.stillness.1", "%1$s of the target’s effects became longer.");
         add("reminiscence.stillness.2", "Of the creatures near the target area, %1$s had their effects become longer.");
         add("reminiscence.change.0", "%1$s of my effects changed.");
-        add("reminiscence.change.1", "%1$s of the target's effects changed.");
+        add("reminiscence.change.1", "%1$s of the target’s effects changed.");
         add("reminiscence.change.2", "Of the creatures near the target area, %1$s had their effects changed.");
         add("reminiscence.plant", "Seeds from another world appeared in my hands.");
         add("reminiscence.plant.vijhiss", "A weird plant from another world appear in my hands.");
@@ -2659,7 +2659,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("research.thesis.abstract.title", "Abstract");
         add("research.thesis.abstract", "Blood, as is known, makes for powerful bindings. \"Brothers in blood\", \"Pact of blood\", and so forth: one must not look far into popular customs among the many folks of this world to find such examples. The phenomenon has a scientific basis: blood binds all life, all things that live. A network of flesh, a web of souls, and its fulcrum is the deep sea Arche from which all things are born.\\n" +
-                "Within this treatise, we shall focus on what stands perhaps as the most important of the bindings that blood can forge: that between life and death. We explore the fluid's role in this endeavor from a historical perspective, study its potential in breaching this veil, and conjecture possibilities for further advancements in the art.");
+                "Within this treatise, we shall focus on what stands perhaps as the most important of the bindings that blood can forge: that between life and death. We explore the fluid’s role in this endeavor from a historical perspective, study its potential in breaching this veil, and conjecture possibilities for further advancements in the art.");
 
         add("research.thesis.chapter", "Chapter %1$s");
 
@@ -2885,7 +2885,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "• A ghast tear.");
 
         add("research.thesis.ritual.summon_energy_zombie.title", "Replenish Energy");
-        add("research.thesis.ritual.summon_energy_zombie.text", "The previously described world bindings would infuse the user with a certain amount of the chosen dimension's energy, but utilizing the imparted powers would deplete it. In order to replenish it, bound individuals engaged in necromancy: they would infuse the sacrificial victim instead, raising it from the dead and then slaying it once more.\\n" +
+        add("research.thesis.ritual.summon_energy_zombie.text", "The previously described world bindings would infuse the user with a certain amount of the chosen dimension’s energy, but utilizing the imparted powers would deplete it. In order to replenish it, bound individuals engaged in necromancy: they would infuse the sacrificial victim instead, raising it from the dead and then slaying it once more.\\n" +
                 "It is unclear exactly what form the resuscitated individual would take; to the best of our knowledge, it is generally described as some form of zombie.\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
@@ -2933,7 +2933,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.drowned.ocean2", "Let us talk, just the two of us.");
         add("gui.drowned.you", "I am You.....");
         add("gui.drowned.you2", "but no, no no...");
-        add("gui.drowned.you3", "You weren't supposed to know yet!");
+        add("gui.drowned.you3", "You weren’t supposed to know yet!");
     }
 
     private void addLetterBox() {
@@ -2988,16 +2988,16 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Operations performed in the watery cradle target the §lSkull§r, and only injections may be executed.\\n" +
                 "The surgery bed, on the other hand, allows the surgeon to perform operations on either the §lChest§r or the §lBack§r. One may {§nswitch§r}[caption:shift_right_click] the patient’s position to allow for surgeries on either location, though only when there is no currently open incision. \\n" +
                 "All operation types can be performed on the surgery bed.");
-        add("gui.journal.overview.managing.text", "Various complications may arise during a surgeon's work, with patient suffering being by far the most common: sedation is thus paramount in any successful surgery. Aside from the ethical concerns, patients in severe pain will indubitably thrash and flail about, virtually ensuring grave injuries and death when using surgery tools upon them.\\n" +
+        add("gui.journal.overview.managing.text", "Various complications may arise during a surgeon’s work, with patient suffering being by far the most common: sedation is thus paramount in any successful surgery. Aside from the ethical concerns, patients in severe pain will indubitably thrash and flail about, virtually ensuring grave injuries and death when using surgery tools upon them.\\n" +
                 "It is thus imperative to inject sufficient quantities of {§nsedative§r}[link:journal.ingredients.sedative] during an operation. Doing so while the patient is already calm will help prevent subsequent pain. For example, injecting sufficient sedative before starting an incision will prevent patients from acting out and injuring themselves with the scalpel.\\n" +
                 "If the patient is in pain, injecting sedative will calm them down. It is wise to stop an operation such as an incision at the first signs of pain to prevent it going awry, and only continuing it after the patient has calmed down and has been sedated enough to prevent further pain.\\n" +
                 "Another somewhat common complication is the scraping of tools and ingredients against organs, and a general hardness of the body. This is signaled by a shrill grinding sound and black smoke. In such cases, the patient is likely to experience §oextreme§r pain and the operation should thus be stopped immediately. To enable an operation that results in scraping I must first inject a good dose of {§nsoftener§r}[link:journal.ingredients.softener], and only then resume.\\n" +
-                "Finally, some operations may result in the patient's bleeding after they are completed, well visible by the blood specks leaking out. This makes it risky to perform any further operation – including stitching – and should thus be treated with {§ncoagulant§r}[link:journal.ingredients.coagulant] before the surgery continues.");
+                "Finally, some operations may result in the patient’s bleeding after they are completed, well visible by the blood specks leaking out. This makes it risky to perform any further operation – including stitching – and should thus be treated with {§ncoagulant§r}[link:journal.ingredients.coagulant] before the surgery continues.");
         add("gui.journal.overview.concluding.text", "The success of an operation depends on the desired outcome. Although a premature death will most likely make any further operations impossible, it may be tolerated as long as the necessary results (such as an organ’s extraction) have already been obtained. The death of a patient is certainly a loss, but not a tragedy.\\n" +
                 "Of course, there are times when we seek the patient’s survival. In general, most patients will exit the surgery either (i) alive and well, (ii) crippled (potentially for life), or (iii) deceased.");
         add("gui.journal.overview.journal.text", "Replicability stands at the very foundations of modern science, and in the solemn pursuit of knowledge one must always, without fail, value the credibility and correctness of results over the selfish chase for fame.\\n" +
-                "It is thus quintessential – for my very own reputation as a researcher – that I take note of my experiments, and document the processes that led to each outcome. I can do so in this journal: I may create a new report for each surgical procedure and describe which operations I performed and what result was obtained – whether successful or not. For the sake of accuracy, I should be as precise as possible, e.g. detailing the patient's position, the complications observed in the process, the exact types and amounts of ingredients utilised, and so forth.\\n" +
-                "The value of taking notes entails at least two aspects: on one end, it is in my future self's best interest not to leave the complex steps involved in successful procedures at the mercy of my own forgetfulness, especially for what concerns the iterative optimisation of the used ingredients over multiple attempts of the same surgery; on the other, it will enable the sharing of knowledge among my peers, and possibly even the delegation of my work to hired surgeons.");
+                "It is thus quintessential – for my very own reputation as a researcher – that I take note of my experiments, and document the processes that led to each outcome. I can do so in this journal: I may create a new report for each surgical procedure and describe which operations I performed and what result was obtained – whether successful or not. For the sake of accuracy, I should be as precise as possible, e.g. detailing the patient’s position, the complications observed in the process, the exact types and amounts of ingredients utilised, and so forth.\\n" +
+                "The value of taking notes entails at least two aspects: on one end, it is in my future self’s best interest not to leave the complex steps involved in successful procedures at the mercy of my own forgetfulness, especially for what concerns the iterative optimisation of the used ingredients over multiple attempts of the same surgery; on the other, it will enable the sharing of knowledge among my peers, and possibly even the delegation of my work to hired surgeons.");
         add("gui.journal.overview.fluids.text", "Liquid ingredients, such as {§nsedative§r}[link:journal.ingredients.sedative], {§ncoagulant§r}[link:journal.ingredients.coagulant], and several others, can be injected into patients to achieve various results. This requires a {§nsyringe§r}[link:journal.tools.syringe], and does not require an incision on the patient.\\n" +
                 "Such fluids may be stored in liquid flasks ({§nsmall§r}[link:journal.tools.flasks], {§nmedium§r}[link:journal.tools.flasks] and {§nlarge§r}[link:journal.tools.flasks]), and are often produced with the help of {§nalembics§r}[link:journal.tools.alembics].");
         add("gui.journal.overview.solids.text", "Solid ingredients may be inserted in the patient. This requires {§nforceps§r}[link:journal.tools.forceps], and can only be done when the incision is open.\\n" +
@@ -3215,7 +3215,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Inserting the gland into a patient’s back will apply §ldisrobe§r to its abomination burst, at a cost in capacity. Inserting into the chest instead produces a peculiar effect: the patient will progressively grow an item within its body, said item being any of the solid ingredients that have been inserted into its chest (including the swollen growth itself). After some time, the tumor will have fully grown (visible by dripping blood) and hitting the patient will make the item drop. However, the patient can only survive this process a few times before perishing.");
 
         add("gui.journal.ingredients.periosteum_growth.title", "Periosteum Growth");
-        add("gui.journal.ingredients.periosteum_growth.text", "A bony protuberance. There's a certain unease at seeing your true self beneath that curtain of flesh.\\n" +
+        add("gui.journal.ingredients.periosteum_growth.text", "A bony protuberance. There’s a certain unease at seeing your true self beneath that curtain of flesh.\\n" +
                 "Inserting the gland into a patient’s back will apply §lfearsome§r to its abomination burst, at a cost in capacity. Inserting it into the chest instead will make any creepers approaching the patient flee away in terror.");
 
         add("gui.journal.ingredients.chromatophore_gland.title", "Chromatophore Gland");
@@ -3295,7 +3295,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("target_type.player_nearby", "Immortals nearby");
         add("target_type.master_nearby", "Master nearby");
         add("target_type.was_hit", "Hitting entity");
-        add("target_type.master_was_hit", "Master's attacker");
+        add("target_type.master_was_hit", "Master’s attacker");
         add("target_type.master_attacked", "Attacked by Master");
 
         add(BTVEffects.FOLLY.get(), "Folly");
