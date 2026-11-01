@@ -2497,7 +2497,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(ALEMBICS.get().getDescriptionId() + ".crafting", "Via the mixing and matching of liquids and solids, this device can create something entirely new... yet analogies to the ancient waters of Arche would constitute foolish ambitions: it cannot create life.\\1" +
                 "The first and leftmost alembic as well as the third one can store input fluids used in crafting. The second, small one can accept input items.\\1" +
                 "A fluid flask must be placed to accept the output. If the input fluid, item and second fluid make for a valid recipe, the flask will slowly start getting filled.\\1" +
-                "A given input item may be sufficient for a certain amount of output fluid. #GIVE EXAMPLE");
+                "A given input item may be sufficient for a certain amount of output fluid. For example, a honeycomb will be enough for 20 mB of sedative, while consuming 20 mB of water in both input alembics.");
         add(ARCHE_DIAL.get().getDescriptionId() + ".crafting", "Arche’s currents are chaos spawning order, amorphous matter breeding life – and, lying at this intersection, does it surprise us or not that they act with such predictable patterns?\\1" +
                 "Arche dials were designed with the purpose of measuring the present state of Arche’s waters, eventually revealing that the cyclical currents occurred on strict timing intervals.\\1" +
                 "The number of gleaming blue slots describes the amount of time left before the next current cycle begins. When it approaches zero, I should start looking for shelter in the form of air pockets.");
@@ -3076,7 +3076,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.tools.item_flask.text", "Similar to their liquid counterpart, but used to store solid items instead (generally up to sixteen). They may also be placed on flask shelves");
 
         add("gui.journal.tools.alembics.title", "Alembics");
-        add("gui.journal.tools.alembics.text", "A device used to concoct various types of fluids. The first and leftmost alembic as well as the third one can store input fluids used in crafting. The second, small one can accept input items.\\nA fluid flask must be placed to accept the output. If the input fluid, item and second fluid make for a valid recipe, the flask will slowly start getting filled.\\nA given input item may be sufficient for a certain amount of output fluid.");
+        add("gui.journal.tools.alembics.text", "A device used to concoct various types of fluids. The first and leftmost alembic as well as the third one can store input fluids used in crafting. The second, small one can accept input items.\\nA fluid flask must be placed to accept the output. If the input fluid, item and second fluid make for a valid recipe, the flask will slowly start getting filled.\\nA given input item may be sufficient for a certain amount of output fluid. For example, a honeycomb will be enough for 20 mB of sedative, while consuming 20 mB of water in both input alembics.");
 
         add("gui.journal.tools.flask_shelf.title", "Flask Shelf");
         add("gui.journal.tools.flask_shelf.text", "A set of shelves where fluid and item flasks may be placed in a more compact manner. Any such flasks may then be interacted with normally, as if they were on the ground.");
