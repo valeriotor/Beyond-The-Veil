@@ -17,6 +17,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
@@ -36,7 +37,7 @@ public class BloodThesisGui extends Screen {
     private static final int TEXT_BLOCK_HEIGHT = 680 * 3 / 5;
     private static final ResourceLocation BACKGROUND = new ResourceLocation(References.MODID, "textures/gui/blood_thesis.png");
     private static final ResourceLocation LOGO = new ResourceLocation(References.MODID, "textures/gui/miskatonic_logo.png");
-
+    private static Style style = Style.EMPTY;
     private int imageWidth;
     private int imageHeight;
     private float scaleFactor = 1;
@@ -47,10 +48,12 @@ public class BloodThesisGui extends Screen {
 
     public BloodThesisGui() {
         super(Component.translatable("gui.blood_thesis.title"));
+        style = I18n.get("research.thesis.title.translation_style").startsWith("#") ? Fonts.ACADEMIC_STYLE : Style.EMPTY;
     }
 
     @Override
     protected void init() {
+        //style = I18n.get("research.thesis.title.translation_style").startsWith("#") && false? Fonts.ACADEMIC_STYLE : Style.EMPTY;
         scaleFactor = 1;
         imageWidth = BACKGROUND_BASE_WIDTH;
         imageHeight = BACKGROUND_BASE_HEIGHT;
@@ -60,6 +63,9 @@ public class BloodThesisGui extends Screen {
         float heightRatio = 95F;
         if (imageHeight > height * heightRatio / 100) {
             scaleFactor = height * heightRatio / 100 / imageHeight;
+        }
+        if (imageHeight < height * 90F / 100) {
+            scaleFactor = height * 90F / 100 / imageHeight;
         }
         float widthRatio = 95F;
         if (imageWidth > width * widthRatio / 100) {
@@ -72,7 +78,7 @@ public class BloodThesisGui extends Screen {
     private List<Element> pages() {
         // Easier to just hardcode it
         List<Element> blocks = new ArrayList<>();
-        blocks.add(new TitlePage());
+        blocks.add(new TitlePage(style));
         blocks.add(empty());
         blocks.add(new AbstractPage());
         blocks.add(empty());
@@ -140,6 +146,11 @@ public class BloodThesisGui extends Screen {
 
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+        if (pMouseX > width / 2F) {
+            rightArrowClick();
+        } else {
+            leftArrowClick();
+        }
         return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 
@@ -149,6 +160,13 @@ public class BloodThesisGui extends Screen {
             leftArrowClick();
         } else if (this.minecraft.options.keyRight.matches(pKeyCode, pScanCode)) {
             rightArrowClick();
+        } else if (this.minecraft.options.keyInventory.matches(pKeyCode, pScanCode)) {
+            boolean b = I18n.get("research.thesis.title.translation_style").startsWith("#");
+            if (b) {
+                style = (style == Fonts.ACADEMIC_STYLE) ? Style.EMPTY : Fonts.ACADEMIC_STYLE;
+                init();
+            }
+            return true;
         }
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
@@ -187,15 +205,15 @@ public class BloodThesisGui extends Screen {
         private final Component author;
         private final Component supervisor;
 
-        protected TitlePage() {
+        protected TitlePage(Style style) {
             super(TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT);
-            institute1 = Component.translatable("research.thesis.title.institute1").withStyle(Fonts.ACADEMIC_STYLE);
-            institute2 = Component.translatable("research.thesis.title.institute2").withStyle(Fonts.ACADEMIC_STYLE);
-            title1 = Component.translatable("research.thesis.title.title1").withStyle(Fonts.ACADEMIC_STYLE);
-            title2 = Component.translatable("research.thesis.title.title2").withStyle(Fonts.ACADEMIC_STYLE);
-            thesis = Component.translatable("research.thesis.title.thesis").withStyle(Fonts.ACADEMIC_STYLE);
-            author = Component.translatable("research.thesis.title.author").withStyle(Fonts.ACADEMIC_STYLE);
-            supervisor = Component.translatable("research.thesis.title.supervisor").withStyle(Fonts.ACADEMIC_STYLE);
+            institute1 = Component.translatable("research.thesis.title.institute1").withStyle(style);
+            institute2 = Component.translatable("research.thesis.title.institute2").withStyle(style);
+            title1 = Component.translatable("research.thesis.title.title1").withStyle(style);
+            title2 = Component.translatable("research.thesis.title.title2").withStyle(style);
+            thesis = Component.translatable("research.thesis.title.thesis").withStyle(style);
+            author = Component.translatable("research.thesis.title.author").withStyle(style);
+            supervisor = Component.translatable("research.thesis.title.supervisor").withStyle(style);
         }
 
         @Override
@@ -266,9 +284,9 @@ public class BloodThesisGui extends Screen {
 
         protected AbstractPage() {
             super(TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT);
-            title = Component.translatable("research.thesis.abstract.title").withStyle(Fonts.ACADEMIC_STYLE);
+            title = Component.translatable("research.thesis.abstract.title").withStyle(style);
             String text = I18n.get("research.thesis.abstract");
-            List<Element> elements = new TextUtil().setStyle(Fonts.ACADEMIC_STYLE).alignCenter().parseText(text, TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
+            List<Element> elements = new TextUtil().setStyle(style).alignCenter().parseText(text, TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
             this.text = new TextBlock(elements, TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT, Minecraft.getInstance().font);
             this.text.setDropShadow(false);
             //Minecraft.getInstance().font.getSplitter().splitLines(text, TEXT_BLOCK_WIDTH, Fonts.ACADEMIC_STYLE, false, (pStyle, pCurrentPos, pContentWidth) -> {
@@ -305,7 +323,7 @@ public class BloodThesisGui extends Screen {
         protected ChapterTitle(int index, Component localized) {
             super(TEXT_BLOCK_WIDTH, 80);
             this.index = index;
-            this.chapter = Component.translatable("research.thesis.chapter", index + 1).withStyle(Fonts.ACADEMIC_STYLE);
+            this.chapter = Component.translatable("research.thesis.chapter", index + 1).withStyle(style);
             this.localized = localized;
         }
 
@@ -353,9 +371,9 @@ public class BloodThesisGui extends Screen {
             super(TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT);
             this.ritual = ritual;
             String title = String.format("%d.%d   ", chapter + 1, ritualIndex + 1) + I18n.get("research.thesis.ritual." + ritual + ".title");
-            this.title = Component.literal(title).withStyle(Fonts.ACADEMIC_STYLE);
+            this.title = Component.literal(title).withStyle(style);
             TextUtil util = new TextUtil();
-            List<Element> elements = util.setStyle(Fonts.ACADEMIC_STYLE).parseText(I18n.get("research.thesis.ritual." + ritual + ".text"), TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
+            List<Element> elements = util.setStyle(style).parseText(I18n.get("research.thesis.ritual." + ritual + ".text"), TEXT_BLOCK_WIDTH, Minecraft.getInstance().font);
             this.text = new TextBlock(elements, TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT, Minecraft.getInstance().font);
             text.setDropShadow(false);
         }
@@ -383,7 +401,7 @@ public class BloodThesisGui extends Screen {
         protected RitualPicture(RitualTemplate ritual) {
             super(TEXT_BLOCK_WIDTH, TEXT_BLOCK_HEIGHT);
             image = new ResourceLocation(References.MODID, "textures/gui/rituals/" + ritual.getName() + ".png");
-            instability = Component.translatable("research.thesis.instability", Component.translatable("research.thesis.instability." + ritual.getThesisInstability().name().toLowerCase())).withStyle(Fonts.ACADEMIC_STYLE);
+            instability = Component.translatable("research.thesis.instability", Component.translatable("research.thesis.instability." + ritual.getThesisInstability().name().toLowerCase())).withStyle(style);
         }
 
         @Override
@@ -435,21 +453,21 @@ public class BloodThesisGui extends Screen {
             for (int i = 0; i < 1; i++) {
                 elements.add(Separators.smallSeparator(TEXT_BLOCK_WIDTH));
             }
-            elements.add(new ChapterTitle(ordinal(), Component.translatable("research.thesis." + name().toLowerCase() + ".title").withStyle(Fonts.ACADEMIC_STYLE)));
+            elements.add(new ChapterTitle(ordinal(), Component.translatable("research.thesis." + name().toLowerCase() + ".title").withStyle(style)));
             Font f = Minecraft.getInstance().font;
             if (preamble) {
                 TextUtil util = new TextUtil();
-                elements.addAll(util.setStyle(Fonts.ACADEMIC_STYLE).parseText(I18n.get("research.thesis." + name().toLowerCase() + ".preamble"), TEXT_BLOCK_WIDTH, f));
+                elements.addAll(util.setStyle(style).parseText(I18n.get("research.thesis." + name().toLowerCase() + ".preamble"), TEXT_BLOCK_WIDTH, f));
                 for (int j = 0; j < 3; j++) {
                     elements.add(Separators.smallSeparator(TEXT_BLOCK_WIDTH));
                 }
             }
             for (int i = 0; i < length; i++) {
                 if(rituals.isEmpty()) {
-                    elements.add(new SectionTitle(Component.translatable("research.thesis." + name().toLowerCase() + ".section." + (i + 1)).withStyle(Fonts.ACADEMIC_STYLE)));
+                    elements.add(new SectionTitle(Component.translatable("research.thesis." + name().toLowerCase() + ".section." + (i + 1)).withStyle(style)));
                 }
                 TextUtil util = new TextUtil();
-                elements.addAll(util.setStyle(Fonts.ACADEMIC_STYLE).parseText(I18n.get("research.thesis." + name().toLowerCase() + ".text." + (i + 1)), TEXT_BLOCK_WIDTH, f));
+                elements.addAll(util.setStyle(style).parseText(I18n.get("research.thesis." + name().toLowerCase() + ".text." + (i + 1)), TEXT_BLOCK_WIDTH, f));
                 if (i < length - 1) {
                     for (int j = 0; j < 3; j++) {
                         elements.add(Separators.smallSeparator(TEXT_BLOCK_WIDTH));

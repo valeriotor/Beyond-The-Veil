@@ -2651,6 +2651,7 @@ public class BTVLanguageProvider extends LanguageProvider {
     }
 
     private void addBloodThesis() {
+        add("research.thesis.title.translation_style", "#Remove the hashtag at the start of this sentence to make the thesis use the default font style.");
         add("research.thesis.title.institute1", "Institute of");
         add("research.thesis.title.institute2", "Anthropological Studies");
         add("research.thesis.title.title1", "Sanguis");

@@ -2351,6 +2351,7 @@
   "research.thesis.title.thesis": "Master Thesis",
   "research.thesis.title.title1": "Sanguis",
   "research.thesis.title.title2": "Inter Vitam et Mortem",
+  "research.thesis.title.translation_style": "#Remove the hashtag at the start of this sentence to make the thesis use the default font style.",
   "research.unlocked_hamlet.text": "Speak to the keeper of the lighthouse.",
   "research.upgraded_pool.text": "",
   "research.use_pillars.text": "Use the pillars... or don’t.",
