@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-31T21:57:10.6332423	Item Models: beyondtheveil
+// 1.20.1	2026-11-01T17:26:57.3910555	Item Models: beyondtheveil
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/adeline.json
 264ec7029ea39fba4f2928e20e6aad200c15ab5e assets/beyondtheveil/models/item/alembics.json
 b9295af9bc93464b96e0750792088ef6553c1b83 assets/beyondtheveil/models/item/algae_block.json
@@ -15,7 +15,7 @@ eccf371773f17a97a46cd841009153272f92ed26 assets/beyondtheveil/models/item/arche_
 69420ae42d4fe3d147b484e77ffea1f177e8ffa9 assets/beyondtheveil/models/item/arche_dial8.json
 5b930126197dd239d9bcc6b164b9ec528fb23aa7 assets/beyondtheveil/models/item/arche_dial9.json
 1940004db9f2cb32ba5623fa62fadd3eea2af7bb assets/beyondtheveil/models/item/arena.json
-aee5581ed967a19f3be9e549f3cbb19663f803b2 assets/beyondtheveil/models/item/blackjack.json
+5d4a7ae1b4cb03f5049982ca317ab477804e2b2f assets/beyondtheveil/models/item/blackjack.json
 35cfe44b3ddb34895d9f3087eeab165d799c128f assets/beyondtheveil/models/item/black_kelp.json
 540649a72e51acc85ca94b97512d8d225aa6db6b assets/beyondtheveil/models/item/black_mirror.json
 ed6f8ed075e9f905c619f40d5ed8ad770e448ee4 assets/beyondtheveil/models/item/black_seagrass.json
@@ -146,7 +146,7 @@ df0283fabdc13496409d7c67bdfacf73282c7e0f assets/beyondtheveil/models/item/regene
 4595d5f709e65efe33d2c4f7ffe8b7c1d4617c40 assets/beyondtheveil/models/item/revelation_ring.json
 00b33acc55c3605ed6e2934fcc13df4dd13f4600 assets/beyondtheveil/models/item/sa245_serum_bucket.json
 690ea1f3132694138569531da72660612fa51f55 assets/beyondtheveil/models/item/sacrifice_altar.json
-3b91ab14247232d6ab7625a9753a38e5638bd194 assets/beyondtheveil/models/item/sacrificial_knife.json
+ac8dd78337e77a93e8b9a67b445695bc6fb0df47 assets/beyondtheveil/models/item/sacrificial_knife.json
 4903ac5575c172cfefefceea38b4acd03075dbca assets/beyondtheveil/models/item/sample_tube.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/beyondtheveil/models/item/sandflatter.json
 40b9f752d1b61383ec5a54fc7b64825fd8ebc8d3 assets/beyondtheveil/models/item/sapling_shrub.json

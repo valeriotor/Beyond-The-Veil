@@ -125,7 +125,7 @@ public class BTVItemModels extends ItemModelProvider {
         singleTexture(GHOST_WEED_SEEDS.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/" + GHOST_WEED_SEEDS.getId().getPath()));
         singleTexture(REDSTONE_WEED_SEEDS.getId().getPath(),mcLoc("item/generated"), "layer0", modLoc("item/" + REDSTONE_WEED_SEEDS.getId().getPath()));
         singleTexture(GRASS_WEED_SEEDS.getId().getPath(),   mcLoc("item/generated"), "layer0", modLoc("item/" + GRASS_WEED_SEEDS.getId().getPath()));
-        singleTexture(BLACKJACK.getId().getPath(),          mcLoc("item/generated"), "layer0", modLoc("item/" + BLACKJACK.getId().getPath()));
+        singleTexture(BLACKJACK.getId().getPath(),          mcLoc("item/handheld"), "layer0", modLoc("item/" + BLACKJACK.getId().getPath()));
         singleTexture(SPINE.getId().getPath(),              mcLoc("item/generated"), "layer0", modLoc("item/" + SPINE.getId().getPath()));
         singleTexture(BLOOD_SHARD.getId().getPath(),        mcLoc("item/generated"), "layer0", modLoc("item/" + BLOOD_SHARD.getId().getPath()));
         singleTexture(HELD_FLETUM.getId().getPath(),        mcLoc("item/generated"), "layer0", modLoc("item/" + HELD_FLETUM.getId().getPath()));
@@ -145,7 +145,7 @@ public class BTVItemModels extends ItemModelProvider {
         //singleTexture(SIGIL_SKELLIE.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + SIGIL_SKELLIE.getId().getPath()));
         singleTexture(SIGIL_PLAYER.getId().getPath(),       mcLoc("item/generated"), "layer0", modLoc("item/" + SIGIL_PLAYER.getId().getPath()));
         singleTexture(SIGIL_PATHWAY.getId().getPath(),      mcLoc("item/generated"), "layer0", modLoc("item/" + SIGIL_PATHWAY.getId().getPath()));
-        singleTexture(SACRIFICIAL_KNIFE.getId().getPath(),  mcLoc("item/generated"), "layer0", modLoc("item/" + SACRIFICIAL_KNIFE.getId().getPath()));
+        singleTexture(SACRIFICIAL_KNIFE.getId().getPath(),  mcLoc("item/handheld"), "layer0", modLoc("item/" + SACRIFICIAL_KNIFE.getId().getPath()));
         singleTexture(MEMORY_PHIAL.getId().getPath(),       mcLoc("item/generated"), "layer0", modLoc("item/" + MEMORY_PHIAL.getId().getPath()));
         singleTexture(SAMPLE_TUBE.getId().getPath(),          mcLoc("item/generated"), "layer0", modLoc("item/" + SAMPLE_TUBE.getId().getPath()));
         singleTexture(NECRONOMICON.getId().getPath(),       mcLoc("item/generated"), "layer0", modLoc("item/" + NECRONOMICON.getId().getPath()));
