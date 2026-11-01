@@ -179,7 +179,7 @@ public enum PlayerDataLib {
     }
 
     public static boolean isKeyFromClientAllowed(String key) {
-        return allowedKeys.contains(key);
+        return allowedKeys.contains(key) || key.startsWith("bookmark");
     }
 
 }
