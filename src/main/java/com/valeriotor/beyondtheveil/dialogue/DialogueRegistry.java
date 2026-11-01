@@ -71,6 +71,7 @@ public class DialogueRegistry {
         registerDialogue(DialogueType.BLACK_MIRROR, "after_weep");
         registerDialogue(DialogueType.BLACK_MIRROR, "idle");
         registerDialogue(DialogueType.BLACK_MIRROR, "revelation");
+        registerDialogue(DialogueType.BLACK_MIRROR, "idle_we");
 
         registerDialogue(DialogueType.BLOOD_CULTIST, "initial");
         registerDialogue(DialogueType.BLOOD_CULTIST, "immortal");

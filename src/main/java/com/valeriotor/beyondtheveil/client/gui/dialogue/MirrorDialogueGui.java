@@ -158,8 +158,8 @@ public class MirrorDialogueGui extends AbstractContainerScreen<MirrorDialogueMen
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         guiGraphics.blit(TEXTURE, width / 2 - imageWidth / 2, height / 2 - imageHeight / 2, imageWidth, imageHeight, 0, 0, 2560, 1440, 2560, 1440);
-        guiGraphics.drawString(minecraft.font, "%d, %d".formatted(pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
-        guiGraphics.drawString(minecraft.font, "%f, %d".formatted(relativeMouseX(pMouseX), (pMouseY - height / 2 + imageHeight / 5)), 0, 15, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, "%d, %d".formatted(pMouseX, pMouseY), 0, 0, 0xFFFFFFFF);
+        //guiGraphics.drawString(minecraft.font, "%f, %d".formatted(relativeMouseX(pMouseX), (pMouseY - height / 2 + imageHeight / 5)), 0, 15, 0xFFFFFFFF);
         PoseStack pose = guiGraphics.pose();
         if (list != null) {
             pose.pushPose();

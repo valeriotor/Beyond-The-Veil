@@ -1202,6 +1202,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.black_mirror.revelation.____.option", "...");
         add("dialogue.black_mirror.revelation.it's_.option", "It’s true that it was through this very mirror that I even came this far.");
 
+        add("dialogue.black_mirror.idle_we.start.0", "There is just us here. The small fortress that is our mind.");
+        add("dialogue.black_mirror.idle_we.my.option", "Our cozy stronghold.");
     }
 
     private void addShoremanDialogue() {
@@ -1743,7 +1745,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.initial1.i.option", "I cannot trust you.");
         add("dialogue.shoreman_lighthouse_keeper.initial1.do.option", "Do not fear.");
 
-        add("dialogue.shoreman_lighthouse_keeper.did_dream.afraid.0", "We are so, so terribly afraid, traveller. Of the past repeating itself. Can you blame us? When staring in the eyes of genocide, how could one respond?");
+        add("dialogue.shoreman_lighthouse_keeper.did_dream.afraid.0", "We are so, so terribly afraid, traveller. Of the past repeating itself. Can you blame us? When staring in the eyes of slaughter, how could one respond?");
         add("dialogue.shoreman_lighthouse_keeper.did_dream.afraid.1", "Your ancestors were frightened by our customs, of the black soil that spread beneath our hamlets. They were afraid of our worship and beliefs, terrorized by a deity truer than theirs.\nBut, perhaps, you may yet break the cycle of agony. Were you to learn,| rather than kill. To be curious,| rather than prejudiced.");
         add("dialogue.shoreman_lighthouse_keeper.did_dream.unlike.0", "We are frightened, traveller, and we weep, for tears are born of fear.\nWill you weep for us?");
         add("dialogue.shoreman_lighthouse_keeper.did_dream.start.0", "I saw you tonight, traveller. Or rather, in my dream I saw yours. Speeding down below, towards the bottom of the sea.\nIt was a brave, angry dream, seeking an unveiling of truth as if dissatisfied with what you already knew.");
@@ -2474,7 +2476,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "This is our new form. Reborn in the shape of the sea; and yet, not ready to wholly relinquish our humanity – we are able to {§ntransform back and forth§r}[caption:transform]. For now.\\n" +
                 "Though there are downsides to this form (such as its reluctance to hold most non-marine objects) its strength is impressive, especially when in water. It can even withstand the pressures of Arche (though currents still pose a threat).\\n" +
                 "And so, it becomes both a tool for our future research in Arche, and the most glorious human achievement in and of itself: mankind’s victory upon its physical limitations, and the frailty of our bodies. I must spread this news in the research community, so that the results may be reproduced and bring a wave of progress like never before.\\n" +
-                "But all of that can wait. We must first adjust, and recover from all that our mind and body went through. Bliss and sorrow. Fortune and tragedy. Peace and pain.\\n" +
+                "But all of that can wait. We must first adjust, and recover from all the turmoil that our mind and body went through. Bliss and sorrow. Fortune and tragedy. Peace and pain.\\n" +
                 "Let us rest for a while. We earned it, friend.");
     }
 

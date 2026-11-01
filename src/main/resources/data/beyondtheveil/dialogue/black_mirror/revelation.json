@@ -548,6 +548,6 @@
     }
   },
   "type": "black_mirror",
-  "dialogueUnlocks": [],
+  "dialogueUnlocks": ["black_mirror:idle_we"],
   "dataUnlocks": ["met_mirror"]
 }
