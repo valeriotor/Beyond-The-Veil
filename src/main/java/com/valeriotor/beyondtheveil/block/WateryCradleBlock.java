@@ -116,4 +116,12 @@ public class WateryCradleBlock extends ThinMultiBlock3by1 implements EntityBlock
             if(pBlockEntity instanceof WateryCradleBE) ((WateryCradleBE) pBlockEntity).tickClient();
         };
     }
+
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        if (pLevel.getBlockEntity(pPos) instanceof SurgicalBE be) {
+            be.makeEntity();
+        }
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+    }
 }

@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by2;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
+import com.valeriotor.beyondtheveil.tile.SurgicalBE;
 import com.valeriotor.beyondtheveil.tile.WateryCradleBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -70,5 +72,13 @@ public class SurgeryBedBlock  extends ThinMultiBlock3by2 implements EntityBlock 
         return (pLevel1, pPos, pState1, pBlockEntity) -> {
             if(pBlockEntity instanceof SurgeryBedBE) ((SurgeryBedBE) pBlockEntity).tickClient();
         };
+    }
+
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        if (pLevel.getBlockEntity(pPos) instanceof SurgicalBE be) {
+            be.makeEntity();
+        }
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 }

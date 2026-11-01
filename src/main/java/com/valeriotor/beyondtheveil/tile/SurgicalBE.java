@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.tile;
 import com.mojang.authlib.GameProfile;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock;
+import com.valeriotor.beyondtheveil.capability.arsenal.TriggerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
@@ -616,5 +617,27 @@ public abstract class SurgicalBE extends BlockEntity {
             multiplier = Math.min(4, multiplier);
         }
         return multiplier;
+    }
+
+    public void makeEntity() {
+        if (patientStatus != null) {
+            PatientType type = patientStatus.getPatientType();
+            if (type != null) {
+                Mob mob = type.getMobFunction().apply(level);
+                if (mob != null && level != null && entityData != null) {
+                    ConvalescentData convalescentData = ConvalescentData.of(patientStatus);
+                    //entityData.put("convalescent", convalescentData.saveToNBT(new CompoundTag()));
+                    mob.setPos(getBlockPos().getCenter());
+                    mob.readAdditionalSaveData(entityData);
+                    mob.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
+                        c.loadFromNBT(convalescentData.saveToNBT(new CompoundTag()));
+                        mob.getCapability(TriggerDataProvider.TRIGGER_DATA).ifPresent(t -> {
+                            t.loadFromNBT(c.getTriggerData().saveToNBT(new CompoundTag()));
+                        });
+                    });
+                    level.addFreshEntity(mob);
+                }
+            }
+        }
     }
 }
