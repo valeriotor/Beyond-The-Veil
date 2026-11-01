@@ -1983,10 +1983,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "1. Will the dreamlike state induced by the sleep chamber also undergo the effects of a nearby fume spreader?\\1" +
                 "2. If so, how many times will I be able to achieve the effect in a single day (assuming there to be a limit)?\\1" +
                 "3. And if such a limit does indeed exist, after reaching it will I still be able to dream in a normal bed at the end of the same day?");
-        add("research.SLEEP_CHAMBER.stage.1", "The experiment with the fume spreader was successful, and the sleep chamber will likely prove itself an invaluable tool in my research.\\n" +
-                "As soon as I have performed sufficiently many experiments, I may also answer my other questions:\\n" +
-                "Max. uses of Sleep Chamber per day: ___\\1" +
-                "May use bed after reaching Sleep Chamber limit: Yes/No.");
+        add("research.SLEEP_CHAMBER.stage.1", "The experiment with the fume spreader was successful, and the sleep chamber will likely prove itself an invaluable tool in my research.\\n");
 
         add("research.SENTIENCE.title", "Sentient Dreams of Sentience");
         add("research.reminisced_sentience.text", "Dream of Sentience.");
