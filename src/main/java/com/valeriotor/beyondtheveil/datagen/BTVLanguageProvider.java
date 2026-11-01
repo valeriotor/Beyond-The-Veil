@@ -2416,22 +2416,21 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "§oYet, what if it§r does §owork. It would be no different from the surgery patients: a necessary sacrifice for the betterment of humanity.§r\\n" +
                 "No... I cannot surrender my mind and will.\\n" +
                 "I will commit the act, but §oonly§r if the keeper agrees to it.");
-        add("research.SNIPPET_OF_TRUTH.stage.1", "The shoremen bleed tears – and so, even our bond had been forged in blood. Theirs.\\n" +
+        add("research.SNIPPET_OF_TRUTH.stage.1", "The fracture would have been fatal on its own, but it was suffocation that took his life. He could not breathe. He drowned in my grasp, blood unspilled, no final bond remaining.\\n" +
                 "What point was there to all this? Was this the truth Dagon meant to teach us? A futile exercise in pointlessness? A trick in perspective?! Nothing we did not already know.\\n" +
                 "§oBut if the entire damn Ocean commands something, you cannot simply ignore it. There was nothing else we could do.§r\\n" +
                 "But then, how do we go forward from here? We don't have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
                 "...wait...\\n" +
                 "...who's \"we\"?");
-        add("research.SNIPPET_OF_TRUTH.stage.1.cultist", "The shoremen bleed tears – and so, even our bond had been forged in blood. Theirs.\\n" +
+        add("research.SNIPPET_OF_TRUTH.stage.1.cultist", "The shoremen bleed white tears – and so, even our bond had been forged in blood. Theirs.\\n" +
                 "What point was there to all this? Was this the truth Dagon meant to teach us? A futile exercise in pointlessness? A trick in perspective?! Nothing we did not already know.\\n" +
                 "§oBut if the entire damn Ocean commands something, you cannot simply ignore it. There was nothing else we could do.§r\\n" +
                 "But then, how do we go forward from here? We don't have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
                 "...wait...\\n" +
                 "...who's \"we\"?");
-        add("research.SNIPPET_OF_TRUTH.stage.1.arche", "The shoremen bleed tears – and so, even our bond had been forged in blood. Theirs.\\n" +
-                "What point was there to all this? Was this the truth Dagon meant to teach us? A futile exercise in pointlessness? A trick in perspective?! Nothing we did not already know.\\n" +
-                "§oBut if the entire damn Ocean commands something, you cannot simply ignore it. There was nothing else we could do.§r\\n" +
-                "But then, how do we go forward from here? We don't have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
+        add("research.SNIPPET_OF_TRUTH.stage.1.arche", "Deep down below at the bottom of the sea, swims a wise old half-man blessed by his Father's embrace. I suspect we will not meet again.\\n" +
+                "Could this have been the point, then? That, for how hard it may be, we still §ocan§r make a difference, and leave our mark on the world?\\n" +
+                "Perhaps, yes. But now, let us plan our next steps. How do we go forward from here? We don't have any leads, we have no more allies, and we are all alone in this quest that we... that I...\\n" +
                 "...wait...\\n" +
                 "...who's \"we\"?");
         add("research.SNIPPET_OF_TRUTH.stage.2", "Alright.\\n" +

@@ -194,7 +194,15 @@ public class ResearchPageGui extends Screen {
         Research.SubResearch stage = this.status.res.getStages()[currentStage];
         String epigraph = stage.getEpigraphKey() != null ? I18n.get(stage.getEpigraphKey(), getFormatting()) : null;
         String epigraphSource = stage.getEpigraphKey() != null ? I18n.get(stage.getEpigraphKey() + ".source", getFormatting()) : null;
-        String localized = I18n.get(stage.getTextKey(), getFormatting());
+        String textKey = stage.getTextKey();
+        if (currentStage == 1 && status.res.getKey().equals("SNIPPET_OF_TRUTH")) {
+            if (DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.saved_keeper.name())) {
+                textKey += ".arche";
+            } else if (DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.keeper_tears.name())) {
+                textKey += ".cultist";
+            }
+        }
+        String localized = I18n.get(textKey, getFormatting());
         //if (status.res.getKey().equals("FIRSTDREAMS") && status.getStage() == 2) {
         //    localized = localized.formatted(DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.HELD_MEMORY_DREAM) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.DRANK_MEMORY_DREAM) ? "§cX§r" : " ", DataUtil.getBoolean(getMinecraft().player, PlayerDataLib.REMINISCED.apply(Memory.METAL)) ? "§aV§r" : " ");
         //}
