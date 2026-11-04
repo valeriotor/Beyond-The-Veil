@@ -900,18 +900,22 @@
           {
             "epigraph": "research.METAMORPHOSIS.epigraph",
             "text": "research.METAMORPHOSIS.stage.0",
-            "required_research": ["scaled_crawler", "scaled_crawler_death"]
+            "required_research": ["scaled_crawler", "scaled_crawler_death"],
+            "recipes":  ["beyondtheveil:scales"]
           },
           {
             "text": "research.METAMORPHOSIS.stage.1",
-            "required_research": ["scaled_player", "scaled_player_death"]
+            "required_research": ["scaled_player", "scaled_player_death"],
+            "recipes":  ["beyondtheveil:scales"]
           },
           {
             "text": "research.METAMORPHOSIS.stage.2",
-            "required_research": ["metamorphosis"]
+            "required_research": ["metamorphosis"],
+            "recipes":  ["beyondtheveil:scales"]
           },
           {
-            "text": "research.METAMORPHOSIS.stage.3"
+            "text": "research.METAMORPHOSIS.stage.3",
+            "recipes":  ["beyondtheveil:scales"]
           }
         ]
       }

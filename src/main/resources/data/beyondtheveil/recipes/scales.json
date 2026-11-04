@@ -1,0 +1,20 @@
+{
+  "type": "beyondtheveil:gear_bench",
+  "category": "misc",
+  "group": "Beyond the Veil",
+  "key": {
+    "S": {
+      "item": "minecraft:prismarine_shard"
+    }
+  },
+  "pattern": [
+    "SSSS",
+    "SSSS",
+    "SSSS",
+    "SSSS"
+  ],
+  "result": {
+    "item": "beyondtheveil:scales"
+  },
+  "show_notification": true
+}

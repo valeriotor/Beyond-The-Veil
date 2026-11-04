@@ -1857,7 +1857,7 @@
   "item.beyondtheveil.sample_tube.crafting": "Used to collect fluids dropped by creatures on death: simply having one in the inventory when slaying specific enemies will have a chance to fill it up.\\1The tube may then be emptied in a liquid container. Its contents may also be {§ndiscarded§r}[caption:shift_right_click_air].",
   "item.beyondtheveil.sandflatter": "Sandflatter Spawn Egg",
   "item.beyondtheveil.scales": "Scales",
-  "item.beyondtheveil.scales.crafting": "",
+  "item.beyondtheveil.scales.crafting": "Inserting the scales into a patient’s back will apply §ldrop item§r to its abomination burst, at a cost in capacity. Inserting them into the chest instead will have catastrophic effects.",
   "item.beyondtheveil.scalpel": "Scalpel",
   "item.beyondtheveil.scalpel.crafting": "A tool for surgical incisions. More information is in the surgeon’s journal.",
   "item.beyondtheveil.sea_snake": "Sea Snake Spawn Egg",
