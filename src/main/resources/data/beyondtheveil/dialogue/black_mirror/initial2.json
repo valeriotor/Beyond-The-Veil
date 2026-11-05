@@ -66,7 +66,9 @@
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
-          "endsDialogue": true
+          "endsDialogue": true,
+          "stopsDialogueUnlock": true,
+          "stopsDataUnlock": true
         }
       ]
     },

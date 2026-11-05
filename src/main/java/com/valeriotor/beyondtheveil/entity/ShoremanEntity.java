@@ -17,6 +17,7 @@ import com.valeriotor.beyondtheveil.container.dialogue.EntityDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
 import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
+import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.entity.ai.control.SuspiciousBodyRotationControl;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.StrollThroughHamletGoal;
@@ -250,6 +251,9 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
         DialogueType dialogueType = getProfession().toType();
         DialogueTemplate template = DialogueData.for_(player).getDialogue(dialogueType);
         if (template != null) {
+            if (DataUtil.getBoolean(player, PlayerDataLib.REMINISCED.apply(Memory.DARKNESS.getDataName()))) {
+                DataUtil.setBooleanOnServerAndSync(player, "spoke_dweller", true);
+            }
             setTalkingPlayer(player);
             NetworkHooks.openScreen(player, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new EntityDialogueMenu(pContainerId, pPlayerInventory, player, this, template, getId()), Component.translatable("gui.dialogue." + getProfession().name().toLowerCase() + ".display_name")), b -> {
                 b.writeUtf(dialogueType.name());

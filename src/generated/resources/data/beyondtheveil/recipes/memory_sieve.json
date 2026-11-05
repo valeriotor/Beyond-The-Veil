@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "group": "Beyond the Veil",
   "key": {
     "S": {
       "item": "minecraft:stone"

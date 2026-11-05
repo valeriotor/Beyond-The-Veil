@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.tile.FumeSpreaderBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -61,7 +62,9 @@ public class FumeSpreaderBlock extends Block implements EntityBlock {
             ItemStack stack = player.getItemInHand(hand);
             if (!state.getValue(FULL) && stack.getItem() == Registration.ONIRIC_INCENSE.get()) {
                 level.setBlock(pos, state.setValue(FULL, true), 3);
-                stack.shrink(1);
+                if (!player.getAbilities().instabuild) {
+                    stack.shrink(1);
+                }
                 return InteractionResult.CONSUME;
             } else if (stack.getItem() == Registration.MEMORY_PHIAL.get() && state.getValue(FULL)) {
                 CompoundTag tag = stack.getOrCreateTag();

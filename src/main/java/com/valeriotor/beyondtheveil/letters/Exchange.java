@@ -140,7 +140,7 @@ public class Exchange {
     }
 
     public void scheduleMail(Player player) {
-        int time = player.getRandom().nextInt(50, 100);
+        int time = player.getRandom().nextInt(20 * 60 * 5, 20 * 60 * 20);
         PlayerTimer timer = new PlayerTimer(time, "letter_" + getName(), PersistentPlayerTimer.LETTER, Map.of("exchange", getName()));
         player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.addTimer(timer));
     }

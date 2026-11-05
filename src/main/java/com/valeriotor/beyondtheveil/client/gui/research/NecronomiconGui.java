@@ -88,6 +88,7 @@ public class NecronomiconGui extends Screen {
     private static final int RESEARCH_BACKGROUND_SIZE = 48;
     private float baseFactor;
     private final int stage;
+    private boolean postOpenClick;
 
     public NecronomiconGui() {
         super(Component.translatable("gui.necronomicon")); // TODO change to TranslatableComponent("gui.necronomicon")
@@ -100,7 +101,7 @@ public class NecronomiconGui extends Screen {
             this.topX = -400;
             this.topY = -200;
         }
-        this.scaleFactor = data.getOrSetInteger(PlayerDataLib.necro_fac.name(), 3, false) / 4F;
+        this.scaleFactor = data.getOrSetInteger(PlayerDataLib.necro_fac.name(), 6, false) / 4F;
         for (Entry<String, ResearchStatus> entry : map.entrySet()) {
             if (entry.getValue().isKnown(map, data)) {
                 if (entry.getValue().getStage() == -1) {
@@ -422,7 +423,7 @@ public class NecronomiconGui extends Screen {
 
     private void drawEye(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         PoseStack poseStack = guiGraphics.pose();
-        if (!updated.isEmpty() || !newClickables.isEmpty()) {
+        if ((!updated.isEmpty() || !newClickables.isEmpty()) && ResearchUtil.isResearchComplete(minecraft.player, "FIRSTDREAMS")) {
 
             int counterMod32 = counter & 31;
             int pupilX = (int) (pupilXOffset + (pupilNextXOffset - pupilXOffset) * (counterMod32 + partialTicks) / 4);
@@ -446,10 +447,12 @@ public class NecronomiconGui extends Screen {
     public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
         //topX = (int) MathHelperBTV.clamp(-700, 3840 - this.width / 2F, topX - pDragX / baseFactor / 1.5);
         //topY = (int) MathHelperBTV.clamp(-700, 2160 - this.height / 2F, topY - pDragY / baseFactor / 1.5);
-        pMouseX /= scaleFactor * baseFactor;
-        pMouseY /= scaleFactor * baseFactor;
-        topX = (int) (dragX - (pMouseX - dragMouseX));
-        topY = (int) (dragY - (pMouseY - dragMouseY));
+        if (postOpenClick) {
+            pMouseX /= scaleFactor * baseFactor;
+            pMouseY /= scaleFactor * baseFactor;
+            topX = (int) (dragX - (pMouseX - dragMouseX));
+            topY = (int) (dragY - (pMouseY - dragMouseY));
+        }
         return true;
     }
 
@@ -474,7 +477,7 @@ public class NecronomiconGui extends Screen {
         }
         pMouseX /= scaleFactor * baseFactor;
         pMouseY /= scaleFactor * baseFactor;
-        if (pMouseX > width / scaleFactor / baseFactor - 142 && pMouseY > height / scaleFactor / baseFactor - 142) {
+        if (pMouseX > width / scaleFactor / baseFactor - 142 && pMouseY > height / scaleFactor / baseFactor - 142 && ResearchUtil.isResearchComplete(minecraft.player, "FIRSTDREAMS")) {
             if (!updated.isEmpty()) {
                 if (highlightIterator == null || !highlightIterator.hasNext()) {
                     highlightIterator = updated.iterator();
@@ -522,6 +525,9 @@ public class NecronomiconGui extends Screen {
         }
         for (Research res : this.newClickables) {
             if (openResearch(res, pMouseX, pMouseY, pButton)) return true;
+        }
+        if (counter > 5) {
+            postOpenClick = true;
         }
         dragX = topX;
         dragY = topY;

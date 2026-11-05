@@ -57,6 +57,9 @@ public class ReminiscenceClientWaypoint extends ReminiscenceClient.TextReminisce
             // Note: this does not account for FOV changes such as sprinting, nor effects such as bobbing. It only takes into account the FOV value from the options
             Vec3 vec3 = gameRenderer.getMainCamera().getPosition();
             BlockPos pos = reminiscenceWaypoint.getPos();
+            if (Minecraft.getInstance().level != null && pos.getY() == Minecraft.getInstance().level.getMinBuildHeight()) {
+                pos = pos.atY(Minecraft.getInstance().level.getSeaLevel() - 1);
+            }
             Quaternionf q = new Quaternionf(gameRenderer.getMainCamera().rotation());
             q.conjugate();
             Vector3f vector = new Vector3f((float) (pos.getX() - vec3.x), (float) (pos.getY() - vec3.y), (float) (pos.getZ() - vec3.z));

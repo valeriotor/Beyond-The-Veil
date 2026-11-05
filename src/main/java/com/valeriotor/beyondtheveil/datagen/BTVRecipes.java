@@ -25,7 +25,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("SSS")
                 .define('S', Blocks.STONE)
                 .define('W', Items.WATER_BUCKET)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_memory_sieve", has(Registration.MEMORY_SIEVE.get()))
                 .save(consumer);
 
@@ -36,7 +36,7 @@ public class BTVRecipes extends RecipeProvider {
                 .define('G', Blocks.GLASS)
                 .define('W', Items.WATER_BUCKET)
                 .define('B', ItemTags.WOODEN_BUTTONS)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_memory_phial", has(Registration.MEMORY_PHIAL.get()))
                 .save(consumer);
 
@@ -46,7 +46,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("OOO")
                 .define('G', Blocks.GLASS)
                 .define('O', Items.GOLD_INGOT)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_fume_spreader", has(Registration.FUME_SPREADER.get()))
                 .save(consumer);
 
@@ -56,7 +56,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern(" S ")
                 .define('G', Items.GOLD_INGOT)
                 .define('S', Items.STICK)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_gear", has(Registration.GEAR.get()))
                 .save(consumer);
 
@@ -66,7 +66,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("LLL")
                 .define('G', Registration.GEAR.get())
                 .define('L', ItemTags.LOGS)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_gear_bench", has(Registration.GEAR_BENCH.get()))
                 .save(consumer);
 
@@ -78,7 +78,7 @@ public class BTVRecipes extends RecipeProvider {
                 .define('T', Items.TROPICAL_FISH)
                 .define('B', Items.BEETROOT)
                 .define('S', Items.SWEET_BERRIES)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_tropical_delight", has(Registration.TROPICAL_DELIGHT.get()))
                 .save(consumer);
 
@@ -88,7 +88,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("WSW")
                 .define('W', Registration.DAMP_WOOD.get())
                 .define('S', Items.STICK)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_damp_wood", has(Registration.DAMP_WOOD.get()))
                 .save(consumer);
 
@@ -97,7 +97,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("WW ")
                 .pattern("WWW")
                 .define('W', Registration.DAMP_WOOD.get())
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_damp_wood", has(Registration.DAMP_WOOD.get()))
                 .save(consumer);
 
@@ -106,7 +106,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern(" W ")
                 .pattern("  W")
                 .define('W', Registration.DAMP_WOOD.get())
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_damp_wood", has(Registration.DAMP_WOOD.get()))
                 .save(consumer);
 
@@ -116,7 +116,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("   ")
                 .define('W', Registration.DAMP_WOOD.get())
                 .define('C', Registration.DAMP_CANOPY.get())
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_damp_canopy", has(Registration.DAMP_CANOPY.get()))
                 .save(consumer);
 
@@ -125,7 +125,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("W W")
                 .pattern("WWW")
                 .define('W', Registration.DAMP_WOOD.get())
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_damp_wood", has(Registration.DAMP_WOOD.get()))
                 .save(consumer);
 
@@ -134,7 +134,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("W W")
                 .pattern("WWW")
                 .define('W', Registration.DAMP_WOOD.get())
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_damp_wood", has(Registration.DAMP_WOOD.get()))
                 .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.FISH_BARREL.get().asItem()));
 
@@ -144,7 +144,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("WSW")
                 .define('W', Registration.DAMP_WOOD.get())
                 .define('S', Items.STONE)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_slug_bait", has(Registration.SLUG_BAIT.get()))
                 .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.SLUG_BAIT.get().asItem()));
 
@@ -154,7 +154,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("I  ")
                 .define('W', Registration.DAMP_WOOD.get())
                 .define('I', Items.IRON_INGOT)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_slug_catcher", has(Registration.SLUG_CATCHER.get()))
                 .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.SLUG_CATCHER.get().asItem()));
 
@@ -163,7 +163,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("WW ")
                 .pattern("WWW")
                 .define('W', Registration.WORN_BRICKS.get())
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_worn_bricks", has(Registration.WORN_BRICKS.get()))
                 .save(consumer);
 
@@ -172,7 +172,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("WW ")
                 .pattern("WWW")
                 .define('W', Registration.BLOOD_BRICK.get())
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_blood_brick", has(Registration.BLOOD_BRICK.get()))
                 .save(consumer);
 
@@ -181,7 +181,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("   ")
                 .pattern("WWW")
                 .define('W', Registration.BLOOD_BRICK.get())
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_blood_brick", has(Registration.BLOOD_BRICK.get()))
                 .save(consumer);
 
@@ -190,7 +190,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern("   ")
                 .pattern("WWW")
                 .define('W', Registration.BLOOD_SMOOTH_STONE.get())
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_blood_smooth_stone", has(Registration.BLOOD_SMOOTH_STONE.get()))
                 .save(consumer);
 
@@ -200,7 +200,7 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern(" E ")
                 .define('E', Items.ENDER_EYE)
                 .define('B', Items.BOOK)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_necronomicon", has(Registration.NECRONOMICON.get()))
                 .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.NECRONOMICON.get().asItem()));
 
@@ -210,14 +210,14 @@ public class BTVRecipes extends RecipeProvider {
                 .pattern(" G ")
                 .define('G', Items.GLASS)
                 .define('H', Items.HEART_OF_THE_SEA)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_antidote_capsule", has(Registration.ANTIDOTE_CAPSULE.get()))
                 .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.ANTIDOTE_CAPSULE.get().asItem()) + "1");
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.ANTIDOTE_CAPSULE.get(), 2)
                 .requires(Registration.ANTIDOTE_CAPSULE.get())
                 .requires(Items.INK_SAC)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_antidote_capsule", has(Registration.ANTIDOTE_CAPSULE.get()))
                 .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.ANTIDOTE_CAPSULE.get().asItem()) + "2");
 
@@ -225,27 +225,27 @@ public class BTVRecipes extends RecipeProvider {
                 .requires(Items.CLAY_BALL)
                 .requires(Items.FLINT)
                 .requires(Blocks.GRAVEL)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_oniric_incense", has(Registration.ONIRIC_INCENSE.get()))
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.DAMP_WOOD.get(), 4)
                 .requires(Registration.DAMP_LOG.get())
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_damp_log", has(Registration.DAMP_LOG.get()))
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.SEAWEED_STEW.get(), 1)
                 .requires(Items.BOWL)
                 .requires(Items.SEAGRASS, 3)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_seaweed_stew", has(Registration.SEAWEED_STEW.get()))
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.KELP_COD_BUNDLE.get(), 1)
                 .requires(Items.COD)
                 .requires(Items.KELP, 2)
-                .group("Beyond the Veil")
+                //.group("Beyond the Veil")
                 .unlockedBy("has_kelp_cod_bundle", has(Registration.KELP_COD_BUNDLE.get()))
                 .save(consumer);
 

@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "group": "Beyond the Veil",
   "ingredients": [
     {
       "item": "beyondtheveil:damp_log"

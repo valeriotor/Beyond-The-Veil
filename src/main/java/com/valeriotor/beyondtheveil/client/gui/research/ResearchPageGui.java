@@ -235,11 +235,17 @@ public class ResearchPageGui extends Screen {
             progress.visible = progress.active = false;
             String[] reqs = status.res.getStages()[this.status.getStage()].getRequirements();
             if (reqs != null) {
+                boolean prevUnlocked = true;
                 for (String req : reqs) {
                     if (!DataUtil.getBoolean(getMinecraft().player, req)) {
-                        MutableComponent requirement = Component.translatable("research." + req + ".text");
-                        this.reqText = minecraft.font.split(requirement, arrowXOffset * 2 - ARROW_WIDTH * 2);
-                        break;
+                        if (prevUnlocked) {
+                            MutableComponent requirement = Component.translatable("research." + req + ".text");
+                            this.reqText = minecraft.font.split(requirement, arrowXOffset * 2 - ARROW_WIDTH * 2);
+                        }
+                        //break;
+                        prevUnlocked = false;
+                    } else {
+                        prevUnlocked = true;
                     }
                 }
             }

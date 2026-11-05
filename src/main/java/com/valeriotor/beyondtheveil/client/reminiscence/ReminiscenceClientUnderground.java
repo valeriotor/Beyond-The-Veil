@@ -90,40 +90,45 @@ public class ReminiscenceClientUnderground extends ReminiscenceClient {
         //poseStack.scale(2.5F, 2.5F, 2.5F);
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         int offset = 0;
+        float scaleFactor = Math.min(1200F / window.getGuiScaledHeight(), 1200F / window.getGuiScaledWidth());
         for (Count count : sortedCounter.values()) {
             BakedModel pBakedmodel = itemRenderer.getModel(count.stack, (Level) null, (LivingEntity) null, 0);
             //TODO is this necessary RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            PoseStack posestack = RenderSystem.getModelViewStack();
-            posestack.pushPose();
-            posestack.translate((double) window.getGuiScaledWidth() / 2 - (double) maxSideLengthForLayer / 2 + 100 * offset, (double) window.getGuiScaledHeight() / 8, (double) (100.0F /*+ itemRenderer.blitOffset*/)); // TODO check if blitoffset is needed
-            posestack.translate(8.0D, 8.0D, 0.0D);
-            posestack.scale(1.0F, -1.0F, 1.0F);
-            posestack.scale(16.0F, 16.0F, 16.0F);
-            posestack.scale(2.5F, 2.5F, 0);
+            PoseStack modelViewStack = poseStack;//RenderSystem.getModelViewStack();
+            modelViewStack.pushPose();
+            modelViewStack.translate((double) window.getGuiScaledWidth() / 2 - (double) maxSideLengthForLayer / 2 + 100 * offset / scaleFactor, (double) window.getGuiScaledHeight() / 8, (double) (100.0F /*+ itemRenderer.blitOffset*/)); // TODO check if blitoffset is needed
+            //modelViewStack.translate(8.0D, 8.0D, 0.0D);
+            //modelViewStack.scale(1.0F, -1.0F, 1.0F);
+            //modelViewStack.scale(16.0F, 16.0F, 16.0F);
+            modelViewStack.scale(2.5F, 2.5F, 1);
+            modelViewStack.scale(1/scaleFactor, 1/scaleFactor, 1);
+
             RenderSystem.applyModelViewMatrix();
             PoseStack posestack1 = new PoseStack();
-            MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
-            boolean flag = !pBakedmodel.usesBlockLight();
-            if (flag) {
-                Lighting.setupForFlatItems();
-            }
+            //MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
+            //boolean flag = !pBakedmodel.usesBlockLight();
+            //if (flag) {
+            //    Lighting.setupForFlatItems();
+            //}
+            event.getGuiGraphics().renderItem(count.stack, 0, 0);
+            //itemRenderer.render(count.stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, pBakedmodel);
+            //multibuffersource$buffersource.endBatch();
+            //RenderSystem.enableDepthTest();
+            //if (flag) {
+            //    Lighting.setupFor3DItems();
+            //}
 
-            itemRenderer.render(count.stack, ItemDisplayContext.GUI, false, posestack1, multibuffersource$buffersource, 15728880, OverlayTexture.NO_OVERLAY, pBakedmodel);
-            multibuffersource$buffersource.endBatch();
-            RenderSystem.enableDepthTest();
-            if (flag) {
-                Lighting.setupFor3DItems();
-            }
-
-            posestack.popPose();
-            RenderSystem.applyModelViewMatrix();
-            RenderSystem.setShaderColor(1, 1, 1, 1);
+            modelViewStack.popPose();
+            //RenderSystem.applyModelViewMatrix();
+            //RenderSystem.setShaderColor(1, 1, 1, 1);
             poseStack.pushPose();
-            poseStack.translate(window.getGuiScaledWidth() / 2 - maxSideLengthForLayer / 2 + 100 * (offset) + 30, window.getGuiScaledHeight() / 8, 0);
+            poseStack.translate(window.getGuiScaledWidth() / 2D - maxSideLengthForLayer / 2D + 100 * (offset) / scaleFactor + 45 / scaleFactor, window.getGuiScaledHeight() / 8D, 0);
             poseStack.scale(2, 2, 1);
+            poseStack.scale(1/scaleFactor, 1/scaleFactor, 1);
+            poseStack.translate(0, 6, 0);
             event.getGuiGraphics().drawString(Minecraft.getInstance().font, "x" + Math.min(count.counter, ticks / 2), 0, 0, 0xFFFFFFFF);
             poseStack.popPose();
             offset++;
@@ -132,7 +137,7 @@ public class ReminiscenceClientUnderground extends ReminiscenceClient {
         if (layer != null) {
             int sideForBlock = maxSideLengthForLayer / layer.length;
             poseStack.pushPose();
-            poseStack.translate(window.getGuiScaledWidth() / 2 + maxSideLengthForLayer / 2 + 10, window.getGuiScaledHeight() + (layer.length * 0.5) * (sideForBlock + 1) - maxSideLengthForLayer - 15 - 15, 0);
+            poseStack.translate(window.getGuiScaledWidth() / 2D + maxSideLengthForLayer / 2D + 10, window.getGuiScaledHeight() + (layer.length * 0.5) * (sideForBlock + 1) - maxSideLengthForLayer - 15 - 15, 0);
             poseStack.scale(3, 3, 1);
             event.getGuiGraphics().drawString(Minecraft.getInstance().font, "y: " + y, 0, 0, 0xFFFFFFFF);
             poseStack.popPose();
@@ -142,12 +147,13 @@ public class ReminiscenceClientUnderground extends ReminiscenceClient {
                     random.setSeed(42L);
                     poseStack.pushPose();
                     Vec3 position = Minecraft.getInstance().cameraEntity.position();
-                    poseStack.translate(window.getGuiScaledWidth() / 2 + i * (sideForBlock + 1) - maxSideLengthForLayer / 2, window.getGuiScaledHeight() + j * (sideForBlock + 1) - maxSideLengthForLayer - 15, 0);
+                    poseStack.translate(window.getGuiScaledWidth() / 2D + i * (sideForBlock + 1) - maxSideLengthForLayer / 2D, window.getGuiScaledHeight() + j * (sideForBlock + 1) - maxSideLengthForLayer - 15, 0);
                     BlockState state = layer[i][j];
                     List<BakedQuad> quads = Minecraft.getInstance().getBlockRenderer().getBlockModel(state).getQuads(state, Direction.UP, Minecraft.getInstance().player.getRandom());
                     if (quads.size() > 0) {
                         TextureAtlasSprite sprite = quads.get(0).getSprite();
-                        event.getGuiGraphics().blit(new ResourceLocation(sprite.contents().name().getNamespace(), "textures/" + sprite.contents().name().getPath() + ".png"), 0, 0, 0, 0, sideForBlock, sideForBlock, sideForBlock, sideForBlock);
+                        event.getGuiGraphics().blit(0, 0, 0, sideForBlock, sideForBlock, sprite);
+//                        event.getGuiGraphics().blit(new ResourceLocation(sprite.contents().name().getNamespace(), "textures/" + sprite.contents().name().getPath() + ".png"), 0, 0, 0, 0, sideForBlock, sideForBlock, sideForBlock, sideForBlock);
                     }
                     //Gui.blit(poseStack, 10, 10, 0, 138, 138, sprite);
                     //.getModelData(Minecraft.getInstance().level, new BlockPos(position), pState, ModelDataManager.getModelData(Minecraft.getInstance().level, new BlockPos(position)));

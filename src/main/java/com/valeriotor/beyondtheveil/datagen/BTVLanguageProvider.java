@@ -107,6 +107,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("commands.btvdata.player_not_found", "Player not found");
         add("commands.btvdata.dialogue_type_not_found", "Dialogue type unknown");
         add("commands.btvdata.dialogue_template_not_found", "Dialogue template unknown");
+        add("beginning.netherreturn", "I have journeyed down and up again, and this sensation feels familiar. I shall write of it in Al Azif.");
     }
 
     private void addEntities() {
@@ -207,7 +208,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("memory.metal.name", "Metal");
         add("memory.metal.brief", "A common memory among those experienced in mining – that of striking ore – yet this is of a different sort, as if in it the iron was felt by thought, rather than touch.");
-        add("memory.metal.0.1", "This dream explores the ground below me, revealing to me the presence of metal ores such as iron or gold. I can scroll through the various layers that have been probed.");
+        add("memory.metal.0.1", "This dream explores the ground below me, revealing to me the presence of metal ores such as iron or gold. I can §lscroll§r through the various layers that have been probed.");
         add("memory.metal.1.1", "↳ §lVoid§r: Increases the search radius.");
         add("memory.metal.2.1", "§oPath Sigil§r: Starts the search at the target area.");
         add("memory.metal.4.1", "§oImmortal Sigil§r: Starts the search below the target human.");
@@ -1014,10 +1015,10 @@ public class BTVLanguageProvider extends LanguageProvider {
 
 
         add("dialogue.black_mirror.initial2.must.0", "A tear is born of fear. From the past, present or future. And the shoremen fear what has happened and may happen once again.");
-        add("dialogue.black_mirror.initial2.must.1", "The pain they endure is tremendous.. but why me? Why need I atone the sins of my forefathers?");
+        add("dialogue.black_mirror.initial2.must.1", "The pain they endure is tremendous... but why me? Why need I atone the sins of my forefathers?");
         add("dialogue.black_mirror.initial2.confirm.0", "Is this it?");
         add("dialogue.black_mirror.initial2.terrible.0", "A terrible thought to hold on to, yet hold on I must.");
-        add("dialogue.black_mirror.initial2.terrible.1", "Have I erred? A grief so great — not of a person, but of a *people*. To accept a burden so heavy.. may shatter me.");
+        add("dialogue.black_mirror.initial2.terrible.1", "Have I erred? A grief so great — not of a person, but of a *people*. To accept a burden so heavy... may shatter me.");
         add("dialogue.black_mirror.initial2.terrible.2", "Too late to turn back. My vision blurs, and a tear caresses my cheek. Such a little thing, yet of such incalculable weight.");
         add("dialogue.black_mirror.initial2.start.0", "There is just me, here. The small fortress that is my mind.");
         add("dialogue.black_mirror.initial2.weep.0", "What is it I fear most?");
@@ -1373,7 +1374,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_bartender.communed2.show.option", "Show me your drinks.");
 
 
-        add("dialogue.shoreman_drunk.initial.mean.0", "It’s just.. I dunnae like life here no more. Ne’er did, actually.\nBroodin’, borin’ fishermen. Misbegotten children of earth and water, I tell ya! That’s what we be!");
+        add("dialogue.shoreman_drunk.initial.mean.0", "It’s just... I dunnae like life here no more. Ne’er did, actually.\nBroodin’, borin’ fishermen. Misbegotten children of earth and water, I tell ya! That’s what we be!");
         add("dialogue.shoreman_drunk.initial.start.0", "A newcomer, eh? We dun’t see many outsiders no’adays.\nGood for ya. Being an outsider an’ all.");
         add("dialogue.shoreman_drunk.initial.brethren.0", "You’d talk ill too, had ya seen what I seen.");
         add("dialogue.shoreman_drunk.initial.elaborate.0", "]]Hmmm.[[\nNah. Cannae talk on a parched throat.");
@@ -1440,7 +1441,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_scholar.initial.knowledge.1", "I can well grasp your struggle. I, too, am a scholar, and oh the wonders I have seen and dreamt of!");
         add("dialogue.shoreman_scholar.initial.dream.0", "A dream? Of our black shores and dark water?\nI see. Perhaps, then, our dreams met already. Deep down below, at the bottom of the ocean.");
         add("dialogue.shoreman_scholar.initial.alas.0", "Alas, our customs dictate I do not discuss my learnings with outsiders.\nI am sorry.");
-        add("dialogue.shoreman_scholar.initial.prejudice.0", "Prejudice? I.. I...\n..I see. You have given me food for thought, traveller.");
+        add("dialogue.shoreman_scholar.initial.prejudice.0", "Prejudice? I.. I...\n...I see. You have given me food for thought, traveller.");
         add("dialogue.shoreman_scholar.initial.suspicion.0", "I see. Please understand that it is not a mere lack of trust. In view of an outsider, our hearts are gripped with fear. By instinct, almost.\nYet it is not innate. There is much history behind our demeanor.\nMuch fury. Much grief. Much regret.");
         add("dialogue.shoreman_scholar.initial.just.option", "Just like the others, blinded by prejudice.");
         add("dialogue.shoreman_scholar.initial.knowledge_.option", "Knowledge.");
@@ -1962,7 +1963,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Yet I can make no conclusions. Was this... §odream§r a simple reflection of my recent real life experiences, or did it have a life of its own?\\n" +
                 "Oh, what a fascinating prospect! That of a sentient dream, living and breathing as I do. I wonder, then: could I talk to it? And if so, in what tongue?\\n" +
                 "I propose to speak through my own §omemories§r: their effect on our dreams is undeniable. Most importantly, the study of human memories is a well-trodden field of research in academic circles. Past literature details the construction and usage of a memory sieve, a simple altar upon which I can place an item that evokes a certain memory, and subsequently store the result in a memory phial.\\n" +
-                "I will begin with an iron ingot: an intense memory of metal, of the first time I mined a vein and saw wealth trickle in my hands. There is so much metal underground, could the dream see it?");
+                "I will begin with an iron ingot: an intense memory of metal, of the first time I mined a vein and saw wealth trickle in my hands. There is so much metal underground – could the dream see it?");
         add("research.FIRSTDREAMS.stage.2", "Replicating the steps of my predecessors was no issue. It is now my responsibility to tie it to the study of dreams.\\n" +
                 "The goal is to have my own memory affect my mind while I sleep, and to do so I must experiment. A few different possibilities come to mind:\\n" +
                 "[%s] Hold the phial in my hand while I sleep.\\1" +
@@ -1976,17 +1977,17 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("research.SLEEP_CHAMBER.title", "Sleep Chamber");
         add("research.slept_in_chamber.text", "Experiment until you can answer at least the first question.");
-        add("research.SLEEP_CHAMBER.stage.0", "I had always been proud of my ability to stay awake and work and walk as long as I needed, leaving sleep to times of absolute necessity. Now, however, it is sleep I need, and I cannot get enough of it. My research studies are limited by the frequency at which I can dream. A most frustrating bound.\\n" +
+        add("research.SLEEP_CHAMBER.stage.0", "I had always been proud of my ability to stay awake and work and walk as long as I needed, leaving sleep to times of absolute necessity. Now, however, it is sleep I need, and I cannot get enough of it! My research studies are limited by the frequency at which I can dream. A most frustrating bound.\\n" +
                 "Thankfully, there is a great body of work aimed at replicating the effects of dreaming through various techniques and devices; one must only look at Carter’s \"The Gate and the Key\" to find all sorts of examples.\\n" +
-                "The method most easily within reach is through the use of a Sleep Chamber, i.e. a small room relying on water vapours to lull its tenant in a dreamlike state. One must simply open it, step inside and close the door. It is a somewhat complex contraption, and creating it will require a Gear Bench. \\n" +
+                "The method most easily within reach is through the use of a Sleep Chamber, i.e. a small room relying on water vapours to lull its tenant into a dreamlike state. One must simply open it, step inside and close the door. It is a somewhat complex contraption, and creating it will require a Gear Bench. \\n" +
                 "Once the testbed is built, I may proceed with the evaluation. Building atop of past literature, in this study I aim to answer the following questions:\\n" +
                 "1. Will the dreamlike state induced by the sleep chamber also undergo the effects of a nearby fume spreader?\\1" +
                 "2. If so, how many times will I be able to achieve the effect in a single day (assuming there to be a limit)?\\1" +
-                "3. And if such a limit does indeed exist, after reaching it will I still be able to dream in a normal bed at the end of the same day?");
+                "3. If such a limit does indeed exist, after reaching it will I still be able to dream in a normal bed at the end of the same day?");
         add("research.SLEEP_CHAMBER.stage.1", "The experiment with the fume spreader was successful, and the sleep chamber will likely prove itself an invaluable tool in my research.\\n");
 
         add("research.SENTIENCE.title", "Sentient Dreams of Sentience");
-        add("research.reminisced_sentience.text", "Dream of Sentience.");
+        add("research.reminisced_sentience.text", "Dream and reminisce of Sentience.");
         add("research.found_sentience.text", "See where the dream leads me.");
         add("research.SENTIENCE.stage.0", "Discovering and acknowledging the intelligence of dreams has marked me with a wild, irrepressible memory, the realization upheaving my view of the world. I spoke to it in the language of thoughts, and it replied in kind as I reminisced.\\n" +
                 "Yet, I am not the only dreamer — indeed, there is hardly a thing more characteristic of sentient creatures than the ability to dream. What could then be happening in their own, weird plane of existence, in however few or many its dimensions and laws? Do dreams talk to one another? And if so, is it a loud and violent cacophony of disparate and disparaging memories or a harmonious exchange among all those beings blessed and united by the gift of life?\\n" +
@@ -2480,12 +2481,12 @@ public class BTVLanguageProvider extends LanguageProvider {
     private void addCraftingRegistry() {
         add("research.CRAFTING.introduced", "First introduced in: {§2%1$s§r}[link:research.%2$s].");
 
-        add(FUME_SPREADER.get().getDescriptionId() + ".crafting", "Breathing its fumes while asleep will alter the behaviour of my dreams.\\1Must be placed on the ground near a bed or similar object. It must then be filled with {§noniric incense§r}[link:crafting.oniric_incense] and, finally, with a {§nmemory phial§r}[link:crafting.memory_phial] containing the desired memory.\\1It can be {§nemptied§r}[caption:Shift + Right Click], but doing so will not return the memory phial.");
+        add(FUME_SPREADER.get().getDescriptionId() + ".crafting", "Breathing its fumes while asleep will alter the behaviour of my dreams.\\1Must be placed on the ground near a bed or similar object. It must then be filled with {§noniric incense§r}[link:crafting.oniric_incense] and, finally, with a {§nmemory phial§r}[link:crafting.memory_phial] containing the desired memory.\\1It can be {§nemptied§r}[caption:shift_right_click], but doing so will not return the memory phial.");
         add(ONIRIC_INCENSE.get().getDescriptionId() + ".crafting", "Used on an empty {§nfume spreader§r}[link:crafting.fume_spreader] to fill it.");
         add(MEMORY_PHIAL.get().getDescriptionId() + ".crafting", "A seminal discovery in the study of human memories. My contributions stand in its applications to dreams.\\1May be used on a {§nmemory sieve§r}[link:crafting.memory_sieve] to capture a memory.");
         add(MEMORY_PHIAL.get().getDescriptionId() + ".crafting2", "A seminal discovery in the study of human memories. My contributions stand in its applications to dreams.\\1May be used on a {§nmemory sieve§r}[link:crafting.memory_sieve] to capture a memory, and then on a full {§nfume spreader§r}[link:crafting.fume_spreader] to assign it the contained memory.");
-        add(MEMORY_SIEVE.get().getDescriptionId() + ".crafting", "A fundamental device in the art of manipulating memories.\\1An item {§nevoking a certain memory§r}[caption:memories] must be placed on it. Then, an {§nempty phial§r}[link:crafting.memory_phial] may be used on it to capture the memory.\\1Some cultures used to fill these basins with their own tears.");
-        add(MEMORY_SIEVE.get().getDescriptionId() + ".crafting2", "A fundamental device in the art of manipulating memories.\\1An item {§nevoking a certain memory§r}[caption:memories] must be placed on it. Then, an {§nempty phial§r}[link:crafting.memory_phial] may be used on it to capture the memory.\\1It can be filled using a tear bucket: doing so will make each item produce multiple memories, although the tears will eventually run out.");
+        add(MEMORY_SIEVE.get().getDescriptionId() + ".crafting", "A fundamental device in the art of manipulating memories.\\1An item evoking a certain memory must be placed on it. Then, an {§nempty phial§r}[link:crafting.memory_phial] may be used on it to capture the memory.\\1Some cultures used to fill these basins with their own tears.");
+        add(MEMORY_SIEVE.get().getDescriptionId() + ".crafting2", "A fundamental device in the art of manipulating memories.\\1An item evoking a certain memory must be placed on it. Then, an {§nempty phial§r}[link:crafting.memory_phial] may be used on it to capture the memory.\\1It can be filled using a tear bucket: doing so will make each item produce multiple memories, although the tears will eventually run out.");
         add(SLEEP_CHAMBER.get().getDescriptionId() + ".crafting", "A complex device known to mimic the dream state induced by sleeping.\\1To use it, I must open its door, walk inside and close it while enclosed within.");
         add(SEAWEED_STEW.get().getDescriptionId() + ".crafting", "A simple but honest recipe; it can be served both hot and cold. Seaweed itself is a staple of Shore cuisine.");
         add(KELP_COD_BUNDLE.get().getDescriptionId() + ".crafting", "Bread is not widespread in Shore cuisine, but these sorts of bundles are a common \"food on the go\" alternative. The different textures match better than expected.");
@@ -2604,6 +2605,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.research_page.back_to_page", "Back to Page");
         add("gui.research_page.back_to_mc", "Exit");
         add("gui.reminiscence.next", "Next Reminiscence");
+        add("gui.necronomicon.bookmarkmade", "Bookmark created");
 
         addJournal();
         addLetterBox();
