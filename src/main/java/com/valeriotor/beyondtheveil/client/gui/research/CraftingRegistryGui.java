@@ -589,6 +589,7 @@ public class CraftingRegistryGui extends Screen {
         private final List<ItemStack[]> stacks;
         private final ItemStack output;
         private final float scaleFactor;
+        private final ElementHolder buttonHolder;
 
         protected CraftingGrid(int width, int height, Recipe<?> recipe, Item result, float scaleFactor) {
             super(width, height);
@@ -596,6 +597,11 @@ public class CraftingRegistryGui extends Screen {
             stacks = recipe.getIngredients().stream().map(Ingredient::getItems).collect(Collectors.toList());
             this.output = Minecraft.getInstance().level != null ? recipe.getResultItem(Minecraft.getInstance().level.registryAccess()) : new ItemStack(result);
             this.scaleFactor = scaleFactor;
+            buttonHolder = ElementHolder.makeHolder(getWidth(), getHeight());
+        }
+
+        public Recipe<?> getRecipe() {
+            return recipe;
         }
 
         @Override

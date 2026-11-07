@@ -139,8 +139,10 @@ public class Exchange {
         letters.forEach(Letter::open);
     }
 
+    private static final boolean DEBUG = true;
     public void scheduleMail(Player player) {
-        int time = player.getRandom().nextInt(20 * 60 * 5, 20 * 60 * 20);
+        int i = DEBUG ? 1 : 60;
+        int time = player.getRandom().nextInt(20 * i * 5, 20 * i * 20);
         PlayerTimer timer = new PlayerTimer(time, "letter_" + getName(), PersistentPlayerTimer.LETTER, Map.of("exchange", getName()));
         player.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.addTimer(timer));
     }

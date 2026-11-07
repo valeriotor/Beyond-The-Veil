@@ -112,6 +112,7 @@ public class ResearchPageGui extends Screen {
     private int blackPageWidth;
     private final List<GearBenchRecipe> gearBenchRecipes = new ArrayList<>();
     private final List<CraftingRecipe> craftingRecipes = new ArrayList<>();
+    private final Map<Recipe, String> recipeToId = new HashMap<>();
     private final List<Memory> memories = new ArrayList<>();
     private final List<MultiblockSchematic> multiblocks = new ArrayList<>();
     private final List<RecipeType> recipeTypes = new ArrayList<>();
@@ -134,6 +135,7 @@ public class ResearchPageGui extends Screen {
     private ShortcutHint backGridHint;
     private ShortcutHint exitGridHint;
     private Button copyThesisButton;
+    private Button goToCraftingRegistryButton;
     private boolean hasPaper;
 
 
@@ -240,7 +242,8 @@ public class ResearchPageGui extends Screen {
                     if (!DataUtil.getBoolean(getMinecraft().player, req)) {
                         if (prevUnlocked) {
                             MutableComponent requirement = Component.translatable("research." + req + ".text");
-                            this.reqText = minecraft.font.split(requirement, arrowXOffset * 2 - ARROW_WIDTH * 2);
+                            //this.reqText = minecraft.font.split(requirement, arrowXOffset * 2 - ARROW_WIDTH * 2);
+                            this.reqText = minecraft.font.split(requirement, 250);
                         }
                         //break;
                         prevUnlocked = false;
@@ -255,7 +258,7 @@ public class ResearchPageGui extends Screen {
         craftingRecipes.clear();
         memories.clear();
         multiblocks.clear();
-
+        recipeToId.clear();
 
         String[] recipes = status.res.getStages()[status.getStage()].getRecipes();
         for (String s : recipes) {
@@ -265,8 +268,10 @@ public class ResearchPageGui extends Screen {
                 if (recipe.isPresent()) {
                     if (recipe.get() instanceof CraftingRecipe cr) {
                         craftingRecipes.add(cr);
+                        recipeToId.put(cr, key);
                     } else if (recipe.get() instanceof GearBenchRecipe gbr) {
                         gearBenchRecipes.add(gbr);
+                        recipeToId.put(gbr, key);
                     }
                 }
 
@@ -478,13 +483,20 @@ public class ResearchPageGui extends Screen {
             currentMultiblock.render(pose, guiGraphics, 0xFFFFFFFF, (int) ((mouseX - width / 2) / scaleFactor) + currentMultiblock.getWidth() / 2, (int) ((mouseY - gridY2) / scaleFactor), partialTicks);
             pose.popPose();
         } else if (selectedRecipeType == RecipeType.BINDING_POWERS) {
+            pose.pushPose();
+            pose.translate(width / 2D, height / 2D, 0);
+            pose.scale(scaleFactor, scaleFactor, 1);
             for (Tuple<Button, Component> bindingButton : bindingButtons) {
                 Button b = bindingButton.getA();
                 int x = b.getX() + b.getWidth() + 10;
                 int y = b.getY() + 5;
                 guiGraphics.drawString(font, bindingButton.getB(), x, y, 0xFFFFFFFF);
             }
+            pose.popPose();
         } else if (selectedRecipeType == RecipeType.COPY_THESIS) {
+            pose.pushPose();
+            pose.translate(width / 2D, height / 2D, 0);
+            pose.scale(scaleFactor, scaleFactor, 1);
             int x = copyThesisButton.getX() + copyThesisButton.getWidth() / 2;
             int y = copyThesisButton.getY() - 20;
             guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("research.copy_thesis"), x, y, 0xFFFFFFFF);
@@ -492,6 +504,7 @@ public class ResearchPageGui extends Screen {
                 guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("research.copy_thesis_paper"), x, copyThesisButton.getY() + 30, 0xFFFF7777);
 
             }
+            pose.popPose();
         }
 
         //if (selectedRecipeGroup != null) {
@@ -532,7 +545,11 @@ public class ResearchPageGui extends Screen {
             }
         }
 
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        pose.pushPose();
+        pose.translate(width / 2D, height / 2D, 0);
+        pose.scale(scaleFactor, scaleFactor, 1);
+        super.render(guiGraphics, (int) ((mouseX - width / 2) / scaleFactor), (int) ((mouseY - height / 2) / scaleFactor), partialTicks);
+        pose.popPose();
     }
 
     private void renderMainPage(PoseStack pose, GuiGraphics guiGraphics, int mouseX, int mouseY, float pPartialTick) {
@@ -552,12 +569,16 @@ public class ResearchPageGui extends Screen {
         }
 
 
-        if (!progress.visible) {
+        if (!progress.visible && selectedRecipeType == null) {
             if (this.reqText != null) {
+                pose.pushPose();
+                pose.translate(width / 2D, height / 2D, 0);
+                pose.scale(scaleFactor, scaleFactor, 1);
                 int i = 0;
                 for (FormattedCharSequence s : this.reqText) {
-                    guiGraphics.drawCenteredString(font, s, width / 2, height / 2 + blackPageHeight * 35 / 100 + (i++) * 15, 0xFFFE9600);
+                    guiGraphics.drawCenteredString(font, s, 0, 135 + (i++) * 15, 0xFFFE9600);
                 }
+                pose.popPose();
             }
         }
     }
@@ -742,11 +763,15 @@ public class ResearchPageGui extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+        //if (goToCraftingRegistryButton != null) {
+        //    removeWidget(goToCraftingRegistryButton);
+        //    goToCraftingRegistryButton = null;
+        //}
         if (selectedRecipeType == RecipeType.PAMPHLET) {
             resetRecipe();
             return true;
         }
-        if (super.mouseClicked(mouseX, mouseY, mouseButton))
+        if (super.mouseClicked(((mouseX - width / 2D) / scaleFactor), ((mouseY - height / 2D) / scaleFactor), mouseButton))
             return true;
         //int a = this.hoveringRecipeKey(mouseX, mouseY);
         if (hoveringLeftArrow(mouseX, mouseY)) {
@@ -766,6 +791,10 @@ public class ResearchPageGui extends Screen {
                 RecipeType recipeType = hoveredSelection(mouseX, mouseY);
                 if (recipeType != null) {
                     if (recipeType != selectedRecipeType) {
+                        if (goToCraftingRegistryButton != null) {
+                            removeWidget(goToCraftingRegistryButton);
+                            goToCraftingRegistryButton = null;
+                        }
                         selectedRecipeType = recipeType;
                         currentRecipeIndex = 0;
                         memoryIngredient = null;
@@ -811,6 +840,10 @@ public class ResearchPageGui extends Screen {
     }
 
     private void resetRecipe() {
+        if (goToCraftingRegistryButton != null) {
+            removeWidget(goToCraftingRegistryButton);
+            goToCraftingRegistryButton = null;
+        }
         selectedRecipeType = null;
         currentGrid = null;
         memoryIngredient = null;
@@ -907,10 +940,10 @@ public class ResearchPageGui extends Screen {
         bindingButtons.clear();
         if (BINDING_RESEARCHES.contains(n)) {
             Binding binding = Binding.valueOf(n.substring(8));
-            int y = 230;
+            int y = -135;
             for (BindingData.PowerToggles value : BindingData.PowerToggles.values()) {
                 if (value.getBinding() == binding) {
-                    powerButton(value, width / 2 - 200, y);
+                    powerButton(value,  -200, y);
                     y += 35;
                 }
             }
@@ -919,7 +952,7 @@ public class ResearchPageGui extends Screen {
                 BindingData.ArcheDamageType[] values = BindingData.ArcheDamageType.values();
                 for (int i = 0; i < values.length; i++) {
                     BindingData.ArcheDamageType archeDamageType = values[i];
-                    archeButton(archeDamageType, width / 2 + (i % 2 == 0 ? -200 : 50), y);
+                    archeButton(archeDamageType,  + (i % 2 == 0 ? -200 : 50), y);
                     if (i % 2 == 1) {
                         y += 35;
                     }
@@ -932,7 +965,7 @@ public class ResearchPageGui extends Screen {
                 //clearWidgets();
                 //init();
                 Messages.sendToServer(GenericToServerPacket.copyThesis());
-            }).bounds(width / 2 - 90, height / 2, 180, 20).build();
+            }).bounds( - 90, 0, 180, 20).build();
             addRenderableWidget(copyThesisButton);
         }
         toggleBindingButtons();
@@ -997,6 +1030,28 @@ public class ResearchPageGui extends Screen {
             copyThesisButton.visible = selectedRecipeType == RecipeType.COPY_THESIS;
         }
         hasPaper = hasPaperInInventory();
+        if (currentGrid != null) {
+            String s = recipeToId.get(currentGrid.getRecipe());
+            if (s != null) {
+                goToCraftingRegistryButton = Button.builder(Component.translatable("research.go_to_registry"), b -> {
+                    if (!(Minecraft.getInstance().screen instanceof CraftingRegistryGui)) {
+                        CraftingRegistryGui pGuiScreen = new CraftingRegistryGui(ResearchUtil.getResearch(Minecraft.getInstance().player, "CRAFTING"));
+                        Minecraft.getInstance().setScreen(pGuiScreen);
+                    }
+                    if (Minecraft.getInstance().screen instanceof CraftingRegistryGui cr) {
+                        String a = s;
+                        if (a.startsWith("beyondtheveil:")) {
+                            a = a.substring("beyondtheveil:".length());
+                            cr.selectEntry(a);
+                        }
+                    }
+                }).bounds(- 90, 120, 180, 20).build();
+
+                addRenderableWidget(goToCraftingRegistryButton);
+                goToCraftingRegistryButton.visible = goToCraftingRegistryButton.active = (selectedRecipeType == RecipeType.CRAFTING_TABLE || selectedRecipeType == RecipeType.GEAR_BENCH) && ResearchUtil.getResearchStage(Minecraft.getInstance().player, "CRAFTING") >= 0;
+            }
+
+        }
     }
 
     private boolean hasPaperInInventory() {

@@ -526,7 +526,7 @@ public class NecronomiconGui extends Screen {
         for (Research res : this.newClickables) {
             if (openResearch(res, pMouseX, pMouseY, pButton)) return true;
         }
-        if (counter > 5) {
+        if (counter > 3) {
             postOpenClick = true;
         }
         dragX = topX;

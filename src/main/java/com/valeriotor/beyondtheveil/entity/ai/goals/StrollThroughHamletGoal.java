@@ -44,7 +44,7 @@ public class StrollThroughHamletGoal extends Goal {
         if (destination == null) {
             if (conveneInCenter() && !convened && profession.isLeavesPost()) {
                 double angle = shoreman.getRandom().nextDouble() * Math.PI * 2;
-                double radius = shoreman.getRandom().nextDouble() * 5 + 5;
+                double radius = shoreman.getRandom().nextDouble() * 5 + 3;
                 double x = Math.sin(angle) * radius;
                 double z = Math.cos(angle) * radius;
                 destination = villageCenter.offset((int) x, 0, (int) z);

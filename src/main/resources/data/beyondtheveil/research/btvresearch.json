@@ -403,7 +403,8 @@
             "required_research": ["ate_slug"]
           },
           {
-            "text": "research.CUSTOMS.stage.1"
+            "text": "research.CUSTOMS.stage.1",
+            "recipes": ["beyondtheveil:slug_bait", "beyondtheveil:slug_catcher"]
           }
         ]
       },
@@ -454,11 +455,11 @@
           {
             "text": "research.CARPENTRY.stage.0",
             "required_research": ["received_fish"],
-            "recipes": ["beyondtheveil:canoe", "beyondtheveil:damp_canopy", "beyondtheveil:damp_filled_canopy"]
+            "recipes": ["beyondtheveil:canoe", "beyondtheveil:damp_canopy"]
           },
           {
             "text": "research.CARPENTRY.stage.1",
-            "recipes": ["beyondtheveil:canoe", "beyondtheveil:damp_canopy", "beyondtheveil:damp_filled_canopy"]
+              "recipes": ["beyondtheveil:canoe", "beyondtheveil:damp_canopy"]
           }
         ]
       },

@@ -101,17 +101,21 @@ public class ExchangeTemplate {
 
         public void takeItems(Player player) {
             IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
-            for (ExchangeTemplate.ExchangeItems exchangeItems : getItemsRequired()) {
-                int remaining = exchangeItems.getAmount();
-                for (int i = 0; i < inventory.getSlots(); i++) {
-                    ItemStack stack = inventory.getStackInSlot(i);
-                    if (stack.getItem() == exchangeItems.getItem().getItem()) {
-                        remaining -= inventory.extractItem(i, remaining, false).getCount();
-                    }
-                    if (remaining == 0) {
-                        break;
+            List<ExchangeItems> itemsRequired1 = getItemsRequired();
+            if (itemsRequired1 != null) {
+                for (ExchangeTemplate.ExchangeItems exchangeItems : itemsRequired1) {
+                    int remaining = exchangeItems.getAmount();
+                    for (int i = 0; i < inventory.getSlots(); i++) {
+                        ItemStack stack = inventory.getStackInSlot(i);
+                        if (stack.getItem() == exchangeItems.getItem().getItem()) {
+                            remaining -= inventory.extractItem(i, remaining, false).getCount();
+                        }
+                        if (remaining == 0) {
+                            break;
+                        }
                     }
                 }
+
             }
         }
 

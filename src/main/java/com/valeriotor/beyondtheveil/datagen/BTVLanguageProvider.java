@@ -1952,6 +1952,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.copy_thesis", "Make a copy of Sanguis?");
         add("research.copy_thesis_button", "Copy");
         add("research.copy_thesis_paper", "(requires paper)");
+        add("research.go_to_registry", "Go to registry entry");
 
 
         add("research.FIRSTDREAMS.title", "The Language of Dreams");
