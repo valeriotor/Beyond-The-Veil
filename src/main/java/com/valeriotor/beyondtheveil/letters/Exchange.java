@@ -139,7 +139,7 @@ public class Exchange {
         letters.forEach(Letter::open);
     }
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     public void scheduleMail(Player player) {
         int i = DEBUG ? 1 : 60;
         int time = player.getRandom().nextInt(20 * i * 5, 20 * i * 20);
