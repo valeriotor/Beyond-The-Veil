@@ -175,7 +175,16 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
             float xRot = (float) -(Mth.atan2(d1, d3) * (double) (180F / (float) Math.PI)) + 10;
             float yRot = Mth.wrapDegrees((float)(Mth.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F);
             p.setXRot(xRot + (p.getXRot() - xRot) * 0.99F);
-            p.setYRot(yRot + (p.getYRot() - yRot) * 0.99F);
+            float v = p.getYRot() - yRot;
+            //if (yRot - p.getYRot() < v) {
+            //    v = yRot - p.getYRot();
+            //}
+            if (p.getYRot() > 100 && yRot < -100) {
+                v -= 360;
+            } else if (p.getYRot() < -100 && yRot > 100) {
+                v += 360;
+            }
+            p.setYRot(yRot + v * 0.99F);
         }
         //p.setYHeadRot((0 - p.getYHeadRot()) * -0.99F);
         //p.setYRot((0 - p.getYRot()) * -0.99F);
