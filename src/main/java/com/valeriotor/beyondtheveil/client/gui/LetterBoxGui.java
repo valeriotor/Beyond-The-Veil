@@ -75,6 +75,7 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
     private TexturedButton redeemButton;
     private TexturedButton sendButton;
     private int noItemsWarningTicks;
+    private boolean newButtonHighlighted;
 
 
     public LetterBoxGui(LetterBoxContainer pMenu, Inventory pPlayerInventory, Component pTitle) {
@@ -122,6 +123,7 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
                 updateWidgetVisibility();
             });
         }));
+        checkNewButtonHighlighted();
         final int LETTER_BUTTONS_WIDTH = 200;
         replyButton = buttonHolder.addElement((int) ((305 + 240 - LETTER_BUTTONS_WIDTH / 2) * 5F / 8), (int) (715 * 5F / 8), new TexturedButton(LETTER_BUTTONS_WIDTH * 5 / 8, 32 * 5 / 8, BUTTON, 0x07FFFFFF, Component.translatable("gui.letter_box.reply"), t -> {
             Minecraft.getInstance().player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
@@ -267,6 +269,9 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
         pose.pushPose();
         pose.translate(-imageWidth / 2F, -imageHeight / 2F, 0);
         buttonHolder.render(pose, pGuiGraphics, 0xFFFFFFFF, (int) holderMouseX(pMouseX), (int) holderMouseY(pMouseY), pPartialTick);
+        if (newButtonHighlighted) {
+            pGuiGraphics.fill((int) (8 * 5F / 8) + 282 * 5 / 8 - 8, 13 * 5 / 8 + 3, (int) (8 * 5F / 8) + 282 * 5 / 8 - 8 + 4, 13 * 5 / 8 + 3 + 4, 0xFFFF3333);
+        }
         if (noItemsWarningTicks > 0) {
             final int LETTER_BUTTONS_WIDTH = 200;
             int color = ((noItemsWarningTicks > 20 ? 0xFF : (int) Math.max(20, 0xFF * (noItemsWarningTicks - pPartialTick) / 20)) << 24) | Color.YELLOW.getRGB();
@@ -392,6 +397,20 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
         selectLetter(Letter.toWrite(template));
     }
 
+    private void checkNewButtonHighlighted() {
+        newButtonHighlighted = false;
+        if (Minecraft.getInstance().player != null) {
+            Minecraft.getInstance().player.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
+                for (Entry<ExchangeTemplate, Exchange> entry : c.getActiveExchanges().entrySet()) {
+                    Exchange exchange = entry.getValue();
+                    if (exchange.canSendLetter() && exchange.noLettersSent() && exchange.isHighlighted()) {
+                        newButtonHighlighted = true;
+                    }
+                }
+            });
+        }
+    }
+
     private class LetterEntry extends Element {
         private final Letter letter;
         private final boolean received;
@@ -476,9 +495,17 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
             graphics.blit(LETTER_ENTRY, 0, 0, getWidth(), getHeight(), 0, 0, ENTRY_BASE_WIDTH, ENTRY_BASE_HEIGHT, ENTRY_BASE_WIDTH, ENTRY_BASE_HEIGHT);
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 graphics.fill(0, 0, getWidth(), getHeight(), 0x44604533);
+                if (exchange.isHighlighted()) {
+                    exchange.setHighlighted(false);
+                    Messages.sendToServer(GenericToServerPacket.hoveredExchange(exchange.getTemplate()));
+                    checkNewButtonHighlighted();
+                }
             }
             graphics.drawString(Minecraft.getInstance().font, correspondence, 7, 3, 0xFFFFFFFF);
             graphics.drawString(Minecraft.getInstance().font, object, 7, 18, 0xFFFFFFFF);
+            if (exchange.isHighlighted()) {
+                graphics.fill(getWidth() - 10, 5, getWidth() - 6, 9, 0xFFFF3333);
+            }
         }
 
         @Override

@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.networking;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.HeartBlock;
 import com.valeriotor.beyondtheveil.capability.CapabilityEvents;
+import com.valeriotor.beyondtheveil.capability.util.LetterData;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
@@ -10,6 +11,7 @@ import com.valeriotor.beyondtheveil.container.dialogue.DoubleDialogueMenu;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.dreaming.dreams.Reminiscence;
+import com.valeriotor.beyondtheveil.letters.Exchange;
 import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -156,6 +158,12 @@ public class GenericToServerPacket {
 
     public static GenericToServerPacket copyThesis() {
         return new GenericToServerPacket(MessageType.COPY_THESIS, new CompoundTag());
+    }
+
+    public static GenericToServerPacket hoveredExchange(ExchangeTemplate template) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("t", template.getName());
+        return new GenericToServerPacket(MessageType.HOVERED_EXCHANGE, tag);
     }
 
     private final MessageType type;
@@ -318,6 +326,16 @@ public class GenericToServerPacket {
                             ItemHandlerHelper.giveItemToPlayer(player, report);
                         }
                     }
+                    case HOVERED_EXCHANGE -> {
+                        ExchangeTemplate template = ExchangeRegistry.byName(tag.getString("t"));
+                        if (template != null) {
+                            Exchange exchange = LetterData.for_(player).getActiveExchanges().get(template);
+                            if (exchange != null) {
+                                exchange.setHighlighted(false);
+                            }
+
+                        }
+                    }
                 }
 
             }
@@ -350,7 +368,8 @@ public class GenericToServerPacket {
         ARCHE_CULTIST,
         TOGGLE_BINDING_POWER,
         SET_ARCHE_DAMAGE_TYPE,
-        COPY_THESIS
+        COPY_THESIS,
+        HOVERED_EXCHANGE
     }
 
 }

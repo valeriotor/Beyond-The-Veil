@@ -20,6 +20,7 @@ public class Exchange {
     private final ExchangeTemplate template;
     private final int version;
     private boolean active = true;
+    private boolean highlighted = true;
     private final List<Letter> letters = new ArrayList<>();
 
     public static Exchange fromNBT(CompoundTag tag) {
@@ -31,6 +32,8 @@ public class Exchange {
             if (!active) {
                 e.setInactive();
             }
+            e.setHighlighted(tag.getBoolean("highlighted"));
+            //e.setHighlighted(true);
             CompoundTag letters1 = tag.getCompound("letters");
             letters1.getAllKeys().stream().sorted(Comparator.comparingInt(Integer::valueOf)).map(s -> Letter.fromNBT(letters1.getCompound(s), template)).filter(Objects::nonNull).forEach(e.letters::add);
             return e;
@@ -168,7 +171,16 @@ public class Exchange {
         tag.put("letters", letters);
         tag.putInt("version", version);
         tag.putBoolean("active", active);
+        tag.putBoolean("highlighted", highlighted);
         return tag;
+    }
+
+    public void setHighlighted(boolean highlighted) {
+        this.highlighted = highlighted;
+    }
+
+    public boolean isHighlighted() {
+        return highlighted;
     }
 
     public int size() {
