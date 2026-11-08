@@ -32,7 +32,7 @@ public class BTVItemModels extends ItemModelProvider {
         withExistingParent(LAMP_ITEM.getId().getPath(), modLoc("block/lamp"));
         withExistingParent(BLUE_BRICKS_ITEM.getId().getPath(), modLoc("block/blue_bricks"));
         withExistingParent(WORN_BRICK_STAIRS_ITEM.getId().getPath(), modLoc("block/worn_brick_stairs"));
-        withExistingParent(DAMP_WOOD_FENCE_ITEM.getId().getPath(), modLoc("block/damp_wood_fence_post"));
+        fenceInventory(DAMP_WOOD_FENCE_ITEM.getId().getPath(), modLoc("block/" + DAMP_WOOD.getId().getPath()));
         withExistingParent(FUME_SPREADER_ITEM.getId().getPath(), modLoc("block/fume_spreader"));
         withExistingParent(SLEEP_CHAMBER_ITEM.getId().getPath(), modLoc("block/sleep_chamber"));
         withExistingParent(GEAR_BENCH_ITEM.getId().getPath(), modLoc("block/gear_bench"));

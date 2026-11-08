@@ -221,14 +221,14 @@ public class BTVRecipes extends RecipeProvider {
                 .unlockedBy("has_antidote_capsule", has(Registration.ANTIDOTE_CAPSULE.get()))
                 .save(consumer, BuiltInRegistries.ITEM.getKey(Registration.ANTIDOTE_CAPSULE.get().asItem()) + "2");
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.ONIRIC_INCENSE.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.ONIRIC_INCENSE.get(), 4)
                 .requires(Items.CLAY_BALL)
                 .requires(Items.FLINT)
                 .requires(Blocks.GRAVEL)
                 //.group("Beyond the Veil")
                 .unlockedBy("has_oniric_incense", has(Registration.ONIRIC_INCENSE.get()))
                 .save(consumer);
-
+        
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.DAMP_WOOD.get(), 4)
                 .requires(Registration.DAMP_LOG.get())
                 //.group("Beyond the Veil")

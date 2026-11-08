@@ -40,7 +40,7 @@ public class ShoremanRenderer extends LivingEntityRenderer<ShoremanEntity, Shore
 
 
     public ShoremanRenderer(EntityRendererProvider.Context context) {
-        super(context, new ShoremanModel(context.bakeLayer(ShoremanModel.LAYER_LOCATION)), 1F);
+        super(context, new ShoremanModel(context.bakeLayer(ShoremanModel.LAYER_LOCATION)), 0.3F);
     }
 
     @Override

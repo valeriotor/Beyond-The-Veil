@@ -15,6 +15,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.NearestVisibleLivingEntities;
+import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -23,6 +26,8 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class BlackjackItem extends Item {
 
@@ -36,7 +41,7 @@ public class BlackjackItem extends Item {
         if (pUsedHand == InteractionHand.MAIN_HAND || pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem() != this) {
             if (pInteractionTarget instanceof Villager villager && !villager.isBaby()) {
                 Level l = pInteractionTarget.level();
-                InteractionResult success = knockDownVillager(villager);
+                InteractionResult success = knockDownVillager(villager, pPlayer);
                 if (success != null) return success;
             }
 
@@ -46,12 +51,23 @@ public class BlackjackItem extends Item {
 
     @Nullable
     public static InteractionResult knockDownVillager(Villager villager) {
+        return knockDownVillager(villager, null);
+    }
+
+    @Nullable
+    public static InteractionResult knockDownVillager(Villager villager, Player player) {
         LazyOptional<ConvalescentData> villagerCapability = villager.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA);
         CompoundTag convalescentData = villagerCapability.isPresent() ? villagerCapability.resolve().get().saveToNBT(new CompoundTag()) : null;
         Level l = villager.level();
         if (!l.isClientSide) {
             CrawlerEntity crawler = convertVillager(BTVEntities.CRAWLER.get(), villager, false);
             if (crawler != null) {
+                if (l instanceof ServerLevel sl && player != null) {
+                    Optional<NearestVisibleLivingEntities> optional = villager.getBrain().getMemory(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES);
+                    optional.ifPresent(nearestVisibleLivingEntities -> nearestVisibleLivingEntities.findAll(ReputationEventHandler.class::isInstance).forEach((p_186297_) -> {
+                        sl.onReputationEvent(ReputationEventType.VILLAGER_KILLED, player, (ReputationEventHandler) p_186297_);
+                    }));
+                }
                 crawler.setYBodyRot(villager.getYHeadRot());
                 crawler.setYHeadRot(villager.getYHeadRot());
                 Messages.sendToTracking(GenericToClientPacket.knockoutVillager(crawler.getId(), villager.yBodyRot), villager);

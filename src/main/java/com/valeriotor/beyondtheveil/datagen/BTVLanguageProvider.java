@@ -1250,7 +1250,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_fisherman.communed1.i.option", "I hope you can see me as a friend from now on.");
         add("dialogue.shoreman_fisherman.communed1.through.option", "Through the Great Dreamer I see the world in a new light. I thank you for the revelation.");
 
-        add("dialogue.shoreman_fisherman.communed2.jerome.0", "Heh, maybe. For all his misdeeds, he had a great mind.\nBut you, friend, have both that and kindness.");
+        add("dialogue.shoreman_fisherman.communed2.jerome.0", "Heh, maybe. For all his misdeeds, he has a great mind.\nBut you, friend, have both that and kindness.");
         add("dialogue.shoreman_fisherman.communed2.start.0", "Bless! Bless! A blessing upon thee!");
         add("dialogue.shoreman_fisherman.communed2.citing.option", "Citing Jerome?");
         add("dialogue.shoreman_fisherman.communed2.thank.option", "Thank you. A blessing upon thee as well.");
@@ -2779,8 +2779,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "• A diamond.\\1" +
                 "• A nether quartz.");
         add("research.thesis.ritual.vein_miner.title", "Vein Miner");
-        add("research.thesis.ritual.vein_miner.text", "A belt to be worn around the waist, adorned with small thorns. Whenever harm befell the wearer, the belt would prick the skin of the stomach, drawing blood.\\n" +
-                "In so doing, the item would protect its owner from any damage, for as long as their stomach was not empty. Excessive use within a short timeframe could weaken the belt, but never irreversibly, as it would quickly repair itself on its own.\\n" +
+        add("research.thesis.ritual.vein_miner.text", "These tools could detect and leverage the connective tissue of minerals within rock, and were thus used to mine entire ore veins at once.\\n" +
                 "\\n" +
                 "Ingredients:\\n" +
                 "• A heart.\\1" +

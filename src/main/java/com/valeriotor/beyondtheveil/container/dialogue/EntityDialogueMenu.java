@@ -81,7 +81,7 @@ public class EntityDialogueMenu extends AbstractContainerMenu {
             if (dialogue.isOpenTrade()) {
                 if (npc instanceof ShoremanEntity sh) {
                     sh.setTradingPlayer(player);
-                    sh.openTradingScreen(player, Component.translatable("gui.%s.display_name".formatted(sh.getProfession().name().toLowerCase())), 5);
+                    sh.openTradingScreen(player, Component.translatable("gui.dialogue.%s.display_name".formatted(sh.getProfession().name().toLowerCase())), 5);
 
                 }
             }

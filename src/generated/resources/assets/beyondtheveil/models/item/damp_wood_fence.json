@@ -1,3 +1,6 @@
 {
-  "parent": "beyondtheveil:block/damp_wood_fence_post"
+  "parent": "minecraft:block/fence_inventory",
+  "textures": {
+    "texture": "beyondtheveil:block/damp_wood"
+  }
 }
