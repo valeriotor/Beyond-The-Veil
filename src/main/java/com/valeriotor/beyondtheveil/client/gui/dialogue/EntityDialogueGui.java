@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.client.gui.dialogue;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.valeriotor.beyondtheveil.capability.PlayerData;
@@ -19,7 +20,9 @@ import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.networking.SendDialogueOptionToServerPacket;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.MouseHandler;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.controls.KeyBindsList;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -27,6 +30,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
@@ -55,6 +59,9 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
     private final ResourceLocation texture;
     private int counterKillKeeper;
     private Entity entity;
+    private boolean mousePressed;
+    private boolean shiftPressed;
+    private int shiftPressedClicks;
 
 
     public EntityDialogueGui(EntityDialogueMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
@@ -145,6 +152,14 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
             init();
         }
         if (dialogueBox != null) {
+
+            dialogueBox.setSkipping(shiftPressed || mousePressed);
+            if (shiftPressedClicks <= 0 || shouldShowOptions()) {
+                shiftPressed = false;
+                shiftPressedClicks = 0;
+            } else {
+                shiftPressedClicks--;
+            }
             dialogueBox.tick();
         }
 
@@ -250,6 +265,7 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
         if (options != null && shouldShowOptions()) {
             return options.mouseClicked((int) optionsMouseX(pMouseX), (int) optionsMouseY(pMouseY), pButton);
         }
+        mousePressed = true;
         return false;
     }
 
@@ -284,9 +300,20 @@ public class EntityDialogueGui extends AbstractContainerScreen<EntityDialogueMen
 
     @Override
     public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
+        mousePressed = false;
         if (options != null) {
             return options.mouseReleased((int) optionsMouseX(pMouseX), (int) optionsMouseY(pMouseY), pButton);
         }
         return false;
+    }
+
+    @Override
+    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        InputConstants.Key key = InputConstants.getKey(pKeyCode, pScanCode);
+        if (Minecraft.getInstance().options.keyShift.matches(pKeyCode, pScanCode)) {
+            shiftPressed = true;
+            shiftPressedClicks = 20;
+        }
+        return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
 }
