@@ -228,7 +228,7 @@ public class ResearchPageGui extends Screen {
             ResearchUtilClient.progressResearchClientAndSync(status.res.getKey());
             currentStage = status.getStage();
             init();
-        }).bounds(width / 2 - 60, height / 2 + blackPageHeight * 35 / 100, 120, 20).build();
+        }).bounds(- 60, 135, 120, 20).build();
         progress = addRenderableWidget(b);
         LocalPlayer p = minecraft.player;
         if (currentStage < status.getStage()) {

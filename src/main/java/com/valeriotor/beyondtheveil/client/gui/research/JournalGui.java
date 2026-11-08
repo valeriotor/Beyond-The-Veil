@@ -371,7 +371,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             list.add(new Dropdown2("capacity"));
             list.add(new Dropdown2("modifiers"));
             list.add(new Dropdown2("triggering"));
-            list.add(new Dropdown2("priorities"));
+            //list.add(new Dropdown2("priorities"));
             if (ResearchUtil.getResearchStage(Minecraft.getInstance().player, "WEEPERS") >= 0) {
                 list.add(new Dropdown2("weepers"));
 
