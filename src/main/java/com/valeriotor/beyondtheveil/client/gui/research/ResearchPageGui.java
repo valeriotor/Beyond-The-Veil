@@ -1039,10 +1039,12 @@ public class ResearchPageGui extends Screen {
                         Minecraft.getInstance().setScreen(pGuiScreen);
                     }
                     if (Minecraft.getInstance().screen instanceof CraftingRegistryGui cr) {
-                        String a = s;
-                        if (a.startsWith("beyondtheveil:")) {
-                            a = a.substring("beyondtheveil:".length());
-                            cr.selectEntry(a);
+                        if (currentGrid != null) {
+                            String a = recipeToId.get(currentGrid.getRecipe());
+                            if (a != null && a.startsWith("beyondtheveil:")) {
+                                a = a.substring("beyondtheveil:".length());
+                                cr.selectEntry(a);
+                            }
                         }
                     }
                 }).bounds(- 90, 120, 180, 20).build();
