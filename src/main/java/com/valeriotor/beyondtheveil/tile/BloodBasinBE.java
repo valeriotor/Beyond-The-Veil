@@ -69,7 +69,7 @@ public class BloodBasinBE extends BlockEntity {
                     player.setItemInHand(hand, left);
                 }
                 updateClient();
-            } else {
+            } else if (!stackHandler.getStackInSlot(0).isEmpty()) {
                 Long altarLong = DataUtil.getOrSetLong(player, PlayerDataLib.sacrifice_altar.name(), -1, false);
                 if (altarLong != -1 && level.getBlockEntity(BlockPos.of(altarLong)) instanceof SacrificeAltarBE sacrificeAltar) {
                     sacrificeAltar.addBasin(getBlockPos());
@@ -109,7 +109,7 @@ public class BloodBasinBE extends BlockEntity {
 
     @Override
     public void load(CompoundTag pTag) {
-        if(pTag != null)
+        if (pTag != null)
             super.load(pTag);
         loadItem(pTag);
     }
@@ -127,7 +127,7 @@ public class BloodBasinBE extends BlockEntity {
             ItemStack stackInSlot = stackHandler.getStackInSlot(0);
             if (stackInSlot.isEmpty()) {
                 itemEntity = null;
-            } else if(level != null && level.isClientSide) {
+            } else if (level != null && level.isClientSide) {
                 itemEntity = new ItemEntity(this.level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stackInSlot);
             }
 

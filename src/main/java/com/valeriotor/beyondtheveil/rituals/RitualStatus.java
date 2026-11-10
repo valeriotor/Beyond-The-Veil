@@ -570,7 +570,7 @@ public class RitualStatus {
             BlockPos blockPos = altars.get(i);
             if (level.getBlockEntity(blockPos) instanceof BloodBasinBE bloodBasin) {
                 ItemStack heldItem = bloodBasin.getStackHandler().getStackInSlot(0);
-                if (heldItem.getItem() != startItems.get(i).getItem() || memoryDoesNotMatch(heldItem, i) || rottenFleshIsInsufficient(heldItem, i)) {
+                if (startItems.size() > i && (heldItem.getItem() != startItems.get(i).getItem() || memoryDoesNotMatch(heldItem, i) || rottenFleshIsInsufficient(heldItem, i))) {
                     Vec3 center = blockPos.getCenter();
                     level.sendParticles(ParticleTypes.LARGE_SMOKE, center.x, center.y + 1, center.z, 10, 0, 0.2, 0, 0.2);
                     if (counter % 5 == 0) {
