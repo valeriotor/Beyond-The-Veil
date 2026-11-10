@@ -14,6 +14,9 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -82,6 +85,18 @@ public class AlembicsBE extends BlockEntity {
         }
     }
 
+    public FluidTank getInputTank1() {
+        return inputTank1;
+    }
+
+    public ItemStackHandler getStackHandler() {
+        return stackHandler;
+    }
+
+    public FluidTank getInputTank2() {
+        return inputTank2;
+    }
+
     public FlaskShelfBE.Flask getHeldFlask() {
         return heldFlask;
     }
@@ -119,6 +134,8 @@ public class AlembicsBE extends BlockEntity {
                             Tuple<Fluid, Integer> output = AlembicsRecipeRegistry.getOutput(inputTank1.getFluid().getFluid(), burningStack, inputTank2.getFluid().getFluid());
                             if (output != null && heldFlask != null) {
                                 heldFlask.getTank().fill(new FluidStack(output.getA(), 1), IFluidHandler.FluidAction.EXECUTE);
+                                inputTank1.drain(1, IFluidHandler.FluidAction.EXECUTE);
+                                inputTank2.drain(1, IFluidHandler.FluidAction.EXECUTE);
                                 updateClient();
                             }
                         }
@@ -156,6 +173,7 @@ public class AlembicsBE extends BlockEntity {
             } else {
                 player.setItemInHand(hand, stackHandler.insertItem(0, held, false));
             }
+            updateClient();
             return true;
         } else {
             if (held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
@@ -192,6 +210,20 @@ public class AlembicsBE extends BlockEntity {
                         }
                     }
 
+                    return true;
+                }
+            } else if (held.isEmpty() && player.isShiftKeyDown()) {
+                FluidTank tank = switch (hit) {
+                    case 0 -> inputTank1;
+                    case 2 -> inputTank2;
+                    default -> null;
+                };
+                if (tank != null) {
+                    FluidStack drain = tank.drain(1000, IFluidHandler.FluidAction.EXECUTE);
+                    if (drain.getAmount() > 0 && level != null) {
+                        level.playSound(null, getBlockPos(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS);
+                    }
+                    updateClient();
                     return true;
                 }
             }

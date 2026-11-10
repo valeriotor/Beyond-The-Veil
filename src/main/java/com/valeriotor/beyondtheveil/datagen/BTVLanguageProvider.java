@@ -2906,6 +2906,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("overlay.repair_hammer.submarine", "Integrity: %.2f%%");
         add("overlay.explode", "Press %s to explode");
         add("overlay.detransform", "Press %s to return human");
+        add("overlay.alembics1", "First Input Tank: %1$s, (%2$s mB / 1000mB)");
+        add("overlay.alembics2", "Item: %1$s %2$s"); // first is amount, second is item name
+        add("overlay.alembics3", "Second Input Tank: %1$s, (%2$s mB / 1000mB)");
+        add("overlay.alembics4", "Output Flask: %1$s, (%2$s mB / %3$smB)");
     }
 
     private void addBaptism() {

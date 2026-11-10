@@ -38,10 +38,7 @@ import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.SurgicalLocation;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
-import com.valeriotor.beyondtheveil.tile.FlaskBE;
-import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
-import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
-import com.valeriotor.beyondtheveil.tile.SurgicalBE;
+import com.valeriotor.beyondtheveil.tile.*;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import net.minecraft.client.Camera;
@@ -98,7 +95,9 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -1072,6 +1071,31 @@ public class RenderEvents {
                                     pY += 15;
                                 }
                             }
+
+                        }
+                    }
+                } else if (blockState.getBlock() == Registration.ALEMBICS.get()) {
+                    BlockPos center = Registration.ALEMBICS.get().findCenter(lookedAtPos, blockState);
+                    if (player.level().getBlockEntity(center) instanceof AlembicsBE alembics) {
+                        int pY = gg.guiHeight() / 2;
+                        FluidStack inputFluid1 = alembics.getInputTank1().getFluid();
+                        if (!inputFluid1.isEmpty()) {
+                            gg.drawString(Minecraft.getInstance().font, I18n.get("overlay.alembics1", inputFluid1.getDisplayName().getString(), inputFluid1.getAmount()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                            pY += 15;
+                        }
+                        ItemStack heldStack = alembics.getStackHandler().getStackInSlot(0);
+                        if (!heldStack.isEmpty()) {
+                            gg.drawString(Minecraft.getInstance().font, I18n.get("overlay.alembics2", heldStack.getDisplayName().getString(), heldStack.getCount()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                            pY += 15;
+                        }
+                        FluidStack inputFluid2 = alembics.getInputTank2().getFluid();
+                        if (!inputFluid2.isEmpty()) {
+                            gg.drawString(Minecraft.getInstance().font, I18n.get("overlay.alembics3", inputFluid2.getDisplayName().getString(), inputFluid2.getAmount()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                            pY += 15;
+                        }
+                        if (alembics.getHeldFlask() != null) {
+                            FluidStack flaskFluid = alembics.getHeldFlask().getTank().getFluid();
+                            gg.drawString(Minecraft.getInstance().font, I18n.get("overlay.alembics4", flaskFluid.getDisplayName().getString(), flaskFluid.getAmount(), alembics.getHeldFlask().getSize().getCapacity()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
 
                         }
                     }
