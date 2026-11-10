@@ -122,9 +122,10 @@ public class CanoeEntity extends Boat {
             double d0 = Mth.clamp(pX, -3.0E7D, 3.0E7D);
             double d1 = Mth.clamp(pZ, -3.0E7D, 3.0E7D);
             double v = Math.pow(xo - d0, 2) + Math.pow(zo - d1, 2);
-            if (v > 0.05 && player.getRandom().nextInt(70) == 0) {
+            boolean receivedFish = DataUtil.getBoolean(player, PlayerDataLib.received_fish.name());
+            if (v > 0.05 && (player.getRandom().nextInt(170) == 0 || (!receivedFish && player.getRandom().nextInt(70) == 0))) {
                 ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(list.getRandom(player.getRandom()).orElse(WeightedEntry.wrap(Items.COD, 1)).getData()));
-                if (!DataUtil.getBoolean(player, PlayerDataLib.received_fish.name()) && ResearchUtil.getResearchStage(player, "CUSTOMS") > -1) { // TODO change customs with carpentry
+                if (!receivedFish && ResearchUtil.getResearchStage(player, "CUSTOMS") > -1) { // TODO change customs with carpentry
                     DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.received_fish.name(), true, false);
                 }
             }
