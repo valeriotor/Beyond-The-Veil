@@ -104,6 +104,9 @@ public class PlayerTickEvents {
             });
             checkDiscoveredWaypoint(event);
             p.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).ifPresent(c -> c.tick(p));
+            if (p.isDeadOrDying()) {
+                return;
+            }
             resetTimesDreamt(event);
             rainBeforeContact(event);
             decrementArcheBreath(event);

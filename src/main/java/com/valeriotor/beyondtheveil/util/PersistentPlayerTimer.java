@@ -55,6 +55,9 @@ public enum PersistentPlayerTimer {
                 sp.serverLevel().playSound(null, sp.blockPosition(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS);
             }
             p.setHealth(t.getRemainingTime() / 100F * 2);
+            if (p.isDeadOrDying()) {
+                p.die(p.damageSources().fellOutOfWorld());
+            }
         }}),
         List.of((p,t) -> p.kill()), // final action
         List.of((p,t) -> DataUtil.getBoolean(p, PlayerDataLib.scaled_player_death.name())), // early interrupt

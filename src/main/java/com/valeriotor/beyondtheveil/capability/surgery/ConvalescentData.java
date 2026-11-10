@@ -180,7 +180,12 @@ public class ConvalescentData {
             flags.put(OperationRegistry.INSERT_SWOLLEN_GROWTH_CHEST.getName(), flags.getOrDefault(OperationRegistry.INSERT_SWOLLEN_GROWTH_CHEST.getName(), 1) + 1);
             if (flags.get(OperationRegistry.INSERT_SWOLLEN_GROWTH_CHEST.getName()) >= 4) {
                 e.kill();
-                e.setHealth(0);
+                if (!e.isDeadOrDying()) {
+                    e.setHealth(0);
+                    if (e.isDeadOrDying()) {
+                        e.die(e.damageSources().fellOutOfWorld());
+                    }
+                }
             }
             return pool.get(e.getRandom().nextInt(pool.size()));
         }
@@ -271,7 +276,12 @@ public class ConvalescentData {
         if (counters.getOrDefault("exploding", -1) == 0) {
             entity.level().explode(entity, entity.getX(), entity.getY(), entity.getZ(), 6, Level.ExplosionInteraction.MOB);
             entity.kill();
-            entity.setHealth(0);
+            if (!entity.isDeadOrDying()) {
+                entity.setHealth(0);
+                if (entity.isDeadOrDying()) {
+                    entity.die(entity.damageSources().fellOutOfWorld());
+                }
+            }
             counters.remove("exploding");
             flags.remove(OperationRegistry.INSERT_GUNPOWDER_BLADDER_BACK.getName());
         }

@@ -459,7 +459,11 @@ public class BindingEvents {
                 if (data != null && data.getBinding() == Binding.NETHER) {
                     LivingEntity attacked = event.getEntity();
                     attacked.setHealth(attacked.getHealth() - event.getAmount() * 0.3F);
-                    event.setAmount(event.getAmount() * 1.5F);
+                    if (attacked.isDeadOrDying()) {
+                        attacked.die(attacked.damageSources().fellOutOfWorld());
+                    } else {
+                        event.setAmount(event.getAmount() * 1.5F);
+                    }
                     sp.heal(1);
                 }
 

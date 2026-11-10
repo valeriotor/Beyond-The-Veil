@@ -66,7 +66,10 @@ public class BaptismTimer extends PlayerTimer {
         if (!(player.containerMenu instanceof DrownedContainer) && !(player.containerMenu instanceof DrownedDialogueMenu)) {
             if ((health > 0 || toKill) && time % 4 == 0 && player instanceof ServerPlayer sp) {
                 health--;
-                player.setHealth(Math.min(player.getHealth(), health));
+                player.setHealth(Math.max(toKill ? 0 : 1, Math.min(player.getHealth(), health)));
+                if (player.isDeadOrDying()) {
+                    player.die(player.damageSources().fellOutOfWorld());
+                }
                 player.level().playSound(null, player.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1, 1);
                 if (health == 1) {
                     NetworkHooks.openScreen(sp, new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> new DrownedContainer(pContainerId, player, phase.ordinal()), Component.translatable("gui.drowned.title")), b -> {
