@@ -228,7 +228,7 @@ public class ResearchPageGui extends Screen {
             ResearchUtilClient.progressResearchClientAndSync(status.res.getKey());
             currentStage = status.getStage();
             init();
-        }).bounds(- 60, 135, 120, 20).build();
+        }).bounds(- 60, (int) (blackPageHeight * 33 / scaleFactor / 100), 120, 20).build();
         progress = addRenderableWidget(b);
         LocalPlayer p = minecraft.player;
         if (currentStage < status.getStage()) {
@@ -572,11 +572,11 @@ public class ResearchPageGui extends Screen {
         if (!progress.visible && selectedRecipeType == null) {
             if (this.reqText != null) {
                 pose.pushPose();
-                pose.translate(width / 2D, height / 2D, 0);
+                pose.translate(width / 2D, height / 2D + blackPageHeight * 33D / 100, 0);
                 pose.scale(scaleFactor, scaleFactor, 1);
                 int i = 0;
                 for (FormattedCharSequence s : this.reqText) {
-                    guiGraphics.drawCenteredString(font, s, 0, 135 + (i++) * 15, 0xFFFE9600);
+                    guiGraphics.drawCenteredString(font, s, 0, (int) (0 + (i++) * 15 * scaleFactor), 0xFFFE9600);
                 }
                 pose.popPose();
             }
@@ -1047,7 +1047,7 @@ public class ResearchPageGui extends Screen {
                             }
                         }
                     }
-                }).bounds(- 90, 120, 180, 20).build();
+                }).bounds(- 90, (int) (blackPageHeight * 33 / scaleFactor / 100), 180, 20).build();
 
                 addRenderableWidget(goToCraftingRegistryButton);
                 goToCraftingRegistryButton.visible = goToCraftingRegistryButton.active = (selectedRecipeType == RecipeType.CRAFTING_TABLE || selectedRecipeType == RecipeType.GEAR_BENCH) && ResearchUtil.getResearchStage(Minecraft.getInstance().player, "CRAFTING") >= 0;
