@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
+import com.valeriotor.beyondtheveil.client.ClientMethods;
 import com.valeriotor.beyondtheveil.container.LetterBoxContainer;
 import com.valeriotor.beyondtheveil.letters.ExchangeRegistry;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
@@ -12,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
@@ -25,6 +27,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -98,5 +102,12 @@ public class LetterBoxBlock extends ThinMultiBlock1by2 {
             }
         }
         super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
+    }
+
+    @Override
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+        if (pLevel.isClientSide) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientMethods.letterBoxParticle(pState, pLevel, pPos, pRandom));
+        }
     }
 }

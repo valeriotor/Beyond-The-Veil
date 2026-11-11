@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.animation.AnimationRegistry;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
+import com.valeriotor.beyondtheveil.capability.util.LetterData;
 import com.valeriotor.beyondtheveil.capability.util.LetterDataProvider;
 import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
@@ -18,6 +19,9 @@ import com.valeriotor.beyondtheveil.entity.AnimatedEntity;
 import com.valeriotor.beyondtheveil.entity.AnimatedTalkable;
 import com.valeriotor.beyondtheveil.event.LivingTickEvents;
 import com.valeriotor.beyondtheveil.item.SurgeryItem;
+import com.valeriotor.beyondtheveil.letters.Exchange;
+import com.valeriotor.beyondtheveil.letters.ExchangeTemplate;
+import com.valeriotor.beyondtheveil.letters.Letter;
 import com.valeriotor.beyondtheveil.lib.BTVSimpleGuis;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
@@ -33,17 +37,20 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -54,6 +61,7 @@ import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
@@ -300,6 +308,32 @@ public class ClientMethods {
         Particle p = Minecraft.getInstance().particleEngine.createParticle(particle, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
         if (p != null) {
             p.setColor(r / 255F, g / 255F, b / 255F);
+        }
+    }
+
+    public static void letterBoxParticle(BlockState pState, Level pLevel, BlockPos pos, RandomSource pRandom) {
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (p != null) {
+            LetterData letterData = LetterData.for_(p);
+            boolean flag = false;
+            for (Map.Entry<ExchangeTemplate, Exchange> entry : letterData.getActiveExchanges().entrySet()) {
+                Exchange exchange = entry.getValue();
+                if (exchange.canSendLetter() && exchange.noLettersSent() && exchange.isHighlighted()) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                for (Letter letter : letterData.getReceivedInOrder()) {
+                    if (!letter.isOpened()) {
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+            if (flag) {
+                pLevel.addAlwaysVisibleParticle(ParticleTypes.ENTITY_EFFECT, pos.getX() + 0.5D, pos.getY() + 0.7D, pos.getZ() + 0.5D, 160 / 255D, 170 / 255D, 91 / 255D);
+            }
         }
     }
 
