@@ -41,14 +41,15 @@ public class ConvalescentPickUpItemGoal<T extends Mob & SurgeryPatient> extends 
     @Override
     public void tick() {
         super.tick();
-        if (entity.tickCount % 10 < 5 || entity.level().isClientSide) {
+        if (entity.tickCount % 10 < 7 || entity.level().isClientSide) {
             return;
         }
         entity.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
             BlockPos chestPos = c.getChestPos();
             if (c.getHeldStack().isEmpty()) {
                 int moveRange = 24;
-                List<ItemEntity> items = entity.level().getEntities(EntityTypeTest.forClass(ItemEntity.class), AABB.ofSize(entity.position(), moveRange, 5, moveRange), entity::hasLineOfSight);
+                List<ItemEntity> items = entity.level().getEntities(EntityTypeTest.forClass(ItemEntity.class), AABB.ofSize(entity.position(), moveRange, 5, moveRange), e -> true);
+                //List<ItemEntity> items = entity.level().getEntities(EntityTypeTest.forClass(ItemEntity.class), AABB.ofSize(entity.position(), moveRange, 5, moveRange), e -> entity.getNavigation().createPath(e.blockPosition(), 0) != null);
                 items.sort(Comparator.comparing(i -> i.distanceToSqr(entity)));
                 if (!items.isEmpty()) {
                     ItemEntity nearest = items.get(0);
