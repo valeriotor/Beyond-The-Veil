@@ -18,24 +18,28 @@ public class AttributeSets {
     public static final float MAX_DEEP_ONE_DAMAGE = 5.0F;
     public static final float MAX_DEEP_ONE_DAMAGE_IN_WATER = 3.0F;
 
+    private static final UUID BAPTISM_SWIM_SPEED = UUID.fromString("548fec35-8e60-4f08-a005-b92b122e9430");
+    private static final UUID BAPTISM_ATTACK = UUID.fromString("22b65803-c9e0-4410-a76f-3849a91314eb");
 
     public static void addBaptismAttributes(Player p) {
         if (!p.level().isClientSide) {
             if (DataUtil.getBoolean(p, PlayerDataLib.baptized.name())) {
                 Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
-                map.put(ForgeMod.SWIM_SPEED.get(), new AttributeModifier("baptism_swim_speed", 2.2, AttributeModifier.Operation.MULTIPLY_BASE));
-                map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier("baptism_attack", 1.1, AttributeModifier.Operation.MULTIPLY_BASE));
+                map.put(ForgeMod.SWIM_SPEED.get(), new AttributeModifier(BAPTISM_SWIM_SPEED, "baptism_swim_speed", 2.2, AttributeModifier.Operation.MULTIPLY_BASE));
+                map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BAPTISM_ATTACK, "baptism_attack", 1.1, AttributeModifier.Operation.MULTIPLY_BASE));
                 p.getAttributes().addTransientAttributeModifiers(map);
             }
         }
     }
+
+    private static final UUID CRAWLING_SPEED = UUID.fromString("b59eaa60-5281-473a-be29-e163a7277221");
 
     public static void addCrawlingAttributes(Player p) {
         if (!p.level().isClientSide) {
             p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
                 if (c.getCrossSync().isCrawling()) {
                     Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
-                    map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier("crawling_speed", -0.5, AttributeModifier.Operation.MULTIPLY_TOTAL));
+                    map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(CRAWLING_SPEED, "crawling_speed", -0.5, AttributeModifier.Operation.MULTIPLY_TOTAL));
                     p.getAttributes().addTransientAttributeModifiers(map);
                 }
             });
