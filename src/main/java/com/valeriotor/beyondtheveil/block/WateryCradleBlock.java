@@ -44,7 +44,7 @@ public class WateryCradleBlock extends ThinMultiBlock3by1 implements EntityBlock
     private static final VoxelShape SHAPE_CLOSED_SOUTH = Shapes.or(UP, DOWN, EAST, WEST, SOUTH);
 
     public WateryCradleBlock(Properties properties) {
-        super(BlockBehaviour.Properties.of().strength(5.0F, 7.0F).noOcclusion());
+        super(properties);
     }
 
 

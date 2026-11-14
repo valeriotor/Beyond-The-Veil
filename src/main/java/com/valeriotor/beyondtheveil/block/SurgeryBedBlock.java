@@ -29,7 +29,7 @@ public class SurgeryBedBlock  extends ThinMultiBlock3by2 implements EntityBlock 
     protected static final VoxelShape UPPER_LEVEL = Shapes.box(0, 0, 0, 1, 0.0625, 1);
 
     public SurgeryBedBlock(Properties pProperties) {
-        super(pProperties.noOcclusion());
+        super(pProperties);
     }
 
     @Override
