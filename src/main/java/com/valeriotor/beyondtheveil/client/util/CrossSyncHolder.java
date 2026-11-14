@@ -15,7 +15,7 @@ public class CrossSyncHolder {
     private static final Map<UUID, CrossSync> holder = new HashMap<>();
 
     public static void setCrossSync(CompoundTag tag) {
-        UUID uuid = UUID.fromString(tag.getString("id"));
+        UUID uuid = tag.getUUID("id");
         CompoundTag crossSyncTag = tag.getCompound("cross_sync");
         if (!holder.containsKey(uuid)) {
             holder.put(uuid, new CrossSync());
@@ -27,7 +27,7 @@ public class CrossSyncHolder {
     }
 
     public static void stopCrossSync(CompoundTag tag) {
-        UUID uuid = UUID.fromString(tag.getString("id"));
+        UUID uuid = tag.getUUID("id");
         holder.remove(uuid);
     }
 

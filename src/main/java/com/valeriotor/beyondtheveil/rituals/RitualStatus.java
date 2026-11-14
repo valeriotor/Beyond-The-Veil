@@ -177,7 +177,7 @@ public class RitualStatus {
         currentHop = tag.getInt("currentHop");
         progressUntilNextHop = tag.getDouble("progressUntilNextHop");
         itemBurnCounter = tag.getInt("itemBurnCounter");
-        initiator = UUID.fromString(tag.getString("initiator"));
+        initiator = tag.getUUID("initiator");
 
         for (ItemStack burnedModifier : this.burnedModifiers) {
             RitualModifierRegistry.modifierEffect(this, burnedModifier);
@@ -507,7 +507,7 @@ public class RitualStatus {
 
         tag.putInt("numberOfModifiers", numberOfModifiers);
         tag.putInt("itemBurnCounter", itemBurnCounter);
-        tag.putString("initiator", initiator.toString());
+        tag.putUUID("initiator", initiator);
 
         tag.putDouble("primaryInstability", primaryInstability);
         tag.putDouble("primaryInstabilityIncreaseRate", primaryInstabilityIncreaseRate);

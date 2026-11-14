@@ -103,7 +103,7 @@ public class GenericToClientPacket {
 
     public static GenericToClientPacket crossSync(Player sender, CrossSync data) {
         CompoundTag tag = new CompoundTag();
-        tag.putString("id", sender.getUUID().toString());
+        tag.putUUID("id", sender.getUUID());
         CompoundTag crossSyncTag = new CompoundTag();
         data.saveToNBTForSync(crossSyncTag);
         tag.put("cross_sync", crossSyncTag);
@@ -112,7 +112,7 @@ public class GenericToClientPacket {
 
     public static GenericToClientPacket stopCrossSync(Player sender) {
         CompoundTag tag = new CompoundTag();
-        tag.putString("id", sender.getUUID().toString());
+        tag.putUUID("id", sender.getUUID());
         return new GenericToClientPacket(MessageType.STOP_CROSS_SYNC, tag);
     }
 

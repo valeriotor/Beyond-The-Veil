@@ -37,6 +37,8 @@ import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntArrayTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -415,7 +417,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
             pCompound.putLong("lacrymatory", lacrymatoryPos.asLong());
         }
         if (master != null) {
-            pCompound.putString("master", master.toString());
+            pCompound.putUUID("master", master);
         }
         pCompound.putInt("ticksToFletum", ticksToFletum);
     }
@@ -429,8 +431,9 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
         if (pCompound.contains("lacrymatory")) {
             lacrymatoryPos = BlockPos.of(pCompound.getLong("lacrymatory"));
         }
-        if (pCompound.contains("master")) {
-            master = UUID.fromString(pCompound.getString("master"));
+        if (pCompound.contains("master", Tag.TAG_INT_ARRAY)) {
+            //master = UUID.fromString(pCompound.getString("master"));
+            master = pCompound.getUUID("master");
         }
         if (pCompound.contains("ticksToFletum")) {
             ticksToFletum = pCompound.getInt("ticksToFletum");

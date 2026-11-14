@@ -12,6 +12,7 @@ import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -148,7 +149,7 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         if (master != null) {
-            pCompound.putString("master", master.toString());
+            pCompound.putUUID("master", master);
         }
         pCompound.putBoolean("replenishesBindingEnergy", replenishesBindingEnergy);
         pCompound.putBoolean("isFollowing", isFollowing);
@@ -157,8 +158,8 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
     @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        if (pCompound.contains("master")) {
-            master = UUID.fromString(pCompound.getString("master"));
+        if (pCompound.contains("master", Tag.TAG_INT_ARRAY)) {
+            master = pCompound.getUUID("master");
         }
         replenishesBindingEnergy = pCompound.getBoolean("replenishesBindingEnergy");
         isFollowing = pCompound.getBoolean("isFollowing");

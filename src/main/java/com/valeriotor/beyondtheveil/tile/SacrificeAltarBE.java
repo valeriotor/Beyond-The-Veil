@@ -22,6 +22,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -151,8 +152,8 @@ public class SacrificeAltarBE extends BlockEntity {
         if (tag != null)
             super.load(tag);
         loadPatient(tag);
-        if (tag.contains("playerInitiating")) {
-            playerInitiating = UUID.fromString(tag.getString("playerInitiating"));
+        if (tag.contains("playerInitiating", Tag.TAG_INT_ARRAY)) {
+            playerInitiating = tag.getUUID("playerInitiating");
         } else {
             playerInitiating = null;
         }
@@ -218,7 +219,7 @@ public class SacrificeAltarBE extends BlockEntity {
         super.saveAdditional(pTag);
         savePatient(pTag);
         if (playerInitiating != null) {
-            pTag.putString("playerInitiating", playerInitiating.toString());
+            pTag.putUUID("playerInitiating", playerInitiating);
         }
         CompoundTag basins = new CompoundTag();
         pTag.put("basins", basins);

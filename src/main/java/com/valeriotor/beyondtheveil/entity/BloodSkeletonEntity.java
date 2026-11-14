@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.entity.ai.goals.MinionFollowMasterGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.MinionHelpMasterTargetGoal;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -76,7 +77,7 @@ public class BloodSkeletonEntity extends Monster implements PlayerMinion {
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         if (masterId != null) {
-            pCompound.putString("master", masterId.toString());
+            pCompound.putUUID("master", masterId);
         }
         pCompound.putBoolean("isFollowing", isFollowing);
     }
@@ -84,8 +85,8 @@ public class BloodSkeletonEntity extends Monster implements PlayerMinion {
     @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        if (pCompound.contains("master")) {
-            masterId = UUID.fromString(pCompound.getString("master"));
+        if (pCompound.contains("master", Tag.TAG_INT_ARRAY)) {
+            masterId = pCompound.getUUID("master");
         }
         isFollowing = pCompound.getBoolean("isFollowing");
     }

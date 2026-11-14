@@ -178,7 +178,7 @@ public class TriggerData {
         tag.put("ignoredPlayers", ignoredPlayersTag);
 
         if (master != null) {
-            tag.putString("master", master.toString());
+            tag.putUUID("master", master);
         }
         tag.putInt("seeingDistance", seeingDistance);
 
@@ -229,8 +229,8 @@ public class TriggerData {
         for (String uuid : tag.getCompound("ignoredPlayers").getAllKeys()) {
             ignoredPlayers.add(UUID.fromString(uuid));
         }
-        if (tag.contains("master")) {
-            master = UUID.fromString(tag.getString("master"));
+        if (tag.contains("master", Tag.TAG_INT_ARRAY)) {
+            master = tag.getUUID("master");
             ignoredPlayers.add(master);
         }
         seeingDistance = tag.getInt("seeingDistance");

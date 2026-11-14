@@ -13,6 +13,7 @@ import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -91,6 +92,7 @@ public class FletumEntity extends PathfinderMob implements PlayerMinion, Talkabl
         }
         if (master != null) {
             pCompound.putString("master", master.toString());
+            pCompound.putUUID("master", master);
         }
 
     }
@@ -101,8 +103,8 @@ public class FletumEntity extends PathfinderMob implements PlayerMinion, Talkabl
         if (pCompound.contains("lacrymatory")) {
             lacrymatoryPos = BlockPos.of(pCompound.getLong("lacrymatory"));
         }
-        if (pCompound.contains("master")) {
-            master = UUID.fromString(pCompound.getString("master"));
+        if (pCompound.contains("master", Tag.TAG_INT_ARRAY)) {
+            master = pCompound.getUUID("master");
         }
 
     }

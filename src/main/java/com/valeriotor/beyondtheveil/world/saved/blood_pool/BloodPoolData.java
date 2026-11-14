@@ -148,7 +148,7 @@ public class BloodPoolData extends SavedData {
             if (!level.isClientSide && level instanceof ServerLevel sl && sl.getPlayerByUUID(playerId) instanceof ServerPlayer sp) {
                 CompoundTag tag = new CompoundTag();
                 tag.putString("modification", PoolModification.ADD.name());
-                tag.putString("UUID", playerId.toString());
+                tag.putUUID("UUID", playerId);
                 tag.put("color", triplet.saveToTag(new CompoundTag()));
                 tag.put("entity", entity.save());
                 Messages.sendToPlayer(GenericToClientPacket.modifyBloodPool(tag), sp);
@@ -180,7 +180,7 @@ public class BloodPoolData extends SavedData {
         Optional<BloodPoolEntity> remove = Optional.of(list.remove(0));
         if (level instanceof ServerLevel sl && sl.getPlayerByUUID(playerId) instanceof ServerPlayer sp) {
             CompoundTag tag = new CompoundTag();
-            tag.putString("UUID", playerId.toString());
+            tag.putUUID("UUID", playerId);
             tag.putString("modification", PoolModification.TAKE_FIRST.name());
             tag.put("color", triplet.saveToTag(new CompoundTag()));
             Messages.sendToPlayer(GenericToClientPacket.modifyBloodPool(tag), sp);
@@ -193,7 +193,7 @@ public class BloodPoolData extends SavedData {
     public void modifyPool(Level level, CompoundTag tag) {
         String modification = tag.getString("modification");
         PoolModification poolModification = PoolModification.valueOf(modification);
-        UUID uuid = UUID.fromString(tag.getString("UUID"));
+        UUID uuid = tag.getUUID("UUID");
         ColorTriplet color = ColorTriplet.fromTag(tag.getCompound("color"));
         if (poolModification == PoolModification.ADD) {
             BloodPoolEntity entity = new BloodPoolEntity(tag.getCompound("entity"));
@@ -217,7 +217,7 @@ public class BloodPoolData extends SavedData {
                 iterator.remove();
                 if (level instanceof ServerLevel sl && sl.getPlayerByUUID(playerId) instanceof ServerPlayer sp) {
                     CompoundTag tag = new CompoundTag();
-                    tag.putString("UUID", playerId.toString());
+                    tag.putUUID("UUID", playerId);
                     tag.putString("modification", PoolModification.TAKE_UUID.name());
                     tag.put("color", triplet.saveToTag(new CompoundTag()));
                     tag.putUUID("entityUUID", entityUUID);
