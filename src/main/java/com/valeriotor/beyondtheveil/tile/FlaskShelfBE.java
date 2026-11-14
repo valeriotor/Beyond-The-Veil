@@ -454,7 +454,7 @@ public class FlaskShelfBE extends BlockEntity {
             return tag;
         }
 
-        ItemStack toItem() {
+        public ItemStack toItem() {
             ItemStack flask = new ItemStack(FlaskBlock.sizeToBlock.get(getSize()));
             CompoundTag tag = new CompoundTag();
             tank.writeToNBT(tag);

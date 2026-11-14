@@ -66,7 +66,7 @@ public class AlembicsBE extends BlockEntity {
         super(BTVBlockEntities.ALEMBICS_BE.get(), pPos, pBlockState);
         inputTank1 = new FluidTank(2000);
         stackHandler = new ItemStackHandler(1);
-        inputTank2 = new FluidTank(1000);
+        inputTank2 = new FluidTank(2000);
         outputTank = new FluidTank(1000);
         updateShape();
     }

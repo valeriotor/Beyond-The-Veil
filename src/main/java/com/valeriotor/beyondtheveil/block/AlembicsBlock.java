@@ -2,12 +2,15 @@ package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by1;
 import com.valeriotor.beyondtheveil.tile.AlembicsBE;
+import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
@@ -164,5 +167,21 @@ public class AlembicsBlock extends ThinMultiBlock3by1 implements EntityBlock {
             };
         }
         return null;
+    }
+
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        if (!pState.is(pNewState.getBlock())) {
+            if (pLevel.getBlockEntity(pPos) instanceof AlembicsBE be) {
+                FlaskShelfBE.Flask f = be.getHeldFlask();
+                if (f != null) {
+                    ItemStack flask = f.toItem();
+                    ItemEntity itementity = new ItemEntity(pLevel, pPos.getX() + 0.5D, pPos.getY() + 0.5D, pPos.getZ() + 0.5D, flask);
+                    itementity.setDefaultPickUpDelay();
+                    pLevel.addFreshEntity(itementity);
+                }
+            }
+        }
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 }
