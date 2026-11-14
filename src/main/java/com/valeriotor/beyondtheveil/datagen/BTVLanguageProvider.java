@@ -2598,6 +2598,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.dagon.title", "Communion");
         add("gui.metamorphosis.title", "Metamorphosis");
         add("gui.journal.title", "Journal");
+        add("gui.drowned.title", "You Drowned");
         add("gui.single_report.title", "Report");
         add("gui.single_report.saved", "Saved report as %1$s");
         add("gui.research_page.complete", "Progress");
@@ -2906,9 +2907,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("overlay.repair_hammer.submarine", "Integrity: %.2f%%");
         add("overlay.explode", "Press %s to explode");
         add("overlay.detransform", "Press %s to return human");
-        add("overlay.alembics1", "First Input Tank: %1$s, (%2$s mB / 1000mB)");
+        add("overlay.alembics1", "First Input Tank: %1$s, (%2$s mB / 2000mB)");
         add("overlay.alembics2", "Item: %1$s %2$s"); // first is amount, second is item name
-        add("overlay.alembics3", "Second Input Tank: %1$s, (%2$s mB / 1000mB)");
+        add("overlay.alembics3", "Second Input Tank: %1$s, (%2$s mB / 2000mB)");
         add("overlay.alembics4", "Output Flask: %1$s, (%2$s mB / %3$smB)");
     }
 
