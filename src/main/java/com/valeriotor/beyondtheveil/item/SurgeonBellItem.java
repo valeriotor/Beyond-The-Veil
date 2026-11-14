@@ -61,7 +61,7 @@ public class SurgeonBellItem extends Item {
                         }
                     } else if (b == Registration.FLASK_SHELF.get() || b instanceof FlaskBlock) {
                         if (b instanceof FlaskShelfBlock fsb) {
-                            pos = fsb.findCenter(pos, state);
+                            pos = fsb.findBEPos(pos, state);
                         }
                         if (!sp.isShiftKeyDown()) {
                             data.addPosition(pos, BellData.PositionType.INPUT_CONTAINERS);
