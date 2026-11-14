@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.EnderManAngerEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -34,7 +36,7 @@ public class ClosedEyesEvents {
 
     @SubscribeEvent
     public static void onFillBucketEvent(FillBucketEvent event) {
-        if (event.getEntity() instanceof ServerPlayer sp && DataUtil.getBoolean(sp, PlayerDataLib.reminiscing.name()) && event.getTarget() != null) {
+        if (event.getEntity() != null && !(event.getEntity() instanceof FakePlayer) && DataUtil.getBoolean(event.getEntity(), PlayerDataLib.reminiscing.name()) && event.getTarget() != null) {
             if (event.getTarget() instanceof BlockHitResult bhr && event.getEmptyBucket().getItem() == Items.BUCKET) {
                 BlockPos prePos = bhr.getBlockPos();
                 BlockState preState = event.getLevel().getBlockState(prePos);
@@ -42,17 +44,24 @@ public class ClosedEyesEvents {
                 Block block = preState.getBlock();
                 if (block == Blocks.WATER && block instanceof BucketPickup bp) {
                     bp.pickupBlock(level, prePos, preState);
-                    event.setFilledBucket(event.getEmptyBucket().copy());
+                    ItemStack copy = event.getEmptyBucket().copy();
+                    copy.setCount(1);
+                    event.setFilledBucket(copy);
                     event.setResult(Event.Result.ALLOW);
-                    DataUtil.incrementOrSetInteger(sp, PlayerDataLib.stored_water.name(), 1, 1, false);
+                    event.getLevel().playSound(event.getEntity(), prePos, SoundEvents.BUCKET_FILL, SoundSource.PLAYERS);
+                    if (event.getEntity() instanceof ServerPlayer sp) {
+                        DataUtil.incrementOrSetIntegerOnServerAndSync(sp, PlayerDataLib.stored_water.name(), 1, 1, false);
+                    }
                 } else {
                     Direction direction = bhr.getDirection();
                     BlockPos pos = canBlockContainWater(level, prePos, preState) ? prePos : prePos.relative(direction);
                     if (DataUtil.getOrSetInteger(event.getEntity(), PlayerDataLib.stored_water.name(), 0, false) > 0 && placeStoredWater(event.getEntity(), level, pos, bhr)) {
-                        DataUtil.incrementOrSetInteger(event.getEntity(), PlayerDataLib.stored_water.name(), -1, 0, false);
-                        event.setFilledBucket(event.getEmptyBucket().copy());
+                        ItemStack copy = event.getEmptyBucket().copy();
+                        copy.setCount(1);
+                        event.setFilledBucket(copy);
                         event.setResult(Event.Result.ALLOW);
-                        if (!DataUtil.getBoolean(sp, PlayerDataLib.grasped_water.name())) {
+                        if (event.getEntity() instanceof ServerPlayer sp && !DataUtil.getBoolean(sp, PlayerDataLib.grasped_water.name())) {
+                            DataUtil.incrementOrSetIntegerOnServerAndSync(event.getEntity(), PlayerDataLib.stored_water.name(), -1, 0, false);
                             DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.grasped_water.name(), true, false);
                         }
                     }

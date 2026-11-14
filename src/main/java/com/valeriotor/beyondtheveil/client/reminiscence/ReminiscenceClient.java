@@ -106,8 +106,9 @@ public abstract class ReminiscenceClient {
             if (KeyBindings.reminisce.isDown() && Minecraft.getInstance().screen == null) {
                 reminisceTimePressed++;
                 preventScreenOpen = false;
-                if (reminisceTimePressed == 20) {
+                if (reminisceTimePressed == 20 && Minecraft.getInstance().player != null) {
                     Messages.sendToServer(new GenericToServerPacket(GenericToServerPacket.MessageType.REMINISCING_START));
+                    DataUtil.setBoolean(Minecraft.getInstance().player, PlayerDataLib.reminiscing.name(), true, true);
                     if (!reminiscences.isEmpty()) {
                         reminiscences.get(selectedReminiscence).reset();
                     }
@@ -132,7 +133,10 @@ public abstract class ReminiscenceClient {
                 }
                 Minecraft.getInstance().setScreen(null);
                 preventScreenOpen = true;
-                Messages.sendToServer(new GenericToServerPacket(GenericToServerPacket.MessageType.REMINISCING_STOP));
+                if (Minecraft.getInstance().player != null) {
+                    Messages.sendToServer(new GenericToServerPacket(GenericToServerPacket.MessageType.REMINISCING_STOP));
+                    DataUtil.setBoolean(Minecraft.getInstance().player, PlayerDataLib.reminiscing.name(), false, true);
+                }
             } else if (event.getKey() == KeyBindings.reminisce.getKey().getValue()) {
                 if (reminiscences.size() > 1) {
                     reminiscences.get(selectedReminiscence).reset();
