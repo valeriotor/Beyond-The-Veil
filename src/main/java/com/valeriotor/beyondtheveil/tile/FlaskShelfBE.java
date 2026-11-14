@@ -135,7 +135,7 @@ public class FlaskShelfBE extends BlockEntity {
             computeFlasksShape();
             level.playSound(null, getBlockPos(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1);
             ItemStack flask = f.toItem();
-            ItemEntity itementity = new ItemEntity(level, hitLocation.x() + 0.5D, hitLocation.y() + 0.5D, hitLocation.z() + 0.5D, flask);
+            ItemEntity itementity = new ItemEntity(level, hitLocation.x() + 0.5D, hitLocation.y() + 0.5D, hitLocation.z() + 0.5D, flask, 0, 0, 0);
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
 

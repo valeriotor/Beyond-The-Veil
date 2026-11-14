@@ -4,6 +4,7 @@ import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by3;
 import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.tile.AlembicsBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -48,34 +50,34 @@ public class FlaskShelfBlock extends ThinMultiBlock3by3 implements EntityBlock {
     //public static final IntegerProperty SIDE = IntegerProperty.create("side", 0, 2); // 0 left, 1 center, 2 right (from perspective of player who placed it)
     private static final VoxelShape BASE_SHAPE = Shapes.box(0, 0, 0, 1, 0.125D, 1);
     private static final double a = 0.0625;
-    private static final VoxelShape L0_EAST = Shapes.box(a, a*2, 0, 1, a*3, 1);
-    private static final VoxelShape L0_NORTH = Shapes.box(0, a*2, 0, 1, a*3, 1-a);
-    private static final VoxelShape L0_WEST = Shapes.box(0, a*2, 0, 1-a, a*3, 1);
-    private static final VoxelShape L0_SOUTH = Shapes.box(0, a*2, a, 1, a*3, 1);
-    private static final VoxelShape L1_EAST = Shapes.box(a, a*2, 0, 1-2*a, a*3, 1);
-    private static final VoxelShape L1_NORTH = Shapes.box(0, a*2, 2*a, 1, a*3, 1-a);
-    private static final VoxelShape L1_WEST = Shapes.box(2*a, a*2, 0, 1-a, a*3, 1);
-    private static final VoxelShape L1_SOUTH = Shapes.box(0, a*2, a, 1, a*3, 1-2*a);
-    private static final VoxelShape L1_EAST_LEFT = Shapes.box(a, a*2, 0, 1-2*a, a*3, 1-a);
-    private static final VoxelShape L1_EAST_RIGHT = Shapes.box(a, a*2, a, 1-2*a, a*3, 1);
-    private static final VoxelShape L1_NORTH_LEFT = Shapes.box(0, a*2, 2*a, 1-a, a*3, 1-a);
-    private static final VoxelShape L1_NORTH_RIGHT = Shapes.box(a, a*2, 2*a, 1, a*3, 1-a);
-    private static final VoxelShape L1_WEST_LEFT = Shapes.box(2*a, a*2, a, 1-a, a*3, 1);
-    private static final VoxelShape L1_WEST_RIGHT = Shapes.box(2*a, a*2, 0, 1-a, a*3, 1-a);
-    private static final VoxelShape L1_SOUTH_LEFT = Shapes.box(a, a*2, a, 1, a*3, 1-2*a);
-    private static final VoxelShape L1_SOUTH_RIGHT = Shapes.box(0, a*2, a, 1-a, a*3, 1-2*a);
-    private static final VoxelShape L2_EAST = Shapes.box(a, a*2, 0, 1-4*a, a*3, 1);
-    private static final VoxelShape L2_NORTH = Shapes.box(0, a*2, 4*a, 1, a*3, 1-a);
-    private static final VoxelShape L2_WEST = Shapes.box(4*a, a*2, 0, 1-a, a*3, 1);
-    private static final VoxelShape L2_SOUTH = Shapes.box(0, a*2, a, 1, a*3, 1-4*a);
-    private static final VoxelShape L2_EAST_LEFT = Shapes.box(a, a*2, 0, 1-4*a, a*3, 1-2*a);
-    private static final VoxelShape L2_EAST_RIGHT = Shapes.box(a, a*2, 2*a, 1-4*a, a*3, 1);
-    private static final VoxelShape L2_NORTH_LEFT = Shapes.box(0, a*2, 4*a, 1-2*a, a*3, 1-a);
-    private static final VoxelShape L2_NORTH_RIGHT = Shapes.box(2*a, a*2, 4*a, 1, a*3, 1-a);
-    private static final VoxelShape L2_WEST_LEFT = Shapes.box(4*a, a*2, 2*a, 1-a, a*3, 1);
-    private static final VoxelShape L2_WEST_RIGHT = Shapes.box(4*a, a*2, 0, 1-a, a*3, 1-2*a);
-    private static final VoxelShape L2_SOUTH_LEFT = Shapes.box(2*a, a*2, a, 1, a*3, 1-4*a);
-    private static final VoxelShape L2_SOUTH_RIGHT = Shapes.box(0, a*2, a, 1-2*a, a*3, 1-4*a);
+    private static final VoxelShape L0_EAST = Shapes.box(a, a * 2, 0, 1, a * 3, 1);
+    private static final VoxelShape L0_NORTH = Shapes.box(0, a * 2, 0, 1, a * 3, 1 - a);
+    private static final VoxelShape L0_WEST = Shapes.box(0, a * 2, 0, 1 - a, a * 3, 1);
+    private static final VoxelShape L0_SOUTH = Shapes.box(0, a * 2, a, 1, a * 3, 1);
+    private static final VoxelShape L1_EAST = Shapes.box(a, a * 2, 0, 1 - 2 * a, a * 3, 1);
+    private static final VoxelShape L1_NORTH = Shapes.box(0, a * 2, 2 * a, 1, a * 3, 1 - a);
+    private static final VoxelShape L1_WEST = Shapes.box(2 * a, a * 2, 0, 1 - a, a * 3, 1);
+    private static final VoxelShape L1_SOUTH = Shapes.box(0, a * 2, a, 1, a * 3, 1 - 2 * a);
+    private static final VoxelShape L1_EAST_LEFT = Shapes.box(a, a * 2, 0, 1 - 2 * a, a * 3, 1 - a);
+    private static final VoxelShape L1_EAST_RIGHT = Shapes.box(a, a * 2, a, 1 - 2 * a, a * 3, 1);
+    private static final VoxelShape L1_NORTH_LEFT = Shapes.box(0, a * 2, 2 * a, 1 - a, a * 3, 1 - a);
+    private static final VoxelShape L1_NORTH_RIGHT = Shapes.box(a, a * 2, 2 * a, 1, a * 3, 1 - a);
+    private static final VoxelShape L1_WEST_LEFT = Shapes.box(2 * a, a * 2, a, 1 - a, a * 3, 1);
+    private static final VoxelShape L1_WEST_RIGHT = Shapes.box(2 * a, a * 2, 0, 1 - a, a * 3, 1 - a);
+    private static final VoxelShape L1_SOUTH_LEFT = Shapes.box(a, a * 2, a, 1, a * 3, 1 - 2 * a);
+    private static final VoxelShape L1_SOUTH_RIGHT = Shapes.box(0, a * 2, a, 1 - a, a * 3, 1 - 2 * a);
+    private static final VoxelShape L2_EAST = Shapes.box(a, a * 2, 0, 1 - 4 * a, a * 3, 1);
+    private static final VoxelShape L2_NORTH = Shapes.box(0, a * 2, 4 * a, 1, a * 3, 1 - a);
+    private static final VoxelShape L2_WEST = Shapes.box(4 * a, a * 2, 0, 1 - a, a * 3, 1);
+    private static final VoxelShape L2_SOUTH = Shapes.box(0, a * 2, a, 1, a * 3, 1 - 4 * a);
+    private static final VoxelShape L2_EAST_LEFT = Shapes.box(a, a * 2, 0, 1 - 4 * a, a * 3, 1 - 2 * a);
+    private static final VoxelShape L2_EAST_RIGHT = Shapes.box(a, a * 2, 2 * a, 1 - 4 * a, a * 3, 1);
+    private static final VoxelShape L2_NORTH_LEFT = Shapes.box(0, a * 2, 4 * a, 1 - 2 * a, a * 3, 1 - a);
+    private static final VoxelShape L2_NORTH_RIGHT = Shapes.box(2 * a, a * 2, 4 * a, 1, a * 3, 1 - a);
+    private static final VoxelShape L2_WEST_LEFT = Shapes.box(4 * a, a * 2, 2 * a, 1 - a, a * 3, 1);
+    private static final VoxelShape L2_WEST_RIGHT = Shapes.box(4 * a, a * 2, 0, 1 - a, a * 3, 1 - 2 * a);
+    private static final VoxelShape L2_SOUTH_LEFT = Shapes.box(2 * a, a * 2, a, 1, a * 3, 1 - 4 * a);
+    private static final VoxelShape L2_SOUTH_RIGHT = Shapes.box(0, a * 2, a, 1 - 2 * a, a * 3, 1 - 4 * a);
 
     public FlaskShelfBlock(Properties properties) {
         super(properties);
@@ -245,6 +247,20 @@ public class FlaskShelfBlock extends ThinMultiBlock3by3 implements EntityBlock {
 
     public BlockPos findBEPos(BlockPos pPos, BlockState pState) {
         return findCenter(pPos, pState).above();
+    }
+
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        if (!pState.is(pNewState.getBlock())) {
+            if (pLevel.getBlockEntity(pPos) instanceof FlaskShelfBE be) {
+                for (FlaskShelfBE.Flask flask : be.flasks) {
+                    ItemEntity itementity = new ItemEntity(pLevel, pPos.getX() + 0.5D, pPos.getY() + 0.5D, pPos.getZ() + 0.5D, flask.toItem());
+                    itementity.setDefaultPickUpDelay();
+                    pLevel.addFreshEntity(itementity);
+                }
+            }
+        }
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 
     public static class BreakFlaskMessage {
