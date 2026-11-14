@@ -60,6 +60,7 @@ public class ResearchEvents {
                 DataUtil.addExchange(p, "keeper_ask_slugs");
             } else if ("WATERY_CRADLE".equals(key) && stage == 2) {
                 DataUtil.addExchange(p, "west_offer_surgeon");
+                DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DISCOVERED_FLUID.apply(BTVFluids.FLUID_MEMORY_HORMONES.getA().get()), true);
             } else if ("BLOOD_RITUALS".equals(key) && stage == 0) {
                 DataUtil.addExchange(p, "mauer_ask_thesis");
             } else if (SHOREMEN_CUSTOMS_RESEARCHES.containsKey(key) && stage == SHOREMEN_CUSTOMS_RESEARCHES.get(key)) {
