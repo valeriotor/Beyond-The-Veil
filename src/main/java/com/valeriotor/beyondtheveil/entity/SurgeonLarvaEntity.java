@@ -76,7 +76,7 @@ public class SurgeonLarvaEntity extends Mob implements PlayerMinion {
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         if (master != null) {
-            pCompound.putUUID("master", uuid);
+            pCompound.putUUID("master", master);
         }
         pCompound.putInt("growth", entityData.get(GROWTH));
         pCompound.putInt("growthTicks", growthTicks);
@@ -101,7 +101,7 @@ public class SurgeonLarvaEntity extends Mob implements PlayerMinion {
     public void tick() {
         super.tick();
         if (!level().isClientSide) {
-            if (growthTicks > 0) {
+            if (growthTicks > 0 && tickCount % 10 == 0) {
                 growthTicks--;
                 entityData.set(GROWTH, entityData.get(GROWTH) + 1);
                 if (entityData.get(GROWTH) > 800) {
@@ -123,6 +123,9 @@ public class SurgeonLarvaEntity extends Mob implements PlayerMinion {
         if (stack.is(Registration.LARVA_FOOD)) {
             if (level().isClientSide()) {
                 return InteractionResult.SUCCESS;
+            }
+            if (!pPlayer.getAbilities().instabuild) {
+                stack.shrink(1);
             }
             if (growthTicks < 100) {
                 growthTicks += 50;
