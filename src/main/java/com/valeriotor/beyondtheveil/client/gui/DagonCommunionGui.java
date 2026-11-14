@@ -21,9 +21,22 @@ public class DagonCommunionGui extends Screen {
     private List<FormattedCharSequence> firstLines = new ArrayList<>();
     private List<FormattedCharSequence> secondLines = new ArrayList<>();
     private static final int SCALE_FACTOR = 4;
+    private float scaleFactor;
 
     public DagonCommunionGui() {
         super(Component.translatable("gui.dagon.title"));
+    }
+
+    @Override
+    protected void init() {
+        scaleFactor = 1;
+        final double MIN_STRING_PROPORTION = 30 / 1440D;
+        final double MAX_STRING_PROPORTION = 45 / 1440D;
+        if (MIN_STRING_PROPORTION > 15D / height) {
+            scaleFactor = (float) ((MIN_STRING_PROPORTION) / (15D / height));
+        } else if (MAX_STRING_PROPORTION < 15D / height) {
+            scaleFactor = (float) ((MAX_STRING_PROPORTION) / (15D / height));
+        }
     }
 
     @Override
@@ -35,7 +48,7 @@ public class DagonCommunionGui extends Screen {
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(BTVSounds.DAGON_THUMP.get(), 1));
         }
         counter++;
-        int pMaxWidth = width * 4 / 5 / SCALE_FACTOR;
+        int pMaxWidth = (int) (width * 4 / 5 / SCALE_FACTOR / scaleFactor);
         if (counter == 80) {
             firstLines.addAll(Minecraft.getInstance().font.split(Component.translatable("gui.dagon.0"), pMaxWidth));
         } else if (counter == 280) {
@@ -72,7 +85,7 @@ public class DagonCommunionGui extends Screen {
         PoseStack pose = gg.pose();
         pose.pushPose();
         pose.translate(width / 2D, height / 2D, 0);
-        pose.scale(4, 4, 1);
+        pose.scale(4 * scaleFactor, 4 * scaleFactor, 1);
 
         int alpha1 = 0, alpha2 = 0;
         if (counter > 80 && counter < 280) {
