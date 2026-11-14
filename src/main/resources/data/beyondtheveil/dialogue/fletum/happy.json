@@ -51,8 +51,8 @@
         },
         {
           "id": "because",
-          "branchLength": 0,
-          "endingNodeID": "",
+          "branchLength": 1,
+          "endingNodeID": "happy",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
