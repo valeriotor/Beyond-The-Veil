@@ -187,9 +187,9 @@ public class PlayerTickEvents {
                     } else {
                         if (crossSync.getTransformation() != PlayerTransformation.SCALED) {
                             if (!itemBySlot.isEmpty()) {
-                                if (crossSync.getTransformation() == PlayerTransformation.DEEP_ONE && true) {
-                                    continue;
-                                }
+                                //if (crossSync.getTransformation() == PlayerTransformation.DEEP_ONE) {
+                                //    continue;
+                                //}
                                 if (sp.isUsingItem() && ((sp.getUsedItemHand() == InteractionHand.MAIN_HAND && value == EquipmentSlot.MAINHAND) || (sp.getUsedItemHand() == InteractionHand.OFF_HAND && value == EquipmentSlot.OFFHAND))) {
                                     sp.stopUsingItem();
                                 }
