@@ -25,6 +25,7 @@ public class NecronomiconItem extends Item {
         if (pLevel.isClientSide()) {
             pPlayer.playSound(SoundEvents.BOOK_PAGE_TURN, 1, 1);
             GuiHelper.openClientSideGui(GuiType.NECRONOMICON);
+            return InteractionResultHolder.success(pPlayer.getItemInHand(pUsedHand));
         } /*else {
             DataUtil.setBooleanOnServerAndSync(pPlayer, "thebeginning", true, false);
             ResearchUtil.getResearch(pPlayer, "FIRSTDREAMS");

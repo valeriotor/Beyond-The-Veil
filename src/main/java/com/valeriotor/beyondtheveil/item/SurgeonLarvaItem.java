@@ -30,6 +30,6 @@ public class SurgeonLarvaItem extends Item {
             }
             return InteractionResult.CONSUME;
         }
-        return super.onItemUseFirst(stack, context);
+        return InteractionResult.CONSUME;
     }
 }
