@@ -213,6 +213,11 @@ public class BloodPoolGui extends Screen {
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
 
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
+
     private class RowEntry extends Element {
 
         private final ColorTriplet triplet;

@@ -529,6 +529,11 @@ public class CraftingRegistryGui extends Screen {
         return selectedTextBlocks.get(selectedBlockIndex);
     }
 
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
+
     private class CraftingEntry extends Element {
 
         private final ItemStack stack;

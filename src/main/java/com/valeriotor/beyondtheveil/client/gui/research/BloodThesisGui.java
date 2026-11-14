@@ -505,4 +505,9 @@ public class BloodThesisGui extends Screen {
         FormattedCharSequence formattedcharsequence = pText.getVisualOrderText();
         graphics.drawString(pFont, formattedcharsequence, pX - pFont.width(formattedcharsequence) / 2, pY, pColor, false);
     }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
 }

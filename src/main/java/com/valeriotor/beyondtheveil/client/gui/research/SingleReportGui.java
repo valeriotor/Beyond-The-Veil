@@ -421,4 +421,9 @@ public class SingleReportGui extends Screen implements ClientAdvancements.Listen
         }
         return super.mouseReleased(pMouseX, pMouseY, pButton);
     }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
 }

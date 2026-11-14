@@ -237,6 +237,11 @@ public class MemoryRegistryGui extends Screen {
         memoryPage = new MemoryPage(memory);
     }
 
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
+
     private class MemoryEntry extends Element {
 
         private final Memory memory;

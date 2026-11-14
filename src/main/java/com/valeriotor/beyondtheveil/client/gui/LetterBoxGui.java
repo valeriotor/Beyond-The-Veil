@@ -411,6 +411,11 @@ public class LetterBoxGui extends AbstractContainerScreen<LetterBoxContainer> {
         }
     }
 
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
+
     private class LetterEntry extends Element {
         private final Letter letter;
         private final boolean received;
