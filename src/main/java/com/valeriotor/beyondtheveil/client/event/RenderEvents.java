@@ -567,12 +567,16 @@ public class RenderEvents {
                     blockpos$mutableblockpos.set(xStart, y1, z1);
                     boolean waterPhase = level.getBlockState(blockpos$mutableblockpos).is(Blocks.WATER);
                     boolean doubleRender = Math.abs(z1 - z) <= 1 && Math.abs(y1 - y) <= 1;
+                    int waterPhaseLength = 0;
                     while (xEnd <= x + l * 2) {
                         xEnd++;
+                        waterPhaseLength++;
                         blockpos$mutableblockpos.set(xEnd, y1, z1);
-                        Block b = level.getBlockState(blockpos$mutableblockpos).getBlock();
-                        if (!waterPhase && b == Blocks.WATER && (Math.abs(xEnd - x) > 2 || !doubleRender)) {
+                        BlockState state = level.getBlockState(blockpos$mutableblockpos);
+                        Block b = state.getBlock();
+                        if (!waterPhase && (state.is(Blocks.WATER) || state.getFluidState().is(Fluids.WATER)) && (Math.abs(xEnd - x) > 2 || !doubleRender)) {
                             waterPhase = true;
+                            waterPhaseLength = 0;
                             xStart = xEnd;
                         } else if (waterPhase && (b != Blocks.WATER || xEnd == x + l * 2 || (doubleRender && xEnd == x - 2))) {
                             waterPhase = false;
@@ -580,7 +584,7 @@ public class RenderEvents {
                             int x1 = x - l * 4 / 2;
                             int x2 = x + l * 4 / 2;
                             blockpos$mutableblockpos.set(x, y1, z1);
-                            if (level.getBlockState(blockpos$mutableblockpos).getBlock() != Blocks.WATER) {
+                            if (level.getBlockState(blockpos$mutableblockpos).getBlock() != Blocks.WATER || waterPhaseLength < 7) {
                                 continue;
                             }
 
@@ -597,7 +601,7 @@ public class RenderEvents {
                                     }
                                 }
                                 if (x1 != x2) {
-                                    RandomSource randomsource = RandomSource.create((long) (y1 * y1 * 3121 + y1 * 45238971 ^ z1 * z1 * 418711 + z1 * 13761));
+                                    RandomSource randomsource = RandomSource.create((long) (y1 * y1 * 3121L + y1 * 45238971L ^ z1 * z1 * 418711L + z1 * 13761L));
                                     if (i1 != 0) {
                                         if (i1 >= 0) {
                                             tesselator.end();
@@ -608,7 +612,7 @@ public class RenderEvents {
                                         bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
                                     }
 
-                                    long i3 = (ticks + (y1 * y1 * 3121) + (y1 * 45238971) + (z1 * z1 * 418711) + (z1 * 13761)) & 31;
+                                    long i3 = (ticks + (y1 * y1 * 3121L) + (y1 * 45238971L) + (z1 * z1 * 418711L) + (z1 * 13761L)) & 31;
                                     float f2 = -((float) i3 + pPartialTick) / 32.0F * (3.0F + randomsource.nextFloat());
                                     f2 *= 3 * speedIncrement;
                                     double d2 = (double) y1 + 0.5D - pCamY;
