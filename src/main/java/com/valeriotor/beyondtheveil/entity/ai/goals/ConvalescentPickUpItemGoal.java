@@ -48,7 +48,7 @@ public class ConvalescentPickUpItemGoal<T extends Mob & SurgeryPatient> extends 
             BlockPos chestPos = c.getChestPos();
             if (c.getHeldStack().isEmpty()) {
                 int moveRange = 24;
-                List<ItemEntity> items = entity.level().getEntities(EntityTypeTest.forClass(ItemEntity.class), AABB.ofSize(entity.position(), moveRange, 5, moveRange), e -> true);
+                List<ItemEntity> items = entity.level().getEntities(EntityTypeTest.forClass(ItemEntity.class), AABB.ofSize(entity.position(), moveRange, 8, moveRange), e -> true);
                 //List<ItemEntity> items = entity.level().getEntities(EntityTypeTest.forClass(ItemEntity.class), AABB.ofSize(entity.position(), moveRange, 5, moveRange), e -> entity.getNavigation().createPath(e.blockPosition(), 0) != null);
                 items.sort(Comparator.comparing(i -> i.distanceToSqr(entity)));
                 if (!items.isEmpty()) {
