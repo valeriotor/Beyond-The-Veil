@@ -108,6 +108,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("commands.btvdata.dialogue_type_not_found", "Dialogue type unknown");
         add("commands.btvdata.dialogue_template_not_found", "Dialogue template unknown");
         add("beginning.netherreturn", "I have journeyed down and up again, and this sensation feels familiar. I shall write of it in Al Azif.");
+        add("multiblock.blood_well.name", "Blood Well");
     }
 
     private void addEntities() {
