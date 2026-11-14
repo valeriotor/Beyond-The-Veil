@@ -41,9 +41,9 @@ public class AlembicsRecipeRegistry {
         registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.TURTLE_EGG), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_WEAKNESS_SERUM.getA().get());
         registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.SPIDER_EYE), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_POISON_SERUM.getA().get());
         registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.WITHER_ROSE), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_WITHER_SERUM.getA().get());
-        registerRecipe(Fluids.WATER, new ItemStack(Items.COD), Fluids.WATER, 3, BTVFluids.FLUID_MEMORY_HORMONES.getA().get());
+        registerRecipe(BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get(), new ItemStack(Items.COD), BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), 3, BTVFluids.FLUID_MEMORY_HORMONES.getA().get());
         registerRecipe(Fluids.WATER, new ItemStack(Items.AMETHYST_BLOCK), Fluids.WATER, 40, BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get());
-        registerRecipe(BTVFluids.FLUID_MEMORY_HORMONES.getA().get(), new ItemStack(Registration.HEART.get()), BTVFluids.FLUID_OBEDIENCE_HORMONES.getA().get(), 60, BTVFluids.FLUID_PARENTAL_HORMONES.getA().get());
+        registerRecipe(Fluids.WATER, new ItemStack(Registration.HEART.get()), Fluids.WATER, 60, BTVFluids.FLUID_PARENTAL_HORMONES.getA().get());
         registerRecipe(Fluids.WATER, new ItemStack(Items.CLAY_BALL), Fluids.WATER, 40, BTVFluids.FLUID_GS121_SERUM.getA().get());
         registerRecipe(Fluids.WATER, new ItemStack(Items.SAND), Fluids.WATER, 40, BTVFluids.FLUID_SA245_SERUM.getA().get());
     }
