@@ -93,7 +93,7 @@ public class ShoremanCultistDialogueGui extends AbstractContainerScreen<DoubleDi
                 new DialogueBranch.DialogueOption(I18n.get("dialogue.shoreman_cultist.go_ahead.option"), DialogueBranch.OptionType.NORMAL)));
         int archeOption, doNotOption, goAheadOption;
         BindingData bindingData = DataUtil.getBindingData(minecraft.player);
-        if (true || (bindingData != null && bindingData.getBinding() == Binding.ARCHE)) {
+        if (bindingData != null && bindingData.getBinding() == Binding.ARCHE) {
             dialogueOptions.add(0, new DialogueBranch.DialogueOption(I18n.get("dialogue.shoreman_cultist.arche.option"), DialogueBranch.OptionType.NORMAL));
             archeOption = 0;
             doNotOption = 1;
