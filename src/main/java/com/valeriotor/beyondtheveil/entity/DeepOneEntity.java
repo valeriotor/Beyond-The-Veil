@@ -10,18 +10,24 @@ import com.valeriotor.beyondtheveil.entity.ai.attacks.AttackList;
 import com.valeriotor.beyondtheveil.entity.ai.attacks.TelegraphedAttackTemplate;
 import com.valeriotor.beyondtheveil.entity.ai.goals.DeepOneContact1Goal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.TelegraphedAttackGoal;
+import com.valeriotor.beyondtheveil.entity.ictya.IctyaEntity;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
+import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
+import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -34,14 +40,19 @@ import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fml.DistExecutor;
+import org.jetbrains.annotations.Nullable;
 
 public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapper {
 
@@ -62,7 +73,7 @@ public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapp
     private boolean toRemove;
     private int ticksBeforeSwimDown = -1;
     private boolean finishedTradeClient;
-
+    private BlockPos home;
 
     public DeepOneEntity(EntityType<? extends Monster> type, Level world) {
         super(BTVEntities.DEEP_ONE.get(), world);
@@ -83,9 +94,57 @@ public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapp
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
         this.goalSelector.addGoal(2, new TelegraphedAttackGoal<>(this, 1.8D, false, initAttackList(), 1));
         //this.goalSelector.addGoal(6, new DeepOneSwimUpGoal(this, 1.0D, this.level().getSeaLevel()));
-        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D) {
+            @Nullable
+            @Override
+            protected Vec3 getPosition() {
+                Vec3 pos = DefaultRandomPos.getPos(this.mob, 10, 7);
+                if (pos != null) {
+                    if (level() instanceof ServerLevel sl && sl.dimension() == BTVDimensions.ARCHE_LEVEL) {
+                        if (!sl.getBlockState(BlockPos.containing(pos)).isAir()) {
+                            ArcheCycleData arche = sl.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
+                            long cycle = arche.getCycle() & ArcheCycleData.TICKS_PER_CYCLE;
+                            if (cycle > ArcheCycleData.CURRENT_START - 2500) {
+                                return null;
+                            }
+
+                        }
+                    }
+                }
+                return pos;
+            }
+        });
+        this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1.2D) {
+            @Override
+            public boolean canUse() {
+                if (level() instanceof ServerLevel sl && sl.dimension() == BTVDimensions.ARCHE_LEVEL) {
+                    ArcheCycleData arche = sl.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
+                    long cycle = arche.getCycle() & ArcheCycleData.TICKS_PER_CYCLE;
+                    if (cycle < ArcheCycleData.CURRENT_START - 1800) {
+                        return super.canUse();
+                    }
+                } else {
+                    return false;
+                }
+                return super.canUse();
+            }
+
+            @Nullable
+            @Override
+            protected Vec3 getPosition() {
+                if (home != null) {
+                    return home.getCenter();
+                }
+                return super.getPosition();
+            }
+        });
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, null));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, false, false, e -> {
+            if (e instanceof Player p) {
+                return ResearchUtil.getResearchStage(p, "COMMUNION") <= 0;
+            }
+            return false;
+        }));
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -105,6 +164,9 @@ public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapp
             if (toRemove) {
                 discard();
                 return;
+            }
+            if (tickCount > 5 && home == null) {
+                home = new BlockPos(blockPosition());
             }
             if (getTarget() == null) {
                 entityData.set(DATA_TARGETING, false);
@@ -326,12 +388,18 @@ public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapp
         if (contactType != null) {
             pCompound.putBoolean("toRemove", true);
         }
+        if (home != null) {
+            pCompound.putLong("home", home.asLong());
+        }
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         toRemove = pCompound.contains("toRemove");
+        if (pCompound.contains("home", Tag.TAG_LONG)) {
+            home = BlockPos.of(pCompound.getLong("home"));
+        }
     }
 
     @Override
@@ -379,10 +447,30 @@ public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapp
                 })
                 .setCanContinueMoving(true)
                 .build();
+        TelegraphedAttackTemplate rightArmAttackWater = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_right_attack_water, 18, 10, 20, armArea, 3.85)
+                .setPredicate((attacker, target) -> {
+                    if (attacker instanceof DeepOneEntity deepOne) {
+                        return deepOne.isInWater() && deepOne.isTargeting();
+                    }
+                    return false;
+                })
+                .setCanContinueMoving(true)
+                .build();
+        TelegraphedAttackTemplate leftArmAttackWater = new TelegraphedAttackTemplate.TelegraphedAttackTemplateBuilder(AnimationRegistry.deep_one_left_attack_water, 18, 10, 20, armArea, 3.85)
+                .setPredicate((attacker, target) -> {
+                    if (attacker instanceof DeepOneEntity deepOne) {
+                        return deepOne.isInWater() && deepOne.isTargeting();
+                    }
+                    return false;
+                })
+                .setCanContinueMoving(true)
+                .build();
 
         attacks.addAttack(openArmAttack, 5);
         attacks.addAttack(rightArmAttack, 25);
         attacks.addAttack(leftArmAttack, 25);
+        attacks.addAttack(leftArmAttackWater, 25);
+        attacks.addAttack(rightArmAttackWater, 25);
 
         return AttackList.immutableAttackListOf(attacks);
     }
@@ -394,6 +482,23 @@ public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapp
     @Override
     public float getDamageCap() {
         return 12;
+    }
+
+    public static boolean checkDeepOneSpawnRules(EntityType<? extends DeepOneEntity> e, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom) {
+        if (pLevel instanceof ServerLevel sl && sl.dimension() == BTVDimensions.ARCHE_LEVEL) {
+            ArcheCycleData arche = sl.getDataStorage().computeIfAbsent(ArcheCycleData::new, ArcheCycleData::new, "arche");
+            long cycle = arche.getCycle() & ArcheCycleData.TICKS_PER_CYCLE;
+            if (cycle > ArcheCycleData.CURRENT_START - 200) {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkSpawnObstruction(LevelReader pLevel) {
+        return pLevel.isUnobstructed(this);
     }
 
     static class DeepOneMoveControl extends MoveControl {

@@ -5,6 +5,7 @@ import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.entity.ictya.*;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.References;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -61,6 +62,7 @@ public class Setup {
         event.register(BTVEntities.OCTID.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(BTVEntities.UMANCALA.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(BTVEntities.SANDFLATTER.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IctyaEntity::checkIctyaSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(BTVEntities.DEEP_ONE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DeepOneEntity::checkDeepOneSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
     }
 
     @SubscribeEvent
