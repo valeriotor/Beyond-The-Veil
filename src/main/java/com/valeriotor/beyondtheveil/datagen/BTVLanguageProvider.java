@@ -2443,7 +2443,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Does it matter?");
 
         add("research.METAMORPHOSIS.title", "Metamorphosis");
-        add("research.scaled_crawler.text", "Insert scales into the chest of a human patient, and witness the outcome.");
+        add("research.scaled_crawler.text", "Insert scales three times into the chest of a human patient, and witness the outcome.");
         add("research.scaled_crawler_death.text", "Witness the outcome of the procedure.");
         add("research.scaled_player.text", "Make a surgeon perform the operation on us, and survive the outcome.");
         add("research.scaled_player_death.text", "It’s killing us! We can’t stop it!");
@@ -2566,7 +2566,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "The offer and demand pillar are to be used in pairs: placing one, binding the other to it, and then placing that as well will result in a bond between the two. Any newly born baby creature next to the offer pillar will be snatched, and a cultist will bring payment next to the demand one. Some rituals may affect this behaviour. \\n" +
                 "It is astonishing how the cultists can become aware of the presence of such pillars from anywhere across the world, no matter who crafted them, no matter who placed them, simply by virtue of their distinct design. For all their talk of binding living beings, their most impressive feat has to be binding their entire order to the eternal, immutable Platonic Form encapsulating the essence of a weirdly shaped piece of stone! What knowledge do these mad ones possess?!");
         add(FLASK_SHELF.get().getDescriptionId() + ".crafting", "Used to hold flasks.");
-        add(SCALES.get().getDescriptionId() + ".crafting", "Inserting the scales into a patient’s back will apply §ldrop item§r to its abomination burst, at a cost in capacity. Inserting them into the chest instead will have catastrophic effects.");
+        add(SCALES.get().getDescriptionId() + ".crafting", "Inserting the scales into a patient’s back will apply §ldrop item§r to its abomination burst, at a cost in capacity. Inserting them three times into the chest instead will have catastrophic effects.");
     }
 
     private void addReminiscence() {
@@ -3239,7 +3239,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Inserting the gland into a patient’s back will apply §lcreate slimes§r to its abomination burst, at a cost in capacity. Inserting it into the chest instead will make nearby slimes protect the patient from aggressors.");
 
         add("gui.journal.ingredients.scales.title", "Scales");
-        add("gui.journal.ingredients.scales.text", "Inserting the scales into a patient’s back will apply §ldrop item§r to its abomination burst, at a cost in capacity. Inserting them into the chest instead will have catastrophic effects.");
+        add("gui.journal.ingredients.scales.text", "Inserting the scales into a patient’s back will apply §ldrop item§r to its abomination burst, at a cost in capacity. Inserting them three times into the chest instead will have catastrophic effects.");
 
 
         add("gui.journal.journal.type.none", "Select Type");
