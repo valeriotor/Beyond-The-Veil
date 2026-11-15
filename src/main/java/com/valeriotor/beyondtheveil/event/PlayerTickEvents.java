@@ -59,10 +59,7 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(modid = References.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -311,7 +308,9 @@ public class PlayerTickEvents {
         if (p.isDeadOrDying()) {
             return;
         }
-        if (!p.getAbilities().instabuild && p.level().dimension() == BTVDimensions.ARCHE_LEVEL && p.isUnderWater() && !(p.getVehicle() instanceof NautilusEntity)) {
+        Optional<CrossSyncData> resolve = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve();
+        boolean deepOne = resolve.isPresent() && resolve.get().getCrossSync().getTransformation() == PlayerTransformation.DEEP_ONE;
+        if (!p.getAbilities().instabuild && p.level().dimension() == BTVDimensions.ARCHE_LEVEL && p.isUnderWater() && !(p.getVehicle() instanceof NautilusEntity) && !deepOne) {
             if (DataUtil.getBoolean(p, PlayerDataLib.baptized.name()) && p.tickCount % 3 <= 1) {
                 DataUtil.incrementOrSetInteger(p, PlayerDataLib.arche_breath.name(), -1, TOTAL_ARCHE_BREATH, false);
             }
