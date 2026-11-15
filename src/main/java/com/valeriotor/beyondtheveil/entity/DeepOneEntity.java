@@ -84,6 +84,7 @@ public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapp
         this.groundNavigation = null;//new GroundPathNavigation(this, world);
         noCulling = true;
         //contactType = ContactType.MOVE3;
+        setPersistenceRequired();
     }
 
 

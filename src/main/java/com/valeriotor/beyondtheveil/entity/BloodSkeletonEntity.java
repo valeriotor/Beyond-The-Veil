@@ -31,6 +31,7 @@ public class BloodSkeletonEntity extends Monster implements PlayerMinion {
 
     public BloodSkeletonEntity(EntityType<? extends Monster> type, Level world) {
         super(type, world);
+        setPersistenceRequired();
     }
 
     @Override

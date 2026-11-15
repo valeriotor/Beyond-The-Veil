@@ -48,6 +48,7 @@ public class FletumEntity extends PathfinderMob implements PlayerMinion, Talkabl
 
     public FletumEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        setPersistenceRequired();
     }
 
     @Override

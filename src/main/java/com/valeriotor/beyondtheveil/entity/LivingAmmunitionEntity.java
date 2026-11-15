@@ -55,6 +55,7 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
 
     public LivingAmmunitionEntity(EntityType<? extends PathfinderMob> type, Level world) {
         super(type, world);
+        setPersistenceRequired();
     }
 
     private Animation explodingAnimation;

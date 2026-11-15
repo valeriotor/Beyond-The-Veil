@@ -96,6 +96,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
 
     public WeeperEntity(EntityType<? extends PathfinderMob> type, Level world) {
         super(type, world);
+        setPersistenceRequired();
     }
 
     @Override
