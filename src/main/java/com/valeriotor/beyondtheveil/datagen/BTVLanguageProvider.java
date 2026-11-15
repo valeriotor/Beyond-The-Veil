@@ -388,7 +388,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(CORAL_STAFF.get(), "Coral Staff");
         //add(SIGIL_ZOMBIE.get(), "Blood Sigil: Zombie");
         //add(SIGIL_SKELLIE.get(), "Blood Sigil: Skeleton");
-        add(SIGIL_PLAYER.get(), "Blood Sigil: Player");
+        add(SIGIL_PLAYER.get(), "Blood Sigil: Immortal");
         add(SIGIL_PATHWAY.get(), "Blood Sigil: Pathway");
         add(SACRIFICIAL_KNIFE.get(), "Sacrificial Knife");
         add(MEMORY_PHIAL.get(), "Memory Phial");
