@@ -311,8 +311,8 @@ public class PlayerTickEvents {
         if (p.isDeadOrDying()) {
             return;
         }
-        if (p.level().dimension() == BTVDimensions.ARCHE_LEVEL && p.isUnderWater() && !(p.getVehicle() instanceof NautilusEntity)) {
-            if (DataUtil.getBoolean(p, PlayerDataLib.baptized.name())) {
+        if (!p.getAbilities().instabuild && p.level().dimension() == BTVDimensions.ARCHE_LEVEL && p.isUnderWater() && !(p.getVehicle() instanceof NautilusEntity)) {
+            if (DataUtil.getBoolean(p, PlayerDataLib.baptized.name()) && p.tickCount % 3 <= 1) {
                 DataUtil.incrementOrSetInteger(p, PlayerDataLib.arche_breath.name(), -1, TOTAL_ARCHE_BREATH, false);
             }
         } else {
