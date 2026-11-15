@@ -814,10 +814,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_cultist.2", "No! I know I must die, but please, do not let me bleed like a pig!");
         add("dialogue.shoreman_cultist.3", "Ohhh, you wish you bled like a pig, yet your blood is older, and paler!");
         add("dialogue.shoreman_cultist.4", "You lie!");
-        add("dialogue.shoreman_cultist.5", "You are the misbegotten child of earth and water. Tell us, §owas §oit §oyour §omother §oor §ofather §owho §owore §oscale §ofor §ocloth?");
+        add("dialogue.shoreman_cultist.5", "You are the misbegotten child of earth and water. Tell us, §owas §oit §oyour §omother §oor §ofather §owho §owore §oscale §ofor §oskin?");
         add("dialogue.shoreman_cultist.6", "||||[[[[....]]my mother[[[[....\n|||....]]]was §ohuman.");
         add("dialogue.shoreman_cultist.7", "Then Father Ocean shall embrace your remains.");
-        add("dialogue.shoreman_cultist.do_not.0", "|||Just as I embraced life,||| so too shall I embrace death.");
+        add("dialogue.shoreman_cultist.do_not.0", "|||Just as I embraced life,||| so too shall I welcome death.");
         add("dialogue.shoreman_cultist.do_not.1", "NO!!!!!!!!");
         add("dialogue.shoreman_cultist.go_ahead.0", "NO!!!!!!!!");
         add("dialogue.shoreman_cultist.bastard", "THE BASTARD BLED WHITE!");
@@ -896,7 +896,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.blood_cultist.immortal.hypocrisy.0", "Oh, drop the hypocrisy! You rip hearts and spines, experiment on hapless fools – you are in no place to make such noble statements, white knight – preach not what you do not follow.");
         add("dialogue.blood_cultist.immortal.tell.0", "Our proposed partnership is a business one – we trade in unorthodox goods, that may be of great help to your research.\nWhat we offer is §ohuman lives§r, folks plucked from their villages and left in your hands – to do with them what you desire.");
         add("dialogue.blood_cultist.immortal.answer.0", "In our letter we spoke of a partnership – we share a mutual interest – and though we seldom make offers to those outside our aggregation – for safety, of course – you have caught our attention like no one before – bar, perhaps, a single exception.");
-        add("dialogue.blood_cultist.immortal.embrace.0", "I shall embrace death – just as I did life.\nNevertheless, know that – on behalf of my brothers and sisters – I come in peace, and with an offer.");
+        add("dialogue.blood_cultist.immortal.embrace.0", "Just as I embraced life, so too shall I welcome death.\nNevertheless, know that – on behalf of my brothers and sisters – I come in peace, and with an offer.");
         add("dialogue.blood_cultist.immortal.horrible.0", "You are now playing in the economy of lives, dear – just like we are – and for the betterment of all humanity, it must continue.\nIf you wish to proceed, simply build the two pillars. We will be there to celebrate the beginning of our partnership.");
         add("dialogue.blood_cultist.immortal.study.0", "You have struck us, yes – undying as you are – like no one has ever done before – bar, perhaps, a single exception.");
         add("dialogue.blood_cultist.immortal.offer.0", "We are an aggregation of scholars – and merchants – bound by a common fascination of the links chaining us all – brother and sister – man and beast – life and death.");
