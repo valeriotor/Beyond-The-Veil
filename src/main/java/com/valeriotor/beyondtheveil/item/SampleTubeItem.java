@@ -3,6 +3,8 @@ package com.valeriotor.beyondtheveil.item;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.BTVFluids;
+import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -162,6 +164,7 @@ public class SampleTubeItem extends Item {
                     if (item.getItem() == Registration.SAMPLE_TUBE.get() && (!item.hasTag() || !item.getOrCreateTag().contains("fluid"))) {
                         ItemStack filledTube = new ItemStack(Registration.SAMPLE_TUBE.get());
                         setFluid(filledTube, fluid);
+                        DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.DISCOVERED_FLUID.apply(fluid), true);
                         boolean flag = player.getInventory().contains(filledTube);
                         int freeSlot = -1;
                         if (!flag) {
