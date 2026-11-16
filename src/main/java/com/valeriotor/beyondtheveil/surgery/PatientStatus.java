@@ -327,6 +327,9 @@ public class PatientStatus {
     }
 
     public boolean extract(@Nullable Player p, SurgicalBE be, int currentDuration, Consumer<ItemStack> itemGiver) {
+        if (condition.isTerminal()) {
+            return false;
+        }
         for (OperationRegistry.ExtractionEntry extractionOperation : OperationRegistry.EXTRACTION_OPERATIONS) {
             Operation operation = extractionOperation.operation();
             if (extractionOperation.additionalRequirements().test(this) && canPerformOperation(operation) ) {
@@ -360,7 +363,7 @@ public class PatientStatus {
 
     public boolean insert(@Nullable Player p, ItemStack heldInForceps, int currentDuration, Runnable itemRemover, SurgicalBE be) {
         List<OperationRegistry.InsertionEntry> insertionEntries = OperationRegistry.INSERTION_OPERATIONS.get(heldInForceps.getItem());
-        if (insertionEntries == null || insertionEntries.isEmpty() || !incised) {
+        if (insertionEntries == null || insertionEntries.isEmpty() || !incised || condition.isTerminal()) {
             return false;
         }
         for (OperationRegistry.InsertionEntry insertionEntry : insertionEntries) {
