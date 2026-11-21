@@ -2321,7 +2321,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "If so, I can craft a lacrymatory, which shall hold all that he weeps.");
         add("research.WEEPERS.stage.1", "After picking him up, I can place the weeper next to the {§nlacrymatory§r}[caption:shift_right_click_lacrymatory], where he will deposit his tears. Eventually, there should be sufficiently many for me to take and use in other experiments.");
 
-        add("research.REVELATION_RING.title", "Weepers");
+        add("research.REVELATION_RING.title", "Ring of Revelation");
         add("research.extracted_revelation_ring.text", "Create a ring of revelation.");
         add("research.REVELATION_RING.stage.0", "Tears clear our eyes and let us see things as they truly are.\\n" +
                 "I picture a ring, resting on my fingers after being torn from a patient’s chest. It is made via the insertion of an eye, and the injection of tears as well as the two targeting serums: GS121 and SA245. Finally, the heart must be extracted.");
@@ -3144,7 +3144,7 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("gui.journal.ingredients.empty_bladder.title", "Empty Bladder");
         add("gui.journal.ingredients.empty_bladder.text", "A small sac, capable of holding other ingredients within itself. Occasionally dropped by monsters when slain with a scalpel.\\n" +
-                "Increases capacity when inserted into the chest or back.");
+                "Increases capacity when inserted into the chest or back, enabling the creation of {§nabominations§r}[link:journal.overview.what_is].");
 
         add("gui.journal.ingredients.sedative.title", "Sedative");
         add("gui.journal.ingredients.sedative.text", "Sedative is the single most important ingredient in surgery, as it is the one method of managing patient pain. Injecting a sufficient amount before each operation is generally a good idea.\\n" +
@@ -3182,12 +3182,12 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.ingredients.sa245_serum.text.ring", " Injecting it into the chest is a step in the crafting of the Ring of Revelation.");
 
         add("gui.journal.ingredients.vasoconstrictor.title", "Vasoconstrictor");
-        add("gui.journal.ingredients.vasoconstrictor.text", "Results in a tightening of the blood vessels within the host creature, and thus an increase in space for other ingredients. Injecting this fluid into the back or chest will increase capacity.");
+        add("gui.journal.ingredients.vasoconstrictor.text", "Results in a tightening of the blood vessels within the host creature, and thus an increase in space for other ingredients. Injecting this fluid into the back or chest will increase capacity, enabling the creation of {§nabominations§r}[link:journal.overview.what_is].");
         add("gui.journal.ingredients.vasoconstrictor.text.bound_flebo", "\\nInjecting it into the skull together with organochloride may lead to additional clones of the patient being sent to my blood pool via bound IV stands.");
 
         add("gui.journal.ingredients.tears.title", "Tears");
         add("gui.journal.ingredients.tears.text", "As the mind weeps away, so does it begin to detest the body; the host creature will no longer deny extraneous agents from entering it.\\n" +
-                "Within surgery, they can be injected in either the chest or back to increase capacity.");
+                "Within surgery, they can be injected in either the chest or back to increase capacity, enabling the creation of {§nabominations§r}[link:journal.overview.what_is].");
         add("gui.journal.ingredients.tears.text.ring", " They are also one of the steps in creating a Ring of Revelation.");
 
         add("gui.journal.ingredients.liquid_glowstone.title", "Liquid Glowstone");

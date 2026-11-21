@@ -391,6 +391,9 @@ public class PatientStatus {
         if (fluidStack.isEmpty()) {
             return false;
         }
+        if (p != null && fluidStack.getFluid().isSame(Fluids.WATER)) {
+            DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DISCOVERED_FLUID.apply(Fluids.WATER), true);
+        }
         double prevAmount = fluidAmounts.getOrDefault(fluid, 0D);
         double newAmount = prevAmount + fluidStack.getAmount();
         List<OperationRegistry.InjectionEntry> injectionEntries = OperationRegistry.INJECTION_OPERATIONS.get(fluid);

@@ -18,12 +18,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
@@ -73,6 +78,18 @@ public class SyringeItem extends SurgeryItem {
             BlockPos centerPos = Registration.MEGYDREA.get().findCenter(pos, lookedAtState);
             if (level.getBlockEntity(centerPos) instanceof MegydreaBE be) {
                 be.tryFillFromItem(level, pos, p, InteractionHand.MAIN_HAND, bhr);
+            }
+        } else if (lookedAtState.is(Blocks.WATER)) {
+            IFluidHandlerItem syringe = itemStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElseThrow();
+            FluidStack fluidInTank = syringe.getFluidInTank(0);
+            if (p.isShiftKeyDown()) {
+                if (fluidInTank.getFluid() == Fluids.WATER) {
+                    syringe.drain(1, IFluidHandler.FluidAction.EXECUTE);
+                }
+            } else {
+                if (fluidInTank.isEmpty() || fluidInTank.getFluid() == Fluids.WATER) {
+                    syringe.fill(new FluidStack(Fluids.WATER, 1), IFluidHandler.FluidAction.EXECUTE);
+                }
             }
         } else {
             super.interactWithBE(p, level, pos, lookedAtState, blockEntity, bhr);

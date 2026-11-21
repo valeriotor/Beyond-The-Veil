@@ -49,6 +49,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -177,6 +178,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         }
         if (!knownFluids.contains(BTVFluids.SOURCE_FLUID_SOFTENER.get())) {
             knownFluids.add(BTVFluids.SOURCE_FLUID_SOFTENER.get());
+        }
+        if (DataUtil.getBoolean(Minecraft.getInstance().player, PlayerDataLib.DISCOVERED_FLUID.apply(Fluids.WATER))) {
+            knownFluids.add(Fluids.WATER);
         }
         firstOpen = true;
         updateReports();
@@ -448,7 +452,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         for (Fluid knownFluid : knownFluids) {
             if (!entriesSoFar.contains(knownFluid)) {
                 ResourceLocation key = ForgeRegistries.FLUIDS.getKey(knownFluid);
-                if (key != null) {
+                if (key != null && knownFluid != Fluids.WATER) {
                     entries.add(new FluidItemEntry(knownFluid, key.getPath().replace("_fluid_source", ""), JournalCategory.INGREDIENTS));
                 }
             }
@@ -752,6 +756,17 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                 if (Objects.equals(row.name, name)) {
                     row.selectEntry();
                     break;
+                }
+            }
+        } else if (entry.startsWith("overview")) {
+            setCategory(JournalCategory.OVERVIEW);
+            String name = entry.substring("overview.".length());
+            for (Element row : overview.rows()) {
+                if (row instanceof Dropdown2 dropdown2) {
+                    if (Objects.equals(dropdown2.id, name)) {
+                        dropdown2.select();
+                        break;
+                    }
                 }
             }
         } else {
@@ -1410,20 +1425,24 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         public boolean mouseClicked(double relativeMouseX, double relativeMouseY, int mouseButton) {
             if (insideBounds(relativeMouseX, relativeMouseY)) {
                 //TextBlock textBlock = new TextBlock(I18n.get("gui.journal.overview." + id + ".text"), 300, 285, Minecraft.getInstance().font);
-                String title = Component.translatable("gui.journal.overview." + id).getString();
-                String text = I18n.get("gui.journal.overview." + id + ".text");
-                if (id.equals("infrastructure")) {
-                    if (ResearchUtil.getKnownRecipes(Minecraft.getInstance().player).containsKey("beyondtheveil:watery_cradle")) { // TODO check if key contains namespace
-                        text += Component.translatable("gui.journal.overview.infrastructure.text.2").getString();
-                    } else {
-                        text += Component.translatable("gui.journal.overview.infrastructure.text.1").getString();
-                    }
-                }
-                overviewPage = new Page(Component.literal("§l" + title), text, 345, new ArrayList<>());
-                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
+                select();
                 return true;
             }
             return false;
+        }
+
+        private void select() {
+            String title = Component.translatable("gui.journal.overview." + id).getString();
+            String text = I18n.get("gui.journal.overview." + id + ".text");
+            if (id.equals("infrastructure")) {
+                if (ResearchUtil.getKnownRecipes(Minecraft.getInstance().player).containsKey("beyondtheveil:watery_cradle")) { // TODO check if key contains namespace
+                    text += Component.translatable("gui.journal.overview.infrastructure.text.2").getString();
+                } else {
+                    text += Component.translatable("gui.journal.overview.infrastructure.text.1").getString();
+                }
+            }
+            overviewPage = new Page(Component.literal("§l" + title), text, 345, new ArrayList<>());
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1));
         }
     }
 

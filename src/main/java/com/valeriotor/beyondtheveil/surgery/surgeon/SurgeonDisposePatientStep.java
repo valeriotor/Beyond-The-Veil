@@ -130,7 +130,7 @@ public class SurgeonDisposePatientStep extends SurgeonStep {
                 IItemHandler iItemHandler = be.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get();
                 for (int i = 0; i < iItemHandler.getSlots(); i++) {
                     if (iItemHandler.insertItem(i, surgeon.getItems().get(0), true).getCount() < surgeon.getItems().get(0).getCount()) {
-                        if (surgeon.distanceToSqr(container.getCenter()) < 6) {
+                        if (surgeon.distanceToSqr(container.getCenter()) < 9) {
                             surgeon.level().playSound(null, surgeon.blockPosition(), SoundEvents.CHEST_OPEN, SoundSource.BLOCKS, 1, 1);
                             ItemStack remainder = iItemHandler.insertItem(i, surgeon.getItems().get(0), false);
                             if (remainder.isEmpty()) {

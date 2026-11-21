@@ -43,7 +43,7 @@ public class SurgeonCollectPatientStep extends SurgeonStep {
                         tryCollectFromSpot();
                     }
                 } else {
-                    if (surgeon.distanceToSqr(bePos.getCenter()) < 6) {
+                    if (surgeon.distanceToSqr(bePos.getCenter()) < 9) {
                         be.placePatientSurgeon(surgeon.getHeldPatientType(), surgeon.getHeldPatientData());
                         surgeon.setHeldPatient(null, new CompoundTag());
                     } else {

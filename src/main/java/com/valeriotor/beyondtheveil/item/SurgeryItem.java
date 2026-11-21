@@ -86,7 +86,7 @@ public class SurgeryItem extends Item {
         SurgeryItem usedItem = null;
         if (p.isUsingItem() && p.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof SurgeryItem surgeryItem) {
             usedItem = surgeryItem;
-            HitResult hitResult = p.pick(p.getEntityReach(), 0, false);
+            HitResult hitResult = p.pick(p.getEntityReach(), 0, true);
             if (hitResult instanceof BlockHitResult bhr) {
                 BlockPos pos = bhr.getBlockPos();
                 BlockState lookedAtState = level.getBlockState(pos);
