@@ -27,7 +27,7 @@ public class DreamUnderground extends Dream {
         this.searchedBlocks = new HashSet<>();
         this.allBlocks = new HashSet<>();
         this.searchedBlocks.addAll(searchedBlocks);
-        this.allBlocks.addAll(Set.of(Blocks.STONE, Blocks.AIR, Blocks.DEEPSLATE, Blocks.GRANITE, Blocks.DIORITE, Blocks.ANDESITE, Blocks.DIRT, Blocks.GRASS, Blocks.SAND, Blocks.SANDSTONE, Blocks.WATER, Blocks.GRAVEL));
+        this.allBlocks.addAll(Set.of(Blocks.STONE, Blocks.AIR, Blocks.DEEPSLATE, Blocks.GRANITE, Blocks.DIORITE, Blocks.ANDESITE, Blocks.DIRT, Blocks.GRASS, Blocks.SAND, Blocks.SANDSTONE, Blocks.WATER, Blocks.GRAVEL, Blocks.NETHERRACK, Blocks.LAVA));
         this.allBlocks.addAll(searchedBlocks);
     }
 

@@ -54,9 +54,9 @@ public class HamletStructure extends Structure {
     private static boolean isValidBiome(Structure.GenerationStub pStub, Structure.GenerationContext pContext) {
         BlockPos blockpos = pStub.position();
         return pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX()), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ()), pContext.randomState().sampler()))
-                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() + 32), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() + 32), pContext.randomState().sampler()))
-                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() - 32), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() + 32), pContext.randomState().sampler()))
-                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() - 32), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() - 32), pContext.randomState().sampler()))
-                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() + 32), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() - 32), pContext.randomState().sampler()));
+                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() + 40), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() + 40), pContext.randomState().sampler()))
+                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() - 40), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() + 40), pContext.randomState().sampler()))
+                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() - 40), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() - 40), pContext.randomState().sampler()))
+                && pContext.validBiome().test(pContext.biomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos.getX() + 40), QuartPos.fromBlock(blockpos.getY()), QuartPos.fromBlock(blockpos.getZ() - 40), pContext.randomState().sampler()));
     }
 }

@@ -2,87 +2,32 @@ package com.valeriotor.beyondtheveil.entity.ai.goals;
 
 import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.util.LandRandomPos;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumSet;
-
-public class StrollThroughHamletGoal extends Goal {
+public class StrollThroughHamletGoal extends WaterAvoidingRandomStrollGoal {
 
     private final ShoremanEntity shoreman;
     private final double speed;
-    private BlockPos destination;
-    private boolean convened, returned;
 
-    public StrollThroughHamletGoal(ShoremanEntity shoreman, double speed) {
+    public StrollThroughHamletGoal(ShoremanEntity shoreman, double pSpeedModifier) {
+        super(shoreman, pSpeedModifier);
         this.shoreman = shoreman;
-        this.speed = speed;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+        speed = pSpeedModifier;
     }
 
+    @Nullable
     @Override
-    public boolean canUse() {
-        if (shoreman.getProfession() == ShoremanEntity.ShoremanProfession.LIGHTHOUSE_KEEPER) {
-            return false;
-        }
-        if (shoreman.getVillageCenter() == null || shoreman.getSpawnPoint() == null) {
-            return false;
-        }
-        return shoreman.level().getDayTime() > 12000 && (conveneInCenter() || returnHome());
-    }
-
-    @Override
-    public void tick() {
-        if (destination != null && (shoreman.tickCount & 127) <= 1) {
-            shoreman.getNavigation().stop();
-            shoreman.getNavigation().moveTo(destination.getX(), destination.getY(), destination.getZ(), speed);
-        }
-        BlockPos spawnPoint = shoreman.getSpawnPoint();
+    protected Vec3 getPosition() {
         BlockPos villageCenter = shoreman.getVillageCenter();
-        ShoremanEntity.ShoremanProfession profession = shoreman.getProfession();
-
-        if (destination == null) {
-            if (conveneInCenter() && !convened && profession.isLeavesPost()) {
-                double angle = shoreman.getRandom().nextDouble() * Math.PI * 2;
-                double radius = shoreman.getRandom().nextDouble() * 5 + 3;
-                double x = Math.sin(angle) * radius;
-                double z = Math.cos(angle) * radius;
-                destination = villageCenter.offset((int) x, 0, (int) z);
-                destination = shoreman.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, destination);
-            } else if (returnHome() && !returned) {
-                destination = spawnPoint;
+        BlockPos spawnPoint = shoreman.getSpawnPoint();
+        if (villageCenter != null && spawnPoint != null) {
+            if (shoreman.distanceToSqr(villageCenter.getCenter()) > 2500 && shoreman.distanceToSqr(spawnPoint.getCenter()) > 1600) {
+                return LandRandomPos.getPosTowards(shoreman, 10, 7, spawnPoint.getCenter());
             }
         }
-        if (destination != null && (shoreman.position().distanceToSqr(destination.getX(), shoreman.getY(), destination.getZ()) < 9 || (!conveneInCenter() && !returnHome()))) { // it currently can't be true that neither conveneInCenter or returnHome are true
-            destination = null;
-            if (conveneInCenter()) {
-                convened = true;
-                returned = false;
-            } else if (returnHome()) {
-                returned = true;
-                convened = false;
-            } else {
-                returned = false;
-                convened = false;
-            }
-        }
-        if (!profession.isLeavesPost()) {
-            returned = false;
-        }
-    }
-
-    private boolean conveneInCenter() {
-        return shoreman.level().getDayTime() < 17000;
-    }
-
-    private boolean returnHome() {
-        return shoreman.level().getDayTime() > 21000;
-    }
-
-    @Override
-    public void stop() {
-        returned = false;
-        convened = false;
-        destination = null;
+        return super.getPosition();
     }
 }

@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.event;
 
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -36,7 +37,7 @@ public class ClosedEyesEvents {
 
     @SubscribeEvent
     public static void onFillBucketEvent(FillBucketEvent event) {
-        if (event.getEntity() != null && !(event.getEntity() instanceof FakePlayer) && DataUtil.getBoolean(event.getEntity(), PlayerDataLib.reminiscing.name()) && event.getTarget() != null) {
+        if (event.getEntity() != null && !(event.getEntity() instanceof FakePlayer) && DataUtil.getBoolean(event.getEntity(), PlayerDataLib.reminiscing.name()) && ResearchUtil.getResearchStage(event.getEntity(), "GRASPING_WATER") >= 0 && event.getTarget() != null) {
             if (event.getTarget() instanceof BlockHitResult bhr && event.getEmptyBucket().getItem() == Items.BUCKET) {
                 BlockPos prePos = bhr.getBlockPos();
                 BlockState preState = event.getLevel().getBlockState(prePos);

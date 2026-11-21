@@ -126,6 +126,7 @@ public enum PlayerDataLib {
     changed_reminiscence,
     took_gift,
     sieve_tears,
+    ready_for_baptism
     ;
 
     // Longs

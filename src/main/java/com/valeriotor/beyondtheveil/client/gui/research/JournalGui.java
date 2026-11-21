@@ -1144,7 +1144,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         private final Component input2Name;
         private final TextureAtlasSprite output;
         private final int capacityRequirement;
-        private final Component outputName;
+        private final List<Component> outputName;
         private static final ItemStack ALEMBICS = new ItemStack(Registration.ALEMBICS.get());
         private static final ItemStack FLASK = new ItemStack(Registration.FLASK_LARGE.get());
 
@@ -1158,7 +1158,9 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
             input1Name = recipe.input1().getFluidType().getDescription();
             stackName = recipe.stack().getItem().getDescription();
             input2Name = recipe.input2().getFluidType().getDescription();
-            outputName = recipe.output().getFluidType().getDescription();
+            Component outputName = recipe.output().getFluidType().getDescription();
+            Component outputAmount = Component.literal(recipe.mBPerItem() + " mB");
+            this.outputName = List.of(outputName, outputAmount);
             if (showCapacityRequirement) {
                 this.capacityRequirement = capacityRequirement;
             } else {
@@ -1213,7 +1215,7 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
                     graphics.renderTooltip(minecraft.font, input2Name, relativeMouseX, relativeMouseY);
                 }
                 if (relativeMouseX > X_OFFSET_OUTPUT && relativeMouseX <= X_OFFSET_OUTPUT + SIDE) {
-                    graphics.renderTooltip(minecraft.font, outputName, relativeMouseX, relativeMouseY);
+                    graphics.renderTooltip(minecraft.font, outputName, Optional.empty(), relativeMouseX, relativeMouseY);
                 }
             }
             if (relativeMouseX > X_OFFSET_STACK && relativeMouseX <= X_OFFSET_STACK + SIDE && relativeMouseY > Y_OFFSET - 7 && relativeMouseY <= Y_OFFSET - 7 + SIDE) {

@@ -122,7 +122,7 @@ public class AlembicsBE extends BlockEntity {
                     if (itemLeft == 0) {
                         if (!inputTank1.isEmpty() && !stackHandler.getStackInSlot(0).isEmpty() && !inputTank2.isEmpty() && heldFlask != null) {
                             Tuple<Fluid, Integer> output = AlembicsRecipeRegistry.getOutput(inputTank1.getFluid().getFluid(), stackHandler.getStackInSlot(0), inputTank2.getFluid().getFluid());
-                            if (output != null) {
+                            if (output != null && heldFlask != null && (heldFlask.getTank().getFluid().getFluid() == output.getA() || heldFlask.getTank().isEmpty())) {
                                 itemLeft = output.getB();
                                 burningStack = stackHandler.getStackInSlot(0).copy();
                                 stackHandler.extractItem(0, 1, false);
@@ -219,7 +219,7 @@ public class AlembicsBE extends BlockEntity {
                     default -> null;
                 };
                 if (tank != null) {
-                    FluidStack drain = tank.drain(1000, IFluidHandler.FluidAction.EXECUTE);
+                    FluidStack drain = tank.drain(2000, IFluidHandler.FluidAction.EXECUTE);
                     if (drain.getAmount() > 0 && level != null) {
                         level.playSound(null, getBlockPos(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS);
                     }

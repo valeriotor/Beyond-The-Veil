@@ -132,7 +132,7 @@ public class HeartBlock extends Block implements SimpleWaterloggedBlock, EntityB
             boolean alreadyDone = !sp.getCapability(PlayerDataProvider.PLAYER_DATA).isPresent() || sp.getCapability(PlayerDataProvider.PLAYER_DATA).resolve().get().getBoolean(PlayerDataLib.met_cult.name());
             if (sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).isPresent()) {
                 boolean isAlreadyBeingBackstabbed = sp.getCapability(PlayerTimerDataProvider.PLAYER_TIMER_DATA).resolve().get().hasTimer("killedByCultist");
-                if (!alreadyDone && !isAlreadyBeingBackstabbed && MathHelperBTV.checkForRing(this, sl, pPos, 4)) {
+                if (!alreadyDone && !isAlreadyBeingBackstabbed && MathHelperBTV.checkForRing(this, sl, pPos, 3)) {
                     DialogueData dialogueData = DialogueData.for_(sp);
                     BloodCultistEntity cultist = new BloodCultistEntity(BTVEntities.BLOOD_CULTIST.get(), sl);
                     Vec3 lookAngle = sp.getLookAngle();

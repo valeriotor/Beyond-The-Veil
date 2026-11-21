@@ -19,10 +19,7 @@ import com.valeriotor.beyondtheveil.dialogue.DialogueTemplate;
 import com.valeriotor.beyondtheveil.dialogue.DialogueType;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
 import com.valeriotor.beyondtheveil.entity.ai.control.SuspiciousBodyRotationControl;
-import com.valeriotor.beyondtheveil.entity.ai.goals.LookAtTalkingPlayerGoal;
-import com.valeriotor.beyondtheveil.entity.ai.goals.StrollThroughHamletGoal;
-import com.valeriotor.beyondtheveil.entity.ai.goals.SuspiciousLookAtPlayerGoal;
-import com.valeriotor.beyondtheveil.entity.ai.goals.TalkToPlayerGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.*;
 import com.valeriotor.beyondtheveil.item.DrinkItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
@@ -129,8 +126,8 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
             }
             return false;
         }));
-        this.goalSelector.addGoal(3, new StrollThroughHamletGoal(this, 1.5D));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(3, new ShoremanConveneGoal(this, 1.5D));
+        this.goalSelector.addGoal(5, new StrollThroughHamletGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new SuspiciousLookAtPlayerGoal<>(this, Player.class, 10.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
@@ -184,7 +181,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
         if (value == ShoremanProfession.LIGHTHOUSE_KEEPER.ordinal()) {
             List<WrappedGoal> toRemove = new ArrayList<>();
             for (WrappedGoal goal : goalSelector.getAvailableGoals()) {
-                if (goal.getGoal().getClass() == SuspiciousLookAtPlayerGoal.class || goal.getGoal().getClass() == WaterAvoidingRandomStrollGoal.class || goal.getGoal().getClass() == RandomLookAroundGoal.class) {
+                if (goal.getGoal().getClass() == SuspiciousLookAtPlayerGoal.class || goal.getGoal() instanceof WaterAvoidingRandomStrollGoal || goal.getGoal().getClass() == RandomLookAroundGoal.class) {
                     toRemove.add(goal);
                 }
             }
@@ -194,7 +191,7 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
         } else if (!ShoremanProfession.values()[value].isLeavesPost()) {
             List<WrappedGoal> toRemove = new ArrayList<>();
             for (WrappedGoal goal : goalSelector.getAvailableGoals()) {
-                if (goal.getGoal().getClass() == WaterAvoidingRandomStrollGoal.class) {
+                if (goal.getGoal() instanceof WaterAvoidingRandomStrollGoal) {
                     toRemove.add(goal);
                 }
             }

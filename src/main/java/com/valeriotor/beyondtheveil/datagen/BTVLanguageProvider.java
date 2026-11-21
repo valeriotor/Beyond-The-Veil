@@ -682,7 +682,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.blood_cult.0.0.red",                  "Red chains bind all beings – living and dead – and so too does knowledge travel atop this network of flesh and blood.\\n");
         add("exchange.blood_cult.0.1.word",                 "Word of your research – and of you – has reached us, and we would humbly request to ask some questions – in person.\\n");
         add("exchange.blood_cult.0.2.partnership",          "If so, we would be open to a partnership. We are a merchant guild – of sorts – and the resources we handle would be of great aid to your work.\\n");
-        add("exchange.blood_cult.0.3.hearts",               "If you wish to proceed, place twelve hearts in an empty square – four on each side – the link shall be formed – we shall know.");
+        add("exchange.blood_cult.0.3.hearts",               "If you wish to proceed, place eight hearts in an empty square – three on each side – the link shall be formed – we shall know.");
     }
 
     private void addCommonCaptions() {
@@ -1256,7 +1256,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_fisherman.communed2.citing.option", "Citing Jerome?");
         add("dialogue.shoreman_fisherman.communed2.thank.option", "Thank you. A blessing upon thee as well.");
         add("dialogue.shoreman_fisherman.communed2.bless.option", "Bless you as well.");
-        add("dialogue.shoreman_fisherman.communed2.his.option", "His spouse, Adelina, was the truly vicious one.");
+        add("dialogue.shoreman_fisherman.communed2.his.option", "His spouse, Adelina, is the truly vicious one.");
 
 
         //add("dialogue.shoreman_scholar.initial.start.0", "Oh? Good day, dear pilgrim. Are you in search of something, here in our humble dwelling?");
@@ -2143,7 +2143,8 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "Fortunately, I shall be turned in no true horror. The crown is simply a tiara, forged from the spine of a human. It is a back operation, requiring an incision and the insertion of three emerald gems. However – and very importantly – a dose of softener is needed before each insertion, due to the sharp edges of the gems. \\n" +
                 "If all is done correctly, an extraction will produce the bone tiara.");
         add("research.BONE_TIARA.stage.1", "The tiara fills me with grit and certainty: as long as I wear it, I shall not back down.\\n" +
-                "It turns me immune to various effects, including terror, mining fatigue, weakness, slowness, and more. Even knockback from attacks is now inconsequential to me.");
+                "It turns me immune to various effects, including terror, mining fatigue, weakness, slowness, and more. Knockback from attacks is now inconsequential to me.\\n" +
+                "Finally, any time a foe attacks me, there is a chance for it to step back in terror.");
 
         add("research.WATERY_CRADLE.title", "The Watery Cradle");
         add("research.crafted_watery_cradle.text", "Craft a watery cradle.");
@@ -2195,7 +2196,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.GRASPING_WATER.stage.1", "The technique worked, yet I cannot grasp the trick. What happens in the world when I close my eyes?");
 
         add("research.BAPTISM.title", "Baptism");
-        add("research.ready_for_baptism.text", "Learn at least three of the shoremen customs, then speak to the keeper.");
+        add("research.ready_for_baptism.text", "Learn at least five of the shoremen customs, then speak to the keeper.");
         add("research.baptized.text", "Perform the ritual.");
         add("research.BAPTISM.stage.0", "After having reached a certain stage of their life, shoremen appear to undergo a secret rite to speak with the Ocean. They are still tightlipped about its details, but as I embrace more and more of their customs they may become willing to reveal them.");
         add("research.BAPTISM.stage.1", "The keeper’s words were ominous, but I must proceed, just as I did for communion.\\n" +
@@ -2213,7 +2214,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.DREAM_BOTTLE.stage.0", "Dreams hold great relevance among the shoremen, and it is unsurprising that some of their customs overlap with my own research. Of great interest is their \"Dream Bottle\", a sort of flask that would induce in them a dreamlike state – perhaps not dissimilar from that of my Sleep Chamber?\\n" +
                 "If so, I could try to replicate the effects already observed in my studies by filling the bottle with memory phials before drinking its contents.\\n" +
                 "Remarkably, the bottle itself is... unremarkable. Aside from a single diamond, its crafting involves only some clay, before filling it with water. Interestingly, the shoremen claim that, in the past, they would fill it with their own tears, for they had so much grief in them. Now their tears are spent, and I could never weep so much myself.");
-        add("research.DREAM_BOTTLE.stage.1", "It works, and the bottle becomes yet another way for me to dream. It is easily portable and can allow me to utilize four memory pials at once. However, it can only be used once per day.");
+        add("research.DREAM_BOTTLE.stage.1", "It works, and the bottle becomes yet another way for me to dream. It is easily portable and can allow me to utilize four memory phials at once. However, it can only be used once per day.");
         add("research.DREAM_BOTTLE.stage.2", "It works, and the bottle becomes yet another way for me to dream. It is easily portable and can allow me to utilize four memory phials at once.\\n" +
                 "Normally, it can only be used once per day. However, filling it with tears overcomes this flaw, allowing me to use it as many times as I want as long as there is sufficient liquid.");
 
@@ -2496,8 +2497,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add(ANTIDOTE_CAPSULE.get().getDescriptionId() + ".crafting", "Used to treat or prevent poison and wither effects. When affected by either ailment, the capsule will be applied automatically if held in the hotbar. It can also be used manually. Doing so will grant immunity for a certain length of time.");
         add(ALEMBICS.get().getDescriptionId() + ".crafting", "Via the mixing and matching of liquids and solids, this device can create something entirely new... yet analogies to the ancient waters of Arche would constitute foolish ambitions: it cannot create life.\\1" +
                 "The first and leftmost alembic as well as the third one can store input fluids used in crafting. The second, small one can accept input items.\\1" +
-                "A fluid flask must be placed to accept the output. If the input fluid, item and second fluid make for a valid recipe, the flask will slowly start getting filled.\\1" +
-                "A given input item may be sufficient for a certain amount of output fluid. For example, a honeycomb will be enough for 20 mB of sedative, while consuming 20 mB of water in both input alembics.");
+                "A fluid flask must be {§nplaced§r}[caption:right_click] to accept the output. If the input fluid, item and second fluid make for a valid recipe, the flask will slowly start getting filled. It may then be {§npicked up§r}[caption:shift_right_click].\\1" +
+                "A given input item may be sufficient for a certain amount of output fluid. For example, a honeycomb will be enough for 60 mB of sedative, while consuming 60 mB of water in both input alembics.");
         add(ARCHE_DIAL.get().getDescriptionId() + ".crafting", "Arche’s currents are chaos spawning order, amorphous matter breeding life – and, lying at this intersection, does it surprise us or not that they act with such predictable patterns?\\1" +
                 "Arche dials were designed with the purpose of measuring the present state of Arche’s waters, eventually revealing that the cyclical currents occurred on strict timing intervals.\\1" +
                 "The number of gleaming blue slots describes the amount of time left before the next current cycle begins. When it approaches zero, I should start looking for shelter in the form of air pockets.");
@@ -3081,10 +3082,10 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("gui.journal.tools.item_flask.text", "Similar to their liquid counterpart, but used to store solid items instead (generally up to sixteen). They may also be placed on flask shelves");
 
         add("gui.journal.tools.alembics.title", "Alembics");
-        add("gui.journal.tools.alembics.text", "A device used to concoct various types of fluids. The first and leftmost alembic as well as the third one can store input fluids used in crafting. The second, small one can accept input items.\\nA fluid flask must be placed to accept the output. If the input fluid, item and second fluid make for a valid recipe, the flask will slowly start getting filled.\\nA given input item may be sufficient for a certain amount of output fluid. For example, a honeycomb will be enough for 20 mB of sedative, while consuming 20 mB of water in both input alembics.");
+        add("gui.journal.tools.alembics.text", "A device used to concoct various types of fluids. The first and leftmost alembic as well as the third one can store input fluids used in crafting. The second, small one can accept input items.\\nA fluid flask must be {§nplaced§r}[caption:right_click] to accept the output. If the input fluid, item and second fluid make for a valid recipe, the flask will slowly start getting filled. It may then be {§npicked up§r}[caption:shift_right_click].\\nA given input item may be sufficient for a certain amount of output fluid. For example, a honeycomb will be enough for 60 mB of sedative, while consuming 60 mB of water in both input alembics.");
 
         add("gui.journal.tools.flask_shelf.title", "Flask Shelf");
-        add("gui.journal.tools.flask_shelf.text", "A set of shelves where fluid and item flasks may be placed in a more compact manner. Any such flasks may then be interacted with normally, as if they were on the ground.");
+        add("gui.journal.tools.flask_shelf.text", "A set of shelves where fluid and item flasks may be placed in a more compact manner. Any such flasks may then be interacted with normally, as if they were on the ground, or broken by striking them.");
 
         add("gui.journal.tools.surgery_bed.title", "Surgery Bed");
         add("gui.journal.tools.surgery_bed.text", "This is where surgical operations on the chest and back are performed.");

@@ -282,7 +282,7 @@ public class PlayerTickEvents {
      */
     private static void resetTimesDreamt(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        if (!player.level().isClientSide && player.level().getDayTime() <= 10) {
+        if (!player.level().isClientSide && player instanceof ServerPlayer sp && sp.getServer() != null && sp.getServer().overworld().getDayTime() % 24000 <= 10) {
             player.getCapability(PlayerDataProvider.PLAYER_DATA).ifPresent(c -> {
                 c.setInteger(PlayerDataLib.TIMES_DREAMT.apply("sleep_chamber"), 0, false);
                 c.setInteger(PlayerDataLib.TIMES_DREAMT.apply("dream_bottle"), 0, false);

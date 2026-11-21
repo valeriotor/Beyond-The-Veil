@@ -90,7 +90,7 @@ public class Dialogue {
         if (template.getType() == DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER && "wantslug".equals(template.getID()) && ("variety".equals(currentBranch.getBranchID()) || "___".equals(currentBranch.getBranchID()))) {
             ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Registration.SLUG.get()));
             letterData.removeUnstartedExchange(player, "keeper_ask_slugs");
-        } else if (template.getType() == DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER && "baptism2".equals(template.getID()) && (currentBranch.endsDialogue() && indexInBranch >= currentBranch.getLength())) {
+        } else if (template.getType() == DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER && "baptism".equals(template.getID()) && (currentBranch.endsDialogue() && indexInBranch >= currentBranch.getLength())) {
             letterData.removeUnstartedExchange(player, "keeper_baptism");
         } else if (template.getType() == DialogueType.BLOOD_CULTIST && "gift".equals(template.getID())) {
             if (menu instanceof EntityDialogueMenu e && e.getNpc() instanceof BloodCultistEntity cultist) {

@@ -233,8 +233,21 @@ public class FlaskShelfBE extends BlockEntity {
             if (!pLevel.isClientSide) {
                 Flask lookedAtFlask = getLookedAtFlask(pLevel, pPos, pHit.getLocation());
                 if (lookedAtFlask != null) {
-                    pPlayer.setItemInHand(pHand, lookedAtFlask.stackHandler.extractItem(0, 16, false));
+                    if (pPlayer.isShiftKeyDown()) {
+                        flasks.remove(lookedAtFlask);
+                        updateClient();
+                        computeFlasksShape();
+                        pLevel.playSound(null, getBlockPos(), SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1, 1);
+                        ItemStack flask = lookedAtFlask.toItem();
+                        pPlayer.setItemInHand(pHand, flask);
+                        return InteractionResult.SUCCESS;
+                    }
+                    ItemStack pStack = lookedAtFlask.stackHandler.extractItem(0, 16, false);
+                    pPlayer.setItemInHand(pHand, pStack);
                     updateClient();
+                    if (!pStack.isEmpty()) {
+                        pLevel.playSound(null, getBlockPos(), SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1, 1);
+                    }
                     return InteractionResult.SUCCESS;
                 }
             }

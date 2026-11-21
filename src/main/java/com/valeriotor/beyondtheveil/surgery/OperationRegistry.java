@@ -275,7 +275,7 @@ public class OperationRegistry {
             .setSuccessSound(SoundEvents.EXPERIENCE_ORB_PICKUP)
             .setSuccessParticleCount(5)
             .addPlayerData(PlayerDataLib.first_skull_operation.name())
-            .buildInjectionOperation(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), 60);
+            .buildInjectionOperation(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), 55);
 
     public static final Operation LIQUID_GOLD_SKULL = makeBasicInjection("liquid_gold_skull", 1.5, 110, 0, true, SurgicalLocation.SKULL)
             .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.DEAD))

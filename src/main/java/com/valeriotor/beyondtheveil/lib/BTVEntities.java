@@ -1,6 +1,11 @@
 package com.valeriotor.beyondtheveil.lib;
 
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSync;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncData;
+import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.entity.*;
 import com.valeriotor.beyondtheveil.entity.dream_focus.DreamFocusFluidEntity;
@@ -16,12 +21,20 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
+import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
+
+import java.util.Optional;
 
 
 public class BTVEntities {
@@ -69,6 +82,27 @@ public class BTVEntities {
 
     public static boolean isScaryEntity(Entity entity) {
         // Transformed players
+        if (entity instanceof Player p) {
+            Optional<ICuriosItemHandler> resolve = CuriosApi.getCuriosInventory(p).resolve();
+            if (resolve.isPresent()) {
+                ICuriosItemHandler inv = resolve.get();
+                Optional<ICurioStacksHandler> head = inv.getStacksHandler("head");
+                if (head.isPresent()) {
+                    ICurioStacksHandler slot = head.get();
+                    ItemStack stackInSlot = slot.getStacks().getStackInSlot(0);
+                    if (stackInSlot.getItem() == Registration.BONE_TIARA.get()) {
+                        return true;
+                    }
+                }
+            }
+            Optional<CrossSyncData> optionalCrossSyncData = p.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).resolve();
+            if (optionalCrossSyncData.isPresent()) {
+                CrossSync crossSync = optionalCrossSyncData.get().getCrossSync();
+                if (crossSync != null && crossSync.getTransformation() == PlayerTransformation.DEEP_ONE) {
+                    return true;
+                }
+            }
+        }
         return entity instanceof DeepOneEntity;
     }
 

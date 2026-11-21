@@ -12,15 +12,18 @@
     "B": {
       "item": "minecraft:iron_block"
     },
+    "C": {
+      "item": "minecraft:copper_block"
+    },
     "G": {
       "item": "minecraft:glass"
     }
   },
   "pattern": [
     "GGGG",
+    "GWWG",
     "IWWI",
-    "BWWB",
-    "BBBB"
+    "CBBC"
   ],
   "result": {
     "item": "beyondtheveil:watery_cradle"

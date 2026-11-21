@@ -71,7 +71,7 @@ public class ResearchEvents {
                         int researchStage = ResearchUtil.getResearchStage(p, entry.getKey());
                         if (researchStage >= entry.getValue()) {
                             total++;
-                            if (total >= 3) {
+                            if (total >= 5) {
                                 DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.embraced_customs.name(), true, false);
                                 addDialogue(d, DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism");
                                 DataUtil.addExchange(p, "keeper_baptism");
@@ -95,7 +95,7 @@ public class ResearchEvents {
             DataUtil.setBooleanOnServerAndSync(p, PlayerDataLib.DISCOVERED_FLUID.apply(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get()), true, false);
         }
         if ("HEARTS".equals(key) || "SPINES".equals(key)) {
-            if (ResearchUtil.isResearchComplete(p, "HEARTS") && ResearchUtil.isResearchComplete(p, "SPINES")) {
+            if (ResearchUtil.isResearchComplete(p, "HEARTS")) {
                 p.getCapability(LetterDataProvider.LETTER_DATA).ifPresent(c -> {
                     c.addExchange(p, ExchangeRegistry.byName("blood_cult"));
                 });

@@ -17,9 +17,11 @@ public class AlembicsRecipeRegistry {
     private static final Map<Fluid, Set<Tuple<AlembicRecipe, List<Item>>>> RECIPES_BY_OUTPUT = new HashMap<>();
 
     public static void registerRecipes() {
-        registerRecipe(Fluids.WATER, new ItemStack(Items.HONEYCOMB), Fluids.WATER, 20, BTVFluids.SOURCE_FLUID_SEDATIVE.get());
-        registerRecipe(Fluids.WATER, new ItemStack(Items.SCUTE), Fluids.WATER, 20, BTVFluids.SOURCE_FLUID_COAGULANT.get());
-        registerRecipe(Fluids.WATER, new ItemStack(Items.FEATHER), Fluids.WATER, 9, BTVFluids.SOURCE_FLUID_SOFTENER.get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.HONEYCOMB), Fluids.WATER, 60, BTVFluids.SOURCE_FLUID_SEDATIVE.get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.SCUTE), Fluids.WATER, 100, BTVFluids.SOURCE_FLUID_COAGULANT.get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.WARPED_FUNGUS), Fluids.WATER, 20, BTVFluids.SOURCE_FLUID_COAGULANT.get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.CRIMSON_FUNGUS), Fluids.WATER, 20, BTVFluids.SOURCE_FLUID_COAGULANT.get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.FEATHER), Fluids.WATER, 35, BTVFluids.SOURCE_FLUID_SOFTENER.get());
         registerRecipe(Fluids.WATER, new ItemStack(Items.NETHER_WART), Fluids.WATER, 20, BTVFluids.FLUID_WART_SERUM.getA().get());
         registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.SUGAR), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_MOVEMENT_SPEED_SERUM.getA().get());
         registerRecipe(BTVFluids.FLUID_WART_SERUM.getA().get(), new ItemStack(Items.NAUTILUS_SHELL), BTVFluids.FLUID_WART_SERUM.getA().get(), 20, BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM.getA().get());

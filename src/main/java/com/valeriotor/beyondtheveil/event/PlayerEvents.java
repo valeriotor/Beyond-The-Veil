@@ -73,7 +73,7 @@ public class PlayerEvents {
     @SubscribeEvent
     public static void wakeUpEvent(PlayerWakeUpEvent event) {
         Player p1 = event.getEntity();
-        if (p1 instanceof ServerPlayer p && !p.level().isClientSide() && !event.wakeImmediately() && p.level().getDayTime() > 23900) {
+        if (p1 instanceof ServerPlayer p && !p.level().isClientSide() && !event.wakeImmediately() && p.level().getDayTime() % 24000 > 23900) {
             DreamHandler.dream(p);
             if (ResearchUtil.getResearchStage(p, "FIRSTDREAMS") == 0 && !DataUtil.getBoolean(p, PlayerDataLib.didDream.name())) {
                 Messages.sendToPlayer(GenericToClientPacket.blackScreen(180, BTVSounds.WATER_DREAM_SHORT.get()), p);

@@ -239,6 +239,18 @@ public class AttackEvents {
                     event.setCanceled(true);
                 }
             });
+            if (!event.isCanceled() && sp.getRandom().nextInt(5) == 0) {
+                CuriosApi.getCuriosInventory(sp).ifPresent(inv -> {
+                    inv.getStacksHandler("head").ifPresent(slot -> {
+                        ItemStack stackInSlot = slot.getStacks().getStackInSlot(0);
+                        if (stackInSlot.getItem() == Registration.BONE_TIARA.get()) {
+                            if (event.getSource().getEntity() instanceof LivingEntity l) {
+                                l.addEffect(new MobEffectInstance(BTVEffects.TERROR.get(), 20 * 10));
+                            }
+                        }
+                    });
+                });
+            }
         }
         if (!event.isCanceled()) {
             event.getEntity().getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
