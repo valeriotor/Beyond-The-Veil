@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.entity.ai.goals;
 
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
+import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.entity.Talkable;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -31,6 +32,9 @@ public class TalkToPlayerGoal<T extends PathfinderMob & Talkable> extends Goal {
         } else {
             Player player = this.mob.getTalkingPlayer();
             if (player == null) {
+                if (mob instanceof ShoremanEntity shoreman) {
+                    return shoreman.getTradingPlayer() != null;
+                }
                 return false;
             } else if (this.mob.distanceToSqr(player) > 16.0D) {
                 return false;

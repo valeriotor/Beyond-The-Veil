@@ -114,10 +114,5 @@ public class FlaskShelfBER implements BlockEntityRenderer<FlaskShelfBE> {
         //}
     }
 
-    @Override
-    public boolean shouldRenderOffScreen(FlaskShelfBE pBlockEntity) {
-        return true;
-    }
-
 
 }

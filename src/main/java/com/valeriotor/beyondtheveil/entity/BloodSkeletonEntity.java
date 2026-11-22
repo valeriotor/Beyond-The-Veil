@@ -1,9 +1,7 @@
 package com.valeriotor.beyondtheveil.entity;
 
 import com.valeriotor.beyondtheveil.animation.Animation;
-import com.valeriotor.beyondtheveil.entity.ai.goals.MinionDefendMasterTargetGoal;
-import com.valeriotor.beyondtheveil.entity.ai.goals.MinionFollowMasterGoal;
-import com.valeriotor.beyondtheveil.entity.ai.goals.MinionHelpMasterTargetGoal;
+import com.valeriotor.beyondtheveil.entity.ai.goals.*;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -16,11 +14,15 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class BloodSkeletonEntity extends Monster implements PlayerMinion {
@@ -37,11 +39,14 @@ public class BloodSkeletonEntity extends Monster implements PlayerMinion {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12));
         //this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
-        this.targetSelector.addGoal(2, (new MinionDefendMasterTargetGoal<>(this, false)));
-        this.targetSelector.addGoal(1, (new MinionHelpMasterTargetGoal<>(this, false)));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8D, false));
+        this.targetSelector.addGoal(1, new MinionHelpMasterTargetGoal<>(this, false));
+        this.targetSelector.addGoal(2, new MinionDefendMasterTargetGoal<>(this, false));
+        this.targetSelector.addGoal(3, new MinionHurtByTargetGoal<>(this));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, true, l -> masterId == null));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false, l -> masterId == null));
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, IronGolem.class, true, l -> masterId == null));
         this.goalSelector.addGoal(3, new MinionFollowMasterGoal<>(this, 1.2D, 10.0F, 2.0F, false));
     }
 

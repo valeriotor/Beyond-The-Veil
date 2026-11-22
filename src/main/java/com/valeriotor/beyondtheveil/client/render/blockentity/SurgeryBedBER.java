@@ -35,8 +35,4 @@ public class SurgeryBedBER implements BlockEntityRenderer<SurgeryBedBE> {
         }
     }
 
-    @Override
-    public boolean shouldRenderOffScreen(SurgeryBedBE pBlockEntity) {
-        return true;
-    }
 }

@@ -36,6 +36,9 @@ public class LookAtTalkingPlayerGoal<T extends PathfinderMob & Talkable> extends
             }
             this.lookAt = this.villager.getTalkingPlayer();
             return true;
+        } else if (this.villager instanceof ShoremanEntity shoreman && shoreman.getTradingPlayer() != null) {
+            this.lookAt = shoreman.getTradingPlayer();
+            return true;
         } else {
             return false;
         }

@@ -56,7 +56,7 @@ public class MemoryUnlockEvents {
             Memory.DEATH.unlock(sp);
         }
         if (event.getSource().getEntity() instanceof ServerPlayer sp && communed(sp)) {
-            if (event.getEntity().getMaxHealth() >= 200) {
+            if (event.getEntity().getMaxHealth() >= 80) {
                 Memory.POWER.unlock(sp);
             }
         }
@@ -95,7 +95,7 @@ public class MemoryUnlockEvents {
     public static void dreamEvent(ServerPlayer sp) {
         if (communed(sp) && !Memory.STILLNESS.isUnlocked(sp)) {
             DataUtil.incrementOrSetInteger(sp, PlayerDataLib.stillness_memory_progress.name(), 1, 0, false);
-            if (DataUtil.getInt(sp, PlayerDataLib.stillness_memory_progress.name()) >= 25) {
+            if (DataUtil.getInt(sp, PlayerDataLib.stillness_memory_progress.name()) >= 5) {
                 Memory.STILLNESS.unlock(sp);
             }
         }

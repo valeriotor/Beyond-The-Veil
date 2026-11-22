@@ -35,7 +35,6 @@ public enum TargetingType {
         if (this == PLAYER_NEARBY) {
             return ammunition.level().getEntities(ammunition, aabb, e -> e instanceof Player && !data.getIgnoredPlayers().contains(e.getUUID())).stream().sorted(Comparator.comparingDouble(e -> e.distanceToSqr(ammunition))).map(e -> (LivingEntity) e).toList();
         } else if (this == HOSTILE_NEARBY) {
-            // TODO and not same master
             return ammunition.level().getEntities(ammunition, aabb, e -> {
                 if (e instanceof LivingEntity && e instanceof Enemy) {
                     if (ammunition instanceof PlayerMinion minion1 && e instanceof PlayerMinion minion2 && Objects.equals(minion1.getMasterID(), minion2.getMasterID())) {

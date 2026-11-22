@@ -69,9 +69,9 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
         this.targetSelector.addGoal(1, new MinionHelpMasterTargetGoal<>(this, false));
         this.targetSelector.addGoal(2, new MinionDefendMasterTargetGoal<>(this, false));
         this.targetSelector.addGoal(3, new MinionHurtByTargetGoal<>(this));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, true, l -> !Objects.equals(l.getUUID(), master)));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
-        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, true, l -> master == null));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false, l -> master == null));
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, IronGolem.class, true, l -> master == null));
         this.goalSelector.addGoal(3, new MinionFollowMasterGoal<>(this, 1.2D, 10.0F, 2.0F, false));
     }
 

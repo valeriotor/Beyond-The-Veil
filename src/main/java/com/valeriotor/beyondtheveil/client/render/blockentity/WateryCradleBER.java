@@ -169,9 +169,4 @@ public class WateryCradleBER implements BlockEntityRenderer<WateryCradleBE> {
 
         }
     }
-
-    @Override
-    public boolean shouldRenderOffScreen(WateryCradleBE pBlockEntity) {
-        return true;
-    }
 }

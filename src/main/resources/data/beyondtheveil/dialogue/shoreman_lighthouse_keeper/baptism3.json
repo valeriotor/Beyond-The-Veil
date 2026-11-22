@@ -243,6 +243,6 @@
     }
   },
   "type": "shoreman_lighthouse_keeper",
-  "dialogueUnlocks": [],
+  "dialogueUnlocks": ["shoreman_lighthouse_keeper:afterslug"],
   "dataUnlocks": []
 }

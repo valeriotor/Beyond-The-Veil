@@ -66,7 +66,7 @@ public class VeinMinerItem extends PickaxeItem {
     private static class VeinMinerTier implements Tier {
         @Override
         public int getUses() {
-            return 240;
+            return 480;
         }
 
         @Override
@@ -81,7 +81,7 @@ public class VeinMinerItem extends PickaxeItem {
 
         @Override
         public int getLevel() {
-            return 3;
+            return 4;
         }
 
         @Override

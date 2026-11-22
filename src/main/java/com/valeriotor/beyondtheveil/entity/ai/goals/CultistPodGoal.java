@@ -31,14 +31,14 @@ public class CultistPodGoal extends Goal {
     @Override
     public void tick() {
         super.tick();
-        if (cultist.level() instanceof ServerLevel sl && counter > 0) {
+        if (cultist.level() instanceof ServerLevel sl && counter > -160 && cultist.isHoldingVillager()) {
             counter--;
             BlockPos podPos = cultist.getPodPos();
             if ((counter & 7) == 0) {
                 cultist.getNavigation().moveTo(podPos.getX(), podPos.getY(), podPos.getZ(), speed);
             }
-            if (counter == 0 || cultist.getPodPos().distSqr(cultist.getOnPos()) < 4) {
-                counter = 0;
+            if (counter <= 0 || cultist.getPodPos().distSqr(cultist.getOnPos()) < 4) {
+                //counter = 0;
                 LifeEconomyData.PodData podData = LifeEconomyData.getInstance(sl).getPodData(podPos);
                 if (podData != null && podData.getPatient() == null) {
                     podData.setPatientAndSync(PatientType.VILLAGER, new CompoundTag(), sl);
@@ -47,6 +47,10 @@ public class CultistPodGoal extends Goal {
                     cultist.getNavigation().stop();
                 }
             }
+        } else if (counter == -160) {
+            cultist.setLeaving(60);
+            cultist.getNavigation().stop();
+            counter--;
         }
     }
 }

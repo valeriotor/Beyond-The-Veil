@@ -39,9 +39,4 @@ public class BloodWellBER implements BlockEntityRenderer<BloodWellBE> {
         buffer.vertex(model,- DIST_FROM_SIDE, y, DIST_FROM_SIDE).color(1, 1,1, 1F).uv(sprite.getU(0), sprite.getV(pU)).overlayCoords(overlay).uv2(0xFFFFFF).normal(0,1,0)./*lightmap(upLMa, upLMb).*/endVertex();
         pose.popPose();
     }
-
-    @Override
-    public boolean shouldRenderOffScreen(BloodWellBE pBlockEntity) {
-        return true;
-    }
 }

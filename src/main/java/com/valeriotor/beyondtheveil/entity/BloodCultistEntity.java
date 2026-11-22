@@ -57,6 +57,8 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public class BloodCultistEntity extends PathfinderMob implements Talkable, AnimatedEntity {
 
     private LivingEntity killingEntity;
@@ -374,6 +376,11 @@ public class BloodCultistEntity extends PathfinderMob implements Talkable, Anima
         } else {
             entityData.set(HELD_VILLAGER_TYPE, type.toString());
         }
+    }
+
+    public boolean isHoldingVillager() {
+        String s = entityData.get(HELD_VILLAGER_TYPE);
+        return !Objects.equals(s, "null");
     }
 
     @Override

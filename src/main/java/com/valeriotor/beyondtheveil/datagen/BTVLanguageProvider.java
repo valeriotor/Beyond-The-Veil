@@ -2202,8 +2202,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.BAPTISM.stage.1", "The keeper’s words were ominous, but I must proceed, just as I did for communion.\\n" +
                 "I must dig a hole three blocks deep, but only one wide, open at the top and surrounded in dark sand elsewhere. I must fill it completely with §ostill§r water, for each of its three empty blocks.\\n" +
                 "Then, I must sink to its bottom and devour a slug... and wait for what comes next.\\n" +
+                "...\\n" +
                 "Merciful God, please,\\1" +
-                "don’t let me drown.");
+                "§odon’t let me drown.");
         add("research.BAPTISM.stage.2", "His voice was calm, placid, yet assertive, authoritative. His instructions were clear: I must make contact with His children, and so I shall.\\n" +
                 "But... what else did I awaken? There was a convergence of thoughts, centered upon me.\\n" +
                 "Oh, what did I do?");

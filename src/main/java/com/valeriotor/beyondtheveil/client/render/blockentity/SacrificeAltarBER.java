@@ -31,9 +31,4 @@ public class SacrificeAltarBER implements BlockEntityRenderer<SacrificeAltarBE> 
         }
     }
 
-    @Override
-    public boolean shouldRenderOffScreen(SacrificeAltarBE pBlockEntity) {
-        return true;
-    }
-
 }

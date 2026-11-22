@@ -100,7 +100,7 @@ public class DreamBottleItem extends Item {
         };
     }
 
-    private static class DreamBottleStackHandler extends ItemStackHandler implements ICapabilityProvider {
+    public static class DreamBottleStackHandler extends ItemStackHandler implements ICapabilityProvider {
 
         private final ItemStack container;
 
@@ -123,7 +123,7 @@ public class DreamBottleItem extends Item {
         }
 
         @Override
-        protected void onContentsChanged(int slot) {
+        public void onContentsChanged(int slot) {
             CompoundTag tag = container.getOrCreateTag();
             if (!tag.contains("contents")) {
                 tag.put("contents", new CompoundTag());

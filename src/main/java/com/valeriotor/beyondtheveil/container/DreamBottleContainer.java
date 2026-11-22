@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.container;
 
 import com.valeriotor.beyondtheveil.Registration;
+import com.valeriotor.beyondtheveil.item.DreamBottleItem;
 import com.valeriotor.beyondtheveil.tile.GearBenchBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -36,7 +37,7 @@ public class DreamBottleContainer extends AbstractContainerMenu {
         bottle.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(c -> {
             bottleInventory = c;
             for (int i = 0; i < c.getSlots(); i++) {
-                addSlot(new SlotItemHandler(this.bottleInventory, i,  BOTTLE_INVENTORY_X + SLOT_X_SPACING * (i % 2), BOTTLE_INVENTORY_Y + SLOT_Y_SPACING * (i / 2)));
+                addSlot(new SlotItemHandler(this.bottleInventory, i, BOTTLE_INVENTORY_X + SLOT_X_SPACING * (i % 2), BOTTLE_INVENTORY_Y + SLOT_Y_SPACING * (i / 2)));
             }
         });
         bottle.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(c -> {
@@ -62,7 +63,7 @@ public class DreamBottleContainer extends AbstractContainerMenu {
                 int slotNumber = HOTBAR_SLOT_COUNT + y * PLAYER_INVENTORY_COLUMN_COUNT + x;
                 int xpos = PLAYER_INVENTORY_XPOS + x * SLOT_X_SPACING;
                 int ypos = PLAYER_INVENTORY_YPOS + y * SLOT_Y_SPACING;
-                addSlot(new SlotItemHandler(this.playerInventory, slotNumber,  xpos, ypos));
+                addSlot(new SlotItemHandler(this.playerInventory, slotNumber, xpos, ypos));
             }
         }
     }
@@ -94,6 +95,11 @@ public class DreamBottleContainer extends AbstractContainerMenu {
             }
 
             slot.onTake(pPlayer, stack);
+            if (bottleInventory instanceof DreamBottleItem.DreamBottleStackHandler stackHandler) {
+                for (int i = 0; i < 4; i++) { // hacky fix but who tf cares, it's 4pm and I haven't had lunch
+                    stackHandler.onContentsChanged(i);
+                }
+            }
         }
 
         return itemStack;

@@ -1,5 +1,6 @@
 package com.valeriotor.beyondtheveil.util.timers;
 
+import com.valeriotor.beyondtheveil.capability.DialogueData;
 import com.valeriotor.beyondtheveil.container.DrownedContainer;
 import com.valeriotor.beyondtheveil.container.dialogue.DrownedDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
@@ -130,6 +131,7 @@ public class BaptismTimer extends PlayerTimer {
             }
         }
         DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.baptized.name(), true, false);
+        DialogueData.for_(player).setDialogue(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, DialogueRegistry.getTemplate(DialogueType.SHOREMAN_LIGHTHOUSE_KEEPER, "baptism3"));
         AttributeSets.addBaptismAttributes(player);
     }
 

@@ -26,7 +26,7 @@ public class AttributeSets {
             if (DataUtil.getBoolean(p, PlayerDataLib.baptized.name())) {
                 Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
                 map.put(ForgeMod.SWIM_SPEED.get(), new AttributeModifier(BAPTISM_SWIM_SPEED, "baptism_swim_speed", 2.2, AttributeModifier.Operation.MULTIPLY_BASE));
-                map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BAPTISM_ATTACK, "baptism_attack", 1.1, AttributeModifier.Operation.MULTIPLY_BASE));
+                map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BAPTISM_ATTACK, "baptism_attack", 0.6, AttributeModifier.Operation.MULTIPLY_BASE));
                 p.getAttributes().addTransientAttributeModifiers(map);
             }
         }
