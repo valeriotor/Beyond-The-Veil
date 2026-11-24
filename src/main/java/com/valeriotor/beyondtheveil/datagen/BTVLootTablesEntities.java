@@ -150,7 +150,7 @@ public class BTVLootTablesEntities extends EntityLootSubProvider {
 
 
         //PLUCKED_EYE, shell, tiny_skull, acid_gland, fertilizer_gland, marrow_gland, silk_gland, GUNPOWDER_BLADDER, living_iron, EMPTY_BLADDER, SWOLLEN_GROWTH, periosteum_growth, chromatophore_gland, osteoclast_gland, slime_heart
-        //growth_stimulant, DIAMOND_POWDER, organochloride, pheromones, VASOCONSTRICTOR
+        //growth_stimulant, DIAMOND_POWDER, organochloride, pheromones, VASOCONSTRICTOR, LIQUID_GOLD
         add(BTVEntities.UMANCALA.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 2.0F))
                         .add(LootItem.lootTableItem(Registration.PLUCKED_EYE.get()).setWeight(5)

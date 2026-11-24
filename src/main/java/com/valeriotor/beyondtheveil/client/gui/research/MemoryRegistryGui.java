@@ -339,7 +339,11 @@ public class MemoryRegistryGui extends Screen {
                             lines.add(new ArrayList<>());
                             lines.add(new ArrayList<>());
                         }
-                        MutableComponent translatable = Component.translatable("memory." + memory.name().toLowerCase() + "." + i + "." + Math.max(1, value));
+                        String key = "memory." + memory.name().toLowerCase() + "." + i + "." + Math.max(1, value);
+                        MutableComponent translatable = Component.translatable(key);
+                        if (key.equals("memory.sentience.0.2") && ResearchUtil.isResearchComplete(p, "COMMUNION")) {
+                            translatable = Component.translatable("memory.sentience.0.2.stronghold");
+                        }
                         List<FormattedCharSequence> split = Minecraft.getInstance().font.split(translatable, 300);
                         lines.add(split);
                     }

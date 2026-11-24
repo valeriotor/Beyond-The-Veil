@@ -266,7 +266,7 @@ public class OperationRegistry {
 
     public static final Operation PARENTAL_HORMONES_SKULL = new Operation.Builder("parental_hormones")
             .addAllowedLocation(SurgicalLocation.SKULL)
-            .setPainPerTick(0.9)
+            .setPainPerTick(1.3)
             .setPersistent(true)
             .setPainForFailure(50)
             .setSuccessParticles(true)
@@ -284,13 +284,13 @@ public class OperationRegistry {
     public static final Operation DIAMOND_POWDER_SKULL = makeBasicInjection("diamond_powder_skull", 4.5, 30, 0, true, SurgicalLocation.SKULL)
             .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.DEAD))
             .buildInjectionOperation(BTVFluids.FLUID_DIAMOND_POWDER.getA().get(), 10);
-    public static final Operation ORGANOCHLORIDE_SKULL = makeBasicInjection("organochloride_skull", 2.5, 110, 0, true, SurgicalLocation.SKULL).buildInjectionOperation(BTVFluids.FLUID_ORGANOCHLORIDE.getA().get(), 60);
-    public static final Operation PHEROMONES_SKULL = makeBasicInjection("pheromones_skull", 0.9, 130, 0, true, SurgicalLocation.SKULL).buildInjectionOperation(BTVFluids.FLUID_PHEROMONES.getA().get(), 54); // Code in ConvalescentData::tick
+    public static final Operation ORGANOCHLORIDE_SKULL = makeBasicInjection("organochloride_skull", 1.5, 110, 0, true, SurgicalLocation.SKULL).buildInjectionOperation(BTVFluids.FLUID_ORGANOCHLORIDE.getA().get(), 17);
+    public static final Operation PHEROMONES_SKULL = makeBasicInjection("pheromones_skull", 0.9, 130, 0, true, SurgicalLocation.SKULL).buildInjectionOperation(BTVFluids.FLUID_PHEROMONES.getA().get(), 22); // Code in ConvalescentData::tick
     public static final Operation TEARS_SKULL = makeBasicInjection("tears_skull", 0.9, 130, 0, true, SurgicalLocation.SKULL)
             .setStatusChangeOnSuccess(PatientStatus::explode)
             .addPlayerData(PlayerDataLib.created_weeper.name())
             .buildInjectionOperation(BTVFluids.FLUID_TEARS.getA().get(), 30);
-    public static final Operation VASOCONSTRICTOR_SKULL = makeBasicInjection("vasoconstrictor_skull", 2.9, 70, 0, true, SurgicalLocation.SKULL).buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 64); // Code in SurgicalBE::getFleboMultiplier
+    public static final Operation VASOCONSTRICTOR_SKULL = makeBasicInjection("vasoconstrictor_skull", 1.9, 70, 0, true, SurgicalLocation.SKULL).buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 15); // Code in SurgicalBE::getFleboMultiplier
 
 
     /**************************************** BACK & SKULL INJECTIONS ****************************************/
@@ -335,18 +335,18 @@ public class OperationRegistry {
 
     /**************************************** CHEST & BACK INJECTIONS ****************************************/
 
-    public static final Operation MEMORY_HORMONES_CHEST_BACK = makeBasicInjection("memory_hormones_chest_back", 0.5, 140, 0, true, SurgicalLocation.BACK, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_MEMORY_HORMONES.getA().get(), 102);
-    public static final Operation PARENTAL_HORMONES_CHEST_BACK = makeBasicInjection("parental_hormones_chest_back", 0.5, 140, 0, true, SurgicalLocation.BACK, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), 52);
+    public static final Operation MEMORY_HORMONES_CHEST_BACK = makeBasicInjection("memory_hormones_chest_back", 0.75, 60, 0, true, SurgicalLocation.BACK, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_MEMORY_HORMONES.getA().get(), 102);
+    public static final Operation PARENTAL_HORMONES_CHEST_BACK = makeBasicInjection("parental_hormones_chest_back", 0.75, 60, 0, true, SurgicalLocation.BACK, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_PARENTAL_HORMONES.getA().get(), 52);
 
-    public static final Operation TEARS_CHEST_BACK = makeBasicInjection("tears_chest_back", 1.1, 110, -10, true, SurgicalLocation.BACK, SurgicalLocation.CHEST)
+    public static final Operation TEARS_CHEST_BACK = makeBasicInjection("tears_chest_back", 1.1, 72, -10, true, SurgicalLocation.BACK, SurgicalLocation.CHEST)
             .buildInjectionOperation(BTVFluids.FLUID_TEARS.getA().get(), 45);
 
-    public static final Operation VASOCONSTRICTOR_CHEST_BACK = makeBasicInjection("vasoconstrictor_chest_back", 2.5, 60, -10, true, SurgicalLocation.BACK, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 60);
+    public static final Operation VASOCONSTRICTOR_CHEST_BACK = makeBasicInjection("vasoconstrictor_chest_back", 2.5, 60, -10, true, SurgicalLocation.BACK, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get(), 12);
 
     /**************************************** CHEST INJECTIONS ****************************************/
     public static final Operation GREAT_HEART = new Operation.Builder("great_heart")
             .addAllowedLocation(SurgicalLocation.CHEST)
-            .setPainForFailure(125)
+            .setPainForFailure(85)
             .setPainPerTick(2.5)
             .setPersistent(true)
             .setSuccessParticles(true)
@@ -356,11 +356,11 @@ public class OperationRegistry {
             .setSuccessSound(BTVSounds.HEART_RIP.get())
             .buildInjectionOperation(BTVFluids.FLUID_GROWTH_STIMULANT.getA().get(), 70);
 
-    public static final Operation LIQUID_GOLD_CHEST = makeBasicInjection("liquid_gold_chest", 1.5, 110, 0, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_LIQUID_GOLD.getA().get(), 60);
-    public static final Operation ORGANOCHLORIDE_CHEST = makeBasicInjection("organochloride_chest", 0.9, 130, 0, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_ORGANOCHLORIDE.getA().get(), 60); // Code in LivingEvents::targetEvent
-    public static final Operation PHEROMONES_CHEST = makeBasicInjection("pheromones_chest", 0.9, 130, 0, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_PHEROMONES.getA().get(), 60); // Code in ConvalescentData::tick
+    public static final Operation LIQUID_GOLD_CHEST = makeBasicInjection("liquid_gold_chest", 1.5, 70, 0, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_LIQUID_GOLD.getA().get(), 60);
+    public static final Operation ORGANOCHLORIDE_CHEST = makeBasicInjection("organochloride_chest", 0.9, 75, 0, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_ORGANOCHLORIDE.getA().get(), 60); // Code in LivingEvents::targetEvent
+    public static final Operation PHEROMONES_CHEST = makeBasicInjection("pheromones_chest", 1.3, 76, 0, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_PHEROMONES.getA().get(), 60); // Code in ConvalescentData::tick
 
-    public static final Operation DIAMOND_POWDER_CHEST = makeBasicInjection("diamond_powder_chest", 2.5, 90, 3, true, SurgicalLocation.CHEST)
+    public static final Operation DIAMOND_POWDER_CHEST = makeBasicInjection("diamond_powder_chest", 2.5, 66, 3, true, SurgicalLocation.CHEST)
             .setIncreaseArsenalEffectAmplifier(true)
             .wantsSoften(true)
             .setPainPerTick(s -> s.hasString("soften") ? 2.5 : 6)
@@ -374,65 +374,65 @@ public class OperationRegistry {
     public static final Operation TARGETING_SERUM_CHEST = makeBasicInjection("targeting_serum_chest", 1.1, 110, 0, true, SurgicalLocation.CHEST)
             .buildInjectionOperation(BTVFluids.FLUID_SA245_SERUM.getA().get(), 15);
 
-    public static final Operation MOVEMENT_SPEED_SERUM_CHEST = chestEffectInjection(makeBasicInjection("movement_speed_serum_chest", 1.5, 120, 4, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SPEED_SERUM.getA().get(), 80), MobEffects.MOVEMENT_SPEED);
-    public static final Operation MOVEMENT_SLOWDOWN_SERUM_CHEST = chestEffectInjection(makeBasicInjection("movement_slowdown_serum_chest", 1.5, 120, 4, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM.getA().get(), 80), MobEffects.MOVEMENT_SLOWDOWN);
-    public static final Operation DIG_SPEED_SERUM_CHEST = chestEffectInjection(makeBasicInjection("dig_speed_serum_chest", 1.5, 120, 3, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_DIG_SPEED_SERUM.getA().get(), 80), MobEffects.DIG_SPEED);
-    public static final Operation DIG_SLOWDOWN_SERUM_CHEST = chestEffectInjection(makeBasicInjection("dig_slowdown_serum_chest", 1.5, 120, 5, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_DIG_SLOWDOWN_SERUM.getA().get(), 80), MobEffects.DIG_SLOWDOWN);
-    public static final Operation DAMAGE_BOOST_SERUM_CHEST = chestEffectInjection(makeBasicInjection("damage_boost_serum_chest", 1.5, 120, 8, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_DAMAGE_BOOST_SERUM.getA().get(), 80), MobEffects.DAMAGE_BOOST);
-    public static final Operation HEAL_SERUM_CHEST = chestEffectInjection(makeBasicInjection("heal_serum_chest", 1.5, 120, 9, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_HEAL_SERUM.getA().get(), 80), MobEffects.HEAL);
-    public static final Operation HARM_SERUM_CHEST = chestEffectInjection(makeBasicInjection("harm_serum_chest", 1.5, 120, 10, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_HARM_SERUM.getA().get(), 80), MobEffects.HARM);
-    public static final Operation JUMP_SERUM_CHEST = chestEffectInjection(makeBasicInjection("jump_serum_chest", 1.5, 120, 4, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_JUMP_SERUM.getA().get(), 80), MobEffects.JUMP);
-    public static final Operation CONFUSION_SERUM_CHEST = chestEffectInjection(makeBasicInjection("confusion_serum_chest", 1.5, 120, 1, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_CONFUSION_SERUM.getA().get(), 80), MobEffects.CONFUSION);
-    public static final Operation REGENERATION_SERUM_CHEST = chestEffectInjection(makeBasicInjection("regeneration_serum_chest", 1.5, 120, 5, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_REGENERATION_SERUM.getA().get(), 80), MobEffects.REGENERATION);
-    public static final Operation DAMAGE_RESISTANCE_SERUM_CHEST = chestEffectInjection(makeBasicInjection("damage_resistance_serum_chest", 1.5, 120, 10, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_DAMAGE_RESISTANCE_SERUM.getA().get(), 80), MobEffects.DAMAGE_RESISTANCE);
-    public static final Operation FIRE_RESISTANCE_SERUM_CHEST = chestEffectInjection(makeBasicInjection("fire_resistance_serum_chest", 1.5, 120, 1, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_FIRE_RESISTANCE_SERUM.getA().get(), 80), MobEffects.FIRE_RESISTANCE);
-    public static final Operation WATER_BREATHING_SERUM_CHEST = chestEffectInjection(makeBasicInjection("water_breathing_serum_chest", 1.5, 120, 1, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_WATER_BREATHING_SERUM.getA().get(), 80), MobEffects.WATER_BREATHING);
-    public static final Operation INVISIBILITY_SERUM_CHEST = chestEffectInjection(makeBasicInjection("invisibility_serum_chest", 1.5, 120, 4, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_INVISIBILITY_SERUM.getA().get(), 80), MobEffects.INVISIBILITY);
-    public static final Operation BLINDNESS_SERUM_CHEST = chestEffectInjection(makeBasicInjection("blindness_serum_chest", 1.5, 120, 4, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_BLINDNESS_SERUM.getA().get(), 80), MobEffects.BLINDNESS);
-    public static final Operation NIGHT_VISION_SERUM_CHEST = chestEffectInjection(makeBasicInjection("night_vision_serum_chest", 1.5, 120, 2, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_NIGHT_VISION_SERUM.getA().get(), 80), MobEffects.NIGHT_VISION);
-    public static final Operation HUNGER_SERUM_CHEST = chestEffectInjection(makeBasicInjection("hunger_serum_chest", 1.5, 120, 5, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_HUNGER_SERUM.getA().get(), 80), MobEffects.HUNGER);
-    public static final Operation WEAKNESS_SERUM_CHEST = chestEffectInjection(makeBasicInjection("weakness_serum_chest", 1.5, 120, 7, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_WEAKNESS_SERUM.getA().get(), 80), MobEffects.WEAKNESS);
-    public static final Operation POISON_SERUM_CHEST = chestEffectInjection(makeBasicInjection("poison_serum_chest", 1.5, 120, 5, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_POISON_SERUM.getA().get(), 80), MobEffects.POISON);
-    public static final Operation WITHER_SERUM_CHEST = chestEffectInjection(makeBasicInjection("wither_serum_chest", 1.5, 120, 6, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_WITHER_SERUM.getA().get(), 80), MobEffects.WITHER);
+    public static final Operation MOVEMENT_SPEED_SERUM_CHEST = chestEffectInjection(makeBasicInjection("movement_speed_serum_chest", 1.5, 55, 4, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SPEED_SERUM.getA().get(), 80), MobEffects.MOVEMENT_SPEED);
+    public static final Operation MOVEMENT_SLOWDOWN_SERUM_CHEST = chestEffectInjection(makeBasicInjection("movement_slowdown_serum_chest", 1.5, 65, 4, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM.getA().get(), 81), MobEffects.MOVEMENT_SLOWDOWN);
+    public static final Operation DIG_SPEED_SERUM_CHEST = chestEffectInjection(makeBasicInjection("dig_speed_serum_chest", 1.5, 64, 3, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_DIG_SPEED_SERUM.getA().get(), 71), MobEffects.DIG_SPEED);
+    public static final Operation DIG_SLOWDOWN_SERUM_CHEST = chestEffectInjection(makeBasicInjection("dig_slowdown_serum_chest", 1.5, 76, 5, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_DIG_SLOWDOWN_SERUM.getA().get(), 48), MobEffects.DIG_SLOWDOWN);
+    public static final Operation DAMAGE_BOOST_SERUM_CHEST = chestEffectInjection(makeBasicInjection("damage_boost_serum_chest", 1.5, 78, 8, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_DAMAGE_BOOST_SERUM.getA().get(), 75), MobEffects.DAMAGE_BOOST);
+    public static final Operation HEAL_SERUM_CHEST = chestEffectInjection(makeBasicInjection("heal_serum_chest", 1.5, 69, 9, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_HEAL_SERUM.getA().get(), 75), MobEffects.HEAL);
+    public static final Operation HARM_SERUM_CHEST = chestEffectInjection(makeBasicInjection("harm_serum_chest", 1.5, 59, 10, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_HARM_SERUM.getA().get(), 71), MobEffects.HARM);
+    public static final Operation JUMP_SERUM_CHEST = chestEffectInjection(makeBasicInjection("jump_serum_chest", 1.5, 81, 4, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_JUMP_SERUM.getA().get(), 63), MobEffects.JUMP);
+    public static final Operation CONFUSION_SERUM_CHEST = chestEffectInjection(makeBasicInjection("confusion_serum_chest", 1.5, 74, 1, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_CONFUSION_SERUM.getA().get(), 88), MobEffects.CONFUSION);
+    public static final Operation REGENERATION_SERUM_CHEST = chestEffectInjection(makeBasicInjection("regeneration_serum_chest", 1.5, 73, 5, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_REGENERATION_SERUM.getA().get(), 72), MobEffects.REGENERATION);
+    public static final Operation DAMAGE_RESISTANCE_SERUM_CHEST = chestEffectInjection(makeBasicInjection("damage_resistance_serum_chest", 1.5, 79, 10, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_DAMAGE_RESISTANCE_SERUM.getA().get(), 89), MobEffects.DAMAGE_RESISTANCE);
+    public static final Operation FIRE_RESISTANCE_SERUM_CHEST = chestEffectInjection(makeBasicInjection("fire_resistance_serum_chest", 1.5, 66, 1, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_FIRE_RESISTANCE_SERUM.getA().get(), 51), MobEffects.FIRE_RESISTANCE);
+    public static final Operation WATER_BREATHING_SERUM_CHEST = chestEffectInjection(makeBasicInjection("water_breathing_serum_chest", 1.5, 62, 1, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_WATER_BREATHING_SERUM.getA().get(), 51), MobEffects.WATER_BREATHING);
+    public static final Operation INVISIBILITY_SERUM_CHEST = chestEffectInjection(makeBasicInjection("invisibility_serum_chest", 1.5, 64, 4, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_INVISIBILITY_SERUM.getA().get(), 68), MobEffects.INVISIBILITY);
+    public static final Operation BLINDNESS_SERUM_CHEST = chestEffectInjection(makeBasicInjection("blindness_serum_chest", 1.5, 88, 4, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_BLINDNESS_SERUM.getA().get(), 51), MobEffects.BLINDNESS);
+    public static final Operation NIGHT_VISION_SERUM_CHEST = chestEffectInjection(makeBasicInjection("night_vision_serum_chest", 1.5, 82, 2, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_NIGHT_VISION_SERUM.getA().get(), 81), MobEffects.NIGHT_VISION);
+    public static final Operation HUNGER_SERUM_CHEST = chestEffectInjection(makeBasicInjection("hunger_serum_chest", 1.5, 76, 5, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_HUNGER_SERUM.getA().get(), 58), MobEffects.HUNGER);
+    public static final Operation WEAKNESS_SERUM_CHEST = chestEffectInjection(makeBasicInjection("weakness_serum_chest", 1.5, 68, 7, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_WEAKNESS_SERUM.getA().get(), 54), MobEffects.WEAKNESS);
+    public static final Operation POISON_SERUM_CHEST = chestEffectInjection(makeBasicInjection("poison_serum_chest", 1.5, 91, 5, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_POISON_SERUM.getA().get(), 71), MobEffects.POISON);
+    public static final Operation WITHER_SERUM_CHEST = chestEffectInjection(makeBasicInjection("wither_serum_chest", 1.5, 95, 6, true, SurgicalLocation.CHEST).buildInjectionOperation(BTVFluids.FLUID_WITHER_SERUM.getA().get(), 66), MobEffects.WITHER);
 
 
 
     /**************************************** BACK INJECTIONS ****************************************/
 
-    public static final Operation GREAT_SPINE = makeBasicInjection("great_spine", 3.5, 90, 0, true, SurgicalLocation.BACK).buildInjectionOperation(BTVFluids.FLUID_GROWTH_STIMULANT.getA().get(), 25);
+    public static final Operation GREAT_SPINE = makeBasicInjection("great_spine", 3.5, 75, 0, true, SurgicalLocation.BACK).buildInjectionOperation(BTVFluids.FLUID_GROWTH_STIMULANT.getA().get(), 25);
 
 
-    public static final Operation INJECT_MOVEMENT_SPEED_SERUM_BACK = makeArsenalInjection("inject_movement_speed_serum_back", 0.9, 90, 4, ArsenalEffectRegistry.MOVEMENT_SPEED).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SPEED_SERUM.getA().get(), 60);
-    public static final Operation INJECT_MOVEMENT_SLOWDOWN_SERUM_BACK = makeArsenalInjection("inject_movement_slowdown_serum_back", 0.9, 90, 4, ArsenalEffectRegistry.MOVEMENT_SLOWDOWN).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM.getA().get(), 80);
-    public static final Operation INJECT_DIG_SPEED_SERUM_BACK = makeArsenalInjection("inject_dig_speed_serum_back", 0.9, 90, 3, ArsenalEffectRegistry.DIG_SPEED).buildInjectionOperation(BTVFluids.FLUID_DIG_SPEED_SERUM.getA().get(), 80);
-    public static final Operation INJECT_DIG_SLOWDOWN_SERUM_BACK = makeArsenalInjection("inject_dig_slowdown_serum_back", 0.9, 90, 5, ArsenalEffectRegistry.DIG_SLOWDOWN).buildInjectionOperation(BTVFluids.FLUID_DIG_SLOWDOWN_SERUM.getA().get(), 80);
-    public static final Operation INJECT_DAMAGE_BOOST_SERUM_BACK = makeArsenalInjection("inject_damage_boost_serum_back", 0.9, 90, 8, ArsenalEffectRegistry.DAMAGE_BOOST).buildInjectionOperation(BTVFluids.FLUID_DAMAGE_BOOST_SERUM.getA().get(), 80);
-    public static final Operation INJECT_HEAL_SERUM_BACK = makeArsenalInjection("inject_heal_serum_back", 0.9, 90, 9, ArsenalEffectRegistry.HEAL).buildInjectionOperation(BTVFluids.FLUID_HEAL_SERUM.getA().get(), 80);
-    public static final Operation INJECT_HARM_SERUM_BACK = makeArsenalInjection("inject_harm_serum_back", 0.9, 90, 10, ArsenalEffectRegistry.HARM).buildInjectionOperation(BTVFluids.FLUID_HARM_SERUM.getA().get(), 80);
-    public static final Operation INJECT_JUMP_SERUM_BACK = makeArsenalInjection("inject_jump_serum_back", 0.9, 90, 4, ArsenalEffectRegistry.JUMP).buildInjectionOperation(BTVFluids.FLUID_JUMP_SERUM.getA().get(), 80);
-    public static final Operation INJECT_CONFUSION_SERUM_BACK = makeArsenalInjection("inject_confusion_serum_back", 0.9, 90, 1, ArsenalEffectRegistry.CONFUSION).buildInjectionOperation(BTVFluids.FLUID_CONFUSION_SERUM.getA().get(), 80);
-    public static final Operation INJECT_REGENERATION_SERUM_BACK = makeArsenalInjection("inject_regeneration_serum_back", 0.9, 90, 5, ArsenalEffectRegistry.REGENERATION).buildInjectionOperation(BTVFluids.FLUID_REGENERATION_SERUM.getA().get(), 80);
-    public static final Operation INJECT_DAMAGE_RESISTANCE_SERUM_BACK = makeArsenalInjection("inject_damage_resistance_serum_back", 0.9, 90, 10, ArsenalEffectRegistry.DAMAGE_RESISTANCE).buildInjectionOperation(BTVFluids.FLUID_DAMAGE_RESISTANCE_SERUM.getA().get(), 80);
-    public static final Operation INJECT_FIRE_RESISTANCE_SERUM_BACK = makeArsenalInjection("inject_fire_resistance_serum_back", 0.9, 90, 1, ArsenalEffectRegistry.FIRE_RESISTANCE).buildInjectionOperation(BTVFluids.FLUID_FIRE_RESISTANCE_SERUM.getA().get(), 80);
-    public static final Operation INJECT_WATER_BREATHING_SERUM_BACK = makeArsenalInjection("inject_water_breathing_serum_back", 0.9, 90, 1, ArsenalEffectRegistry.WATER_BREATHING).buildInjectionOperation(BTVFluids.FLUID_WATER_BREATHING_SERUM.getA().get(), 80);
-    public static final Operation INJECT_INVISIBILITY_SERUM_BACK = makeArsenalInjection("inject_invisibility_serum_back", 0.9, 90, 4, ArsenalEffectRegistry.INVISIBILITY).buildInjectionOperation(BTVFluids.FLUID_INVISIBILITY_SERUM.getA().get(), 80);
-    public static final Operation INJECT_BLINDNESS_SERUM_BACK = makeArsenalInjection("inject_blindness_serum_back", 0.9, 90, 4, ArsenalEffectRegistry.BLINDNESS).buildInjectionOperation(BTVFluids.FLUID_BLINDNESS_SERUM.getA().get(), 80);
-    public static final Operation INJECT_NIGHT_VISION_SERUM_BACK = makeArsenalInjection("inject_night_vision_serum_back", 0.9, 90, 2, ArsenalEffectRegistry.NIGHT_VISION).buildInjectionOperation(BTVFluids.FLUID_NIGHT_VISION_SERUM.getA().get(), 80);
-    public static final Operation INJECT_HUNGER_SERUM_BACK = makeArsenalInjection("inject_hunger_serum_back", 0.9, 90, 5, ArsenalEffectRegistry.HUNGER).buildInjectionOperation(BTVFluids.FLUID_HUNGER_SERUM.getA().get(), 80);
-    public static final Operation INJECT_WEAKNESS_SERUM_BACK = makeArsenalInjection("inject_weakness_serum_back", 0.9, 90, 7, ArsenalEffectRegistry.WEAKNESS).buildInjectionOperation(BTVFluids.FLUID_WEAKNESS_SERUM.getA().get(), 80);
-    public static final Operation INJECT_POISON_SERUM_BACK = makeArsenalInjection("inject_poison_serum_back", 0.9, 90, 5, ArsenalEffectRegistry.POISON).buildInjectionOperation(BTVFluids.FLUID_POISON_SERUM.getA().get(), 80);
-    public static final Operation INJECT_WITHER_SERUM_BACK = makeArsenalInjection("inject_wither_serum_back", 0.9, 90, 6, ArsenalEffectRegistry.WITHER).buildInjectionOperation(BTVFluids.FLUID_WITHER_SERUM.getA().get(), 80);
-    public static final Operation INJECT_LIQUID_GOLD_BACK = makeArsenalInjection("inject_liquid_gold_back", 0.9, 90, 5, ArsenalEffectRegistry.SINK).buildInjectionOperation(BTVFluids.FLUID_LIQUID_GOLD.getA().get(), 80);
-    public static final Operation INJECT_ORGANOCHLORIDE_BACK = makeArsenalInjection("inject_organochloride_back", 0.9, 90, 6, ArsenalEffectRegistry.HARM_ARTHROPODS).buildInjectionOperation(BTVFluids.FLUID_ORGANOCHLORIDE.getA().get(), 80);
-    public static final Operation INJECT_PHEROMONES_BACK = makeArsenalInjection("inject_pheromones_back", 0.9, 90, 11, ArsenalEffectRegistry.EVERYONE_TARGET).buildInjectionOperation(BTVFluids.FLUID_PHEROMONES.getA().get(), 80);
+    public static final Operation INJECT_MOVEMENT_SPEED_SERUM_BACK = makeArsenalInjection("inject_movement_speed_serum_back", 0.8, 55, 4, ArsenalEffectRegistry.MOVEMENT_SPEED).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SPEED_SERUM.getA().get(), 12);
+    public static final Operation INJECT_MOVEMENT_SLOWDOWN_SERUM_BACK = makeArsenalInjection("inject_movement_slowdown_serum_back", 0.8, 65, 4, ArsenalEffectRegistry.MOVEMENT_SLOWDOWN).buildInjectionOperation(BTVFluids.FLUID_MOVEMENT_SLOWDOWN_SERUM.getA().get(), 16);
+    public static final Operation INJECT_DIG_SPEED_SERUM_BACK = makeArsenalInjection("inject_dig_speed_serum_back", 0.8, 64, 3, ArsenalEffectRegistry.DIG_SPEED).buildInjectionOperation(BTVFluids.FLUID_DIG_SPEED_SERUM.getA().get(), 11);
+    public static final Operation INJECT_DIG_SLOWDOWN_SERUM_BACK = makeArsenalInjection("inject_dig_slowdown_serum_back", 0.8, 76, 5, ArsenalEffectRegistry.DIG_SLOWDOWN).buildInjectionOperation(BTVFluids.FLUID_DIG_SLOWDOWN_SERUM.getA().get(), 19);
+    public static final Operation INJECT_DAMAGE_BOOST_SERUM_BACK = makeArsenalInjection("inject_damage_boost_serum_back", 0.8, 78, 8, ArsenalEffectRegistry.DAMAGE_BOOST).buildInjectionOperation(BTVFluids.FLUID_DAMAGE_BOOST_SERUM.getA().get(), 22);
+    public static final Operation INJECT_HEAL_SERUM_BACK = makeArsenalInjection("inject_heal_serum_back", 0.8, 69, 9, ArsenalEffectRegistry.HEAL).buildInjectionOperation(BTVFluids.FLUID_HEAL_SERUM.getA().get(), 24);
+    public static final Operation INJECT_HARM_SERUM_BACK = makeArsenalInjection("inject_harm_serum_back", 0.8, 59, 10, ArsenalEffectRegistry.HARM).buildInjectionOperation(BTVFluids.FLUID_HARM_SERUM.getA().get(), 17);
+    public static final Operation INJECT_JUMP_SERUM_BACK = makeArsenalInjection("inject_jump_serum_back", 0.8, 81, 4, ArsenalEffectRegistry.JUMP).buildInjectionOperation(BTVFluids.FLUID_JUMP_SERUM.getA().get(), 16);
+    public static final Operation INJECT_CONFUSION_SERUM_BACK = makeArsenalInjection("inject_confusion_serum_back", 0.8, 74, 1, ArsenalEffectRegistry.CONFUSION).buildInjectionOperation(BTVFluids.FLUID_CONFUSION_SERUM.getA().get(), 18);
+    public static final Operation INJECT_REGENERATION_SERUM_BACK = makeArsenalInjection("inject_regeneration_serum_back", 0.8, 73, 5, ArsenalEffectRegistry.REGENERATION).buildInjectionOperation(BTVFluids.FLUID_REGENERATION_SERUM.getA().get(), 21);
+    public static final Operation INJECT_DAMAGE_RESISTANCE_SERUM_BACK = makeArsenalInjection("inject_damage_resistance_serum_back", 0.8, 79, 10, ArsenalEffectRegistry.DAMAGE_RESISTANCE).buildInjectionOperation(BTVFluids.FLUID_DAMAGE_RESISTANCE_SERUM.getA().get(), 28);
+    public static final Operation INJECT_FIRE_RESISTANCE_SERUM_BACK = makeArsenalInjection("inject_fire_resistance_serum_back", 0.8, 66, 1, ArsenalEffectRegistry.FIRE_RESISTANCE).buildInjectionOperation(BTVFluids.FLUID_FIRE_RESISTANCE_SERUM.getA().get(), 11);
+    public static final Operation INJECT_WATER_BREATHING_SERUM_BACK = makeArsenalInjection("inject_water_breathing_serum_back", 0.8, 62, 1, ArsenalEffectRegistry.WATER_BREATHING).buildInjectionOperation(BTVFluids.FLUID_WATER_BREATHING_SERUM.getA().get(), 16);
+    public static final Operation INJECT_INVISIBILITY_SERUM_BACK = makeArsenalInjection("inject_invisibility_serum_back", 0.8, 64, 4, ArsenalEffectRegistry.INVISIBILITY).buildInjectionOperation(BTVFluids.FLUID_INVISIBILITY_SERUM.getA().get(), 18);
+    public static final Operation INJECT_BLINDNESS_SERUM_BACK = makeArsenalInjection("inject_blindness_serum_back", 0.8, 88, 4, ArsenalEffectRegistry.BLINDNESS).buildInjectionOperation(BTVFluids.FLUID_BLINDNESS_SERUM.getA().get(), 19);
+    public static final Operation INJECT_NIGHT_VISION_SERUM_BACK = makeArsenalInjection("inject_night_vision_serum_back", 0.8, 82, 2, ArsenalEffectRegistry.NIGHT_VISION).buildInjectionOperation(BTVFluids.FLUID_NIGHT_VISION_SERUM.getA().get(), 14);
+    public static final Operation INJECT_HUNGER_SERUM_BACK = makeArsenalInjection("inject_hunger_serum_back", 0.8, 76, 5, ArsenalEffectRegistry.HUNGER).buildInjectionOperation(BTVFluids.FLUID_HUNGER_SERUM.getA().get(), 16);
+    public static final Operation INJECT_WEAKNESS_SERUM_BACK = makeArsenalInjection("inject_weakness_serum_back", 0.8, 68, 7, ArsenalEffectRegistry.WEAKNESS).buildInjectionOperation(BTVFluids.FLUID_WEAKNESS_SERUM.getA().get(), 16);
+    public static final Operation INJECT_POISON_SERUM_BACK = makeArsenalInjection("inject_poison_serum_back", 0.8, 91, 5, ArsenalEffectRegistry.POISON).buildInjectionOperation(BTVFluids.FLUID_POISON_SERUM.getA().get(), 17);
+    public static final Operation INJECT_WITHER_SERUM_BACK = makeArsenalInjection("inject_wither_serum_back", 0.8, 95, 6, ArsenalEffectRegistry.WITHER).buildInjectionOperation(BTVFluids.FLUID_WITHER_SERUM.getA().get(), 18);
+    public static final Operation INJECT_LIQUID_GOLD_BACK = makeArsenalInjection("inject_liquid_gold_back", 1.5, 90, 5, ArsenalEffectRegistry.SINK).buildInjectionOperation(BTVFluids.FLUID_LIQUID_GOLD.getA().get(), 21);
+    public static final Operation INJECT_ORGANOCHLORIDE_BACK = makeArsenalInjection("inject_organochloride_back", 1.6, 90, 6, ArsenalEffectRegistry.HARM_ARTHROPODS).buildInjectionOperation(BTVFluids.FLUID_ORGANOCHLORIDE.getA().get(), 24);
+    public static final Operation INJECT_PHEROMONES_BACK = makeArsenalInjection("inject_pheromones_back", 1.6, 90, 11, ArsenalEffectRegistry.EVERYONE_TARGET).buildInjectionOperation(BTVFluids.FLUID_PHEROMONES.getA().get(), 25);
 
-    public static final Operation DIAMOND_POWDER_BACK = makeBasicInjection("diamond_powder_back", 2.5, 90, 3, true, SurgicalLocation.BACK)
+    public static final Operation DIAMOND_POWDER_BACK = makeBasicInjection("diamond_powder_back", 2.5, 70, 3, true, SurgicalLocation.BACK)
             .setIncreaseArsenalEffectAmplifier(true)
             .wantsSoften(true)
             .setPainPerTick(s -> s.hasString("soften") ? 2.5 : 6)
             .setMaximumTimesAllowed(-1)
             .setEraseFluid(true)
-            .buildInjectionOperation(BTVFluids.FLUID_DIAMOND_POWDER.getA().get(), 80);
+            .buildInjectionOperation(BTVFluids.FLUID_DIAMOND_POWDER.getA().get(), 42);
 
 
 
@@ -451,7 +451,7 @@ public class OperationRegistry {
             .setProgressParticles(true)
             .buildInsertionOperation(Registration.EMPTY_BLADDER.get());
 
-    public static final Operation LIQUID_GLOWSTONE_BACK_CHEST = makeBasicInjection("liquid_glowstone_back_chest", 1.5, 90, 4, true, SurgicalLocation.BACK, SurgicalLocation.CHEST)
+    public static final Operation LIQUID_GLOWSTONE_BACK_CHEST = makeBasicInjection("liquid_glowstone_back_chest", 1.1, 90, 4, true, SurgicalLocation.BACK, SurgicalLocation.CHEST)
             .setIncreaseArsenalEffectAmplifier(true)
             .setMaximumTimesAllowed(-1)
             .setEraseFluid(true)
@@ -459,28 +459,28 @@ public class OperationRegistry {
 
     /**************************************** BACK INSERTIONS ****************************************/
 
-    public static final Operation INSERT_EYE_BACK = makeArsenalInsertion("insert_eye_back", 80, 0.4, 150, 7, ArsenalEffectRegistry.FOLLY).buildInsertionOperation(Registration.PLUCKED_EYE.get());
-    public static final Operation INSERT_SHELL_BACK = makeArsenalInsertion("insert_shell_back", 90, 2.5, 55, 15, ArsenalEffectRegistry.VULNERABILITY)
+    public static final Operation INSERT_EYE_BACK = makeArsenalInsertion("insert_eye_back", 80, 0.4, 80, 7, ArsenalEffectRegistry.FOLLY).buildInsertionOperation(Registration.PLUCKED_EYE.get());
+    public static final Operation INSERT_SHELL_BACK = makeArsenalInsertion("insert_shell_back", 90, 1.3, 55, 15, ArsenalEffectRegistry.VULNERABILITY)
             .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.BLEEDING)).buildInsertionOperation(Registration.SHELL.get());
-    public static final Operation INSERT_TINY_SKULL_BACK = makeArsenalInsertion("insert_tiny_skull_back", 110, 0.9, 65, 7, ArsenalEffectRegistry.TERROR).buildInsertionOperation(Registration.TINY_SKULL.get());
-    public static final Operation INSERT_ACID_GLAND_BACK = makeArsenalInsertion("insert_acid_gland_back", 60, 0.9, 80, 7, ArsenalEffectRegistry.DAMAGE_ARMOR).buildInsertionOperation(Registration.ACID_GLAND.get());
-    public static final Operation INSERT_SILK_GLAND_BACK = makeArsenalInsertion("insert_silk_gland_back", 60, 0.9, 120, 4, ArsenalEffectRegistry.ENWEB).buildInsertionOperation(Registration.SILK_GLAND.get());
-    public static final Operation INSERT_SCALES_BACK = makeArsenalInsertion("insert_scales_back", 100, 1.8, 120, 12, ArsenalEffectRegistry.DROP_ITEM).buildInsertionOperation(Registration.SCALES.get());
-    public static final Operation INSERT_SWOLLEN_GROWTH_BACK = makeArsenalInsertion("insert_swollen_growth_back", 200, 1.2, 120, 15, ArsenalEffectRegistry.DISROBE)
+    public static final Operation INSERT_TINY_SKULL_BACK = makeArsenalInsertion("insert_tiny_skull_back", 110, 0.6, 65, 7, ArsenalEffectRegistry.TERROR).buildInsertionOperation(Registration.TINY_SKULL.get());
+    public static final Operation INSERT_ACID_GLAND_BACK = makeArsenalInsertion("insert_acid_gland_back", 60, 0.5, 60, 7, ArsenalEffectRegistry.DAMAGE_ARMOR).buildInsertionOperation(Registration.ACID_GLAND.get());
+    public static final Operation INSERT_SILK_GLAND_BACK = makeArsenalInsertion("insert_silk_gland_back", 60, 0.1, 65, 4, ArsenalEffectRegistry.ENWEB).buildInsertionOperation(Registration.SILK_GLAND.get());
+    public static final Operation INSERT_SCALES_BACK = makeArsenalInsertion("insert_scales_back", 100, 0.9, 75, 12, ArsenalEffectRegistry.DROP_ITEM).buildInsertionOperation(Registration.SCALES.get());
+    public static final Operation INSERT_SWOLLEN_GROWTH_BACK = makeArsenalInsertion("insert_swollen_growth_back", 200, 1.2, 75, 15, ArsenalEffectRegistry.DISROBE)
             .wantsSoften(true)
             .setPainPerTick(s -> s.hasString("soften") ? 1.2 : 5)
             .buildInsertionOperation(Registration.SWOLLEN_GROWTH.get());
-    public static final Operation INSERT_PERIOSTEUM_GROWTH_BACK = makeArsenalInsertion("insert_periosteum_growth_back", 70, 1.4, 120, 12, ArsenalEffectRegistry.FEARSOME).buildInsertionOperation(Registration.PERIOSTEUM_GROWTH.get());
-    public static final Operation INSERT_CHROMATOPHORE_GLAND_BACK = makeArsenalInsertion("insert_chromatophore_gland_back", 100, 0.1, 140, 3, ArsenalEffectRegistry.CAMOUFLAGE).buildInsertionOperation(Registration.CHROMATOPHORE_GLAND.get());
-    public static final Operation INSERT_OSTEOCLAST_GLAND_BACK = makeArsenalInsertion("insert_osteoclast_gland_back", 100, 0.6, 140, 5, ArsenalEffectRegistry.HARM_UNDEAD).buildInsertionOperation(Registration.OSTEOCLAST_GLAND.get());
-    public static final Operation INSERT_SLIME_HEART_BACK = makeArsenalInsertion("insert_slime_heart_back", 70, 0.4, 140, 2, ArsenalEffectRegistry.CREATE_SLIME).buildInsertionOperation(Registration.SLIME_HEART.get());
+    public static final Operation INSERT_PERIOSTEUM_GROWTH_BACK = makeArsenalInsertion("insert_periosteum_growth_back", 70, 0.9, 71, 12, ArsenalEffectRegistry.FEARSOME).buildInsertionOperation(Registration.PERIOSTEUM_GROWTH.get());
+    public static final Operation INSERT_CHROMATOPHORE_GLAND_BACK = makeArsenalInsertion("insert_chromatophore_gland_back", 100, 0.3, 77, 3, ArsenalEffectRegistry.CAMOUFLAGE).buildInsertionOperation(Registration.CHROMATOPHORE_GLAND.get());
+    public static final Operation INSERT_OSTEOCLAST_GLAND_BACK = makeArsenalInsertion("insert_osteoclast_gland_back", 100, 0.6, 77, 5, ArsenalEffectRegistry.HARM_UNDEAD).buildInsertionOperation(Registration.OSTEOCLAST_GLAND.get());
+    public static final Operation INSERT_SLIME_HEART_BACK = makeArsenalInsertion("insert_slime_heart_back", 70, 0.6, 68, 2, ArsenalEffectRegistry.CREATE_SLIME).buildInsertionOperation(Registration.SLIME_HEART.get());
 
     public static final Operation INSERT_EMERALD_GEM_BACK = new Operation.Builder("insert_emerald_gem_back")
             .addAllowedLocation(SurgicalLocation.BACK)
             .setPainPerTick(s -> s.hasString("soften") ? 0.4 : 4)
             .wantsSoften(true)
             .setDuration(80)
-            .setPainForFailure(150)
+            .setPainForFailure(66)
             .setStatusChangeOnSuccess(s -> {
                 s.setFluidAmount(BTVFluids.SOURCE_FLUID_SOFTENER.get(), s.getFluidAmount(BTVFluids.SOURCE_FLUID_SOFTENER.get()) - 57);
                 s.removeString("soften");
@@ -500,50 +500,50 @@ public class OperationRegistry {
             .setProgressParticles(true)
             .buildInsertionOperation(Registration.LIVING_IRON.get());
 
-    public static final Operation INSERT_MARROW_GLAND_BACK = makeBasicInsertion("insert_marrow_gland_back", 60, 0.9, 120, SurgicalLocation.BACK).buildInsertionOperation(Registration.MARROW_GLAND.get()); // code in ConvalescentData::tick
-    public static final Operation INSERT_FERTILIZER_GLAND_BACK = makeBasicInsertion("insert_fertilizer_gland_back", 60, 0.9, 120, SurgicalLocation.BACK).buildInsertionOperation(Registration.FERTILIZER_GLAND.get()); // code in ConvalescentData::tick
-    public static final Operation INSERT_GUNPOWDER_BLADDER_BACK = makeBasicInsertion("insert_gunpowder_bladder_back", 110, 0.9, 120, SurgicalLocation.BACK).buildInsertionOperation(Registration.GUNPOWDER_BLADDER.get()); // code in ConvalescentData::tick
+    public static final Operation INSERT_MARROW_GLAND_BACK = makeBasicInsertion("insert_marrow_gland_back", 60, 1.5, 68, SurgicalLocation.BACK).buildInsertionOperation(Registration.MARROW_GLAND.get()); // code in ConvalescentData::tick
+    public static final Operation INSERT_FERTILIZER_GLAND_BACK = makeBasicInsertion("insert_fertilizer_gland_back", 60, 1.5, 68, SurgicalLocation.BACK).buildInsertionOperation(Registration.FERTILIZER_GLAND.get()); // code in ConvalescentData::tick
+    public static final Operation INSERT_GUNPOWDER_BLADDER_BACK = makeBasicInsertion("insert_gunpowder_bladder_back", 110, 1.1, 68, SurgicalLocation.BACK).buildInsertionOperation(Registration.GUNPOWDER_BLADDER.get()); // code in ConvalescentData::tick
 
     /**************************************** CHEST INSERTIONS ****************************************/
 
     public static final Operation INSERT_SCALES_CHEST = new Operation.Builder("insert_scales_chest")
             .addAllowedLocation(SurgicalLocation.CHEST)
-            .setPainPerTick(0.35)
+            .setPainPerTick(1.4)
             .setDuration(80)
-            .setPainForFailure(100)
+            .setPainForFailure(60)
             .setPersistent(true)
             .setMaximumTimesAllowed(3)
             .setProgressParticles(true)
             .addPlayerData(s -> s.getFlags().getOrDefault("insert_scales_chest", 0) >= 3, PlayerDataLib.scaled_crawler.name())
             .buildInsertionOperation(Registration.SCALES.get());
 
-    public static final Operation INSERT_SHELL_CHEST = makeBasicInsertion("insert_shell_chest", 150, 1.5, 120, SurgicalLocation.CHEST) // code in AttackEvents::livingDamageEvent
+    public static final Operation INSERT_SHELL_CHEST = makeBasicInsertion("insert_shell_chest", 150, 1.5, 65, SurgicalLocation.CHEST) // code in AttackEvents::livingDamageEvent
             .setStatusChangeOnSuccess(s -> s.setCondition(PatientCondition.BLEEDING)).buildInsertionOperation(Registration.SHELL.get());
 
-    public static final Operation INSERT_TINY_SKULL_CHEST = makeBasicInsertion("insert_tiny_skull_chest", 60, 0.9, 120, SurgicalLocation.CHEST).buildInsertionOperation(Registration.TINY_SKULL.get()); // code in LivingEvents::livingDeathEvent
-    public static final Operation INSERT_ACID_GLAND_CHEST = makeBasicInsertion("insert_acid_gland_chest", 105, 1.8, 120, SurgicalLocation.CHEST) // code in LivingEvents::livingDeathEvent
+    public static final Operation INSERT_TINY_SKULL_CHEST = makeBasicInsertion("insert_tiny_skull_chest", 60, 1.9, 75, SurgicalLocation.CHEST).buildInsertionOperation(Registration.TINY_SKULL.get()); // code in LivingEvents::livingDeathEvent
+    public static final Operation INSERT_ACID_GLAND_CHEST = makeBasicInsertion("insert_acid_gland_chest", 105, 1.8, 75, SurgicalLocation.CHEST) // code in LivingEvents::livingDeathEvent
             .setMaximumTimesAllowed(3).buildInsertionOperation(Registration.ACID_GLAND.get());
 
-    public static final Operation INSERT_MARROW_GLAND_CHEST = makeBasicInsertion("insert_marrow_gland_chest", 105, 0.4, 120, SurgicalLocation.CHEST).buildInsertionOperation(Registration.MARROW_GLAND.get()); // part of blood fist
-    public static final Operation INSERT_SILK_GLAND_CHEST = makeBasicInsertion("insert_silk_gland_chest", 105, 0.4, 120, SurgicalLocation.CHEST).buildInsertionOperation(Registration.SILK_GLAND.get()); // part of blood fist
-    public static final Operation INSERT_GUNPOWDER_BLADDER_CHEST = makeBasicInsertion("insert_gunpowder_bladder_chest", 105, 0.4, 120, SurgicalLocation.CHEST).buildInsertionOperation(Registration.GUNPOWDER_BLADDER.get()); // part of blood fist
+    public static final Operation INSERT_MARROW_GLAND_CHEST = makeBasicInsertion("insert_marrow_gland_chest", 105, 1.0, 76, SurgicalLocation.CHEST).buildInsertionOperation(Registration.MARROW_GLAND.get()); // part of blood fist
+    public static final Operation INSERT_SILK_GLAND_CHEST = makeBasicInsertion("insert_silk_gland_chest", 105, 1.0, 76, SurgicalLocation.CHEST).buildInsertionOperation(Registration.SILK_GLAND.get()); // part of blood fist
+    public static final Operation INSERT_GUNPOWDER_BLADDER_CHEST = makeBasicInsertion("insert_gunpowder_bladder_chest", 105, 1.0, 67, SurgicalLocation.CHEST).buildInsertionOperation(Registration.GUNPOWDER_BLADDER.get()); // part of blood fist
 
-    public static final Operation INSERT_PERIOSTEUM_GROWTH_CHEST = makeBasicInsertion("insert_periosteum_growth_chest", 105, 1.1, 110, SurgicalLocation.CHEST).buildInsertionOperation(Registration.PERIOSTEUM_GROWTH.get()); // code in LivingEvents::targetEvent
-    public static final Operation INSERT_OSTEOCLAST_GLAND_CHEST = makeBasicInsertion("insert_osteoclast_gland_chest", 105, 1.3, 110, SurgicalLocation.CHEST).buildInsertionOperation(Registration.OSTEOCLAST_GLAND.get()); // code in LivingEvents::targetEvent
-    public static final Operation INSERT_SLIME_HEART_CHEST = makeBasicInsertion("insert_slime_heart_chest", 105, 1.6, 110, SurgicalLocation.CHEST).buildInsertionOperation(Registration.SLIME_HEART.get()); // code in LivingEvents::targetEvent and AttackEvents::livingAttackEvent
+    public static final Operation INSERT_PERIOSTEUM_GROWTH_CHEST = makeBasicInsertion("insert_periosteum_growth_chest", 105, 1.1, 76, SurgicalLocation.CHEST).buildInsertionOperation(Registration.PERIOSTEUM_GROWTH.get()); // code in LivingEvents::targetEvent
+    public static final Operation INSERT_OSTEOCLAST_GLAND_CHEST = makeBasicInsertion("insert_osteoclast_gland_chest", 105, 1.3, 71, SurgicalLocation.CHEST).buildInsertionOperation(Registration.OSTEOCLAST_GLAND.get()); // code in LivingEvents::targetEvent
+    public static final Operation INSERT_SLIME_HEART_CHEST = makeBasicInsertion("insert_slime_heart_chest", 105, 1.6, 81, SurgicalLocation.CHEST).buildInsertionOperation(Registration.SLIME_HEART.get()); // code in LivingEvents::targetEvent and AttackEvents::livingAttackEvent
 
-    public static final Operation INSERT_LIVING_IRON_CHEST = makeBasicInsertion("insert_living_iron_chest", 85, 0.4, 110, SurgicalLocation.CHEST).buildInsertionOperation(Registration.LIVING_IRON.get()); // code in ConvalescentData::applyConvalescentAttributes
-    public static final Operation INSERT_PLUCKED_EYE_CHEST = makeBasicInsertion("insert_plucked_eye_chest", 115, 0.4, 110, SurgicalLocation.CHEST).buildInsertionOperation(Registration.PLUCKED_EYE.get()); // code in ConvalescentData::applyConvalescentAttributes
-    public static final Operation INSERT_SWOLLEN_GROWTH_CHEST = makeBasicInsertion("insert_swollen_growth_chest", 85, 0.4, 110, SurgicalLocation.CHEST)
+    public static final Operation INSERT_LIVING_IRON_CHEST = makeBasicInsertion("insert_living_iron_chest", 85, 0.6, 68, SurgicalLocation.CHEST).buildInsertionOperation(Registration.LIVING_IRON.get()); // code in ConvalescentData::applyConvalescentAttributes
+    public static final Operation INSERT_PLUCKED_EYE_CHEST = makeBasicInsertion("insert_plucked_eye_chest", 115, 0.7, 69, SurgicalLocation.CHEST).buildInsertionOperation(Registration.PLUCKED_EYE.get()); // code in ConvalescentData::applyConvalescentAttributes
+    public static final Operation INSERT_SWOLLEN_GROWTH_CHEST = makeBasicInsertion("insert_swollen_growth_chest", 85, 1.2, 57, SurgicalLocation.CHEST)
             .wantsSoften(true)
             .setPainPerTick(s -> s.hasString("soften") ? 1.2 : 5)
             .buildInsertionOperation(Registration.SWOLLEN_GROWTH.get()); // code in ConvalescentData::tick
-    public static final Operation INSERT_EMERALD_GEM_CHEST = makeBasicInsertion("insert_emerald_gem_chest", 85, 0.4, 110, SurgicalLocation.CHEST)
+    public static final Operation INSERT_EMERALD_GEM_CHEST = makeBasicInsertion("insert_emerald_gem_chest", 85, 1.2, 57, SurgicalLocation.CHEST)
             .wantsSoften(true)
             .setPainPerTick(s -> s.hasString("soften") ? 1.2 : 5)
             .buildInsertionOperation(Registration.EMERALD_GEM.get()); // code in ConvalescentData::tick
 
-    public static final Operation INSERT_CHROMATOPHORE_GLAND_CHEST = makeBasicInsertion("insert_chromatophore_gland_chest", 100, 0.1, 140, SurgicalLocation.CHEST).buildInsertionOperation(Registration.CHROMATOPHORE_GLAND.get());
+    public static final Operation INSERT_CHROMATOPHORE_GLAND_CHEST = makeBasicInsertion("insert_chromatophore_gland_chest", 100, 0.6, 140, SurgicalLocation.CHEST).buildInsertionOperation(Registration.CHROMATOPHORE_GLAND.get());
 
     /**************************************** HELPER METHODS ****************************************/
 

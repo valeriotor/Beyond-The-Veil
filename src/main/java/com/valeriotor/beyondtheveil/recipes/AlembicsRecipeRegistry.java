@@ -48,6 +48,8 @@ public class AlembicsRecipeRegistry {
         registerRecipe(Fluids.WATER, new ItemStack(Registration.HEART.get()), Fluids.WATER, 60, BTVFluids.FLUID_PARENTAL_HORMONES.getA().get());
         registerRecipe(Fluids.WATER, new ItemStack(Items.CLAY_BALL), Fluids.WATER, 40, BTVFluids.FLUID_GS121_SERUM.getA().get());
         registerRecipe(Fluids.WATER, new ItemStack(Items.SAND), Fluids.WATER, 40, BTVFluids.FLUID_SA245_SERUM.getA().get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.GOLD_BLOCK), Fluids.WATER, 60, BTVFluids.FLUID_LIQUID_GOLD.getA().get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.GLOWSTONE), Fluids.WATER, 40, BTVFluids.FLUID_LIQUID_GLOWSTONE.getA().get());
     }
 
     private static void registerRecipe(Fluid input1, ItemStack stack, Fluid input2, int mBPerItem, Fluid output) {

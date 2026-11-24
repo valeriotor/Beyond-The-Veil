@@ -22,6 +22,7 @@ import com.valeriotor.beyondtheveil.entity.CanoeEntity;
 import com.valeriotor.beyondtheveil.entity.NautilusEntity;
 import com.valeriotor.beyondtheveil.entity.SurgeonEntity;
 import com.valeriotor.beyondtheveil.item.SlugItem;
+import com.valeriotor.beyondtheveil.item.SurgeryIngredient;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
@@ -49,7 +50,9 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -168,10 +171,16 @@ public class PlayerTickEvents {
         }
     }
 
+
     private static void transformationTickEvents(TickEvent.PlayerTickEvent event) {
         event.player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(crossSyncData -> {
             CrossSync crossSync = crossSyncData.getCrossSync();
             if ((event.player.tickCount & 3) == 0 && crossSync.getTransformation() != null && event.player instanceof ServerPlayer sp) {
+                if (crossSync.getTransformation() == PlayerTransformation.DEEP_ONE) {
+                    if ((sp.tickCount & 31) == 0 || (sp.isInWater() && (sp.tickCount & 15) == 0)) {
+                        sp.heal(1);
+                    }
+                }
                 for (EquipmentSlot value : EquipmentSlot.values()) {
                     ItemStack itemBySlot = sp.getItemBySlot(value);
                     if (value.isArmor()) {
@@ -187,6 +196,10 @@ public class PlayerTickEvents {
                                 //if (crossSync.getTransformation() == PlayerTransformation.DEEP_ONE) {
                                 //    continue;
                                 //}
+                                Set<Item> marineItems = Set.of(Registration.VESSEL_STONE.get(), Registration.SAMPLE_TUBE.get(), Registration.SLUG.get(), Items.PRISMARINE, Items.PRISMARINE_BRICKS, Items.PRISMARINE_BRICK_SLAB, Items.PRISMARINE_SLAB, Items.PRISMARINE_BRICK_STAIRS, Items.PRISMARINE_CRYSTALS, Items.PRISMARINE_SHARD, Items.PRISMARINE_WALL, Items.DARK_PRISMARINE, Items.DARK_PRISMARINE_STAIRS, Items.DARK_PRISMARINE_SLAB, Items.HEART_OF_THE_SEA, Registration.ALGAE_BLOCK_ITEM.get(), Items.KELP, Items.DRIED_KELP, Items.DRIED_KELP_BLOCK, Items.SEAGRASS, Items.SEA_PICKLE, Items.SEA_LANTERN, Registration.BLACK_KELP_ITEM.get(), Registration.BLACK_SEAGRASS_ITEM.get(), Registration.DARK_SAND_ITEM.get(), Registration.DARK_GLASS_ITEM.get());
+                                if (marineItems.contains(itemBySlot.getItem()) || itemBySlot.getItem() instanceof SurgeryIngredient) {
+                                    continue;
+                                }
                                 if (sp.isUsingItem() && ((sp.getUsedItemHand() == InteractionHand.MAIN_HAND && value == EquipmentSlot.MAINHAND) || (sp.getUsedItemHand() == InteractionHand.OFF_HAND && value == EquipmentSlot.OFFHAND))) {
                                     sp.stopUsingItem();
                                 }

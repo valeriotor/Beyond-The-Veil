@@ -28,7 +28,7 @@ public enum Memory {
     PLANT(Items.JUNGLE_SAPLING, 0xFF00FF00, new int[]{1, 1, 1, 0, 1, 0}),
     POWER(Items.BLAZE_POWDER, 0xFFff9300, new int[]{1, 1, 1, 0, 1, 0}),
     REPAIR(Items.ANVIL, 0xFF99f19d, new int[]{1, 1, 0, 0, 1, 1}),
-    SENTIENCE(Items.BOOK, 0xFFd87474, new int[]{2, 0, 1, 0, 1, 0}),
+    SENTIENCE(Items.BOOK, 0xFFd87474, new int[]{2, 1, 1, 0, 1, 0}),
     STILLNESS(Items.SOUL_SAND, 0xFF444444, new int[]{1, 1, 1, 1, 1, 1}),
     //TOOL(Items.WOODEN_PICKAXE, 0xFF324eAA),
     VOID(Items.OBSIDIAN, 0xFF36111F, new int[]{1, 0, 0, 0, 1, 0}),

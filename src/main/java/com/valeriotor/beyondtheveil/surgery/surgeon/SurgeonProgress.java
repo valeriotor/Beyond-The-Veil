@@ -55,7 +55,10 @@ public class SurgeonProgress {
                 default -> null;
             };
             if (newStep != null) {
-                steps.add(newStep);
+                boolean ignore = step instanceof ReportStep.CompletableStep completableStep && !completableStep.isComplete();
+                if (!ignore) {
+                    steps.add(newStep);
+                }
             }
             if (step instanceof PositionStep ps) {
                 BlockPos surgicalBE = surgeon.bellData.getSurgicalBE();

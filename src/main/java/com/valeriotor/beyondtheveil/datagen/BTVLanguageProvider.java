@@ -240,7 +240,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("memory.sentience.brief", "With action comes reaction, but of a thoughtful sort – non-deterministic. Is it a worthy definition, or just wishful thinking?");
         add("memory.sentience.0.1", "When I reminisce, I should look around. Eventually, I should see it point me towards the place visited by the dream.");
         add("memory.sentience.0.2", "When I reminisce, I should look around. Eventually, I should see it point me towards the closest village.");
-        add("memory.sentience.1.1", "↳ §lVoid§r: Points me to a place where sentience once lay, yet no longer. Is time just a fourth axis to a dream, no different from the other three?");
+        add("memory.sentience.0.2.stronghold", "When I reminisce, I should look around. Eventually, I should see it point me towards the closest village. If I hold an eye of ender while dreaming, it will instead point me to a place where sentience once lay, yet no longer. Is time just a fourth axis to a dream, no different from the other three?");
+        add("memory.sentience.1.1", "↳ §lVoid§r: Points me to a woodland mansion.");
         add("memory.sentience.2.1", "§oPath Sigil§r: Starts the search from the target area instead.");
         add("memory.sentience.4.1", "§oImmortal Sigil§r: Starts the search from the target human instead.");
 
@@ -841,7 +842,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.drowned.ocean.veil.0", "Delve into my depths, far below the earthly crust I bear atop of me.\nAnd let us speak again there.");
         add("dialogue.drowned.ocean.veil.1", "Be forewarned, however: I am now calm and placid, but I am multifaceted.\nAnd the next time we meet, I shall be tempestuous.");
         add("dialogue.drowned.ocean.child.0", "All life is born from me.");
-        add("dialogue.drowned.ocean.who.0", "I am the Ocean, eldest in time.");
+        add("dialogue.drowned.ocean.who.0", "I am the Ocean, the primeval being.");
         add("dialogue.drowned.ocean.who.1", "I have also been called Arche, the First Principle, and Dagon, the Archpriest.");
         add("dialogue.drowned.ocean.depths.0", "Travel far from land, sailing on a canoe of the shoremen, holding a gift.\nMy oldest children will recognize you, and whisper secrets in your mind.");
         add("dialogue.drowned.ocean.last.0", "There was a convergence of thoughts.\nYou too are multifaceted, though you do not yet know, and your mind is fractured, irreparably.");

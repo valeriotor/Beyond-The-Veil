@@ -214,6 +214,7 @@ public class SampleTubeItem extends Item {
                     new FluidRoll(0.1, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
             rolls.computeIfAbsent(BTVEntities.UMANCALA.get(), type -> List.of(
                     new FluidRoll(0.5, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),
+                    new FluidRoll(0.75, BTVFluids.FLUID_LIQUID_GOLD.getA().get()),
                     new FluidRoll(0.1, BTVFluids.FLUID_DIAMOND_POWDER.getA().get())));
             rolls.computeIfAbsent(BTVEntities.ANGLER.get(), type -> List.of(
                     new FluidRoll(0.3, BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()),

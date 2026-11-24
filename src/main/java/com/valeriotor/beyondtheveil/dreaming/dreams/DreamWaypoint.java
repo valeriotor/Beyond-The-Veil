@@ -4,16 +4,22 @@ import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.DreamHandler;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
+import com.valeriotor.beyondtheveil.research.Research;
+import com.valeriotor.beyondtheveil.research.ResearchUtil;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
 import com.valeriotor.beyondtheveil.util.PlayerTimer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.StructureTags;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import org.apache.commons.lang3.function.TriFunction;
 
 import java.util.Map;
@@ -80,7 +86,8 @@ public class DreamWaypoint extends Dream {
             DreamHandler.consumeVoid(p);
         }
         ServerLevel sl = (ServerLevel) l;
-        BlockPos blockpos = function.apply(sl, pos, p);
+        boolean stronghold = memory == Memory.SENTIENCE && !isVoid && ResearchUtil.isResearchComplete(p, "COMMUNION") && (p.getItemInHand(InteractionHand.MAIN_HAND).is(Items.ENDER_EYE) || p.getItemInHand(InteractionHand.MAIN_HAND).is(Items.ENDER_EYE));
+        BlockPos blockpos = stronghold ? sl.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, pos, 100, false) : function.apply(sl, pos, p);
         if (blockpos != null) {
             //DataUtil.createWaypoint(p, WaypointType.OCEAN_MONUMENT, 20*600, blockpos);
             Reminiscence r = new ReminiscenceWaypoint(blockpos, color, sl.dimension());

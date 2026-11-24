@@ -182,6 +182,15 @@ public class JournalGui extends Screen implements ClientAdvancements.Listener {
         if (DataUtil.getBoolean(Minecraft.getInstance().player, PlayerDataLib.DISCOVERED_FLUID.apply(Fluids.WATER))) {
             knownFluids.add(Fluids.WATER);
         }
+        if (!knownFluids.contains(BTVFluids.FLUID_LIQUID_GLOWSTONE.getA().get())) {
+            int i = 0;
+            i += knownFluids.contains(BTVFluids.FLUID_VASOCONSTRICTOR.getA().get()) ? 1 : 0;
+            i += knownFluids.contains(BTVFluids.FLUID_TEARS.getA().get()) ? 1 : 0;
+            i += knownIngredients.contains(Registration.EMPTY_BLADDER.get()) ? 1 : 0;
+            if (i >= 2) {
+                knownFluids.add(BTVFluids.FLUID_LIQUID_GLOWSTONE.getA().get());
+            }
+        }
         firstOpen = true;
         updateReports();
 
