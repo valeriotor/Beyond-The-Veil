@@ -194,4 +194,11 @@ public class FletumEntity extends PathfinderMob implements PlayerMinion, Talkabl
                 WeightedEntry.wrap("chaos", 1));
         return list.getRandom(player.getRandom()).orElse(WeightedEntry.wrap("happy", 1)).getData();
     }
+
+
+    @Override
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        setPersistenceRequired();
+    }
 }

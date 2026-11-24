@@ -78,7 +78,7 @@ public abstract class IctyaEntity extends Monster implements DamageCapper {
 
     @Override
     public float getDamageCap() {
-        return 18;
+        return 22;
     }
 
     public int getSizeInt() {

@@ -29,7 +29,7 @@ public class UmancalaEntity extends IctyaEntity{
 
     public static AttributeSupplier.Builder prepareAttributes() {
         return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 80.0D)
+                .add(Attributes.MAX_HEALTH, 70.0D)
                 .add(Attributes.MOVEMENT_SPEED, 1.25D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.2D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D)

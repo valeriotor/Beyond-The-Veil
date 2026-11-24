@@ -57,7 +57,7 @@ public class DreamBottleItem extends Item {
                 });
                 NetworkHooks.openScreen(sp, new SimpleMenuProvider(DreamBottleContainer::new, Component.translatable("gui.dream_bottle.title")));
             }
-            return super.use(pLevel, pPlayer, pUsedHand);
+            return InteractionResultHolder.success(inHand);
         } else {
             return ItemUtils.startUsingInstantly(pLevel, pPlayer, pUsedHand);
         }

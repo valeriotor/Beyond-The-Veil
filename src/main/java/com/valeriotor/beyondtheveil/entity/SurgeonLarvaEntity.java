@@ -143,4 +143,11 @@ public class SurgeonLarvaEntity extends Mob implements PlayerMinion {
     public int getGrowth() {
         return entityData.get(GROWTH);
     }
+
+
+    @Override
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        setPersistenceRequired();
+    }
 }

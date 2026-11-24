@@ -288,4 +288,11 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
         }
         return super.mobInteract(pPlayer, pHand);
     }
+
+
+    @Override
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        setPersistenceRequired();
+    }
 }

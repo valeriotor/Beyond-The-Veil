@@ -59,7 +59,7 @@ public class RitualRegistry {
 
     public static final RitualTemplate LIVING_IRON = new RitualTemplate.RitualTemplateBuilder("living_iron", 10, 1, 1, 0, 0, NEGLIGIBLE)
             .setMatch(input -> oneOrMore(input, List.of(Registration.HEART_ITEM.get()), ItemSet.of(Items.RAW_IRON), 4))
-            .setOutputs((itemStacks, player) -> byNumberScaled(itemStacks, Items.RAW_IRON, Registration.LIVING_IRON.get(), 3, 4))
+            .setOutputs((itemStacks, player) -> byNumberScaled(itemStacks, Items.RAW_IRON, Registration.LIVING_IRON.get(), 3, 16))
             .toTemplate(TEMPLATES, BY_NAME);
 
     public static final RitualTemplate VESSEL_STONE = new RitualTemplate.RitualTemplateBuilder("vessel_stone", 5, 20, 10, 0.03, 0, LOW)

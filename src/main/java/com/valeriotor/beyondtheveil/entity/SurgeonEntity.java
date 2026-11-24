@@ -351,4 +351,11 @@ public class SurgeonEntity extends PathfinderMob implements PlayerMinion, Damage
     public Component getStallReason() {
         return entityData.get(STALL_REASON);
     }
+
+
+    @Override
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        setPersistenceRequired();
+    }
 }

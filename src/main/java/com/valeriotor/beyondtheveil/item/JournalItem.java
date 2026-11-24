@@ -24,6 +24,6 @@ public class JournalItem extends Item {
             DataUtil.setBooleanOnServerAndSync(pPlayer, "thebeginning", true, false);
             ResearchUtil.getResearch(pPlayer, "FIRSTDREAMS");
         }*/
-        return super.use(pLevel, pPlayer, pUsedHand);
+        return InteractionResultHolder.success(pPlayer.getItemInHand(pUsedHand));
     }
 }

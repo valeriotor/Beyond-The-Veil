@@ -747,4 +747,10 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
     }
 
 
+    @Override
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        setPersistenceRequired();
+    }
+
 }

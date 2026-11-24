@@ -446,6 +446,7 @@ public class CrawlerEntity extends PathfinderMob implements VillagerDataHolder, 
     public void onAddedToWorld() {
         super.onAddedToWorld();
         setHeld(false);
+        setPersistenceRequired();
     }
 
     @Override

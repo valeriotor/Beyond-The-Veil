@@ -144,7 +144,7 @@ public class EntityDialogueBox extends ScrollableList<TextLine> {
                     characterIndex++;
                 } else {
                     if (!ignorePause) {
-                        Set<Character> strongPunctuation = Set.of('.', '!', '?', ':');
+                        Set<Character> strongPunctuation = Set.of('.', '!', '?', ':', ';');
                         if (strongPunctuation.contains(c)) {
                             if (characterIndex + 1 >= line.length() || !strongPunctuation.contains(line.charAt(characterIndex + 1))) {
                                 nextAddCharacter += DOT_PAUSE / (skipping ? skippingMultiplier : 1);

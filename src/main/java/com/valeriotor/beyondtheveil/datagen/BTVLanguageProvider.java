@@ -1861,7 +1861,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.death.you_know.0", "Dreams travel not only in space, but in time. I witnessed my own demise, a nightmare that lived through my awakening.");
         add("dialogue.shoreman_lighthouse_keeper.death.they.0", "Easy, easy. I understand. I only wish to offer... perspective.\nBecause you §oterrify§r us. We know §owe§r are just pawns in §oyour§r game. To us, you are the most unknowable of horrors. Uncaring, unpredictable.");
         add("dialogue.shoreman_lighthouse_keeper.death.they.1", "Here, then, comes the snippet of Truth that Dagon wishes you to learn.\nJust as I am nothing to you, so are you too insignificant to someone else.");
-        add("dialogue.shoreman_lighthouse_keeper.death.who.0", "Perhaps it is the Great Dreamer. Or perhaps Dagon.\nMaybe it’s just humanity itself: this multitude of several billion cells, uncaring of who you are.");
+        add("dialogue.shoreman_lighthouse_keeper.death.who.0", "Perhaps it is the Great Dreamer. Or perhaps Dagon.\nMaybe it’s just humanity itself: this world-spanning organism of several billion cells, uncaring of who you are.");
         add("dialogue.shoreman_lighthouse_keeper.death.who.1", "Perhaps it is the infinity of space,|| and you a dot,| dimensionless;| or it is the eternity of time, and you again a point on an axis,||| ephemeral,||| already gone.");
         add("dialogue.shoreman_lighthouse_keeper.death.too.0", "Enough! You came here for something.");
         add("dialogue.shoreman_lighthouse_keeper.death.hate.0", "We cannot choose what we feel.\nI may be old, but there was yet life ahead of me. Oh, how pathetic that I grieve for myself!");
@@ -2758,7 +2758,7 @@ public class BTVLanguageProvider extends LanguageProvider {
                 "\\n" +
                 "Ingredients:\\n" +
                 "• A heart.\\1" +
-                "• Up to three stacks of raw iron, of any size. One living iron will be created for every four chunks of raw material.");
+                "• Up to three stacks of raw iron, of any size. One living iron will be created for every sixteen chunks of raw material.");
         add("research.thesis.ritual.vessel_stone.title", "Vessel Stone");
         add("research.thesis.ritual.vessel_stone.text", "Vessel stones have become widely known in recent years due to their usage by Arché prospectors and hunters: their serendipitous discovery within the blood corals of the deepest ocean proved to be a way out of Arché for what would have otherwise been a suicide mission for the brave hunters. However, unbeknownst to them, vessel stones had already been discovered by ancient peoples, and even been replicated via blood rituals.\\n" +
                 "We describe here a ritual used in the creation of such an object. Vessel stones allow their user to return to the surface when wielded in Arché. They also become bound to the position where they were last used: they may thus also be employed to return to Arché in the same place where the user last left from.\\n" +

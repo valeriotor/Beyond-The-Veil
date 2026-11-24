@@ -560,6 +560,13 @@ public class DeepOneEntity extends Monster implements AnimatedEntity, DamageCapp
 
     }
 
+
+    @Override
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        setPersistenceRequired();
+    }
+
     public enum ContactType {
         MOVE1(3, 40), MOVE2(1.5F, 0), MOVE3(2.5F, 70), TRADE(1, 1, false);
 

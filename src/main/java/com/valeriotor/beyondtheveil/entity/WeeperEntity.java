@@ -408,6 +408,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
     public void onAddedToWorld() {
         super.onAddedToWorld();
         setHeld(false);
+        setPersistenceRequired();
     }
 
     @Override

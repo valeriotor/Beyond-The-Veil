@@ -137,7 +137,7 @@ public class OperationRegistry {
             .addPlayerData(PlayerDataLib.extracted_spine.name())
             .buildExtractionOperation(EXTRACTION_OPERATIONS, s -> {
                 if (s.getFlags().containsKey(IRON_SPINE))
-                    return new ItemStack(Items.IRON_INGOT, new Random().nextInt(10, 13));
+                    return new ItemStack(Items.IRON_INGOT, new Random().nextInt(40, 52));
                 if (s.getFlags().getOrDefault("great_spine", 0) > 0)
                     return new ItemStack(Items.BONE_MEAL, new Random().nextInt(48, 64));
                 return new ItemStack(Registration.SPINE.get());
