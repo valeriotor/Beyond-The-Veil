@@ -7,7 +7,8 @@
   "client": [
     "client.HumanoidModelMixin",
     "client.PlayerRendererMixin",
-    "client.EntityMixin"
+    "client.EntityMixin",
+    "client.MinecraftMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -2327,7 +2327,8 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("research.extracted_revelation_ring.text", "Create a ring of revelation.");
         add("research.REVELATION_RING.stage.0", "Tears clear our eyes and let us see things as they truly are.\\n" +
                 "I picture a ring, resting on my fingers after being torn from a patient’s chest. It is made via the insertion of an eye, and the injection of tears as well as the two targeting serums: GS121 and SA245. Finally, the heart must be extracted.");
-        add("research.REVELATION_RING.stage.1", "The ring allows me to see invisible creatures. It is the first step in widening our vision through the use of tears – as long as they are someone else’s.");
+        add("research.REVELATION_RING.stage.1", "This ring is the first step in widening our vision through the use of tears – as long as they are someone else’s.\\n" +
+                "Wearing it allows me to see invisible creatures. Additionally, if I am wielding a blood fist in either of my hands, I will be able to see creatures behind walls, though this quickly drains my binding energy.");
 
         add("research.FLETUM.title", "The Fletum");
         add("research.FLETUM.stage.0", "A weeper without its spine is nothing but its head. It is content, this way.\\n" +

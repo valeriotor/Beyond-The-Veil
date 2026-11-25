@@ -6,10 +6,7 @@ import com.valeriotor.beyondtheveil.entity.PlayerMinion;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.networking.GenericToClientPacket;
 import com.valeriotor.beyondtheveil.networking.Messages;
-import com.valeriotor.beyondtheveil.util.DataUtil;
-import com.valeriotor.beyondtheveil.util.PersistentPlayerTimer;
-import com.valeriotor.beyondtheveil.util.PlayerTimer;
-import com.valeriotor.beyondtheveil.util.VanillaUtils;
+import com.valeriotor.beyondtheveil.util.*;
 import com.valeriotor.beyondtheveil.util.timers.PlaceBlocksTimer;
 import com.valeriotor.beyondtheveil.world.saved.PlayerSavedData;
 import com.valeriotor.beyondtheveil.world.saved.blood_pool.BloodPoolData;
@@ -309,6 +306,9 @@ public class BindingEvents {
                 }
             }
             BloodPoolData.getInstance(sp.serverLevel()).setArchePlayer(sp.getUUID(), data.getBinding() == Binding.ARCHE);
+            if (sp.tickCount % 20 == 0 && CuriosUtil.hasItem(sp, "ring", Registration.REVELATION_RING.get()) && (sp.getItemInHand(InteractionHand.MAIN_HAND).is(Registration.BLOOD_FIST.get()) || sp.getItemInHand(InteractionHand.OFF_HAND).is(Registration.BLOOD_FIST.get()))) {
+                DataUtil.decreaseBindingEnergy(sp, 20);
+            }
         }
     }
 

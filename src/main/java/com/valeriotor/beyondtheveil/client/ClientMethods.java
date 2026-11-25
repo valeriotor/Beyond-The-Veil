@@ -26,6 +26,7 @@ import com.valeriotor.beyondtheveil.lib.BTVSimpleGuis;
 import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
 import com.valeriotor.beyondtheveil.lib.References;
+import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import com.valeriotor.beyondtheveil.world.dimension.ArcheCycleData;
 import net.minecraft.client.Minecraft;
@@ -44,10 +45,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -197,6 +201,17 @@ public class ClientMethods {
 
     public static boolean isRevelationRing() {
         return revelationRing;
+    }
+
+    public static boolean isRevelationRingGlow(Entity e) {
+        LocalPlayer p = Minecraft.getInstance().player;
+        if (isRevelationRing() && p != null && p.distanceToSqr(e) < 1600 && (p.getItemInHand(InteractionHand.MAIN_HAND).is(Registration.BLOOD_FIST.get()) || p.getItemInHand(InteractionHand.OFF_HAND).is(Registration.BLOOD_FIST.get()))) {
+            BindingData data = DataUtil.getBindingData(p);
+            if (data != null) {
+                return data.getEnergy() > 20;
+            }
+        }
+        return false;
     }
 
     private static void stopRitual() {
