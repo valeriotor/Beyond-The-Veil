@@ -6,6 +6,7 @@ import com.valeriotor.beyondtheveil.client.ClientData;
 import com.valeriotor.beyondtheveil.networking.Messages;
 import com.valeriotor.beyondtheveil.tile.AlembicsBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
+import com.valeriotor.beyondtheveil.tile.FlaskShelfProxyBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -242,7 +243,7 @@ public class FlaskShelfBlock extends ThinMultiBlock3by3 implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return pState.getValue(SIDE) == 1 && pState.getValue(LEVEL) == 1 ? new FlaskShelfBE(pPos, pState) : null; // TODO change second one to set it as simple
+        return pState.getValue(SIDE) == 1 && pState.getValue(LEVEL) == 1 ? new FlaskShelfBE(pPos, pState) : new FlaskShelfProxyBE(pPos, pState);
     }
 
     public BlockPos findBEPos(BlockPos pPos, BlockState pState) {

@@ -99,7 +99,7 @@ public class DreamFocusFluidEntity extends Entity implements DreamFocusMovable {
 
                 if (fluid.getAmount() > fill && fill > 0) {
                     setFluid(new FluidStack(fluid.getFluid(), fluid.getAmount() - fill));
-                } else {
+                } else if (fill > 0) {
                     toBeRemoved = true;
                 }
             }

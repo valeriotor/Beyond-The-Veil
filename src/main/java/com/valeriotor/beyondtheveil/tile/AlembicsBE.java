@@ -304,10 +304,31 @@ public class AlembicsBE extends BlockEntity {
     @NotNull
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
         if (capability == ForgeCapabilities.FLUID_HANDLER) {
-
+            return inputTank2Holder.cast();
             //TODO if facing == .... return holder.cast();
+        } else if (capability == ForgeCapabilities.ITEM_HANDLER) {
+            return stackHolder.cast();
         }
         return super.getCapability(capability, facing);
+    }
+
+    public LazyOptional<IFluidHandler> getInputTank1Holder() {
+        return inputTank1Holder;
+    }
+
+    public LazyOptional<IItemHandler> getStackHolder() {
+        return stackHolder;
+    }
+
+    public LazyOptional<IFluidHandler> getInputTank2Holder() {
+        return inputTank2Holder;
+    }
+
+    public LazyOptional<IFluidHandler> getOutputTankHolder() {
+        if (heldFlask != null) {
+            return LazyOptional.of(() -> heldFlask.getTank()).cast();
+        }
+        return LazyOptional.empty();
     }
 
     @Override

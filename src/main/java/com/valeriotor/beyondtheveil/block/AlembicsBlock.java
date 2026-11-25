@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock3by1;
 import com.valeriotor.beyondtheveil.tile.AlembicsBE;
+import com.valeriotor.beyondtheveil.tile.AlembicsProxyBE;
 import com.valeriotor.beyondtheveil.tile.FlaskShelfBE;
 import com.valeriotor.beyondtheveil.tile.SurgeryBedBE;
 import net.minecraft.core.BlockPos;
@@ -155,7 +156,7 @@ public class AlembicsBlock extends ThinMultiBlock3by1 implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new AlembicsBE(pPos, pState);
+        return pState.getValue(getSideProperty()) == 1 ? new AlembicsBE(pPos, pState) : new AlembicsProxyBE(pPos, pState);
     }
 
     @Nullable
