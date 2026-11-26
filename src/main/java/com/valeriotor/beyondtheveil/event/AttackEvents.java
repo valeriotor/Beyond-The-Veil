@@ -94,7 +94,7 @@ public class AttackEvents {
             bleedingBeltEvent(event, player);
             player.getCapability(CrossSyncDataProvider.CROSS_SYNC_DATA).ifPresent(c -> {
                 if (c.getCrossSync().getTransformation() == PlayerTransformation.DEEP_ONE) {
-                    event.setAmount(event.getAmount() * 2 / 5); // first a 60% damage reduction
+                    event.setAmount(event.getAmount() * 3 / 10); // first a 70% damage reduction
                     float damageCap = AttributeSets.MAX_DEEP_ONE_DAMAGE; // then a damage cap
                     if (player.isInWater()) {
                         damageCap = AttributeSets.MAX_DEEP_ONE_DAMAGE_IN_WATER;

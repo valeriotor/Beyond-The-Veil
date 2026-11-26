@@ -6,14 +6,18 @@ import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentData;
 import com.valeriotor.beyondtheveil.capability.surgery.ConvalescentDataProvider;
 import com.valeriotor.beyondtheveil.client.event.RenderEvents;
 import com.valeriotor.beyondtheveil.entity.PlayerMinion;
+import com.valeriotor.beyondtheveil.entity.WeeperEntity;
+import com.valeriotor.beyondtheveil.lib.BTVEffects;
 import com.valeriotor.beyondtheveil.lib.BTVEntities;
 import com.valeriotor.beyondtheveil.lib.PlayerDataLib;
+import com.valeriotor.beyondtheveil.surgery.OperationRegistry;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.util.DataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.npc.Villager;
 
 import java.util.UUID;
 
@@ -67,11 +71,25 @@ public class BloodPoolEntity {
     }
 
     public void spawn(ServerPlayer player) {
-        Mob mob = type.getMobFunction().apply(player.serverLevel());
+        Mob m = type.getMobFunction().apply(player.serverLevel());
+        if (m instanceof Villager) {
+            CompoundTag convalescentData = entityData.getCompound("convalescent");
+            CompoundTag subTag = convalescentData.getCompound("subTag");
+            if ((subTag.contains(OperationRegistry.SPINELESS) && subTag.getCompound(OperationRegistry.SPINELESS).getInt("value") > 0) || (subTag.contains(OperationRegistry.IRON_SPINE) && subTag.getCompound(OperationRegistry.IRON_SPINE).getInt("value") > 0)) {
+                m = BTVEntities.CRAWLER.get().create(player.serverLevel());
+                if (m == null) {
+                    return;
+                }
+            }
+        }
+        Mob mob = m;
         mob.readAdditionalSaveData(entityData);
         mob.getCapability(ConvalescentDataProvider.CONVALESCENT_DATA).ifPresent(c -> {
             if (entityData.contains("convalescent")) {
                 c.loadFromNBT(entityData.getCompound("convalescent"));
+                if (mob instanceof Villager && c.getFlags().getOrDefault(OperationRegistry.INSERT_LIVING_IRON_BACK.getName(), 0) > 0) {
+                    c.setCounter("spreading_iron", 2000);
+                }
             }
         });
         mob.getCapability(TriggerDataProvider.TRIGGER_DATA).ifPresent(t -> {
@@ -93,6 +111,9 @@ public class BloodPoolEntity {
         player.level().addFreshEntity(mob);
         if (getType().isUndead()) {
             DataUtil.setBooleanOnServerAndSync(player, PlayerDataLib.spawned_undead.name(), true, false);
+        }
+        if (mob instanceof WeeperEntity weeper) {
+            weeper.standUp();
         }
     }
 

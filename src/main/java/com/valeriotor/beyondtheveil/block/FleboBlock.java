@@ -2,8 +2,17 @@ package com.valeriotor.beyondtheveil.block;
 
 import com.valeriotor.beyondtheveil.block.multiblock.ThinMultiBlock1by2;
 import com.valeriotor.beyondtheveil.tile.FleboBE;
+import com.valeriotor.beyondtheveil.world.saved.blood_pool.ColorTriplet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -13,6 +22,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class FleboBlock extends ThinMultiBlock1by2 implements EntityBlock {
     protected static final VoxelShape SHAPE_STICK_DOWN;
@@ -57,5 +68,26 @@ public class FleboBlock extends ThinMultiBlock1by2 implements EntityBlock {
     @Override
     public boolean isPathfindable(BlockState pState, BlockGetter pLevel, BlockPos pPos, PathComputationType pType) {
         return false;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+        CompoundTag tag = BlockItem.getBlockEntityData(pStack);
+        if (tag != null) {
+            if (tag.contains("first")) {
+                ColorTriplet colorTriplet = ColorTriplet.fromTag(tag);
+                Component[] colors = new Component[3];
+                for (int i = 0; i < 3; i++) {
+                    DyeColor color = colorTriplet.index(i);
+                    colors[i] = color == null ? Component.translatable("tooltip.flebo.color_none") : Component.translatable("color.minecraft." + color.getName());
+                }
+                MutableComponent translatable = Component.translatable("tooltip.flebo.colors", colors[0], colors[1], colors[2]);
+                pTooltip.add(translatable);
+                if (tag.contains("username", Tag.TAG_STRING)) {
+                    pTooltip.add(Component.translatable("tooltip.flebo.owner", tag.getString("username")));
+                }
+            }
+        }
     }
 }

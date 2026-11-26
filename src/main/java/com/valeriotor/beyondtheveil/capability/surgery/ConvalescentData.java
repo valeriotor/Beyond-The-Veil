@@ -2,6 +2,7 @@ package com.valeriotor.beyondtheveil.capability.surgery;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
@@ -12,6 +13,7 @@ import com.valeriotor.beyondtheveil.surgery.PatientCondition;
 import com.valeriotor.beyondtheveil.surgery.PatientStatus;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -195,11 +197,17 @@ public class ConvalescentData {
 
     public void tick(LivingEntity entity) { // only called server side
         counters.replaceAll((k, v) -> Math.max(0, v - 1));
-        if (counters.containsKey("spreading_iron") && counters.get("spreading_iron") == 0) {
-            counters.remove("spreading_iron");
-            flags.put(OperationRegistry.IRON_SPINE, 1);
-            if (entity instanceof Villager villager) {
-                BlackjackItem.knockDownVillager(villager);
+        if (counters.containsKey("spreading_iron")) {
+            if (entity.level() instanceof ServerLevel sl && entity.tickCount % 5 == 0) {
+                sl.sendParticles(DustParticleOptions.REDSTONE, entity.getX(), entity.getY(), entity.getZ(), 10, 0.5, 0.5, 0.5, 0);
+
+            }
+            if (counters.get("spreading_iron") == 0) {
+                counters.remove("spreading_iron");
+                flags.put(OperationRegistry.IRON_SPINE, 1);
+                if (entity instanceof Villager villager) {
+                    BlackjackItem.knockDownVillager(villager);
+                }
             }
         }
 

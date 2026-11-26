@@ -158,8 +158,13 @@ public class BTVLootTables extends BlockLootSubProvider {
                 propertiesBuilder = propertiesBuilder.hasProperty(fmb.getDepthProperty(), 0);
             }
             LootItemBlockStatePropertyCondition.Builder condition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(pBlock).setProperties(propertiesBuilder);
-            LootTable.Builder lootTableBuilder = LootTable.lootTable().withPool(this.applyExplosionCondition(pBlock, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(pBlock).when(condition))));
-            add(pBlock, lootTableBuilder);
+            if (pBlock == Registration.FLEBO.get()) {
+                LootTable.Builder lootTableBuilder = LootTable.lootTable().withPool(this.applyExplosionCondition(pBlock, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(pBlock).when(condition).apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("owner", "BlockEntityTag.owner").copy("username", "BlockEntityTag.username").copy("first", "BlockEntityTag.first").copy("second", "BlockEntityTag.second").copy("third", "BlockEntityTag.third")))));
+                add(pBlock, lootTableBuilder);
+            } else {
+                LootTable.Builder lootTableBuilder = LootTable.lootTable().withPool(this.applyExplosionCondition(pBlock, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(pBlock).when(condition))));
+                add(pBlock, lootTableBuilder);
+            }
         } else if (pBlock instanceof SleepChamberBlock scb) {
             StatePropertiesPredicate.Builder propertiesBuilder = StatePropertiesPredicate.Builder.properties().hasProperty(SleepChamberBlock.HALF, DoubleBlockHalf.LOWER);
             LootItemBlockStatePropertyCondition.Builder condition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(pBlock).setProperties(propertiesBuilder);

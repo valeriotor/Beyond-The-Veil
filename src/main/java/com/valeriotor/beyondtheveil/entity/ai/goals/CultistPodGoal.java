@@ -1,7 +1,6 @@
 package com.valeriotor.beyondtheveil.entity.ai.goals;
 
 import com.valeriotor.beyondtheveil.entity.BloodCultistEntity;
-import com.valeriotor.beyondtheveil.entity.ShoremanEntity;
 import com.valeriotor.beyondtheveil.surgery.PatientType;
 import com.valeriotor.beyondtheveil.world.saved.LifeEconomyData;
 import net.minecraft.core.BlockPos;
@@ -10,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
+import java.util.List;
 
 public class CultistPodGoal extends Goal {
 
@@ -34,6 +34,17 @@ public class CultistPodGoal extends Goal {
         if (cultist.level() instanceof ServerLevel sl && counter > -160 && cultist.isHoldingVillager()) {
             counter--;
             BlockPos podPos = cultist.getPodPos();
+            LifeEconomyData instance = LifeEconomyData.getInstance(sl);
+            LifeEconomyData.PodData podData1 = instance.getPodData(podPos);
+            if (podData1 != null && podData1.getPatient() != null) {
+                List<LifeEconomyData.PodData> closestEmptyPods = instance.findClosestEmptyPods(cultist.blockPosition(), 1, 10);
+                for (LifeEconomyData.PodData closestEmptyPod : closestEmptyPods) {
+                    if (!instance.isReserved(closestEmptyPod)) {
+                        cultist.setPodPos(closestEmptyPod.getCurrentPos());
+                        instance.reserve(closestEmptyPod, cultist.getId());
+                    }
+                }
+            }
             if ((counter & 7) == 0) {
                 cultist.getNavigation().moveTo(podPos.getX(), podPos.getY(), podPos.getZ(), speed);
             }

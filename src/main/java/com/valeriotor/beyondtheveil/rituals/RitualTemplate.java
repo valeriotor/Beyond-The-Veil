@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.function.TriFunction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class RitualTemplate {
     private final double secondaryInstabilityRateTemplate;
     private final double secondarySeverityRateTemplate;
     private final int frequencyRate = 0;
-    private final BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs;
+    private final TriFunction<List<ItemStack>, UUID, ServerLevel, List<ItemStack>> outputs;
     private final AdditionalRitualEffect otherEffects;
     private final Predicate<List<ItemStack>> match;
     private final PatientType patientType;
@@ -48,7 +49,7 @@ public class RitualTemplate {
         return name;
     }
 
-    public BiFunction<List<ItemStack>, UUID, List<ItemStack>> getOutputs() {
+    public TriFunction<List<ItemStack>, UUID, ServerLevel, List<ItemStack>> getOutputs() {
         return outputs;
     }
 
@@ -93,7 +94,7 @@ public class RitualTemplate {
         private final double secondarySeverityRateTemplate;
         private final double startingSecondarySeverity;
         public final Instability thesisInstability;
-        private BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs = (a, b) -> new ArrayList<>();
+        private TriFunction<List<ItemStack>, UUID, ServerLevel, List<ItemStack>> outputs = (a, b, c) -> new ArrayList<>();
         private AdditionalRitualEffect otherEffects = (player, level, vec3, dimension) -> {};
         private Predicate<List<ItemStack>> match;
         private PatientType patientType = PatientType.VILLAGER;
@@ -114,11 +115,11 @@ public class RitualTemplate {
         }
 
         public RitualTemplateBuilder setOutputs(List<ItemStack> outputs) {
-            this.outputs = (a, b) -> outputs;
+            this.outputs = (a, b, c) -> outputs;
             return this;
         }
 
-        public RitualTemplateBuilder setOutputs(BiFunction<List<ItemStack>, UUID, List<ItemStack>> outputs) {
+        public RitualTemplateBuilder setOutputs(TriFunction<List<ItemStack>, UUID, ServerLevel, List<ItemStack>> outputs) {
             this.outputs = outputs;
             return this;
         }

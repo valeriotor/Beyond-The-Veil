@@ -89,10 +89,10 @@ public class BloodPoolData extends SavedData {
     }
 
     private static final List<Tuple<Integer, Integer>> MULTIPLIER_THRESHOLDS = List.of(
-            new Tuple<>(10, 2),
-            new Tuple<>(60, 3),
-            new Tuple<>(200, 4),
-            new Tuple<>(350, 5)
+            new Tuple<>(5, 2),
+            new Tuple<>(45, 3),
+            new Tuple<>(195, 4),
+            new Tuple<>(335, 5)
             );
 
     public int getBaseMultiplier(UUID playerId) {

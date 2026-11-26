@@ -452,7 +452,7 @@ public class RitualStatus {
     }
 
     public void terminationEffects(ServerLevel level, Vec3 altar) {
-        List<ItemStack> outputStacks = template.getOutputs().apply(burnedIngredients, initiator);
+        List<ItemStack> outputStacks = template.getOutputs().apply(burnedIngredients, initiator, level);
         for (ItemStack outputStack : outputStacks) {
             ItemEntity item = new ItemEntity(level, altar.x, altar.y, altar.z, outputStack);
             level.addFreshEntity(item);

@@ -205,7 +205,7 @@ public class BloodZombieEntity extends Monster implements Suspicious, PlayerGuar
     @Override
     public int getAmbientSoundInterval() {
         this.longSound = random.nextInt(4) == 0;
-        return longSound ? 180 : 80;
+        return longSound ? random.nextInt(200) + 280 : random.nextInt(150) + 230;
     }
 
     @Nullable

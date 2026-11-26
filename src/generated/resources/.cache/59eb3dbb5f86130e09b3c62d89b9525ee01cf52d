@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-27T00:12:14.3852474	Loot Tables
+// 1.20.1	2026-11-26T22:23:14.8066571	Loot Tables
 dd3accd54512dee8c12b56c173be0101b70d5a38 data/beyondtheveil/loot_tables/blocks/alembics.json
 ad9763a7eeadcef3b43c845626f20b555982b162 data/beyondtheveil/loot_tables/blocks/algae_block.json
 d4bc5b32a05a5bc243e6ae10ad45d729d684e262 data/beyondtheveil/loot_tables/blocks/arboreal_generator.json
@@ -48,7 +48,7 @@ b78902b3a5245e17474b2b0d7be949d638cfa0dc data/beyondtheveil/loot_tables/blocks/f
 f794b5ef93c2a71a6605360f50505e99cd6ce81f data/beyondtheveil/loot_tables/blocks/flask_medium.json
 2d9f63196cc6e98158e08d378fa7fb43474e7da7 data/beyondtheveil/loot_tables/blocks/flask_shelf.json
 134470ae95cd2f98e1d90fce9baf748986358c4b data/beyondtheveil/loot_tables/blocks/flask_small.json
-6e875d27554e3a6967898c44d20ecef371a9898e data/beyondtheveil/loot_tables/blocks/flebo.json
+fd14859120dd420239c671bc6d0fedea9f5a240f data/beyondtheveil/loot_tables/blocks/flebo.json
 c02c9973efb981ceee82bb9bccca4add85ab750b data/beyondtheveil/loot_tables/blocks/fume_spreader.json
 f642da10eefbc3f4ef7d9fb5ddbd4762d911050a data/beyondtheveil/loot_tables/blocks/gear_bench.json
 19b5b2c02867d6bef3b78c10717c6cb3ba8f5dfd data/beyondtheveil/loot_tables/blocks/ghost_grass.json

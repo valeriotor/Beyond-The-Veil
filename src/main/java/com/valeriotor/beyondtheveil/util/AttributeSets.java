@@ -15,8 +15,8 @@ import java.util.UUID;
 
 public class AttributeSets {
 
-    public static final float MAX_DEEP_ONE_DAMAGE = 5.0F;
-    public static final float MAX_DEEP_ONE_DAMAGE_IN_WATER = 3.0F;
+    public static final float MAX_DEEP_ONE_DAMAGE = 4.0F;
+    public static final float MAX_DEEP_ONE_DAMAGE_IN_WATER = 2.5F;
 
     private static final UUID BAPTISM_SWIM_SPEED = UUID.fromString("548fec35-8e60-4f08-a005-b92b122e9430");
     private static final UUID BAPTISM_ATTACK = UUID.fromString("22b65803-c9e0-4410-a76f-3849a91314eb");

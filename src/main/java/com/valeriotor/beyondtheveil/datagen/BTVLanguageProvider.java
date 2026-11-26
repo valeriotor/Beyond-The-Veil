@@ -77,6 +77,9 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("tooltip.decrepit_heart.1", "Heart of an immortal, decayed as its owner resurrected.");
         add("tooltip.decrepit_heart.2", "Wield in off-hand while using an immortal sigil in the main hand to bind it.");
         add("tooltip.decrepit_heart.3", "Bound to: %1$s");
+        add("tooltip.flebo.colors", "Bound to: %1$s, %2$s, %3$s");
+        add("tooltip.flebo.color_none", "None");
+        add("tooltip.flebo.owner", "Owned by %1$s");
 
         add("sleep.transformed", "I cannot sleep while transformed.");
         add("sleep.parasite", "I don’t feel all too well.. I can’t sleep.");

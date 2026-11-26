@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.rituals;
 
 import com.google.common.collect.Streams;
+import com.mojang.authlib.GameProfile;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.dreaming.Memory;
@@ -22,6 +23,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
@@ -44,7 +46,7 @@ public class RitualRegistry {
 
     public static final RitualTemplate BLOOD_BRICKS = new RitualTemplate.RitualTemplateBuilder("blood_bricks", 100, 1, 0, 0, 0, NEGLIGIBLE)
             .setMatch(input -> oneOrMore(input, List.of(), ItemSet.of(Items.STONE_BRICKS), 4))
-            .setOutputs(((itemStacks, player) -> byNumber(itemStacks, Registration.BLOOD_BRICK_ITEM.get(), 3)))
+            .setOutputs(((itemStacks, player, level) -> byNumber(itemStacks, Registration.BLOOD_BRICK_ITEM.get(), 3)))
             .toTemplate(TEMPLATES, BY_NAME);
 
     public static final RitualTemplate CORAL_STAFF = new RitualTemplate.RitualTemplateBuilder("coral_staff", 0, 20, 10, 0.03, 0, LOW)
@@ -59,7 +61,7 @@ public class RitualRegistry {
 
     public static final RitualTemplate LIVING_IRON = new RitualTemplate.RitualTemplateBuilder("living_iron", 10, 1, 1, 0, 0, NEGLIGIBLE)
             .setMatch(input -> oneOrMore(input, List.of(Registration.HEART_ITEM.get()), ItemSet.of(Items.RAW_IRON), 4))
-            .setOutputs((itemStacks, player) -> byNumberScaled(itemStacks, Items.RAW_IRON, Registration.LIVING_IRON.get(), 3, 16))
+            .setOutputs((itemStacks, player, level) -> byNumberScaled(itemStacks, Items.RAW_IRON, Registration.LIVING_IRON.get(), 3, 16))
             .toTemplate(TEMPLATES, BY_NAME);
 
     public static final RitualTemplate VESSEL_STONE = new RitualTemplate.RitualTemplateBuilder("vessel_stone", 5, 20, 10, 0.03, 0, LOW)
@@ -84,7 +86,7 @@ public class RitualRegistry {
 
     public static final RitualTemplate BIND_ITEM_DAMAGE = new RitualTemplate.RitualTemplateBuilder("bind_item_damage", 50, 20, 30, 0.03, 0, MEDIUM)
             .setMatch(input -> exactWithWildcard(input, 1, Registration.HEART_ITEM.get(), null, Items.DIAMOND_SWORD, Registration.SCALPEL.get()))
-            .setOutputs((stacks, player) -> {
+            .setOutputs((stacks, player, level) -> {
                 if (stacks.size() == 4) {
                     ItemStack stack = stacks.get(1);
                     stack.getOrCreateTag().putUUID("bind_item_damage", player);
@@ -95,7 +97,7 @@ public class RitualRegistry {
 
     public static final RitualTemplate BIND_ITEM_WEAKNESS = new RitualTemplate.RitualTemplateBuilder("bind_item_weakness", 50, 20, 30, 0.03, 0, MEDIUM)
             .setMatch(input -> exactWithWildcard(input, 1, Registration.HEART_ITEM.get(), null, Items.ANVIL, Registration.SPINE.get()))
-            .setOutputs((stacks, player) -> {
+            .setOutputs((stacks, player, level) -> {
                 if (stacks.size() == 4) {
                     ItemStack stack = stacks.get(1);
                     stack.getOrCreateTag().putUUID("bind_item_weakness", player);
@@ -106,7 +108,7 @@ public class RitualRegistry {
 
     public static final RitualTemplate BIND_PILLAR = new RitualTemplate.RitualTemplateBuilder("bind_pillar", 50, 40, 10, 0, 0, LOW)
             .setMatch(input -> exact(input, Registration.HEART_ITEM.get(), Registration.OFFER_PILLAR_ITEM.get(), Registration.BLOOD_SHARD.get()))
-            .setOutputs((stacks, player) -> {
+            .setOutputs((stacks, player, level) -> {
                 ItemStack stack = new ItemStack(Registration.OFFER_PILLAR.get());
                 if (stacks.size() == 3) {
                     stack.setTag(stacks.get(1).getOrCreateTag());
@@ -141,7 +143,7 @@ public class RitualRegistry {
                 }
                 return input.get(3).getItem() == Registration.FLEBO_ITEM.get();
             })
-            .setOutputs((stacks, player) -> {
+            .setOutputs((stacks, player, level) -> {
                 if (stacks.size() == 4) {
                     ItemStack flebo = new ItemStack(Registration.FLEBO_ITEM.get());
                     ArrayList<DyeColor> dyes = new ArrayList<>();
@@ -160,6 +162,11 @@ public class RitualRegistry {
                     CompoundTag tag = new CompoundTag();
                     tag.putBoolean("pool", true);
                     tag.putUUID("owner", player);
+                    GameProfileCache cache = level.getServer().getProfileCache();
+                    if (cache != null) {
+                        Optional<GameProfile> gameProfile = cache.get(player);
+                        gameProfile.ifPresent(profile -> tag.putString("username", profile.getName()));
+                    }
                     BlockItem.setBlockEntityData(flebo, BTVBlockEntities.FLEBO_BE.get(), colorTriplet.saveToTag(tag));
                     return List.of(flebo);
                 }

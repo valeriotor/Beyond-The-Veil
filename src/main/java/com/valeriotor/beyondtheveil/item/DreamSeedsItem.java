@@ -25,7 +25,7 @@ public class DreamSeedsItem extends ItemNameBlockItem {
         Level l = context.getLevel();
         BlockState state = l.getBlockState(context.getClickedPos());
         Block b = state.getBlock();
-        if (b == Blocks.DIRT || b == Blocks.GRASS_BLOCK) {
+        if (b == Blocks.DIRT || (b == Blocks.GRASS_BLOCK && stack.getItem() != Registration.GRASS_WEED_SEEDS.get())) {
             if (!l.isClientSide) {
                 if (stack.getItem() == Registration.GHOST_WEED_SEEDS.get()) {
                     l.setBlock(context.getClickedPos(), Registration.GHOST_GRASS.get().defaultBlockState(), 3);
@@ -33,6 +33,9 @@ public class DreamSeedsItem extends ItemNameBlockItem {
                     l.setBlock(context.getClickedPos(), Registration.REDSTONE_GRASS.get().defaultBlockState(), 3);
                 } else {
                     l.setBlock(context.getClickedPos(), Blocks.GRASS_BLOCK.defaultBlockState(), 3);
+                }
+                if (context.getPlayer() == null || !context.getPlayer().getAbilities().instabuild) {
+                    stack.shrink(1);
                 }
             }
             l.playSound(context.getPlayer(), context.getClickedPos(), SoundEvents.GRASS_PLACE, SoundSource.BLOCKS, 1, 1);
