@@ -338,7 +338,7 @@ public class WeeperEntity extends PathfinderMob implements AnimatedEntity, Ammun
                     deathTimer = 15;
                 }
             } else {
-                if (tickCount % 150 == 0) {
+                if (tickCount % 150 == 0 && talkingPlayer == null) {
                     ServerPlayer player = getMaster();
                     if (player != null) {
                         DialogueTemplate template = DialogueData.for_(player).getDialogue(DialogueType.WEEPER);

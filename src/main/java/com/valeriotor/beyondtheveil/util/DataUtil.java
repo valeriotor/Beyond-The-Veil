@@ -188,7 +188,7 @@ public class DataUtil {
 
     public static Integer getOrSetInteger(Player p, String key, int valueIfAbsent, boolean temporary) {
         Optional<PlayerData> capability = p.getCapability(PlayerDataProvider.PLAYER_DATA, null).resolve();
-        Integer value = null;
+        Integer value = 0;
         if (capability.isPresent()) {
             value = capability.get().getOrSetInteger(key, valueIfAbsent, temporary);
         }
@@ -197,7 +197,7 @@ public class DataUtil {
 
     public static Long getOrSetLong(Player p, String key, long valueIfAbsent, boolean temporary) {
         Optional<PlayerData> capability = p.getCapability(PlayerDataProvider.PLAYER_DATA, null).resolve();
-        Long value = null;
+        Long value = 0L;
         if (capability.isPresent()) {
             value = capability.get().getOrSetLong(key, valueIfAbsent, temporary);
         }
