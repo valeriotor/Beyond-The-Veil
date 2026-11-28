@@ -117,9 +117,9 @@ public class AlembicsBE extends BlockEntity {
                     double z3 = worldPosition.getZ() + (facing.getAxis() == Direction.Axis.Z ? 0.5 : (facing == Direction.WEST ? 15 * a : 1 * a));
                     ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x1, worldPosition.getY() + 0.01 + 1 - a, z1, 1, 0, 0, 0, 0.025);
                     ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x2, worldPosition.getY() + 0.01 + 10 * a, z2, 1, 0, 0, 0, 0.025);
-                    ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x3, worldPosition.getY() + 0.01 + 1 - a, z3, 1, 0, 0, 0, 0.052);
+                    ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x3, worldPosition.getY() + 0.01 + 1 - a, z3, 1, 0, 0, 0, 0.025);
                 }
-                if (counter % 30 == 0) {
+                if (counter % 25 == 0) {
                     if (itemLeft == 0) {
                         if (!inputTank1.isEmpty() && !stackHandler.getStackInSlot(0).isEmpty() && !inputTank2.isEmpty() && heldFlask != null) {
                             Tuple<Fluid, Integer> output = AlembicsRecipeRegistry.getOutput(inputTank1.getFluid().getFluid(), stackHandler.getStackInSlot(0), inputTank2.getFluid().getFluid());

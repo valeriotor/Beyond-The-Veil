@@ -222,6 +222,7 @@ public class BloodPoolData extends SavedData {
                     tag.put("color", triplet.saveToTag(new CompoundTag()));
                     tag.putUUID("entityUUID", entityUUID);
                     Messages.sendToPlayer(GenericToClientPacket.modifyBloodPool(tag), sp);
+                    setDirty();
                 }
                 return Optional.of(bloodPoolEntity);
             }

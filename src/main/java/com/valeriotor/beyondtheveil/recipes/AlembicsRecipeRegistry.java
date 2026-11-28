@@ -17,7 +17,7 @@ public class AlembicsRecipeRegistry {
     private static final Map<Fluid, Set<Tuple<AlembicRecipe, List<Item>>>> RECIPES_BY_OUTPUT = new HashMap<>();
 
     public static void registerRecipes() {
-        registerRecipe(Fluids.WATER, new ItemStack(Items.HONEYCOMB), Fluids.WATER, 60, BTVFluids.SOURCE_FLUID_SEDATIVE.get());
+        registerRecipe(Fluids.WATER, new ItemStack(Items.HONEYCOMB), Fluids.WATER, 65, BTVFluids.SOURCE_FLUID_SEDATIVE.get());
         registerRecipe(Fluids.WATER, new ItemStack(Items.SCUTE), Fluids.WATER, 100, BTVFluids.SOURCE_FLUID_COAGULANT.get());
         registerRecipe(Fluids.WATER, new ItemStack(Items.WARPED_FUNGUS), Fluids.WATER, 20, BTVFluids.SOURCE_FLUID_COAGULANT.get());
         registerRecipe(Fluids.WATER, new ItemStack(Items.CRIMSON_FUNGUS), Fluids.WATER, 20, BTVFluids.SOURCE_FLUID_COAGULANT.get());

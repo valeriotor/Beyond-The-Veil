@@ -12,8 +12,8 @@ import net.minecraft.world.item.DyeColor;
 import java.util.*;
 
 public class TriggerData {
-    private TargetingType triggerType;
-    private TargetingType targetType;
+    private TargetingType triggerType = TargetingType.HOSTILE_NEARBY;
+    private TargetingType targetType = TargetingType.HOSTILE_NEARBY;
     private List<UUID> restrictedTriggerers = new ArrayList<>();
     private List<UUID> restrictedTargets = new ArrayList<>();
     private List<UUID> ignoredPlayers = new ArrayList<>();

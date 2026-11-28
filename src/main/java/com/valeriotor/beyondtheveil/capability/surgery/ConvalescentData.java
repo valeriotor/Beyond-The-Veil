@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import com.valeriotor.beyondtheveil.Registration;
 import com.valeriotor.beyondtheveil.capability.arsenal.TriggerData;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
+import com.valeriotor.beyondtheveil.capability.util.LetterData;
 import com.valeriotor.beyondtheveil.entity.WeeperEntity;
 import com.valeriotor.beyondtheveil.item.BlackjackItem;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
@@ -41,6 +42,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -409,5 +411,10 @@ public class ConvalescentData {
                 chestEffects.put(OperationRegistry.getChestEffectInjection(effectKey), chestEffects1.getInt(effectKey));
             }
         }
+    }
+
+    public void copyToNewStore(ConvalescentData newStore) {
+        CompoundTag tag = saveToNBT(new CompoundTag());
+        newStore.loadFromNBT(tag);
     }
 }

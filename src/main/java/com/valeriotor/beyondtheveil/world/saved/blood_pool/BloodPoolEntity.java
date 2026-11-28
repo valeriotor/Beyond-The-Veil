@@ -31,6 +31,9 @@ public class BloodPoolEntity {
         if (patientType == PatientType.VILLAGER && triggerData != null) {
             triggerData.setMaster(fleboOwner);
             bloodPoolEntityType = BTVEntities.getTriggerEntity(convalescentData, triggerData).getB();
+            if (bloodPoolEntityType != BloodPoolEntityType.VILLAGER) {
+                entityData.putFloat("Health", bloodPoolEntityType.getMaxHealth());
+            }
         } else {
             bloodPoolEntityType = BloodPoolEntityType.fromPatientType(patientType);
         }

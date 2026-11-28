@@ -42,7 +42,11 @@ public class ReportSheetItem extends Item {
                 for (ReportStep step : report.getSteps()) {
                     if (step instanceof InsertionStep insertionStep && pPlayer instanceof ServerPlayer sp && sp.getServer() != null) {
                         SurgeryIngredient ingredient = insertionStep.getIngredient();
-                        ResourceLocation resourceLocation = new ResourceLocation(References.MODID, "ingredients/" + ingredient.toString().split(":")[1]);
+                        String s = ingredient.toString();
+                        if (s.contains(":")) {
+                            s = s.split(":")[1];
+                        }
+                        ResourceLocation resourceLocation = new ResourceLocation(References.MODID, "ingredients/" + s);
                         VanillaUtils.awardAdvancement(sp, resourceLocation);
                     } else if (step instanceof InjectionStep injectionStep) {
                         DataUtil.discoverFluid(pPlayer, injectionStep.getFluid(), false);

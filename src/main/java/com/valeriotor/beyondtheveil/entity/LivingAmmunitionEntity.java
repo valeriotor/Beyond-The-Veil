@@ -11,6 +11,7 @@ import com.valeriotor.beyondtheveil.animation.AnimationTemplate;
 import com.valeriotor.beyondtheveil.entity.ai.goals.LivingAmmunitionGoal;
 import com.valeriotor.beyondtheveil.entity.ai.goals.MinionFollowMasterGoal;
 import com.valeriotor.beyondtheveil.lib.BTVParticles;
+import com.valeriotor.beyondtheveil.lib.BTVSounds;
 import com.valeriotor.beyondtheveil.rituals.bindings.Binding;
 import com.valeriotor.beyondtheveil.rituals.bindings.BindingData;
 import com.valeriotor.beyondtheveil.surgery.arsenal.ArsenalEffect;
@@ -22,6 +23,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -187,6 +189,7 @@ public abstract class LivingAmmunitionEntity extends PathfinderMob implements Vi
                 }
                 attackTimer--;
                 if (attackTimer == 0) {
+                    level().playSound(null, blockPosition(), BTVSounds.HEAD_EXPLODE.get(), SoundSource.HOSTILE, 1, 1);
                     TriggerData data = getTriggerData();
                     Burst burst = data.getBurst();
                     List<ArsenalEffect> effects = data.getEffects();

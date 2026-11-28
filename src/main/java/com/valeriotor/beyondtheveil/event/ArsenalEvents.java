@@ -87,7 +87,7 @@ public class ArsenalEvents {
     @SubscribeEvent
     public static void entityTickEvent(LivingEvent.LivingTickEvent event) {
         LivingEntity e = event.getEntity();
-        if ((e.level().getGameTime() & 7) == 7 && e.getCapability(TriggerDataProvider.TRIGGER_DATA).isPresent() && e instanceof Mob entity) {
+        if (!e.level().isClientSide && (e.level().getGameTime() & 7) == 7 && e.getCapability(TriggerDataProvider.TRIGGER_DATA).isPresent() && e instanceof Mob entity) {
             TriggerData triggerData = entity.getCapability(TriggerDataProvider.TRIGGER_DATA).orElseThrow(IllegalStateException::new);
             triggerData.cleanLists(entity);
             if (triggerData.isTriggered() && triggerData.getPotentialTargets(entity).isEmpty()) {

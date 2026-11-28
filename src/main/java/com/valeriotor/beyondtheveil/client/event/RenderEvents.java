@@ -1023,15 +1023,20 @@ public class RenderEvents {
         final int X_OFFSET = gg.guiWidth() / 2 + 10;
         HitResult hitResult = Minecraft.getInstance().hitResult;
         if (hitResult != null && hitResult.getType() == HitResult.Type.BLOCK) {
-            if (hitResult instanceof BlockHitResult bhr) {
+            if (hitResult instanceof BlockHitResult bhr && hitResult.distanceTo(player) < 11.1) {
                 BlockPos lookedAtPos = bhr.getBlockPos();
                 BlockState blockState = player.level().getBlockState(lookedAtPos);
                 BlockEntity be = player.level().getBlockEntity(lookedAtPos);
                 if (blockState.getBlock() instanceof FlaskBlock && be instanceof FlaskBE flaskBE) {
                     FluidStack fluid = flaskBE.getTank().getFluid();
-                    if (!fluid.isEmpty() && (mainHandItem == Registration.SYRINGE.get())) {
+                    if (!fluid.isEmpty()) {
                         gg.drawString(Minecraft.getInstance().font, fluid.getDisplayName(), X_OFFSET, gg.guiHeight() / 2, 0xFF000000 | Color.YELLOW.getRGB());
                         gg.drawString(Minecraft.getInstance().font, fluid.getAmount() + " mB/" + flaskBE.getTank().getTankCapacity(0) + " mB", X_OFFSET, gg.guiHeight() / 2 + 15, 0xFF000000 | Color.YELLOW.getRGB());
+                    }
+                    ItemStack stackInSlot = flaskBE.getStackHandler().getStackInSlot(0);
+                    if (!stackInSlot.isEmpty()) {
+                        String string = stackInSlot.getHoverName().getString();
+                        gg.drawString(Minecraft.getInstance().font, stackInSlot.getCount() + " " + string, X_OFFSET, gg.guiHeight() / 2, 0xFF000000 | Color.YELLOW.getRGB());
                     }
                 } else if (blockState.getBlock() == Registration.FLASK_SHELF.get()) {
                     BlockPos centerPos = Registration.FLASK_SHELF.get().findBEPos(lookedAtPos, blockState);
@@ -1039,9 +1044,15 @@ public class RenderEvents {
                         FlaskShelfBE.Flask lookedAtFlask = flaskShelfBE.getLookedAtFlask(player.level(), lookedAtPos, bhr.getLocation());
                         if (lookedAtFlask != null) {
                             FluidStack fluid = lookedAtFlask.getTank().getFluid();
-                            if (!fluid.isEmpty() && (mainHandItem == Registration.SYRINGE.get())) {
+                            //if (!fluid.isEmpty() && (mainHandItem == Registration.SYRINGE.get())) {
+                            if (!fluid.isEmpty()) {
                                 gg.drawString(Minecraft.getInstance().font, fluid.getDisplayName(), X_OFFSET, gg.guiHeight() / 2, 0xFF000000 | Color.YELLOW.getRGB());
                                 gg.drawString(Minecraft.getInstance().font, fluid.getAmount() + " mB/" + lookedAtFlask.getTank().getTankCapacity(0) + " mB", X_OFFSET, gg.guiHeight() / 2 + 15, 0xFF000000 | Color.YELLOW.getRGB());
+                            }
+                            ItemStack stackInSlot = lookedAtFlask.getStackHandler().getStackInSlot(0);
+                            if (!stackInSlot.isEmpty()) {
+                                String string = stackInSlot.getHoverName().getString();
+                                gg.drawString(Minecraft.getInstance().font, stackInSlot.getCount() + " " + string, X_OFFSET, gg.guiHeight() / 2, 0xFF000000 | Color.YELLOW.getRGB());
                             }
                         }
                     }
@@ -1089,7 +1100,7 @@ public class RenderEvents {
                         }
                         ItemStack heldStack = alembics.getStackHandler().getStackInSlot(0);
                         if (!heldStack.isEmpty()) {
-                            gg.drawString(Minecraft.getInstance().font, I18n.get("overlay.alembics2", heldStack.getDisplayName().getString(), heldStack.getCount()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
+                            gg.drawString(Minecraft.getInstance().font, I18n.get("overlay.alembics2", heldStack.getHoverName().getString(), heldStack.getCount()), X_OFFSET, pY, 0xFF000000 | Color.YELLOW.getRGB());
                             pY += 15;
                         }
                         FluidStack inputFluid2 = alembics.getInputTank2().getFluid();

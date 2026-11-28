@@ -157,6 +157,12 @@ public class CapabilityEvents {
             event.getEntity().getCapability(LETTER_DATA).ifPresent(oldData::copyToNewStore);
         });
 
+        if (!event.isWasDeath()) {
+            event.getOriginal().getCapability(CONVALESCENT_DATA).ifPresent(oldData -> {
+                event.getEntity().getCapability(CONVALESCENT_DATA).ifPresent(oldData::copyToNewStore);
+            });
+        }
+
         event.getOriginal().invalidateCaps();
     }
 

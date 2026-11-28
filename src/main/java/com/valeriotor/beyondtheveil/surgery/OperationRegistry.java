@@ -455,7 +455,7 @@ public class OperationRegistry {
             .setIncreaseArsenalEffectAmplifier(true)
             .setMaximumTimesAllowed(-1)
             .setEraseFluid(true)
-            .buildInjectionOperation(BTVFluids.FLUID_LIQUID_GLOWSTONE.getA().get(), 110);
+            .buildInjectionOperation(BTVFluids.FLUID_LIQUID_GLOWSTONE.getA().get(), 68);
 
     /**************************************** BACK INSERTIONS ****************************************/
 
