@@ -3,6 +3,7 @@ package com.valeriotor.beyondtheveil.item;
 import com.valeriotor.beyondtheveil.capability.PlayerDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.CrossSyncDataProvider;
 import com.valeriotor.beyondtheveil.capability.crossync.PlayerTransformation;
+import com.valeriotor.beyondtheveil.capability.util.LetterData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.capability.util.PlayerTimerDataProvider;
 import com.valeriotor.beyondtheveil.entity.CanoeEntity;
@@ -21,6 +22,7 @@ import com.valeriotor.beyondtheveil.world.dimension.BTVDimensions;
 import com.valeriotor.beyondtheveil.world.saved.ArcheSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -46,6 +48,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import static com.valeriotor.beyondtheveil.capability.util.LetterDataProvider.LETTER_DATA;
+
 public class SlugItem extends Item {
 
     public SlugItem(Properties pProperties) {
@@ -57,6 +61,10 @@ public class SlugItem extends Item {
         if (pLivingEntity instanceof ServerPlayer sp) {
             if (ResearchUtil.getResearchStage(sp, "CUSTOMS") == 0) {
                 DataUtil.setBooleanOnServerAndSync(sp, PlayerDataLib.ate_slug.name(), true, false);
+                sp.getCapability(LETTER_DATA).ifPresent(data -> {
+                    data.removeUnstartedExchange(sp, "keeper_ask_slugs");
+                    Messages.sendToPlayer(GenericToClientPacket.syncLetterData(data.saveToNBT(new CompoundTag())), sp);
+                });
             }
             boolean baptized = DataUtil.getBoolean(sp, PlayerDataLib.baptized.name());
             if (!baptized) {

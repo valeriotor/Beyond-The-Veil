@@ -35,7 +35,7 @@ public enum PersistentPlayerTimer {
     }), List.of(), List.of((p, t) -> {
         String time = t.getAdditionalData("time");
         if (StringUtils.isNumeric(time) && p instanceof ServerPlayer sp && sp.getServer() != null) {
-            int firstTime = Integer.parseInt(time);
+            int firstTime = Integer.parseInt(time) % 24000;
             return sp.getServer().overworld().getDayTime() % 24000 < firstTime;
         }
         return false;

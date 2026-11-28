@@ -30,14 +30,14 @@
       "id": "old",
       "dialogueOptions": [
         {
-          "id": "i___",
-          "branchLength": 0,
-          "endingNodeID": "end",
+          "id": "i_wish_to",
+          "branchLength": 2,
+          "endingNodeID": "ocean",
           "unlockedData": [],
           "mustHaveData": [],
           "mustNotHaveData": [],
           "stopsDialogueUnlock": false,
-          "endsDialogue": true
+          "endsDialogue": false
         }
       ]
     },

@@ -1,6 +1,7 @@
 package com.valeriotor.beyondtheveil.util.timers;
 
 import com.valeriotor.beyondtheveil.capability.DialogueData;
+import com.valeriotor.beyondtheveil.capability.util.PlayerTimerData;
 import com.valeriotor.beyondtheveil.container.DrownedContainer;
 import com.valeriotor.beyondtheveil.container.dialogue.DrownedDialogueMenu;
 import com.valeriotor.beyondtheveil.dialogue.DialogueRegistry;
@@ -124,6 +125,9 @@ public class BaptismTimer extends PlayerTimer {
     public void complete(ServerPlayer player) {
         done = true;
         player.setHealth(player.getMaxHealth());
+        player.setHealth(player.getMaxHealth());
+        player.heal(player.getMaxHealth());
+        PlayerTimerData.for_(player).addTimer(new PlayerTimer.Builder("post_baptism_heal", 3).addFinalActions((player1, playerTimer) -> player1.setHealth(player1.getMaxHealth())).toTimer());
         for (int i = 1; i < 4; i++) {
             Block block = player.level().getBlockState(player.getOnPos().above(i)).getBlock();
             if (block == Blocks.ICE) {

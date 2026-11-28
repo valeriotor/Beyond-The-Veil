@@ -213,6 +213,11 @@ public class HamletPieces {
         protected void fillColumnDown(WorldGenLevel pLevel, BlockState pState, int pX, int pY, int pZ, BoundingBox pBox) {
             super.fillColumnDown(pLevel, pState, pX, pY, pZ, pBox);
         }
+
+        @Override
+        protected boolean isReplaceableByStructures(BlockState pState) {
+            return pState.isAir();
+        }
     }
 
     public static class StreetPiece extends StructurePiece {

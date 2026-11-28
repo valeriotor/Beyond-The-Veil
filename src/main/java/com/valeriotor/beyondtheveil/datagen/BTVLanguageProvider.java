@@ -212,7 +212,8 @@ public class BTVLanguageProvider extends LanguageProvider {
 
         add("memory.metal.name", "Metal");
         add("memory.metal.brief", "A common memory among those experienced in mining – that of striking ore – yet this is of a different sort, as if in it the iron was felt by thought, rather than touch.");
-        add("memory.metal.0.1", "This dream explores the ground below me, revealing to me the presence of metal ores such as iron or gold. I can §lscroll§r through the various layers that have been probed.");
+        add("memory.metal.0.1", "Could this work?");
+        add("memory.metal.0.2", "This dream explores the ground below me, revealing to me the presence of metal ores such as iron or gold. I can §lscroll§r through the various layers that have been probed.");
         add("memory.metal.1.1", "↳ §lVoid§r: Increases the search radius.");
         add("memory.metal.2.1", "§oPath Sigil§r: Starts the search at the target area.");
         add("memory.metal.4.1", "§oImmortal Sigil§r: Starts the search below the target human.");
@@ -609,14 +610,14 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.west_offer_surgeon.0.1.word",         "Word has travelled of your interest in surgical practices. I hope your experiments are proceeding smoothly.\\n");
         add("exchange.west_offer_surgeon.0.2.as",           "As a word of advice—coming from someone with abundant experience—I would encourage you to focus on the intellectual tasks involved in experimentation, while delegating the menial repetition of such experiments to others.\\n");
         add("exchange.west_offer_surgeon.0.3.if",           "If this interests you, we would be glad to provide capable and precise surgeons for hire; all you would have to do is to provide them with clear instructions (I assume you are taking notes of your experiments?) and the necessary patients, ingredients, and indications on where to deposit the outcomes.\\n");
-        add("exchange.west_offer_surgeon.0.4.the",          "The hiring cost is a small (though admittedly non-negligible) one-time payment of five diamonds.\\n");
+        add("exchange.west_offer_surgeon.0.4.the",          "The hiring cost is a small (though admittedly non-negligible) one-time payment of three diamonds.\\n");
         add("exchange.west_offer_surgeon.0.5.dr",           "Dr. H. West\\1");
         add("exchange.west_offer_surgeon.0.6.arkham",       "Arkham Sanitarium");
         add("exchange.west_offer_surgeon.1.0.all",          "Dear all,\\n");
         add("exchange.west_offer_surgeon.1.0.dr",           "Dear Dr. West,\\n");
         add("exchange.west_offer_surgeon.1.1.grateful",     "I am grateful for your advice. Indeed, I would be glad to keep close contact with your institution, in hopes of potential future collaborations.\\n");
         add("exchange.west_offer_surgeon.1.1.tempting",     "Your offer is tempting, although the price is indeed non-negligible. Nonetheless, I accept.\\n");
-        add("exchange.west_offer_surgeon.1.2.enclose",      "I hereby enclose the five diamonds. Please inform me of any additional procedures involved in relocation, setting up the contract, and so forth.\\n");
+        add("exchange.west_offer_surgeon.1.2.enclose",      "I hereby enclose the three diamonds. Please inform me of any additional procedures involved in relocation, setting up the contract, and so forth.\\n");
         add("exchange.west_offer_surgeon.1.3.best",         "Best Regards,\\1");
         add("exchange.west_offer_surgeon.1.3.faithfully",   "Faithfully\\1");
         add("exchange.west_offer_surgeon.1.4.name",         "%s");
@@ -636,7 +637,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.another_surgeon.0.1.remarkable",      "Your previous surgeon has proved itself a remarkable assistant.\\n");
         add("exchange.another_surgeon.0.1.acceptable",      "Your previous surgeon’s performance was acceptable.\\n");
         add("exchange.another_surgeon.0.1.longer",          "Your previous surgeon is no longer with us.\\n");
-        add("exchange.another_surgeon.0.2.additional",      "I would like to hire an additional one. You will find enclosed the usual fee of five diamonds.\\n");
+        add("exchange.another_surgeon.0.2.additional",      "I would like to hire an additional one. You will find enclosed the usual fee of three diamonds.\\n");
         add("exchange.another_surgeon.0.3.best",            "Best Regards,\\1");
         add("exchange.another_surgeon.0.3.faithfully",      "Faithfully,\\1");
         add("exchange.another_surgeon.0.4.name",            "%s");
@@ -651,7 +652,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("exchange.more_surgeons.0.0.all",               "Dear all,\\n");
         add("exchange.more_surgeons.0.0.dr",                "Dear Dr. West,\\n");
         add("exchange.more_surgeons.0.0.nurse",             "Dear Nurse Palmer,\\n");
-        add("exchange.more_surgeons.0.1.additional",        "I would like to hire an additional surgeon. You will find enclosed the usual fee of five diamonds.\\n");
+        add("exchange.more_surgeons.0.1.additional",        "I would like to hire an additional surgeon. You will find enclosed the usual fee of three diamonds.\\n");
         add("exchange.more_surgeons.0.2.best",              "Best Regards,\\1");
         add("exchange.more_surgeons.0.2.faithfully",        "Faithfully,\\1");
         add("exchange.more_surgeons.0.3.name",              "%s");
@@ -1824,6 +1825,7 @@ public class BTVLanguageProvider extends LanguageProvider {
         add("dialogue.shoreman_lighthouse_keeper.baptism.what.option", "What makes you different from outsiders?");
         add("dialogue.shoreman_lighthouse_keeper.baptism.then.option", "Then tell me. Please.");
         add("dialogue.shoreman_lighthouse_keeper.baptism.i____.option", "I wish to speak to the Ocean.");
+        add("dialogue.shoreman_lighthouse_keeper.baptism.i_wish_to.option", "I wish to speak to the Ocean.");
         add("dialogue.shoreman_lighthouse_keeper.baptism.how.option", "How was His voice?");
         add("dialogue.shoreman_lighthouse_keeper.baptism.i_.option", "I understand. Then please tell me how to perform the ritual, so that I may see whether we are more alike than not.");
         add("dialogue.shoreman_lighthouse_keeper.baptism.and.option", "And then?");

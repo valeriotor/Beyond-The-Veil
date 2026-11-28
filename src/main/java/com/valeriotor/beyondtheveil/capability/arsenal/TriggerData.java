@@ -12,8 +12,8 @@ import net.minecraft.world.item.DyeColor;
 import java.util.*;
 
 public class TriggerData {
-    private TargetingType triggerType = TargetingType.HOSTILE_NEARBY;
-    private TargetingType targetType = TargetingType.HOSTILE_NEARBY;
+    private TargetingType triggerType;
+    private TargetingType targetType;
     private List<UUID> restrictedTriggerers = new ArrayList<>();
     private List<UUID> restrictedTargets = new ArrayList<>();
     private List<UUID> ignoredPlayers = new ArrayList<>();
@@ -26,23 +26,19 @@ public class TriggerData {
     private DyeColor mutex = null;
 
     public List<LivingEntity> getPotentialTargets(LivingEntity triggerableEntity) {
-        if (targetType == null) {
-            return new ArrayList<>();
-        }
-        if (targetType.isRestricted()) {
+        TargetingType type = targetType == null ? TargetingType.HOSTILE_NEARBY : targetType;
+        if (type.isRestricted()) {
             return restrictedTargets.stream().map(uuid -> fromUUID((ServerLevel) triggerableEntity.level(), uuid)).toList();
         }
-        return targetType.getPotentialTargets(triggerableEntity, this);
+        return type.getPotentialTargets(triggerableEntity, this);
     }
 
     public List<LivingEntity> getTriggerers(LivingEntity triggerableEntity) {
-        if (triggerType == null) {
-            return new ArrayList<>();
-        }
-        if (triggerType.isRestricted()) {
+        TargetingType type = triggerType == null ? (targetType == null ? TargetingType.HOSTILE_NEARBY : targetType) : triggerType;
+        if (type.isRestricted()) {
             return restrictedTriggerers.stream().map(uuid -> fromUUID((ServerLevel) triggerableEntity.level(), uuid)).toList();
         }
-        return triggerType.getPotentialTargets(triggerableEntity, this);
+        return type.getPotentialTargets(triggerableEntity, this);
     }
 
 

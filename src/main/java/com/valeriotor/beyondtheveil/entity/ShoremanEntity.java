@@ -753,4 +753,8 @@ public class ShoremanEntity extends PathfinderMob implements AnimatedEntity, Ani
         setPersistenceRequired();
     }
 
+    @Override
+    public boolean canBeLeashed(Player pPlayer) {
+        return false;
+    }
 }

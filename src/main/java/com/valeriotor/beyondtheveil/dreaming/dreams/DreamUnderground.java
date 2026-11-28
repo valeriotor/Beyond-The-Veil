@@ -47,7 +47,9 @@ public class DreamUnderground extends Dream {
     }
 
     private boolean activateInternal(Player p, Level l, BlockPos pos) {
-
+        if (memory == Memory.METAL) {
+            DataUtil.getMemoryStatus(p, Memory.METAL).increaseTo(2, Memory.Target.BASE, false);
+        }
         Map<Integer, String[][]> layers = new HashMap<>();
 
         if (p != null) {

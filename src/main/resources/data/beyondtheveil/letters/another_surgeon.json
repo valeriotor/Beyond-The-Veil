@@ -8,7 +8,7 @@
       "optionsPerLine": [["all", "dr", "nurse"], ["remarkable", "acceptable", "longer"], ["additional"], ["best", "faithfully"],["name", "dr_name", "seeker"]],
       "itemsRequired": [{
         "item": "minecraft:diamond",
-        "amount": 5
+        "amount": 3
       }]
     },
     {
