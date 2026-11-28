@@ -44,9 +44,6 @@
   "spine_rip": {
     "sounds": [ "beyondtheveil:spine_rip" ]
   },
-  "currents": {
-    "sounds": [ "beyondtheveil:currents" ]
-  },
   "submarine_crash": {
     "sounds": [ "beyondtheveil:submarine_crash" ]
   },

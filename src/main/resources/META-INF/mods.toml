@@ -8,11 +8,10 @@ modId="beyondtheveil"
 version="${file.jarVersion}"
 displayName="Beyond The Veil"
 logoFile="examplemod.png"
-credits="Azanor, for Baubles. The creators on FreeSound.org (listed in the sounds folder under CREDITS). The people on the forge forums for asking and answering questions." #optional
+#credits="Azanor, for Baubles. The creators on FreeSound.org (listed in the sounds folder under CREDITS). The people on the forge forums for asking and answering questions." #optional
 authors="valeriotor"
 description='''
-A story driven Minecraft mod inspired by the writings of H.P. Lovecraft, and other works based on the author.
-'''
+In Beyond the Veil, you take on the mantle of an academic: a Seeker of Truth. Via rigorous experimentation, exploration, and dialogue with the people of the world, you may breach mankind's preconceived notions of reality... but could some veils be better left unopened? Beyond the Veil is inspired by the works of H.P. Lovecraft, and turns the player into both victim and perpetrator of cruel indifference.'''
 
 [[dependencies.beyondtheveil]]
     modId="forge"
